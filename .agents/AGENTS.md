@@ -17,6 +17,25 @@ Source of Truth
 
 tsconfig.json is the source of truth for TypeScript and application import path aliases.
 
+Use:
+
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+
+Add or modify aliases in tsconfig.json first.
+
+Do not duplicate the same alias mappings in next.config.mjs unless there is a specific documented runtime/build reason.
+
+Next.js Behavior
+
+Next.js natively supports baseUrl and paths from tsconfig.json / jsconfig.json.
+
 For normal imports like:
 
 import { Button } from "@/components/Button";
