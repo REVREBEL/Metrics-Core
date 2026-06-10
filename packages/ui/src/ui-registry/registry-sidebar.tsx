@@ -45,7 +45,7 @@ function FolderTree({
   node: RegistryFolderNode;
   pathname: string;
   query: string;
-}): JSX.Element | null {
+}): React.ReactNode {
   if (!matches(node, query)) return null;
 
   const isActive = pathname === folderHref(node.id);

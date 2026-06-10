@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
-import { Separator } from "@ui";
+import { Separator } from "@ui-core";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +26,6 @@ function ButtonGroup({
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof buttonGroupVariants>) {
   return (
-    // biome-ignore lint/a11y/useSemanticElements: ButtonGroup uses role="group" intentionally for flexible styling
     <div
       role="group"
       data-slot="button-group"
