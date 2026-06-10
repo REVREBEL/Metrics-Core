@@ -1,0 +1,501 @@
+---
+title: UI Package Structure
+nav_order: 1
+---
+
+# UI Package Structure
+
+The `packages/ui` workspace is the shared UI system for Metrics-Core.
+
+It contains shared primitives, custom REVREBEL components, icons, hooks, styles, registry metadata, and generated registry output.
+
+## Current package structure
+
+```txt
+packages/ui
+├── public
+├── registry
+│   └── app
+├── registry.json
+├── scripts
+├── src
+│   ├── common
+│   ├── components
+│   │   ├── _shared-props
+│   │   ├── _shared-ui
+│   │   ├── charts
+│   │   ├── errors
+│   │   ├── feedback
+│   │   ├── layouts
+│   │   ├── metrics
+│   │   ├── sections
+│   │   ├── tables
+│   │   └── timeline
+│   ├── context
+│   ├── db
+│   ├── fonts
+│   ├── hooks
+│   ├── icons
+│   ├── lib
+│   ├── primitives
+│   │   ├── auto-form
+│   │   ├── buttons
+│   │   ├── charts
+│   │   ├── dropdown
+│   │   ├── inputs
+│   │   ├── layouts
+│   │   ├── menus
+│   │   ├── popovers
+│   │   ├── registry
+│   │   ├── skeleton
+│   │   ├── tables
+│   │   ├── tabs
+│   │   ├── textarea
+│   │   ├── typography
+│   │   └── ui
+│   ├── styles
+│   ├── types
+│   └── utils
+├── tailwind.config.ts
+└── tsconfig.json
+```
+
+## Core distinction
+
+### `src/primitives`
+
+`src/primitives` is for native Shadcn/base UI components only.
+
+These are low-level building blocks. They should stay generic, reusable, and minimally branded.
+
+Examples:
+
+```txt
+Button
+Card
+Input
+Select
+DropdownMenu
+Dialog
+Popover
+Tabs
+Table
+Skeleton
+Textarea
+ChartContainer
+Tooltip
+Badge
+```
+
+Do not place business-specific Metrics logic, dashboard-specific naming, property-specific behavior, or REVREBEL-specific content assumptions in `primitives`.
+
+### `src/components`
+
+`src/components` is for custom REVREBEL components built on top of the shared design system.
+
+These components can be opinionated. They may use REVREBEL styling, Metrics-specific layout patterns, metric display logic, and approved dashboard visual treatments.
+
+Examples:
+
+```txt
+PerformanceCard
+BudgetSnapshotCard
+MetricDelta
+DashboardSection
+DailyPickupTable
+OTBStackedBarChart
+EmptyDashboardState
+TimelineEvent
+RevenueMetricCard
+```
+
+## Component file convention
+
+The preferred convention is named component files inside category folders.
+
+Use this:
+
+```txt
+components/metrics/performance-card.tsx
+components/charts/area-chart-interactive.tsx
+components/tables/daily-pickup-table.tsx
+```
+
+Avoid recreating the older folder pattern unless there is a specific reason:
+
+```txt
+PerformanceCard/index.tsx
+AreaChartInteractive/index.tsx
+DailyPickupTable/index.tsx
+```
+
+## Naming standard
+
+Use kebab-case file names:
+
+```txt
+performance-card.tsx
+budget-snapshot-card.tsx
+area-chart-interactive.tsx
+daily-pickup-table.tsx
+market-segment-group-rooms-table.tsx
+```
+
+Use PascalCase named exports:
+
+```ts
+export function PerformanceCard() {}
+export function BudgetSnapshotCard() {}
+export function AreaChartInteractive() {}
+export function DailyPickupTable() {}
+```
+
+Avoid default exports for shared UI components unless needed for compatibility.
+
+## Barrel export standard
+
+Every reusable category folder should have an `index.ts` barrel export.
+
+Example:
+
+```ts
+// src/components/metrics/index.ts
+export * from "./browser-stats-card"
+export * from "./budget-snapshot-card"
+export * from "./conversion-card"
+export * from "./model-comparison-card"
+export * from "./performance-card"
+export * from "./performance-card-other"
+export * from "./sales-metrics-card"
+export * from "./simple-kpi-cards"
+export * from "./simple-statistics-cards"
+export * from "./social-visits-card"
+export * from "./stat-card"
+export * from "./statistics-card-fin"
+export * from "./total-earning-card"
+export * from "./total-stats-card"
+```
+
+Example:
+
+```ts
+// src/components/charts/index.ts
+export * from "./analytics-chart"
+export * from "./analytics"
+export * from "./area-chart-interactive"
+export * from "./bar-chart-interactive"
+export * from "./bar-with-label-custom"
+export * from "./calendar-heatmap"
+export * from "./interactive-area-line-combo"
+export * from "./line-chart-interactive"
+export * from "./otb-stacked-bar-chart"
+export * from "./overview"
+export * from "./pie-chart-donut-center-text"
+export * from "./pie-chart-interactive"
+export * from "./pie-donut-chart-active"
+export * from "./radial-ring-chart-with-label"
+export * from "./recent-sales"
+export * from "./top-channels-chart"
+export * from "./top-services-bar-chart"
+export * from "./top-services-chart"
+```
+
+## Route alias standard
+
+Every major category folder should have a dedicated route alias.
+
+Components should import from stable aliases, not physical folder paths.
+
+Recommended component aliases:
+
+```json
+{
+  "@shared-props": ["./src/components/_shared-props/index.ts"],
+  "@shared-ui": ["./src/components/_shared-ui/index.ts"],
+  "@charts": ["./src/components/charts/index.ts"],
+  "@errors": ["./src/components/errors/index.ts"],
+  "@feedback": ["./src/components/feedback/index.ts"],
+  "@layouts": ["./src/components/layouts/index.ts"],
+  "@metrics": ["./src/components/metrics/index.ts"],
+  "@sections": ["./src/components/sections/index.ts"],
+  "@tables": ["./src/components/tables/index.ts"],
+  "@timeline": ["./src/components/timeline/index.ts"]
+}
+```
+
+Recommended primitive aliases:
+
+```json
+{
+  "@auto-form": ["./src/primitives/auto-form/index.ts"],
+  "@buttons": ["./src/primitives/buttons/index.ts"],
+  "@primitive-charts": ["./src/primitives/charts/index.ts"],
+  "@dropdown": ["./src/primitives/dropdown/index.ts"],
+  "@inputs": ["./src/primitives/inputs/index.ts"],
+  "@primitive-layouts": ["./src/primitives/layouts/index.ts"],
+  "@menus": ["./src/primitives/menus/index.ts"],
+  "@popovers": ["./src/primitives/popovers/index.ts"],
+  "@ui-registry": ["./src/ui-registry/index.ts"],
+  "@skeleton": ["./src/primitives/skeleton/index.ts"],
+  "@primitive-tables": ["./src/primitives/tables/index.ts"],
+  "@tabs": ["./src/primitives/tabs/index.ts"],
+  "@textarea": ["./src/primitives/textarea/index.ts"],
+  "@typography": ["./src/primitives/typography/index.ts"],
+  "@ui": ["./src/primitives/ui/index.ts"]
+}
+```
+
+Use collision-safe names where components and primitives overlap:
+
+```txt
+@charts              → src/components/charts
+@primitive-charts    → src/primitives/charts
+
+@tables              → src/components/tables
+@primitive-tables    → src/primitives/tables
+
+@layouts             → src/components/layouts
+@primitive-layouts   → src/primitives/layouts
+```
+
+## Import rules
+
+Preferred:
+
+```ts
+import { PerformanceCard } from "@metrics"
+import { AreaChartInteractive } from "@charts"
+import { DailyPickupTable } from "@tables"
+import { DashboardSection } from "@sections"
+import { MetricCardShell } from "@shared-ui"
+import { Button } from "@buttons"
+import { Card } from "@ui"
+```
+
+Allowed for private helpers inside the same component group:
+
+```ts
+import { formatPerformanceValue } from "./format-performance-value"
+import { PerformanceCardHeader } from "./performance-card-header"
+```
+
+Avoid cross-category relative imports:
+
+```ts
+import { MetricCardShell } from "../_shared-ui/metric-card-shell"
+import { AreaChartInteractive } from "../charts/area-chart-interactive"
+import { Button } from "../../primitives/buttons/button"
+```
+
+Use aliases instead:
+
+```ts
+import { MetricCardShell } from "@shared-ui"
+import { AreaChartInteractive } from "@charts"
+import { Button } from "@buttons"
+```
+
+## Folder guidance
+
+### `_shared-props`
+
+Use for shared prop contracts, reusable TypeScript types, and component-facing interfaces.
+
+Do not put rendered UI here.
+
+### `_shared-ui`
+
+Use for reusable REVREBEL UI pieces that are not primitives but are shared across multiple component categories.
+
+Examples:
+
+```txt
+MetricCard
+MetricCardShell
+MetricTrendIcon
+DashboardTabs
+ConfigDrawer
+Shared Popover wrappers
+Metric layout helpers
+```
+
+This is the correct place for repeated actions, switchers, states, headers, shells, and controls that are reused across metrics, sections, layouts, tables, or charts.
+
+### `charts`
+
+Use for custom REVREBEL/Metrics chart components.
+
+Base chart primitives stay in:
+
+```txt
+src/primitives/charts
+```
+
+Custom chart components stay in:
+
+```txt
+src/components/charts
+```
+
+### `errors`
+
+Use for reusable error screens or error panels.
+
+Examples:
+
+```txt
+Forbidden
+GeneralError
+MaintenanceError
+NotFoundError
+UnauthorizedError
+```
+
+### `feedback`
+
+Use for non-error state UI.
+
+Examples:
+
+```txt
+EmptyState
+LoadingState
+SuccessState
+WarningState
+NoDataState
+FeedbackMessage
+```
+
+### `layouts`
+
+Use for composed layout systems and groups of sections.
+
+Important distinction:
+
+```txt
+Reusable layout shell → packages/ui/src/components/layouts
+Actual app route/page → apps/*
+```
+
+Folders like `campaigns`, `properties`, `tasks`, and `users` may represent reusable page templates or app-domain layout groups. If they become actual app pages with route-specific data behavior, they should move into the consuming app.
+
+### `metrics`
+
+Use for metric-display cards, KPI widgets, revenue/occupancy/pace cards, and dashboard metric UI.
+
+Metric components should receive data through props.
+
+Avoid placing direct app data logic here:
+
+```txt
+DuckDB hooks
+BigQuery queries
+route-specific fetches
+property-specific filters
+page-level state
+```
+
+### `sections`
+
+Use for reusable dashboard sections that compose cards, charts, tables, and shared UI.
+
+Sections are larger than metrics, but smaller than app pages.
+
+If a section becomes route-specific or data-fetching-heavy, split it:
+
+```txt
+Reusable visual section → packages/ui/src/components/sections
+Data/container section → apps/*
+```
+
+### `tables`
+
+Use for custom REVREBEL/Metrics table components.
+
+Base table primitives stay in:
+
+```txt
+src/primitives/tables
+```
+
+Custom tables stay in:
+
+```txt
+src/components/tables
+```
+
+Tables should standardize:
+
+```txt
+Header style
+Column alignment
+Number formatting
+Currency formatting
+Percent formatting
+Empty state
+Loading state
+Error state
+Density
+Row hover behavior
+```
+
+### `timeline`
+
+Use for custom timeline UI.
+
+## Registry guidance
+
+Current registry area:
+
+```txt
+registry
+└── app
+```
+
+The preferred source-of-truth rule is:
+
+```txt
+src = canonical implementation
+registry = registry configuration / app registry structure
+public = generated output
+```
+
+Do not duplicate component implementations across `src` and `registry` unless the registry system explicitly requires it.
+
+If registry requires generated component files, they should be generated or treated as build artifacts, not manually maintained parallel source.
+
+## Agent rule
+
+Do not reorganize files for aesthetics alone.
+
+When adding a new component:
+
+1. Place the file in the correct category folder.
+2. Use kebab-case for the file name.
+3. Use a PascalCase named export.
+4. Add it to that category's `index.ts`.
+5. Import it elsewhere through the category alias.
+
+Example:
+
+```txt
+src/components/metrics/channel-performance-card.tsx
+```
+
+```ts
+export function ChannelPerformanceCard() {
+  return null
+}
+```
+
+```ts
+// src/components/metrics/index.ts
+export * from "./channel-performance-card"
+```
+
+```ts
+// consuming component
+import { ChannelPerformanceCard } from "@metrics"
+```
+
+The point of the alias system is to make folder moves cheap. Components should depend on stable route names, not physical folder paths.

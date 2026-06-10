@@ -1,0 +1,80 @@
+---
+title: Design System Registry
+nav_order: 20
+---
+
+# Design System Registry
+
+The Design System Registry documents the shared UI architecture for `packages/ui` in Metrics-Core.
+
+This section defines how REVREBEL UI components, primitives, registry entries, aliases, shared props, shared UI patterns, and app-facing exports should be organized so future coding agents can work from the same structure.
+
+## Purpose
+
+The goal of the design system registry is to make UI work predictable.
+
+The package should support:
+
+* reusable REVREBEL components,
+* native Shadcn-style primitives,
+* stable import routes,
+* registry-driven component discovery,
+* consistent dashboard patterns,
+* and future-safe file movement.
+
+The guiding principle is simple:
+
+> Components should depend on stable routes, not fragile folder paths.
+
+## Core package location
+
+```txt
+packages/ui
+```
+
+The `packages/ui` package is the shared UI system for Metrics-Core.
+
+## Primary documentation
+
+<Columns cols={2}>
+  <Card
+    title="UI Package Structure"
+    icon="layout-dashboard"
+    href="/design-system/ui-package-structure/"
+  >
+    Component categories, primitive boundaries, shared UI folders, and route alias rules.
+  </Card>
+</Columns>
+
+## Core rules
+
+1. `src/primitives` is for native Shadcn/base UI components only.
+2. `src/components` is for custom REVREBEL design-system components.
+3. Every reusable category folder should have an `index.ts` barrel export.
+4. Every major component and primitive group should have a dedicated route alias.
+5. Components should import from aliases like `@charts`, `@metrics`, `@buttons`, and `@shared-ui`.
+6. Registry output should not become the normal app import path.
+7. App-specific pages and data-fetching logic should stay in consuming apps, not `packages/ui`.
+
+## Preferred import pattern
+
+```ts
+import { PerformanceCard } from "@metrics"
+import { AreaChartInteractive } from "@charts"
+import { DailyPickupTable } from "@tables"
+import { Button } from "@buttons"
+import { Card } from "@ui"
+```
+
+Avoid cross-domain relative imports like:
+
+```ts
+import { Button } from "../../primitives/buttons/button"
+import { MetricCardShell } from "../_shared-ui/metric-card-shell"
+```
+
+## Registry principle
+
+The registry should describe and package approved UI components. It should not encourage multiple competing implementations of the same component.
+
+Use the source package structure as the canonical design-system layer, then expose stable registry metadata and generated registry output from there.

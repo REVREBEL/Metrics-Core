@@ -1,0 +1,8 @@
+name: Database Migrate
+on: [workflow_dispatch]
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: echo "Configure migration execution here"

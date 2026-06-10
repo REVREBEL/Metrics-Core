@@ -1,0 +1,28 @@
+name: Dataform Mirror Sync
+
+on:
+  push:
+    paths:
+      - 'packages/dataform/**'
+    branches:
+      - main
+
+jobs:
+  sync-to-polyrepo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Monorepo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Sync Directory to Poly-Repo
+        uses: andstor/copycat-action@v3
+        with:
+          personal_token: ${{ secrets.DATAFORM_SYNC_TOKEN }}
+          src_path: 'packages/dataform/.'
+          dst_path: '/'
+          dst_owner: 'REVREBEL'
+          dst_repo_name: 'Metrics-Dataform'
+          dst_branch: 'main'
+          clean: true

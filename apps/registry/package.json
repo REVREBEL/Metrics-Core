@@ -1,0 +1,49 @@
+{
+  "name": "@apps/registry",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm registry:folders:sync && pnpm generate-registry && next dev -p 3205",
+    "build": "pnpm registry:folders:sync && pnpm generate-registry && next build",
+    "registry:build": "pnpm run registry:folders:sync && pnpm run registry:sync && pnpm run registry:items:sync && pnpm run registry:manifest:sync && pnpm run registry:tokens:sync && pnpm run registry:playground:sync && pnpm run registry:prepare && pnpm dlx shadcn@latest build",
+    "registry:folders:sync": "node ./scripts/registry-folders-sync.mjs",
+    "generate-registry": "node ./scripts/generate-registry.mjs",
+    "registry:validate": "node ./scripts/validate-registries.mjs",
+    "registry:sync": "node ./scripts/registry-sync.mjs",
+    "registry:manifest:sync": "node ./scripts/registry-manifest-sync.mjs",
+    "registry:tokens:sync": "node ./scripts/registry-tokens-sync.mjs",
+    "registry:prepare": "node ./scripts/registry-prepare-next-root.mjs",
+    "registry:items:sync": "node ./scripts/registry-items-sync.mjs",
+    "registry:playground:sync": "node ./scripts/registry-playground-sync.mjs",
+    "lint": "biome check .",
+    "test": "echo \"No tests configured\"",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "dependencies": {
+    "@repo/ui": "workspace:*",
+    "clsx": "^2.1.1",
+    "next": "16.2.9",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "tailwind-merge": "^2.3.0"
+  },
+  "devDependencies": {
+    "@tabler/icons-react": "^3.44.0",
+    "@tailwindcss/nesting": "latest",
+    "@types/node": "^20",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "glob": "^10.4.2",
+    "postcss": "^8.4.39",
+    "turbopack": "^0.0.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.2.17",
+      "@types/react-dom": "19.2.3"
+    }
+  }
+}

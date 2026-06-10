@@ -1,0 +1,36 @@
+{
+  "name": "rebel-apps",
+  "private": true,
+  "version": "1.0.0",
+  "packageManager": "pnpm@11.5.2",
+  "scripts": {
+    "build": "turbo run build --filter=./packages/*",
+    "build:all": "turbo run build",
+    "dev": "turbo run dev",
+    "dev:packages": "turbo run dev --filter=./packages/*",
+    "dev:app": "turbo run dev --filter=@apps/app",
+    "dev:admin": "turbo run dev --filter=@apps/admin",
+    "dev:docs": "turbo run dev --filter=@apps/docs",
+    "dev:registry": "turbo run generate-registry && dev --filter=@apps/registry",
+    "generate-registry": "--filter=@apps/registry/scripts/generate-registry.mjs",
+    "dev:db": "turbo run dev --filer=@repo/db",
+    "dev:ui": "turbo run dev --filer=@repo/ui",
+    "clean": "rm -rf .turbo && pnpm -r exec sh -c 'rm -rf dist .next .turbo *.tsbuildinfo'",
+    "clean:node_modules": "rm -rf node_modules apps/*/node_modules packages/*/node_modules",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "db:generate": "turbo run db:generate",
+    "db:push": "turbo run db:push"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.16",
+    "@tailwindcss/postcss": "^4.3.0",
+    "tailwindcss": "^4.3.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "next": "^16.2.7"
+  }
+}

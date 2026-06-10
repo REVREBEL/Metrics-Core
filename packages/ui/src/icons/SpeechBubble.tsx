@@ -1,0 +1,17 @@
+import type { SVGProps } from "react";
+
+const SvgSpeechBubble = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 18 18"
+    {...props}
+  >
+    <path
+      fillRule="evenodd"
+      d="M9 0C4 0 0 4 0 9s4 9 9 9 9-4 9-9-4-9-9-9m4.4 10.4c-.5.6-1.1 1-1.9 1.3s-1.6.5-2.6.5c-.4 0-.8 0-1.3-.1-.6.4-1.3.7-2 .9-.2 0-.4.1-.6.1-.1 0-.1 0-.1-.1 0 0-.1-.1-.1-.2s.1-.1.2-.2.1-.2.2-.2c0-.1.1-.1.2-.2s.1-.2.2-.3.1-.2.1-.3c-.6-.3-1.1-.8-1.4-1.3s-.5-1-.5-1.6c0-.7.2-1.3.7-1.9s1.1-1 1.9-1.3c.8-.5 1.7-.7 2.6-.7s1.8.2 2.6.5 1.4.8 1.9 1.3c.5.6.7 1.2.7 1.9s-.3 1.3-.8 1.9"
+    />
+  </svg>
+);
+export default SvgSpeechBubble;

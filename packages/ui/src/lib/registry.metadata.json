@@ -1,0 +1,7433 @@
+{
+  "components/metrics-charts/analytics-chart": {
+    "displayName": "analytics-chart",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/analytics": {
+    "displayName": "analytics",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/area-chart-interactive": {
+    "displayName": "area-chart-interactive",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/bar-chart-interactive": {
+    "displayName": "bar-chart-interactive",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/bar-with-label-custom": {
+    "displayName": "bar-with-label-custom",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/calendar-heatmap": {
+    "displayName": "calendar-heatmap",
+    "description": "",
+    "props": [
+      {
+        "name": "startDate",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/interactive-area-line-combo": {
+    "displayName": "interactive-area-line-combo",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/line-chart-interactive": {
+    "displayName": "line-chart-interactive",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/otb-stacked-bar-chart": {
+    "displayName": "otb-stacked-bar-chart",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/overview": {
+    "displayName": "overview",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/pie-chart-donut-center-text": {
+    "displayName": "pie-chart-donut-center-text",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/pie-chart-interactive": {
+    "displayName": "pie-chart-interactive",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/pie-donut-chart-active": {
+    "displayName": "pie-donut-chart-active",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/radial-ring-chart-with-label": {
+    "displayName": "radial-ring-chart-with-label",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/recent-sales": {
+    "displayName": "recent-sales",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/top-channels-chart": {
+    "displayName": "top-channels-chart",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/top-services-bar-chart": {
+    "displayName": "top-services-bar-chart",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-charts/top-services-chart": {
+    "displayName": "top-services-chart",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-core/browser-stats-card": {
+    "displayName": "browser-stats-card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-core/budget-snapshot-card": {
+    "displayName": "budget-snapshot-card",
+    "description": "",
+    "props": [
+      {
+        "name": "value",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "mix",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-core/conversion-card": {
+    "displayName": "conversion-card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-core/metric-dashboard-card": {
+    "displayName": "metric-dashboard-card",
+    "description": "",
+    "props": [
+      {
+        "name": "stats",
+        "type": "[MetricDashboardStat, MetricDashboardStat, MetricDashboardStat, MetricDashboardStat]",
+        "required": true
+      },
+      {
+        "name": "hero",
+        "type": "MetricDashboardHero",
+        "required": true
+      },
+      {
+        "name": "donut",
+        "type": "{",
+        "required": true
+      },
+      {
+        "name": "data",
+        "type": "MetricDashboardDonutDatum[]",
+        "required": true
+      },
+      {
+        "name": "centerLabel",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "centerSubLabel",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "sparklineData",
+        "type": "Array<{ val: number }>",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      }
+    ]
+  },
+  "components/metrics-core/model-comparison-card": {
+    "displayName": "model-comparison-card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-core/performance-card-other": {
+    "displayName": "performance-card-other",
+    "description": "",
+    "props": [
+      {
+        "name": "val",
+        "type": "10",
+        "required": true
+      },
+      {
+        "name": "year",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "month",
+        "type": "string",
+        "required": true
+      }
+    ]
+  },
+  "components/metrics-core/performance-card": {
+    "displayName": "performance-card",
+    "description": "",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "format",
+        "type": "ValueFormat",
+        "required": true
+      },
+      {
+        "name": "variance",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "booked",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "remaining",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-core/sales-metrics-card": {
+    "displayName": "sales-metrics-card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-core/simple-kpi-cards": {
+    "displayName": "simple-kpi-cards",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-core/simple-statistics-cards": {
+    "displayName": "simple-statistics-cards",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-core/social-visits-card": {
+    "displayName": "social-visits-card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-core/stat-card": {
+    "displayName": "stat-card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-core/statistics-card-fin": {
+    "displayName": "statistics-card-fin",
+    "description": "",
+    "props": [
+      {
+        "name": "title",
+        "type": "'Net Profit'",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "'$38,200'",
+        "required": true
+      },
+      {
+        "name": "status",
+        "type": "'within'",
+        "required": true
+      },
+      {
+        "name": "range",
+        "type": "'$30k - $50k'",
+        "required": true
+      },
+      {
+        "name": "icon",
+        "type": "<BriefcaseIcon />",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-core/total-earning-card": {
+    "displayName": "total-earning-card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-core/total-stats-card": {
+    "displayName": "total-stats-card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-errors/forbidden": {
+    "displayName": "forbidden",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-errors/general-error": {
+    "displayName": "general-error",
+    "description": "",
+    "props": [
+      {
+        "name": "minimal",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-errors/maintenance-error": {
+    "displayName": "maintenance-error",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-errors/not-found-error": {
+    "displayName": "not-found-error",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-errors/unauthorized-error": {
+    "displayName": "unauthorized-error",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-feedback/empty-state": {
+    "displayName": "empty-state",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/campaigns/active_page": {
+    "displayName": "active_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/campaigns/campaigns_layout": {
+    "displayName": "campaigns_layout",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/campaigns/performance_page": {
+    "displayName": "performance_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/campaigns/setup_page": {
+    "displayName": "setup_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/chats/chat-assistant_page": {
+    "displayName": "chat-assistant_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/chats/chats_layout": {
+    "displayName": "chats_layout",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/chats/new_page": {
+    "displayName": "new_page",
+    "description": "",
+    "props": [
+      {
+        "name": "users",
+        "type": "User[]",
+        "required": true
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/dashboard/channels_page": {
+    "displayName": "channels_page",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/dashboard/dashboard_homepage": {
+    "displayName": "dashboard_homepage",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/dashboard/dashboard_layout": {
+    "displayName": "dashboard_layout",
+    "description": "",
+    "props": [
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/dashboard/demand_page": {
+    "displayName": "demand_page",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/dashboard/roomtypes_page": {
+    "displayName": "roomtypes_page",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/dashboard/segments_page": {
+    "displayName": "segments_page",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/dashboard/website_page": {
+    "displayName": "website_page",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/data-library/data-health_page": {
+    "displayName": "data-health_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/data-library/data-library_layout": {
+    "displayName": "data-library_layout",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/data-library/lookups-manager_table-row": {
+    "displayName": "lookups-manager_table-row",
+    "description": "",
+    "props": [
+      {
+        "name": "row",
+        "type": "LookupTableRow",
+        "required": true
+      },
+      {
+        "name": "dirty",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "rowErrors",
+        "type": "Record<string, string>",
+        "required": false
+      },
+      {
+        "name": "updateRow",
+        "type": "(id: string, patch: Partial<LookupTableRow>) => void",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/data-library/lookups-manager_table": {
+    "displayName": "lookups-manager_table",
+    "description": "",
+    "props": [
+      {
+        "name": "tables",
+        "type": "LookupTableMetadata[]",
+        "required": true
+      },
+      {
+        "name": "initialRows",
+        "type": "LookupTableRow[]",
+        "required": true
+      },
+      {
+        "name": "initialTableKey",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/data-library/lookups_page": {
+    "displayName": "lookups_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/data-library/mapping-manager_table": {
+    "displayName": "mapping-manager_table",
+    "description": "",
+    "props": [
+      {
+        "name": "tables",
+        "type": "MappingTableMetadata[]",
+        "required": true
+      },
+      {
+        "name": "initialRows",
+        "type": "MappingTableRow[]",
+        "required": true
+      },
+      {
+        "name": "initialTableKey",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/data-library/mapping-row-edit_drawer": {
+    "displayName": "mapping-row-edit_drawer",
+    "description": "",
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "row",
+        "type": "MappingTableRow | null",
+        "required": true
+      },
+      {
+        "name": "tableKey",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "columns",
+        "type": "MappingColumnDefinition[]",
+        "required": true
+      },
+      {
+        "name": "lookupOptions",
+        "type": "Record<string, LookupOption[]>",
+        "required": true
+      },
+      {
+        "name": "onSaved",
+        "type": "(rowId: string, savedAt: string, draftId?: string) => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/data-library/mappings_page": {
+    "displayName": "mappings_page",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/data-library/unmapped-codes_page": {
+    "displayName": "unmapped-codes_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/help-desk/documentation_page": {
+    "displayName": "documentation_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/help-desk/helpdesk_layout": {
+    "displayName": "helpdesk_layout",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/help-desk/helpdesk_page": {
+    "displayName": "helpdesk_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/metric-library/base_page": {
+    "displayName": "base_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/metric-library/calculated_page": {
+    "displayName": "calculated_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/metric-library/metric-library_layout": {
+    "displayName": "metric-library_layout",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/properties/events_page": {
+    "displayName": "events_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/properties/lookups_page": {
+    "displayName": "lookups_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/properties/notes_page": {
+    "displayName": "notes_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/properties/page": {
+    "displayName": "page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/properties/properties_layout": {
+    "displayName": "properties_layout",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/properties/strategies_page": {
+    "displayName": "strategies_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/properties/tasks_page": {
+    "displayName": "tasks_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/settings/account-settings_page": {
+    "displayName": "account-settings_page",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/settings/account_form": {
+    "displayName": "account_form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/settings/account_page": {
+    "displayName": "account_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/settings/content-section_page": {
+    "displayName": "content-section_page",
+    "description": "",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "desc",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "children",
+        "type": "React.JSX.Element",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/settings/display_form": {
+    "displayName": "display_form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/settings/display_page": {
+    "displayName": "display_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/settings/forgot-password_page": {
+    "displayName": "forgot-password_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/settings/login_page": {
+    "displayName": "login_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/settings/notifications_form": {
+    "displayName": "notifications_form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/settings/notifications_page": {
+    "displayName": "notifications_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/settings/profile_form": {
+    "displayName": "profile_form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/settings/profile_page": {
+    "displayName": "profile_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/settings/register_page": {
+    "displayName": "register_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/settings/settings_layout": {
+    "displayName": "settings_layout",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/settings/settings_sidebar-nav": {
+    "displayName": "settings_sidebar-nav",
+    "description": "",
+    "props": [
+      {
+        "name": "items",
+        "type": "{",
+        "required": true
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "icon",
+        "type": "JSX.Element",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/settings/users-invite_dialog": {
+    "displayName": "users-invite_dialog",
+    "description": "",
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/strategies/playbooks_page": {
+    "displayName": "playbooks_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/strategies/recommended-actions_page": {
+    "displayName": "recommended-actions_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/strategies/strategies_layout": {
+    "displayName": "strategies_layout",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/strategies/triggers_page": {
+    "displayName": "triggers_page",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/tasks/calendar-view_page": {
+    "displayName": "calendar-view_page",
+    "description": "",
+    "props": [
+      {
+        "name": "tasks",
+        "type": "Task[]",
+        "required": true
+      },
+      {
+        "name": "onTaskClick",
+        "type": "(task: Task) => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/data-actions_table-row": {
+    "displayName": "data-actions_table-row",
+    "description": "",
+    "props": [
+      {
+        "name": "row",
+        "type": "Row<TData>",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/data-bulk-actions_table": {
+    "displayName": "data-bulk-actions_table",
+    "description": "",
+    "props": [
+      {
+        "name": "table",
+        "type": "Table<TData>",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/group-views": {
+    "displayName": "group-views",
+    "description": "",
+    "props": [
+      {
+        "name": "tasks",
+        "type": "Task[]",
+        "required": true
+      },
+      {
+        "name": "onTaskClick",
+        "type": "(task: Task) => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/growth-plan-view_switcher": {
+    "displayName": "growth-plan-view_switcher",
+    "description": "",
+    "props": [
+      {
+        "name": "activeView",
+        "type": "GrowthPlanView",
+        "required": true
+      },
+      {
+        "name": "onViewChange",
+        "type": "(view: GrowthPlanView) => void",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/growth-plan_header": {
+    "displayName": "growth-plan_header",
+    "description": "",
+    "props": [
+      {
+        "name": "mode",
+        "type": "GrowthPlanMode",
+        "required": true
+      },
+      {
+        "name": "onModeChange",
+        "type": "(mode: GrowthPlanMode) => void",
+        "required": true
+      },
+      {
+        "name": "onCreateInitiative",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "onCreateTask",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "initiatives",
+        "type": "Initiative[]",
+        "required": false
+      },
+      {
+        "name": "selectedInitiative",
+        "type": "Initiative | null",
+        "required": false
+      },
+      {
+        "name": "activeTab",
+        "type": "HeaderTab",
+        "required": false
+      },
+      {
+        "name": "onTabChange",
+        "type": "(tab: HeaderTab) => void",
+        "required": false
+      },
+      {
+        "name": "activeViewMode",
+        "type": "HeaderViewMode",
+        "required": false
+      },
+      {
+        "name": "onViewModeChange",
+        "type": "(viewMode: HeaderViewMode) => void",
+        "required": false
+      },
+      {
+        "name": "onAddMember",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/growth-plan_sidebar": {
+    "displayName": "growth-plan_sidebar",
+    "description": "",
+    "props": [
+      {
+        "name": "initiatives",
+        "type": "Initiative[]",
+        "required": true
+      },
+      {
+        "name": "selectedInitiative",
+        "type": "Initiative | null",
+        "required": false
+      },
+      {
+        "name": "onInitiativeSelect",
+        "type": "(initiative: Initiative) => void",
+        "required": true
+      },
+      {
+        "name": "teamMembers",
+        "type": "TeamMember[]",
+        "required": false
+      },
+      {
+        "name": "onAddInitiative",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/growth-plan_states": {
+    "displayName": "growth-plan_states",
+    "description": "",
+    "props": [
+      {
+        "name": "view",
+        "type": "GrowthPlanView",
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "'initiatives' | 'tasks'",
+        "required": true
+      },
+      {
+        "name": "onCreateInitiative",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "onCreateTask",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "message",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "onRetry",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/kanban_page": {
+    "displayName": "kanban_page",
+    "description": "",
+    "props": [
+      {
+        "name": "initiatives",
+        "type": "Initiative[]",
+        "required": true
+      },
+      {
+        "name": "tasks",
+        "type": "Task[]",
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "'initiatives' | 'tasks'",
+        "required": true
+      },
+      {
+        "name": "onInitiativeClick",
+        "type": "(initiative: Initiative) => void",
+        "required": false
+      },
+      {
+        "name": "onTaskClick",
+        "type": "(task: Task) => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/meeting-recap_page": {
+    "displayName": "meeting-recap_page",
+    "description": "",
+    "props": [
+      {
+        "name": "initiatives",
+        "type": "Initiative[]",
+        "required": true
+      },
+      {
+        "name": "tasks",
+        "type": "Task[]",
+        "required": true
+      },
+      {
+        "name": "meetingDate",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/owner-rollup_page": {
+    "displayName": "owner-rollup_page",
+    "description": "",
+    "props": [
+      {
+        "name": "initiatives",
+        "type": "Initiative[]",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/tasks-columns": {
+    "displayName": "tasks-columns",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/tasks-import_dialog": {
+    "displayName": "tasks-import_dialog",
+    "description": "",
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/tasks-multi-delete_dialog": {
+    "displayName": "tasks-multi-delete_dialog",
+    "description": "",
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "table",
+        "type": "Table<TData>",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/tasks-mutate_drawer": {
+    "displayName": "tasks-mutate_drawer",
+    "description": "",
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "currentRow",
+        "type": "Task",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/tasks-primary-buttons": {
+    "displayName": "tasks-primary-buttons",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/tasks_dialogs": {
+    "displayName": "tasks_dialogs",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/tasks_layout": {
+    "displayName": "tasks_layout",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/tasks_provider": {
+    "displayName": "tasks_provider",
+    "description": "",
+    "props": [
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/tasks_table": {
+    "displayName": "tasks_table",
+    "description": "",
+    "props": [
+      {
+        "name": "data",
+        "type": "Task[]",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/workstream-mutate_drawer": {
+    "displayName": "workstream-mutate_drawer",
+    "description": "",
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "initiativeId",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/tasks/workstreams_section": {
+    "displayName": "workstreams_section",
+    "description": "",
+    "props": [
+      {
+        "name": "initiativeId",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      }
+    ]
+  },
+  "components/metrics-layouts/users/data-bulk-actions_table": {
+    "displayName": "data-bulk-actions_table",
+    "description": "",
+    "props": [
+      {
+        "name": "table",
+        "type": "Table<TData>",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/data-row-actions_table_row": {
+    "displayName": "data-row-actions_table_row",
+    "description": "",
+    "props": [
+      {
+        "name": "row",
+        "type": "Row<User>",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/page": {
+    "displayName": "page",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/permissions-panel_page": {
+    "displayName": "permissions-panel_page",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/users-action_dialog": {
+    "displayName": "users-action_dialog",
+    "description": "",
+    "props": [
+      {
+        "name": "currentRow",
+        "type": "User",
+        "required": false
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/users-delete_dialog": {
+    "displayName": "users-delete_dialog",
+    "description": "",
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "currentRow",
+        "type": "User",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/users-invite_dialog": {
+    "displayName": "users-invite_dialog",
+    "description": "",
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/users-multi-delete_dialog": {
+    "displayName": "users-multi-delete_dialog",
+    "description": "",
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "table",
+        "type": "Table<TData>",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/users-primary-buttons": {
+    "displayName": "users-primary-buttons",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/users_columns": {
+    "displayName": "users_columns",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/users_dialogs": {
+    "displayName": "users_dialogs",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-layouts/users/users_provider": {
+    "displayName": "users_provider",
+    "description": "",
+    "props": [
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/users_table": {
+    "displayName": "users_table",
+    "description": "",
+    "props": [
+      {
+        "name": "data",
+        "type": "User[]",
+        "required": true
+      },
+      {
+        "name": "search",
+        "type": "Record<string, unknown>",
+        "required": true
+      },
+      {
+        "name": "navigate",
+        "type": "NavigateFn",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-layouts/users/verify-email": {
+    "displayName": "verify-email",
+    "description": "",
+    "props": []
+  },
+  "components/metrics-sections/analytics-overview": {
+    "displayName": "analytics-overview",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-sections/analytics-section": {
+    "displayName": "analytics-section",
+    "description": "",
+    "props": [
+      {
+        "name": "metrics",
+        "type": "SummaryMetric[]",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-sections/campaigns-section": {
+    "displayName": "campaigns-section",
+    "description": "",
+    "props": [
+      {
+        "name": "initialCampaigns",
+        "type": "Campaign[]",
+        "required": false
+      },
+      {
+        "name": "onCreateCampaign",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-sections/charts-grid": {
+    "displayName": "charts-grid",
+    "description": "",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "Components",
+        "type": "React.ReactNode[]",
+        "required": true
+      },
+      {
+        "name": "Additional",
+        "type": "React.ReactNode",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-sections/dashboard-section": {
+    "displayName": "dashboard-section",
+    "description": "",
+    "props": [
+      {
+        "name": "summaryMetrics",
+        "type": "SummaryMetric[]",
+        "required": false
+      },
+      {
+        "name": "platformMetrics",
+        "type": "PlatformMetric[]",
+        "required": false
+      },
+      {
+        "name": "topPosts",
+        "type": "TopPost[]",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-sections/overview-section": {
+    "displayName": "overview-section",
+    "description": "",
+    "props": [
+      {
+        "name": "profileName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "roleLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "followerCount",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "monthlyReach",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "engagementRate",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "notifications",
+        "type": "string[]",
+        "required": false
+      },
+      {
+        "name": "locations",
+        "type": "AudienceEntry[]",
+        "required": false
+      },
+      {
+        "name": "ageGroups",
+        "type": "AudienceEntry[]",
+        "required": false
+      },
+      {
+        "name": "activityMatrix",
+        "type": "number[][]",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-sections/posts-section": {
+    "displayName": "posts-section",
+    "description": "",
+    "props": [
+      {
+        "name": "initialPosts",
+        "type": "SocialPost[]",
+        "required": false
+      },
+      {
+        "name": "onCreatePost",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "onEditPost",
+        "type": "(post: SocialPost) => void",
+        "required": false
+      },
+      {
+        "name": "onDeletePost",
+        "type": "(post: SocialPost) => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-sections/sales-metrics": {
+    "displayName": "sales-metrics",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-tables/daily-pickup-table": {
+    "displayName": "daily-pickup-table",
+    "description": "",
+    "props": [
+      {
+        "name": "value",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "isNegative",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "subValue",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "type",
+        "type": "\"occ\" | \"currency\" | \"revpar\"",
+        "required": false
+      },
+      {
+        "name": "transient",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "group",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "crew",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "complimentary",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "other",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "year",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "month",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-tables/data-table": {
+    "displayName": "data-table",
+    "description": "",
+    "props": [
+      {
+        "name": "data",
+        "type": "AnalyticsTableRow[]",
+        "required": false
+      },
+      {
+        "name": "isLoading",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-tables/market-segment-group-rooms-table": {
+    "displayName": "market-segment-group-rooms-table",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-tables/market-segment-transient-rooms-table": {
+    "displayName": "market-segment-transient-rooms-table",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "components/metrics-timeline/timeline-component": {
+    "displayName": "timeline-component",
+    "description": "",
+    "props": []
+  },
+  "primitives/auto-form/common/label": {
+    "displayName": "label",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/auto-form/common/tooltip": {
+    "displayName": "tooltip",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/auto-form/fields/array": {
+    "displayName": "array",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/auto-form/fields/checkbox": {
+    "displayName": "checkbox",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/auto-form/fields/date": {
+    "displayName": "date",
+    "description": "",
+    "props": []
+  },
+  "primitives/auto-form/fields/enum": {
+    "displayName": "enum",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/auto-form/fields/field-group": {
+    "displayName": "field-group",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/auto-form/fields/field": {
+    "displayName": "field",
+    "description": "",
+    "props": [
+      {
+        "name": "variant",
+        "type": "\"legend\" | \"label\"",
+        "required": false
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false
+      },
+      {
+        "name": "errors",
+        "type": "Array<{ message?: string",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"fieldset\">",
+        "required": false,
+        "description": "Accepts standard fieldset element attributes."
+      }
+    ]
+  },
+  "primitives/auto-form/fields/form": {
+    "displayName": "form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/auto-form/fields/input": {
+    "displayName": "input",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/auto-form/fields/number": {
+    "displayName": "number",
+    "description": "",
+    "props": []
+  },
+  "primitives/auto-form/fields/object": {
+    "displayName": "object",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/auto-form/fields/radio-group": {
+    "displayName": "radio-group",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/auto-form/fields/switch": {
+    "displayName": "switch",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/auto-form/fields/textarea": {
+    "displayName": "textarea",
+    "description": "",
+    "props": []
+  },
+  "primitives/auto-form/form": {
+    "displayName": "form",
+    "description": "",
+    "props": [
+      {
+        "name": "name",
+        "type": "TName",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/auto-form/helpers": {
+    "displayName": "helpers",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-default": {
+    "displayName": "button-default",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-destructive": {
+    "displayName": "button-destructive",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-ghost": {
+    "displayName": "button-ghost",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-group-dropdown": {
+    "displayName": "button-group-dropdown",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/button-group-input-group": {
+    "displayName": "button-group-input-group",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/button-group-input": {
+    "displayName": "button-group-input",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-group-nested": {
+    "displayName": "button-group-nested",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-group-orientation": {
+    "displayName": "button-group-orientation",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/button-group-popover": {
+    "displayName": "button-group-popover",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/button-group-select": {
+    "displayName": "button-group-select",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/button-group-separator": {
+    "displayName": "button-group-separator",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-group-size": {
+    "displayName": "button-group-size",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/button-group-split": {
+    "displayName": "button-group-split",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-group": {
+    "displayName": "button-group",
+    "description": "",
+    "props": [
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/buttons/button-icon": {
+    "displayName": "button-icon",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-link": {
+    "displayName": "button-link",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-outline": {
+    "displayName": "button-outline",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-render": {
+    "displayName": "button-render",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/button-rounded": {
+    "displayName": "button-rounded",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/button-secondary": {
+    "displayName": "button-secondary",
+    "description": "",
+    "props": []
+  },
+  "primitives/buttons/button-size": {
+    "displayName": "button-size",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/button-spinner": {
+    "displayName": "button-spinner",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/button-with-icon": {
+    "displayName": "button-with-icon",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/button": {
+    "displayName": "button",
+    "description": "",
+    "props": [
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "\"default\" | \"destructive\" | \"outline\" | \"secondary\" | \"ghost\" | \"hover\" | \"link\"",
+        "required": false,
+        "description": "Generated from cva variant variants."
+      },
+      {
+        "name": "size",
+        "type": "\"default\" | \"sm\" | \"lg\" | \"icon\" | \"xs\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"",
+        "required": false,
+        "description": "Generated from cva size variants."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"button\">",
+        "required": false,
+        "description": "Accepts standard button element attributes."
+      }
+    ]
+  },
+  "primitives/buttons/discover-button": {
+    "displayName": "discover-button",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/status-button": {
+    "displayName": "status-button",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/buttons/toolbar-button": {
+    "displayName": "toolbar-button",
+    "description": "",
+    "props": [
+      {
+        "name": "isActive",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "tooltip",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "tooltipOptions",
+        "type": "TooltipContentProps",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/charts/chart-demos": {
+    "displayName": "chart-demos",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/charts/chart-sales-metrics": {
+    "displayName": "chart-sales-metrics",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/charts/chart.test": {
+    "displayName": "chart.test",
+    "description": "",
+    "props": []
+  },
+  "primitives/charts/chart": {
+    "displayName": "chart",
+    "description": "",
+    "props": [
+      {
+        "name": "config",
+        "type": "ChartConfig",
+        "required": true
+      },
+      {
+        "name": "children",
+        "type": "React.ComponentProps<",
+        "required": true
+      },
+      {
+        "name": "hideLabel",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "hideIndicator",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "indicator",
+        "type": "\"line\" | \"dot\" | \"dashed\"",
+        "required": false
+      },
+      {
+        "name": "nameKey",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "labelKey",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "hideIcon",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/charts/line-chart": {
+    "displayName": "line-chart",
+    "description": "",
+    "props": [
+      {
+        "name": "data",
+        "type": "Record<string, any>[]",
+        "required": true
+      },
+      {
+        "name": "index",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "categories",
+        "type": "string[]",
+        "required": true
+      },
+      {
+        "name": "strokeColors",
+        "type": "string[]",
+        "required": false
+      },
+      {
+        "name": "tooltipBgColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "tooltipBorderColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "gridColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "valueFormatter",
+        "type": "(value: number) => string",
+        "required": false
+      },
+      {
+        "name": "showGrid",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showTooltip",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "strokeWidth",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "dotSize",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      }
+    ]
+  },
+  "primitives/charts/statistics-card": {
+    "displayName": "statistics-card",
+    "description": "",
+    "props": [
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "changePercentage",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      }
+    ]
+  },
+  "primitives/charts/statistics-with-status": {
+    "displayName": "statistics-with-status",
+    "description": "",
+    "props": [
+      {
+        "name": "value",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "status",
+        "type": "'within' | 'observe' | 'exceed' | 'unknown'",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "range",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "icon",
+        "type": "React.ReactNode",
+        "required": false
+      }
+    ]
+  },
+  "primitives/charts/widget-product-insights": {
+    "displayName": "widget-product-insights",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/charts/widget-total-earning": {
+    "displayName": "widget-total-earning",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/data-grid/data-grid-column-filter": {
+    "displayName": "data-grid-column-filter",
+    "description": "",
+    "props": [
+      {
+        "name": "column",
+        "type": "Column<TData, TValue>",
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "options",
+        "type": "{",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "icon",
+        "type": "React.ComponentType<{ className?: string }>",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/data-grid/data-grid-column-header": {
+    "displayName": "data-grid-column-header",
+    "description": "",
+    "props": [
+      {
+        "name": "column",
+        "type": "Column<TData, TValue>",
+        "required": true
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "pinnable",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "filter",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "visibility",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/data-grid/data-grid-column-visibility": {
+    "displayName": "data-grid-column-visibility",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/data-grid/data-grid-pagination": {
+    "displayName": "data-grid-pagination",
+    "description": "",
+    "props": [
+      {
+        "name": "sizes",
+        "type": "number[]",
+        "required": false
+      },
+      {
+        "name": "sizesInfo",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "sizesLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "sizesDescription",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "sizesSkeleton",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "more",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "moreLimit",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "info",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "infoSkeleton",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "rowsPerPageLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "previousPageLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "nextPageLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ellipsisText",
+        "type": "string",
+        "required": false
+      }
+    ]
+  },
+  "primitives/data-grid/data-grid-table-dnd-rows": {
+    "displayName": "data-grid-table-dnd-rows",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/data-grid/data-grid-table-dnd": {
+    "displayName": "data-grid-table-dnd",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/data-grid/data-grid-table": {
+    "displayName": "data-grid-table",
+    "description": "",
+    "props": [
+      {
+        "name": "width",
+        "type": "header.getSize()",
+        "required": true
+      },
+      {
+        "name": "size",
+        "type": "\"dense\" | \"default\"",
+        "required": false,
+        "description": "Generated from cva size variants."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/data-grid/data-grid": {
+    "displayName": "data-grid",
+    "description": "",
+    "props": [
+      {
+        "name": "props",
+        "type": "DataGridProps<TData>",
+        "required": true
+      },
+      {
+        "name": "table",
+        "type": "Table<TData>",
+        "required": true
+      },
+      {
+        "name": "recordCount",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "isLoading",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "onRowClick",
+        "type": "(row: TData) => void",
+        "required": false
+      },
+      {
+        "name": "loadingMode",
+        "type": "\"skeleton\" | \"spinner\"",
+        "required": false
+      },
+      {
+        "name": "loadingMessage",
+        "type": "ReactNode | string",
+        "required": false
+      },
+      {
+        "name": "emptyMessage",
+        "type": "ReactNode | string",
+        "required": false
+      },
+      {
+        "name": "tableLayout",
+        "type": "{",
+        "required": false
+      },
+      {
+        "name": "dense",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "cellBorder",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "rowBorder",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "rowRounded",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "stripped",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "headerBackground",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "headerBorder",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "headerSticky",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "\"auto\" | \"fixed\"",
+        "required": false
+      },
+      {
+        "name": "columnsVisibility",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "columnsResizable",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "columnsPinnable",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "columnsMovable",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "columnsDraggable",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "rowsDraggable",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "tableClassNames",
+        "type": "{",
+        "required": false
+      },
+      {
+        "name": "base",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "header",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "headerRow",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "body",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "bodyRow",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "footer",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "edgeCell",
+        "type": "string",
+        "required": false
+      }
+    ]
+  },
+  "primitives/dropdowns/dropdown-language": {
+    "displayName": "dropdown-language",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/dropdowns/dropdown-menu-avatar": {
+    "displayName": "dropdown-menu-avatar",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/dropdowns/dropdown-menu-basic": {
+    "displayName": "dropdown-menu-basic",
+    "description": "",
+    "props": []
+  },
+  "primitives/dropdowns/dropdown-menu-checkboxes-icons": {
+    "displayName": "dropdown-menu-checkboxes-icons",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/dropdowns/dropdown-menu-checkboxes": {
+    "displayName": "dropdown-menu-checkboxes",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/dropdowns/dropdown-menu-destructive": {
+    "displayName": "dropdown-menu-destructive",
+    "description": "",
+    "props": []
+  },
+  "primitives/dropdowns/dropdown-menu-icons": {
+    "displayName": "dropdown-menu-icons",
+    "description": "",
+    "props": []
+  },
+  "primitives/dropdowns/dropdown-menu-radio-group": {
+    "displayName": "dropdown-menu-radio-group",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/dropdowns/dropdown-menu-radio-icons": {
+    "displayName": "dropdown-menu-radio-icons",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/dropdowns/dropdown-menu-shortcuts": {
+    "displayName": "dropdown-menu-shortcuts",
+    "description": "",
+    "props": []
+  },
+  "primitives/dropdowns/dropdown-menu-submenu": {
+    "displayName": "dropdown-menu-submenu",
+    "description": "",
+    "props": []
+  },
+  "primitives/dropdowns/dropdown-menu": {
+    "displayName": "dropdown-menu",
+    "description": "",
+    "props": [
+      {
+        "name": "inset",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "'default' | 'destructive'",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"span\">",
+        "required": false,
+        "description": "Accepts standard span element attributes."
+      }
+    ]
+  },
+  "primitives/dropdowns/dropdown-profile": {
+    "displayName": "dropdown-profile",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/dropdowns/select-dropdown": {
+    "displayName": "select-dropdown",
+    "description": "",
+    "props": [
+      {
+        "name": "onValueChange",
+        "type": "(value: string) => void",
+        "required": false
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | undefined",
+        "required": true
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "isPending",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "isControlled",
+        "type": "boolean",
+        "required": false
+      }
+    ]
+  },
+  "primitives/dropdowns/smooth-dropdown": {
+    "displayName": "smooth-dropdown",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/image-blocks/image-edit-block": {
+    "displayName": "image-edit-block",
+    "description": "",
+    "props": [
+      {
+        "name": "editor",
+        "type": "Editor",
+        "required": true
+      },
+      {
+        "name": "close",
+        "type": "() => void",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/image-blocks/image-edit-dialog": {
+    "displayName": "image-edit-dialog",
+    "description": "",
+    "props": [
+      {
+        "name": "editor",
+        "type": "Editor",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/combobox-option": {
+    "displayName": "combobox-option",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/combobox": {
+    "displayName": "combobox",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-badge": {
+    "displayName": "input-badge",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-basic": {
+    "displayName": "input-basic",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-button-group": {
+    "displayName": "input-button-group",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-disabled": {
+    "displayName": "input-disabled",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-field": {
+    "displayName": "input-field",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-fieldgroup": {
+    "displayName": "input-fieldgroup",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-file": {
+    "displayName": "input-file",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-form": {
+    "displayName": "input-form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-grid": {
+    "displayName": "input-grid",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-basic": {
+    "displayName": "input-group-basic",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-group-block-end": {
+    "displayName": "input-group-block-end",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-block-start": {
+    "displayName": "input-group-block-start",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-button-group": {
+    "displayName": "input-group-button-group",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-button": {
+    "displayName": "input-group-button",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-custom": {
+    "displayName": "input-group-custom",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-dropdown": {
+    "displayName": "input-group-dropdown",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-icon": {
+    "displayName": "input-group-icon",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-in-card": {
+    "displayName": "input-group-in-card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-inline-end": {
+    "displayName": "input-group-inline-end",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-inline-start": {
+    "displayName": "input-group-inline-start",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-kbd": {
+    "displayName": "input-group-kbd",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-label": {
+    "displayName": "input-group-label",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-spinner": {
+    "displayName": "input-group-spinner",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-text": {
+    "displayName": "input-group-text",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-textarea-examples": {
+    "displayName": "input-group-textarea-examples",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-textarea": {
+    "displayName": "input-group-textarea",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-tooltip": {
+    "displayName": "input-group-tooltip",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-with-addons": {
+    "displayName": "input-group-with-addons",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-with-buttons": {
+    "displayName": "input-group-with-buttons",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-group-with-kbd": {
+    "displayName": "input-group-with-kbd",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-group-with-tooltip": {
+    "displayName": "input-group-with-tooltip",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-group": {
+    "displayName": "input-group",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/inputs/input-inline": {
+    "displayName": "input-inline",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-input-group": {
+    "displayName": "input-input-group",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-invalid": {
+    "displayName": "input-invalid",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-otp-alphanumeric": {
+    "displayName": "input-otp-alphanumeric",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-otp-controlled": {
+    "displayName": "input-otp-controlled",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-otp-disabled": {
+    "displayName": "input-otp-disabled",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-otp-form": {
+    "displayName": "input-otp-form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-otp-four-digits": {
+    "displayName": "input-otp-four-digits",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-otp-invalid": {
+    "displayName": "input-otp-invalid",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-otp-pattern": {
+    "displayName": "input-otp-pattern",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/inputs/input-otp-separator": {
+    "displayName": "input-otp-separator",
+    "description": "",
+    "props": []
+  },
+  "primitives/inputs/input-otp": {
+    "displayName": "input-otp",
+    "description": "",
+    "props": [
+      {
+        "name": "containerClassName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "index",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/inputs/input": {
+    "displayName": "input",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"input\">",
+        "required": false,
+        "description": "Accepts standard input element attributes."
+      }
+    ]
+  },
+  "primitives/layouts/brand-header": {
+    "displayName": "brand-header",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/layouts/brand-sidebar": {
+    "displayName": "brand-sidebar",
+    "description": "",
+    "props": [
+      {
+        "name": "collapsed",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "onToggle",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      }
+    ]
+  },
+  "primitives/layouts/coming-soon": {
+    "displayName": "coming-soon",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/layouts/hero": {
+    "displayName": "hero",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/layouts/measured-container": {
+    "displayName": "measured-container",
+    "description": "",
+    "props": [
+      {
+        "name": "as",
+        "type": "T",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false
+      }
+    ]
+  },
+  "primitives/layouts/navigation-menu": {
+    "displayName": "navigation-menu",
+    "description": "",
+    "props": [
+      {
+        "name": "viewport",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/layouts/navigation-progress": {
+    "displayName": "navigation-progress",
+    "description": "",
+    "props": []
+  },
+  "primitives/layouts/resizable-handle": {
+    "displayName": "resizable-handle",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/layouts/resizable-vertical": {
+    "displayName": "resizable-vertical",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/layouts/sidebar": {
+    "displayName": "sidebar",
+    "description": "",
+    "props": [
+      {
+        "name": "state",
+        "type": "\"expanded\" | \"collapsed\"",
+        "required": true
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "setOpen",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "openMobile",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "setOpenMobile",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "isMobile",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "toggleSidebar",
+        "type": "() => void",
+        "required": true
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": false
+      },
+      {
+        "name": "side",
+        "type": "\"left\" | \"right\"",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "\"sidebar\" | \"floating\" | \"inset\"",
+        "required": false
+      },
+      {
+        "name": "collapsible",
+        "type": "\"offcanvas\" | \"icon\" | \"none\"",
+        "required": false
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "isActive",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "tooltip",
+        "type": "string | React.ComponentProps<typeof TooltipContent>",
+        "required": false
+      },
+      {
+        "name": "showOnHover",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showIcon",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\"",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/layouts/social-proof-01": {
+    "displayName": "social-proof-01",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/layouts/social-proof-07": {
+    "displayName": "social-proof-07",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/layouts/sub-nav": {
+    "displayName": "sub-nav",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/layouts/swap-layout-loader": {
+    "displayName": "swap-layout-loader",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/layouts/swap-layout": {
+    "displayName": "swap-layout",
+    "description": "",
+    "props": [
+      {
+        "name": "sections",
+        "type": "{",
+        "required": true
+      },
+      {
+        "name": "sectionSlotClassNames",
+        "type": "{",
+        "required": true
+      },
+      {
+        "name": "defaultEditing",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "enable",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "onSwap",
+        "type": "(record: Record<string, string | null>) => void",
+        "required": false
+      },
+      {
+        "name": "config",
+        "type": "object",
+        "required": false
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false
+      }
+    ]
+  },
+  "primitives/links/link-bubble-menu": {
+    "displayName": "link-bubble-menu",
+    "description": "",
+    "props": [
+      {
+        "name": "editor",
+        "type": "Editor",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/links/link-edit-block": {
+    "displayName": "link-edit-block",
+    "description": "",
+    "props": [
+      {
+        "name": "defaultUrl",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "defaultText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "defaultIsNewTab",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "onSave",
+        "type": "(url: string, text?: string, isNewTab?: boolean) => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/links/link-edit-popover": {
+    "displayName": "link-edit-popover",
+    "description": "",
+    "props": [
+      {
+        "name": "editor",
+        "type": "Editor",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/links/link-popover-block": {
+    "displayName": "link-popover-block",
+    "description": "",
+    "props": [
+      {
+        "name": "url",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "onClear",
+        "type": "() => void",
+        "required": true
+      },
+      {
+        "name": "onEdit",
+        "type": "(e: React.MouseEvent<HTMLButtonElement>) => void",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/lists/list-item": {
+    "displayName": "list-item",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/menus/menu-option": {
+    "displayName": "menu-option",
+    "description": "",
+    "props": []
+  },
+  "primitives/menus/menu-other": {
+    "displayName": "menu-other",
+    "description": "",
+    "props": []
+  },
+  "primitives/menus/menu": {
+    "displayName": "menu",
+    "description": "",
+    "props": [
+      {
+        "name": "align",
+        "type": "MenuPrimitive.Positioner.Props[\"align\"]",
+        "required": false
+      },
+      {
+        "name": "sideOffset",
+        "type": "MenuPrimitive.Positioner.Props[\"sideOffset\"]",
+        "required": false
+      },
+      {
+        "name": "alignOffset",
+        "type": "MenuPrimitive.Positioner.Props[\"alignOffset\"]",
+        "required": false
+      },
+      {
+        "name": "side",
+        "type": "MenuPrimitive.Positioner.Props[\"side\"]",
+        "required": false
+      },
+      {
+        "name": "anchor",
+        "type": "MenuPrimitive.Positioner.Props[\"anchor\"]",
+        "required": false
+      },
+      {
+        "name": "inset",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "\"default\" | \"destructive\"",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"kbd\">",
+        "required": false,
+        "description": "Accepts standard kbd element attributes."
+      }
+    ]
+  },
+  "primitives/menus/menubar-checkbox": {
+    "displayName": "menubar-checkbox",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/menus/menubar-icons": {
+    "displayName": "menubar-icons",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/menus/menubar-radio": {
+    "displayName": "menubar-radio",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/menus/menubar-submenu": {
+    "displayName": "menubar-submenu",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/menus/menubar": {
+    "displayName": "menubar",
+    "description": "",
+    "props": [
+      {
+        "name": "inset",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "\"default\" | \"destructive\"",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"span\">",
+        "required": false,
+        "description": "Accepts standard span element attributes."
+      }
+    ]
+  },
+  "primitives/menus/navigation-menu": {
+    "displayName": "navigation-menu",
+    "description": "",
+    "props": [
+      {
+        "name": "viewport",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/popovers/popover-alignments": {
+    "displayName": "popover-alignments",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/popovers/popover-basic": {
+    "displayName": "popover-basic",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/popovers/popover-form": {
+    "displayName": "popover-form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/popovers/popover": {
+    "displayName": "popover",
+    "description": "",
+    "props": [
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "side",
+        "type": "PopoverPrimitive.Positioner.Props[\"side\"]",
+        "required": false
+      },
+      {
+        "name": "align",
+        "type": "PopoverPrimitive.Positioner.Props[\"align\"]",
+        "required": false
+      },
+      {
+        "name": "sideOffset",
+        "type": "PopoverPrimitive.Positioner.Props[\"sideOffset\"]",
+        "required": false
+      },
+      {
+        "name": "alignOffset",
+        "type": "PopoverPrimitive.Positioner.Props[\"alignOffset\"]",
+        "required": false
+      },
+      {
+        "name": "tooltipStyle",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "anchor",
+        "type": "PopoverPrimitive.Positioner.Props[\"anchor\"]",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/registry/add-to-cursor": {
+    "displayName": "add-to-cursor",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/registry/component-card": {
+    "displayName": "component-card",
+    "description": "",
+    "props": [
+      {
+        "name": "component",
+        "type": "Component",
+        "required": true
+      },
+      {
+        "name": "baseUrl",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "prompt",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "hasDemo",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/registry/mcp-tabs": {
+    "displayName": "mcp-tabs",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/registry/open-in-v0": {
+    "displayName": "open-in-v0",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/registry/registry-logo": {
+    "displayName": "registry-logo",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/registry/registry-sidebar": {
+    "displayName": "registry-sidebar",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/registry/theme-toggle": {
+    "displayName": "theme-toggle",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/sections/five": {
+    "displayName": "five",
+    "description": "",
+    "props": [
+      {
+        "name": "editor",
+        "type": "Editor",
+        "required": true
+      },
+      {
+        "name": "activeActions",
+        "type": "InsertElementAction[]",
+        "required": false
+      },
+      {
+        "name": "mainActionCount",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/sections/four": {
+    "displayName": "four",
+    "description": "",
+    "props": [
+      {
+        "name": "editor",
+        "type": "Editor",
+        "required": true
+      },
+      {
+        "name": "activeActions",
+        "type": "ListItemAction[]",
+        "required": false
+      },
+      {
+        "name": "mainActionCount",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/sections/one": {
+    "displayName": "one",
+    "description": "",
+    "props": [
+      {
+        "name": "editor",
+        "type": "Editor",
+        "required": true
+      },
+      {
+        "name": "activeLevels",
+        "type": "Level[]",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/sections/three": {
+    "displayName": "three",
+    "description": "",
+    "props": [
+      {
+        "name": "editor",
+        "type": "Editor",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/sections/toolbar-section": {
+    "displayName": "toolbar-section",
+    "description": "",
+    "props": [
+      {
+        "name": "editor",
+        "type": "Editor",
+        "required": true
+      },
+      {
+        "name": "actions",
+        "type": "FormatAction[]",
+        "required": true
+      },
+      {
+        "name": "activeActions",
+        "type": "string[]",
+        "required": false
+      },
+      {
+        "name": "mainActionCount",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "dropdownIcon",
+        "type": "React.ReactNode",
+        "required": false
+      },
+      {
+        "name": "dropdownTooltip",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "dropdownClassName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/sections/two": {
+    "displayName": "two",
+    "description": "",
+    "props": [
+      {
+        "name": "editor",
+        "type": "Editor",
+        "required": true
+      },
+      {
+        "name": "activeActions",
+        "type": "TextStyleAction[]",
+        "required": false
+      },
+      {
+        "name": "mainActionCount",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/skeleton/empty-state": {
+    "displayName": "empty-state",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/skeleton/skeleton-avatar": {
+    "displayName": "skeleton-avatar",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/skeleton/skeleton-card": {
+    "displayName": "skeleton-card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/skeleton/skeleton-demo": {
+    "displayName": "skeleton-demo",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/skeleton/skeleton-form": {
+    "displayName": "skeleton-form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/skeleton/skeleton-table": {
+    "displayName": "skeleton-table",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/skeleton/skeleton-text": {
+    "displayName": "skeleton-text",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/skeleton/skeleton": {
+    "displayName": "skeleton",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/tables/datatable-transaction": {
+    "displayName": "datatable-transaction",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/tables/table-actions": {
+    "displayName": "table-actions",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/tables/table-footer": {
+    "displayName": "table-footer",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/tables/table": {
+    "displayName": "table",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"table\">",
+        "required": false,
+        "description": "Accepts standard table element attributes."
+      }
+    ]
+  },
+  "primitives/tabs/discrete-tabs": {
+    "displayName": "discrete-tabs",
+    "description": "",
+    "props": [
+      {
+        "name": "size",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/tabs/tabs-disabled": {
+    "displayName": "tabs-disabled",
+    "description": "",
+    "props": []
+  },
+  "primitives/tabs/tabs-icons": {
+    "displayName": "tabs-icons",
+    "description": "",
+    "props": []
+  },
+  "primitives/tabs/tabs-line": {
+    "displayName": "tabs-line",
+    "description": "",
+    "props": []
+  },
+  "primitives/tabs/tabs-vertical": {
+    "displayName": "tabs-vertical",
+    "description": "",
+    "props": []
+  },
+  "primitives/tabs/tabs": {
+    "displayName": "tabs",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/textarea/long-text": {
+    "displayName": "long-text",
+    "description": "",
+    "props": [
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "contentClassName",
+        "type": "string",
+        "required": false
+      }
+    ]
+  },
+  "primitives/textarea/textarea-button": {
+    "displayName": "textarea-button",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/textarea/textarea-disabled": {
+    "displayName": "textarea-disabled",
+    "description": "",
+    "props": []
+  },
+  "primitives/textarea/textarea-field": {
+    "displayName": "textarea-field",
+    "description": "",
+    "props": []
+  },
+  "primitives/textarea/textarea-invalid": {
+    "displayName": "textarea-invalid",
+    "description": "",
+    "props": []
+  },
+  "primitives/textarea/textarea": {
+    "displayName": "textarea",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"textarea\">",
+        "required": false,
+        "description": "Accepts standard textarea element attributes."
+      }
+    ]
+  },
+  "primitives/timelines/content/v1-1-0": {
+    "displayName": "v1-1-0",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/timelines/content/v1-2-0": {
+    "displayName": "v1-2-0",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/timelines/content/v1-3-0": {
+    "displayName": "v1-3-0",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/timelines/timeline-component-05": {
+    "displayName": "timeline-component-05",
+    "description": "",
+    "props": [
+      {
+        "name": "releases",
+        "type": "Release[]",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-blockquote": {
+    "displayName": "typography-blockquote",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-h1": {
+    "displayName": "typography-h1",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-h2": {
+    "displayName": "typography-h2",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-h3": {
+    "displayName": "typography-h3",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-h4": {
+    "displayName": "typography-h4",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-inline-code": {
+    "displayName": "typography-inline-code",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-large": {
+    "displayName": "typography-large",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-lead": {
+    "displayName": "typography-lead",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-list": {
+    "displayName": "typography-list",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-muted": {
+    "displayName": "typography-muted",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-p": {
+    "displayName": "typography-p",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-small": {
+    "displayName": "typography-small",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/typography/typography-table": {
+    "displayName": "typography-table",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/accordion": {
+    "displayName": "accordion",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/alert-dialog": {
+    "displayName": "alert-dialog",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/ui/alert": {
+    "displayName": "alert",
+    "description": "",
+    "props": [
+      {
+        "name": "variants",
+        "type": "{",
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "{",
+        "required": true
+      },
+      {
+        "name": "default",
+        "type": "\"bg-card text-card-foreground\"",
+        "required": true
+      },
+      {
+        "name": "defaultVariants",
+        "type": "{",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/ui/aspect-ratio": {
+    "displayName": "aspect-ratio",
+    "description": "",
+    "props": []
+  },
+  "primitives/ui/avatar": {
+    "displayName": "avatar",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/badge": {
+    "displayName": "badge",
+    "description": "",
+    "props": [
+      {
+        "name": "variants",
+        "type": "{",
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "{",
+        "required": true
+      },
+      {
+        "name": "defaultVariants",
+        "type": "{",
+        "required": true
+      },
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"span\">",
+        "required": false,
+        "description": "Accepts standard span element attributes."
+      }
+    ]
+  },
+  "primitives/ui/breadcrumb": {
+    "displayName": "breadcrumb",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"nav\">",
+        "required": false,
+        "description": "Accepts standard nav element attributes."
+      }
+    ]
+  },
+  "primitives/ui/calendar": {
+    "displayName": "calendar",
+    "description": "",
+    "props": [
+      {
+        "name": "selected",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "name": "onSelect",
+        "type": "(date: Date | undefined) => void",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | ((date: Date) => boolean)",
+        "required": false
+      },
+      {
+        "name": "mode",
+        "type": "\"single\" | string",
+        "required": false
+      },
+      {
+        "name": "defaultMonth",
+        "type": "Date",
+        "required": false
+      },
+      {
+        "name": "initialFocus",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "captionLayout",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "showOutsideDays",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "classNames",
+        "type": "Record<string, string>",
+        "required": false
+      },
+      {
+        "name": "components",
+        "type": "Record<string, React.ComponentType<unknown>>",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/ui/card": {
+    "displayName": "card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/ui/carousel": {
+    "displayName": "carousel",
+    "description": "",
+    "props": [
+      {
+        "name": "opts",
+        "type": "CarouselOptions",
+        "required": false
+      },
+      {
+        "name": "plugins",
+        "type": "CarouselPlugin",
+        "required": false
+      },
+      {
+        "name": "orientation",
+        "type": "\"horizontal\" | \"vertical\"",
+        "required": false
+      },
+      {
+        "name": "setApi",
+        "type": "(api: CarouselApi) => void",
+        "required": false
+      },
+      {
+        "name": "carouselRef",
+        "type": "ReturnType<typeof useEmblaCarousel>[0]",
+        "required": true
+      },
+      {
+        "name": "api",
+        "type": "ReturnType<typeof useEmblaCarousel>[1]",
+        "required": true
+      },
+      {
+        "name": "scrollPrev",
+        "type": "() => void",
+        "required": true
+      },
+      {
+        "name": "scrollNext",
+        "type": "() => void",
+        "required": true
+      },
+      {
+        "name": "canScrollPrev",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "canScrollNext",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/ui/checkbox": {
+    "displayName": "checkbox",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/collapsible": {
+    "displayName": "collapsible",
+    "description": "",
+    "props": []
+  },
+  "primitives/ui/combobox": {
+    "displayName": "combobox",
+    "description": "",
+    "props": [
+      {
+        "name": "size",
+        "type": "\"sm\" | \"default\" | \"lg\" | number",
+        "required": false
+      },
+      {
+        "name": "ref",
+        "type": "React.Ref<HTMLInputElement>",
+        "required": false
+      },
+      {
+        "name": "showTrigger",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showClear",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "startAddon",
+        "type": "React.ReactNode",
+        "required": false
+      },
+      {
+        "name": "triggerProps",
+        "type": "ComboboxPrimitive.Trigger.Props",
+        "required": false
+      },
+      {
+        "name": "clearProps",
+        "type": "ComboboxPrimitive.Clear.Props",
+        "required": false
+      },
+      {
+        "name": "align",
+        "type": "ComboboxPrimitive.Positioner.Props[\"align\"]",
+        "required": false
+      },
+      {
+        "name": "sideOffset",
+        "type": "ComboboxPrimitive.Positioner.Props[\"sideOffset\"]",
+        "required": false
+      },
+      {
+        "name": "alignOffset",
+        "type": "ComboboxPrimitive.Positioner.Props[\"alignOffset\"]",
+        "required": false
+      },
+      {
+        "name": "side",
+        "type": "ComboboxPrimitive.Positioner.Props[\"side\"]",
+        "required": false
+      },
+      {
+        "name": "anchor",
+        "type": "ComboboxPrimitive.Positioner.Props[\"anchor\"]",
+        "required": false
+      },
+      {
+        "name": "removeProps",
+        "type": "ComboboxPrimitive.ChipRemove.Props",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/command-menu": {
+    "displayName": "command-menu",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/command": {
+    "displayName": "command",
+    "description": "",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "showCloseButton",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"span\">",
+        "required": false,
+        "description": "Accepts standard span element attributes."
+      }
+    ]
+  },
+  "primitives/ui/config-drawer": {
+    "displayName": "config-drawer",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/context-menu": {
+    "displayName": "context-menu",
+    "description": "",
+    "props": [
+      {
+        "name": "side",
+        "type": "\"top\" | \"right\" | \"bottom\" | \"left\"",
+        "required": false
+      },
+      {
+        "name": "inset",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "\"default\" | \"destructive\"",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"span\">",
+        "required": false,
+        "description": "Accepts standard span element attributes."
+      }
+    ]
+  },
+  "primitives/ui/copy-code": {
+    "displayName": "copy-code",
+    "description": "",
+    "props": [
+      {
+        "name": "code",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/date-picker": {
+    "displayName": "date-picker",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/day-picker": {
+    "displayName": "day-picker",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/dialog": {
+    "displayName": "dialog",
+    "description": "",
+    "props": [
+      {
+        "name": "showCloseButton",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/ui/direction": {
+    "displayName": "direction",
+    "description": "",
+    "props": [
+      {
+        "name": "direction",
+        "type": "React.ComponentProps<typeof Direction.DirectionProvider>[\"dir\"]",
+        "required": false
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/drawer": {
+    "displayName": "drawer",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/ui/edit-switch": {
+    "displayName": "edit-switch",
+    "description": "",
+    "props": [
+      {
+        "name": "defaultEditing",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onCheckedChange",
+        "type": "(checked: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/empty": {
+    "displayName": "empty",
+    "description": "",
+    "props": [
+      {
+        "name": "variant",
+        "type": "\"default\" | \"icon\"",
+        "required": false,
+        "description": "Generated from cva variant variants."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/ui/filters": {
+    "displayName": "filters",
+    "description": "",
+    "props": [
+      {
+        "name": "icon",
+        "type": "React.ReactNode",
+        "required": false
+      },
+      {
+        "name": "field",
+        "type": "FilterFieldConfig<T>",
+        "required": true
+      },
+      {
+        "name": "values",
+        "type": "T[]",
+        "required": true
+      },
+      {
+        "name": "onChange",
+        "type": "(values: T[]) => void",
+        "required": true
+      },
+      {
+        "name": "operator",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "onClose",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "showBackButton",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "onBack",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "inline",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "filters",
+        "type": "Filter<T>[]",
+        "required": true
+      },
+      {
+        "name": "fields",
+        "type": "FilterFieldsConfig<T>",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "showAddButton",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "addButtonText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "addButtonIcon",
+        "type": "React.ReactNode",
+        "required": false
+      },
+      {
+        "name": "addButtonClassName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "addButton",
+        "type": "React.ReactNode",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "\"solid\" | \"outline\"",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "required": false
+      },
+      {
+        "name": "radius",
+        "type": "\"md\" | \"full\"",
+        "required": false
+      },
+      {
+        "name": "i18n",
+        "type": "Partial<FilterI18nConfig>",
+        "required": false
+      },
+      {
+        "name": "showSearchInput",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "cursorPointer",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "trigger",
+        "type": "React.ReactNode",
+        "required": false
+      },
+      {
+        "name": "allowMultiple",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "popoverContentClassName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "onInputChange",
+        "type": "(e: React.ChangeEvent<HTMLInputElement>) => void",
+        "required": false
+      }
+    ]
+  },
+  "primitives/ui/group": {
+    "displayName": "group",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/ui/hover-card-sides": {
+    "displayName": "hover-card-sides",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/hover-card": {
+    "displayName": "hover-card",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/item": {
+    "displayName": "item",
+    "description": "",
+    "props": [
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "\"default\" | \"outline\" | \"muted\"",
+        "required": false,
+        "description": "Generated from cva variant variants."
+      },
+      {
+        "name": "size",
+        "type": "\"default\" | \"sm\" | \"xs\"",
+        "required": false,
+        "description": "Generated from cva size variants."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/ui/kbd": {
+    "displayName": "kbd",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"kbd\">",
+        "required": false,
+        "description": "Accepts standard kbd element attributes."
+      }
+    ]
+  },
+  "primitives/ui/label": {
+    "displayName": "label",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/logo": {
+    "displayName": "logo",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/native-select": {
+    "displayName": "native-select",
+    "description": "",
+    "props": [
+      {
+        "name": "size",
+        "type": "\"sm\" | \"default\"",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"select\">",
+        "required": false,
+        "description": "Accepts standard select element attributes."
+      }
+    ]
+  },
+  "primitives/ui/navigation-menu": {
+    "displayName": "navigation-menu",
+    "description": "",
+    "props": [
+      {
+        "name": "viewport",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/number-field": {
+    "displayName": "number-field",
+    "description": "",
+    "props": [
+      {
+        "name": "size",
+        "type": "\"sm\" | \"default\" | \"lg\"",
+        "required": false
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"svg\">",
+        "required": false,
+        "description": "Accepts standard svg element attributes."
+      }
+    ]
+  },
+  "primitives/ui/pagination": {
+    "displayName": "pagination",
+    "description": "",
+    "props": [
+      {
+        "name": "isActive",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "text",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"nav\">",
+        "required": false,
+        "description": "Accepts standard nav element attributes."
+      }
+    ]
+  },
+  "primitives/ui/preview-card": {
+    "displayName": "preview-card",
+    "description": "",
+    "props": [
+      {
+        "name": "align",
+        "type": "PreviewCardPrimitive.Positioner.Props[\"align\"]",
+        "required": false
+      },
+      {
+        "name": "sideOffset",
+        "type": "PreviewCardPrimitive.Positioner.Props[\"sideOffset\"]",
+        "required": false
+      },
+      {
+        "name": "anchor",
+        "type": "PreviewCardPrimitive.Positioner.Props[\"anchor\"]",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/product-grid": {
+    "displayName": "product-grid",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/progress": {
+    "displayName": "progress",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/promo": {
+    "displayName": "promo",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/radio-group": {
+    "displayName": "radio-group",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/rating": {
+    "displayName": "rating",
+    "description": "",
+    "props": [
+      {
+        "name": "value",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "defaultValue",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "precision",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: number) => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/resizable": {
+    "displayName": "resizable",
+    "description": "",
+    "props": [
+      {
+        "name": "withHandle",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/scroll-area": {
+    "displayName": "scroll-area",
+    "description": "",
+    "props": [
+      {
+        "name": "orientation",
+        "type": "\"vertical\" | \"horizontal\"",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/select": {
+    "displayName": "select",
+    "description": "",
+    "props": [
+      {
+        "name": "size",
+        "type": "\"sm\" | \"default\"",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/separator": {
+    "displayName": "separator",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/sheet": {
+    "displayName": "sheet",
+    "description": "",
+    "props": [
+      {
+        "name": "side",
+        "type": "\"top\" | \"right\" | \"bottom\" | \"left\"",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"div\">",
+        "required": false,
+        "description": "Accepts standard div element attributes."
+      }
+    ]
+  },
+  "primitives/ui/slider": {
+    "displayName": "slider",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/sonner": {
+    "displayName": "sonner",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/sortable-table-head": {
+    "displayName": "sortable-table-head",
+    "description": "",
+    "props": [
+      {
+        "name": "isSorted",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "isSortedDesc",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "onSort",
+        "type": "() => void",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/spinner": {
+    "displayName": "spinner",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/switch": {
+    "displayName": "switch",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/tabs": {
+    "displayName": "tabs",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/textarea": {
+    "displayName": "textarea",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"textarea\">",
+        "required": false,
+        "description": "Accepts standard textarea element attributes."
+      }
+    ]
+  },
+  "primitives/ui/toast": {
+    "displayName": "toast",
+    "description": "",
+    "props": [
+      {
+        "name": "position",
+        "type": "ToastPosition",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/toggle-group": {
+    "displayName": "toggle-group",
+    "description": "",
+    "props": [
+      {
+        "name": "spacing",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "orientation",
+        "type": "\"horizontal\" | \"vertical\"",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/ui/toggle": {
+    "displayName": "toggle",
+    "description": "",
+    "props": [
+      {
+        "name": "variant",
+        "type": "\"default\" | \"outline\"",
+        "required": false,
+        "description": "Generated from cva variant variants."
+      },
+      {
+        "name": "size",
+        "type": "\"default\" | \"sm\" | \"lg\"",
+        "required": false,
+        "description": "Generated from cva size variants."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/ui/tooltip": {
+    "displayName": "tooltip",
+    "description": "",
+    "props": [
+      {
+        "name": "asChild",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "align",
+        "type": "TooltipPrimitive.Positioner.Props[\"align\"]",
+        "required": false
+      },
+      {
+        "name": "side",
+        "type": "TooltipPrimitive.Positioner.Props[\"side\"]",
+        "required": false
+      },
+      {
+        "name": "sideOffset",
+        "type": "TooltipPrimitive.Positioner.Props[\"sideOffset\"]",
+        "required": false
+      },
+      {
+        "name": "anchor",
+        "type": "TooltipPrimitive.Positioner.Props[\"anchor\"]",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/users/account-settings": {
+    "displayName": "account-settings",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/connect-account": {
+    "displayName": "connect-account",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/danger-zone": {
+    "displayName": "danger-zone",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/email-password": {
+    "displayName": "email-password",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/forgot-password-form": {
+    "displayName": "forgot-password-form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/forgot-password": {
+    "displayName": "forgot-password",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/login-form": {
+    "displayName": "login-form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/login-page": {
+    "displayName": "login-page",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/login": {
+    "displayName": "login",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/password-input": {
+    "displayName": "password-input",
+    "description": "",
+    "props": [
+      {
+        "name": "ref",
+        "type": "React.Ref<HTMLInputElement>",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/personal-info": {
+    "displayName": "personal-info",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/profile-dropdown": {
+    "displayName": "profile-dropdown",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/register-form": {
+    "displayName": "register-form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/register": {
+    "displayName": "register",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/sign-out-dialog": {
+    "displayName": "sign-out-dialog",
+    "description": "",
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/social-url": {
+    "displayName": "social-url",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/verify-email": {
+    "displayName": "verify-email",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  }
+}

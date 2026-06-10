@@ -1,0 +1,17 @@
+import type { SVGProps } from "react";
+
+const SvgMountian = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    id="Layer_1"
+    data-name="Layer 1"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 150 150"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <polygon points="91.6 46.57 80.32 72.16 66.52 33.89 53.99 33.89 28.91 103.47 28.91 116.11 129.21 116.11 129.21 103.47 104.13 46.57 91.6 46.57" />
+  </svg>
+);
+
+export default SvgMountian;

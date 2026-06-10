@@ -1,0 +1,13 @@
+export { default as BraveColor } from "./BraveColor";
+export { default as CometColorV1 } from "./CometColorV1";
+export { default as CometColorV2 } from "./CometColorV2";
+export { default as FirefoxMozillaColor } from "./FirefoxMozillaColor";
+export { default as GoogleChromeColorV1 } from "./GoogleChromeColorV1";
+export { default as GoogleChromeColorV2 } from "./GoogleChromeColorV2";
+export { default as MicrosoftEdgeColor } from "./MicrosoftEdgeColor";
+export { default as OperaColor } from "./OperaColor";
+export { default as SafariColor } from "./SafariColor";
+export { default as TorColor } from "./TorColor";
+export { default as VivaldiColor } from "./VivaldiColor";
+export { default as ZenColorV1 } from "./ZenColorV1";
+export { default as ZenColorV2 } from "./ZenColorV2";

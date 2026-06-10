@@ -1,0 +1,18 @@
+import type { SVGProps } from "react";
+
+const SvgHamburgerMenuClose = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 30 30"
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <path
+      fillRule="evenodd"
+      d="M15 13.5858L7.82294 6.40874l-1.4142 1.4142L13.5858 15 6.40874 22.1771l1.4142 1.4142L15 16.4142l7.17706 7.17706 1.4142-1.4142L16.4142 15l7.17706-7.17706 -1.4142-1.4142L15 13.5858Z"
+    />
+  </svg>
+);
+
+export default SvgHamburgerMenuClose;

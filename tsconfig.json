@@ -1,0 +1,86 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./packages/ui/src/*"],
+
+      "@/registry": ["./registry.json"],
+
+      // PRIMITIVES
+      "@auto-form/*": ["./packages/ui/src/primitives/auto-form/*"],
+      "@buttons/*": ["./packages/ui/src/primitives/buttons/*"],
+      "@charts/*": ["./packages/ui/src/primitives/charts/*"],
+      "@data-grid/*": ["./packages/ui/src/primitives/data-grid/*"],
+      "@dropdowns/*": ["./packages/ui/src/primitives/dropdowns/*"],
+      "@image-blocks/*": ["./packages/ui/src/primitives/image-blocks/*"],
+      "@inputs/*": ["./packages/ui/src/primitives/inputs/*"],
+      "@links/*": ["./packages/ui/src/primitives/links/*"],
+      "@lists/*": ["./packages/ui/src/primitives/lists/*"],
+      "@layouts/*": ["./packages/ui/src/primitives/layouts/*"],
+      "@menus/*": ["./packages/ui/src/primitives/menus/*"],
+      "@popovers/*": ["./packages/ui/src/primitives/popovers/*"],
+      "@skeleton/*": ["./packages/ui/src/primitives/skeleton/*"],
+      "@tabs/*": ["./packages/ui/src/primitives/tabs/*"],
+      "@tables/*": ["./packages/ui/src/primitives/tables/*"],
+      "@textarea/*": ["./packages/ui/src/primitives/textarea/*"],
+      "@typography/*": ["./packages/ui/src/primitives/typography/*"],
+      "@studio-blocks/*": ["./packages/ui/src/primitives/studio-blocks/*"],
+
+      // UI CORE
+      "@ui-core/*": ["./packages/ui/src/primitives/ui-core/*"]
+
+      // UI REGISTRY
+      "@ui-registry/*": ["./packages/ui/src/ui-registry/*"],
+
+      // METRIC COMPONENTS
+      "@shared-props/*": ["./packages/ui/src/components/_shared-props/*"],
+      "@shared-ui/*": ["./packages/ui/src/components/_shared-ui/*"],
+      "@metrics-charts/*": ["./packages/ui/src/components/metrics-charts/*"],
+      "@metrics-errors/*": ["./packages/ui/src/components/metrics-errors/*"],
+      "@metrics-feedback/*": ["./packages/ui/src/components/metrics-feedback/*"],
+      "@metrics-layouts/*": ["./packages/ui/src/components/metrics-layouts/*"],
+      "@metrics-core/*": ["./packages/ui/src/components/metrics-core/*"],
+      "@metrics-sections/*": ["./packages/ui/src/components/metrics-sections/*"],
+      "@metrics-tables/*": ["./packages/ui/src/components/metrics-tables/*"],
+      "@metrics-timeline/*": ["./packages/ui/src/components/metrics-timeline/*"],
+
+      // OTHER
+      "@common/*": ["./packages/ui/src/common/*"],
+      "@context/*": ["./packages/ui/src/context/*"],
+      "@db/*": ["./packages/ui/src/db/*"],
+      "@fonts/*": ["./packages/ui/src/fonts/*"],
+      "@hooks/*": ["./packages/ui/src/hooks/*"],
+      "@icons/*": ["./packages/ui/src/icons/*"],
+      "@lib/*": ["./packages/ui/src/lib/*"],
+      "@styles/*": ["./packages/ui/src/styles/*"],
+      "@types/*": ["./packages/ui/src/types/*"],
+      "@utils/*": ["./packages/ui/src/utils/*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "target": "ES2017"
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

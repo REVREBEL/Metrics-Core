@@ -1,0 +1,28 @@
+import type { SVGProps } from "react";
+
+const SvgArrowCircleLeft = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    id="Layer_1"
+    data-name="Layer 1"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 200 200"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <defs>
+      <style>
+        {
+          ".cls-1 {\n        fill: #010101;\n      }\n\n      .cls-2 {\n        fill: #a7a9ac;\n      }"
+        }
+      </style>
+    </defs>
+    <circle className="cls-1" cx="100" cy="100" r="97.5" />
+    <path
+      className="cls-2"
+      d="M87.75,58.46l-53.91,38.57c-.98.71-1.55,1.84-1.57,3.03h0c0,1.23.58,2.35,1.55,3.05l53.89,38.32c1.12.81,2.62.92,3.86.28,1.23-.62,2.01-1.91,2.01-3.3v-18.03s48.41.01,48.41.01c2.06,0,3.72-1.67,3.72-3.72v-33.36c-.01-2.04-1.69-3.72-3.74-3.72h-48.43v-18.03c0-1.39-.78-2.66-2.03-3.3s-2.74-.52-3.88.3l.1-.12Z"
+    />
+  </svg>
+);
+
+export default SvgArrowCircleLeft;

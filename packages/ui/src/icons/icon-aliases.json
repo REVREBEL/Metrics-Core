@@ -1,0 +1,9 @@
+{
+  "aliases": [
+    {
+      "directory": "RebelIconsReact",
+      "alias": "IconX",
+      "target": "XIcon"
+    }
+  ]
+}

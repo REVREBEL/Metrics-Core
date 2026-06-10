@@ -1,0 +1,15 @@
+import type { SVGProps } from "react";
+
+const SvgComment = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <path d="M88.466 16.936c-.172-1.703-1.592-3.036-3.34-3.036H14.781v.009c-1.705.047-3.079 1.355-3.247 3.027H11.5v56.342h.068c.305 1.512 1.622 2.65 3.214 2.694v.009h11.564v6.744c0 1.864 1.51 3.374 3.374 3.374 1.165 0 2.192-.591 2.798-1.49l8.629-8.629h43.979c1.634 0 2.995-1.161 3.306-2.703h.068V16.936h-.034Z" />
+  </svg>
+);
+
+export default SvgComment;

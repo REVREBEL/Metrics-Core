@@ -1,0 +1,36 @@
+import type { SVGProps } from "react";
+
+const SvgBadge = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    id="Layer_1"
+    data-name="Layer 1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    viewBox="0 0 150 150"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <defs>
+      <style>
+        {
+          ".cls-1 {\n        fill: none;\n      }\n\n      .cls-2 {\n        clip-path: url(#clippath);\n      }"
+        }
+      </style>
+      <clipPath id="clippath">
+        <rect
+          className="cls-1"
+          x="27.22"
+          y="22.73"
+          width="95.57"
+          height="104.55"
+        />
+      </clipPath>
+    </defs>
+    <g className="cls-2">
+      <path d="M122.78,49.29c0,51.15-37.19,77.46-47.94,77.46-9.97-.07-47.57-25.6-47.57-77.46,0-.95.13-1.88.4-2.79.27-.91.67-1.76,1.19-2.56.52-.79,1.15-1.5,1.87-2.11.73-.61,1.53-1.1,2.4-1.47l38.1-16.18c1.17-.5,2.39-.75,3.66-.75s2.49.25,3.66.75l38.26,16.1c.88.38,1.68.88,2.41,1.5s1.36,1.32,1.89,2.12c.53.8.93,1.66,1.22,2.57.28.92.43,1.85.44,2.81Z" />
+    </g>
+  </svg>
+);
+
+export default SvgBadge;
