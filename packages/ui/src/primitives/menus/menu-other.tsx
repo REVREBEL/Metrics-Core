@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@buttons/button";
 import {
   Menu,
   MenuItem,
   MenuPopup,
   MenuTrigger,
-} from "@/components/ui/menu";
+} from "./menu";
 
 export default function Particle() {
   return (

@@ -9,6 +9,7 @@
   "include": [
     "src/primitives/**/*.ts",
     "src/primitives/**/*.tsx",
+    "src/types/**/*.ts",
     "next-env.d.ts"
   ],
   "exclude": [
