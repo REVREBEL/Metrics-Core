@@ -9,7 +9,14 @@
   ],
   "exclude": ["node_modules", "**/demo/**"],
   "compilerOptions": {
+    "baseUrl": ".",
     "jsx": "preserve",
+    "paths": {
+      "@/*": ["../../packages/ui/src/*"],
+      "@buttons/*": ["../../packages/ui/src/primitives/buttons/*"],
+      "@components/*": ["./components/*"],
+      "@lib/*": ["./lib/*", "../../packages/ui/src/lib/*"]
+    },
     "plugins": [
       {
         "name": "next"

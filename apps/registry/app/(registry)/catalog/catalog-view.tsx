@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  IconArrowRight,
+  IconLayoutGrid,
+  IconListDetails,
+  IconSparkles,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -8,6 +14,17 @@ import {
   getRegistryFolderRoots,
   type RegistryFolderNode,
 } from "@lib/registry-folders";
+import {
+  getPreviewLayoutClasses,
+  getRegistryPreviewSpec,
+  getVisualPreview,
+  type RegistryPreviewInput,
+} from "@lib/registry-preview";
+import {
+  getRegistryItemsForFolder,
+  getRootSummary,
+  toFolderHref,
+} from "@lib/site";
 
 type FolderViewProps = {
   folderFilter?: string;
@@ -21,25 +38,13 @@ function toTitle(value: string) {
     .join(" ");
 }
 
-function folderHref(folder: string) {
-  return `/catalog/folder/${folder
-    .split("/")
-    .map((part) => encodeURIComponent(part))
-    .join("/")}`;
-}
-
 function getNode(folderId: string | undefined) {
   if (!folderId) return null;
   return getRegistryFolderNode(folderId) ?? null;
 }
 
 function getNodeText(node: RegistryFolderNode) {
-  return [
-    node.id,
-    node.title,
-    node.sourcePath,
-    ...node.directFiles,
-  ]
+  return [node.id, node.title, node.sourcePath, ...node.directFiles]
     .join(" ")
     .toLowerCase();
 }
@@ -60,8 +65,8 @@ function matchesFolder(node: RegistryFolderNode, query: string): boolean {
 function FolderCard({ node }: { node: RegistryFolderNode }) {
   return (
     <Link
-      className="rounded-lg border bg-card p-4 transition-colors hover:bg-muted/50"
-      href={folderHref(node.id)}
+      className="rounded-2xl border bg-card p-4 transition-colors hover:bg-muted/50"
+      href={toFolderHref(node.id)}
     >
       <div className="flex items-start justify-between gap-3">
         <div>
@@ -106,12 +111,6 @@ function FolderTree({
         </div>
       </summary>
       <div className="mt-2 space-y-1 pl-3">
-        <Link
-          className="block rounded-md px-2 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          href={folderHref(node.id)}
-        >
-          Open folder
-        </Link>
         {visibleChildren.map((child) => (
           <FolderTree key={child.id} node={child} query={query} />
         ))}
@@ -147,6 +146,66 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
     );
   }, [currentNode, normalizedQuery]);
 
+  const matchedItems = useMemo(() => {
+    if (!currentNode) return [];
+    return getRegistryItemsForFolder(currentNode.id, visibleFiles);
+  }, [currentNode, visibleFiles]);
+
+  const groupedPreviewEntries = useMemo(() => {
+    const groups = new Map<
+      string,
+      {
+        items: typeof matchedItems;
+        layout: ReturnType<typeof getRegistryPreviewSpec>["layout"];
+        previewInput: RegistryPreviewInput;
+        template: ReturnType<typeof getRegistryPreviewSpec>["template"];
+      }
+    >();
+
+    for (const item of matchedItems) {
+      const previewInput = {
+        description: item.description,
+        name: item.name,
+        sourcePath: item.files?.[0]?.path,
+        title: item.title,
+        type: item.type,
+      };
+      const spec = getRegistryPreviewSpec(previewInput);
+
+      if (spec.layout !== "grouped") {
+        groups.set(`${item.name}:${spec.template}`, {
+          items: [item],
+          layout: spec.layout,
+          previewInput,
+          template: spec.template,
+        });
+        continue;
+      }
+
+      const sourcePath = previewInput.sourcePath ?? "";
+      const familyKey = sourcePath.split("/").slice(0, 3).join("/") || item.type;
+      const key = `${spec.template}:${familyKey}`;
+      const existing = groups.get(key);
+
+      if (existing) {
+        existing.items.push(item);
+      } else {
+        groups.set(key, {
+          items: [item],
+          layout: spec.layout,
+          previewInput: {
+            ...previewInput,
+            name: item.title ?? toTitle(familyKey.split("/").pop() ?? item.name),
+            title: item.title ?? toTitle(familyKey.split("/").pop() ?? item.name),
+          },
+          template: spec.template,
+        });
+      }
+    }
+
+    return Array.from(groups.values());
+  }, [matchedItems]);
+
   const breadcrumb = useMemo(() => {
     if (!currentNode) return [];
 
@@ -178,7 +237,7 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
               {breadcrumb.map((node, index) => (
                 <span key={node.id} className="flex items-center gap-2">
                   {index > 0 ? <span>/</span> : null}
-                  <Link className="underline-offset-4 hover:underline" href={folderHref(node.id)}>
+                  <Link className="underline-offset-4 hover:underline" href={toFolderHref(node.id)}>
                     {node.title}
                   </Link>
                 </span>
@@ -225,6 +284,73 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
         </div>
       ) : (
         <div className="space-y-6">
+          <section className="rounded-[1.5rem] border bg-card p-5">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <IconSparkles className="size-4 text-muted-foreground" />
+                  Registry items in this folder
+                </div>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {getRootSummary(currentNode.id.split("/")[0] ?? currentNode.id).description}
+                </p>
+              </div>
+              <span className="rounded-full border px-3 py-1 text-xs">
+                {matchedItems.length} item{matchedItems.length === 1 ? "" : "s"}
+              </span>
+            </div>
+
+            {matchedItems.length > 0 ? (
+              <div className="mt-5 grid gap-4 xl:grid-cols-2">
+                {groupedPreviewEntries.map((entry) => (
+                  <div
+                    key={`${entry.template}:${entry.previewInput.name}:${entry.items.map((item) => item.name).join(",")}`}
+                    className={[
+                      "rounded-2xl border bg-background p-4",
+                      getPreviewLayoutClasses(entry.layout),
+                    ].join(" ")}
+                  >
+                    <div className="mb-4 flex items-start justify-between gap-3">
+                      <div>
+                        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                          {entry.items[0]?.type.replace("registry:", "")}
+                        </div>
+                        <h2 className="mt-2 font-semibold text-xl">
+                          {entry.layout === "grouped"
+                            ? entry.previewInput.title ?? entry.previewInput.name
+                            : entry.items[0]?.title ?? toTitle(entry.items[0]?.name ?? entry.previewInput.name)}
+                        </h2>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          {entry.layout === "grouped"
+                            ? `${entry.items.length} related registry items shown together.`
+                            : entry.items[0]?.description || "Registry item available for install and preview."}
+                        </p>
+                      </div>
+                      {entry.items.length === 1 ? (
+                        <Link
+                          href={`/registry/${entry.items[0].name}`}
+                          className="inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-xs transition hover:bg-muted"
+                        >
+                          Open item
+                          <IconArrowRight className="size-3.5" />
+                        </Link>
+                      ) : (
+                        <span className="rounded-full border px-3 py-1.5 text-xs">
+                          {entry.items.length} items
+                        </span>
+                      )}
+                    </div>
+                    <RegistryGroupPreview entry={entry} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-5 rounded-2xl border border-dashed p-5 text-sm text-muted-foreground">
+                This folder does not map cleanly to registry item metadata yet, so the raw source files are listed below.
+              </div>
+            )}
+          </section>
+
           <section className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {directChildren.map((node) => (
               <FolderCard key={node.id} node={node} />
@@ -233,7 +359,10 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
 
           <section className="rounded-lg border bg-card p-4">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="font-medium text-base">Direct Files</h2>
+              <div className="flex items-center gap-2">
+                <IconListDetails className="size-4 text-muted-foreground" />
+                <h2 className="font-medium text-base">Direct Files</h2>
+              </div>
               <span className="text-xs text-muted-foreground">
                 {visibleFiles.length} file{visibleFiles.length === 1 ? "" : "s"}
               </span>
@@ -243,7 +372,9 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
                 visibleFiles.map((filePath) => (
                   <div key={filePath} className="flex items-center justify-between gap-3 px-3 py-2 text-sm">
                     <span className="truncate font-mono">{filePath}</span>
-                    <span className="text-xs text-muted-foreground">{toTitle(filePath.split("/").pop() ?? "")}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {toTitle(filePath.split("/").pop() ?? "")}
+                    </span>
                   </div>
                 ))
               ) : (
@@ -255,13 +386,105 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
           </section>
 
           <section className="rounded-lg border bg-card p-4">
-            <h2 className="font-medium text-base">Nested Tree</h2>
+            <div className="flex items-center gap-2">
+              <IconLayoutGrid className="size-4 text-muted-foreground" />
+              <h2 className="font-medium text-base">Nested Tree</h2>
+            </div>
             <div className="mt-3 space-y-1">
               <FolderTree node={currentNode} query={normalizedQuery} />
             </div>
           </section>
         </div>
       )}
+    </div>
+  );
+}
+
+function RegistryItemPreview({
+  item,
+}: {
+  item: {
+    description?: string;
+    files?: Array<{ path: string; type: string; target?: string }>;
+    name: string;
+    title?: string;
+    type: string;
+  };
+}) {
+  const Preview = getVisualPreview({
+    description: item.description,
+    name: item.name,
+    sourcePath: item.files?.[0]?.path,
+    title: item.title,
+    type: item.type,
+  });
+
+  return (
+    <div className="rounded-2xl border bg-card p-4">
+      <Preview
+        description={item.description}
+        name={item.name}
+        sourcePath={item.files?.[0]?.path}
+        title={item.title}
+      />
+      <div className="mt-4 flex items-center justify-between gap-3 border-t pt-4">
+        <div className="text-xs text-muted-foreground">
+          {item.files?.[0]?.path ?? "Registry item"}
+        </div>
+        <Link
+          href={`/registry/${item.name}`}
+          className="inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-xs transition hover:bg-muted"
+        >
+          Open install view
+          <IconArrowRight className="size-3.5" />
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function RegistryGroupPreview({
+  entry,
+}: {
+  entry: {
+    items: Array<{
+      description?: string;
+      files?: Array<{ path: string; type: string; target?: string }>;
+      name: string;
+      title?: string;
+      type: string;
+    }>;
+    layout: ReturnType<typeof getRegistryPreviewSpec>["layout"];
+    previewInput: RegistryPreviewInput;
+  };
+}) {
+  const Preview = getVisualPreview(entry.previewInput);
+
+  return (
+    <div className="rounded-2xl border bg-card p-4">
+      <Preview
+        description={entry.previewInput.description}
+        name={entry.previewInput.name}
+        sourcePath={entry.previewInput.sourcePath}
+        title={entry.previewInput.title}
+      />
+      <div className="mt-4 border-t pt-4">
+        <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          {entry.items.length === 1 ? "Install view" : "Items in this preview"}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {entry.items.map((item) => (
+            <Link
+              key={item.name}
+              href={`/registry/${item.name}`}
+              className="inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-xs transition hover:bg-muted"
+            >
+              {item.title ?? toTitle(item.name)}
+              <IconArrowRight className="size-3.5" />
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
