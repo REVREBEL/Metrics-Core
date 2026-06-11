@@ -673,3 +673,14 @@ next.config.mjs should not duplicate them.
   Use skills as targeted operating instructions, not as bulk context.
   
   The main agent must route work through the correct skill group, preserve repo conventions, and avoid creating duplicate or conflicting patterns across the codebase.
+
+### Icon Usage Rules
+
+Before adding a new Tabler icon, check docs/icon-inventory.md first.
+
+If an existing icon already represents the intended action or concept, reuse it.
+
+Only introduce a new icon when:
+1. no existing icon matches the intended meaning,
+2. the new icon improves clarity,
+3. and docs/icon-inventory.md is updated in the same change.
