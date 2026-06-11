@@ -1,8 +1,15 @@
-import type { Editor, ShouldShowProps } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import * as React from "react";
 import { LinkEditBlock } from "./link-edit-block";
 import { LinkPopoverBlock } from "./link-popover-block";
+
+type ShouldShowProps = {
+  editor: Editor;
+  from: number;
+  to: number;
+  [key: string]: any;
+};
 
 interface LinkBubbleMenuProps {
   editor: Editor;
@@ -56,10 +63,10 @@ export const LinkBubbleMenu: React.FC<LinkBubbleMenuProps> = ({ editor }) => {
 
   const onSetLink = React.useCallback(
     (url: string, text?: string, openInNewTab?: boolean) => {
-      editor
+      (editor
         .chain()
         .focus()
-        .extendMarkRange("link")
+        .extendMarkRange("link") as any)
         .insertContent({
           type: "text",
           text: text || url,
@@ -82,7 +89,7 @@ export const LinkBubbleMenu: React.FC<LinkBubbleMenuProps> = ({ editor }) => {
   );
 
   const onUnsetLink = React.useCallback(() => {
-    editor.chain().focus().extendMarkRange("link").unsetLink().run();
+    (editor.chain().focus().extendMarkRange("link") as any).unsetLink().run();
     setShowEdit(false);
     updateLinkState();
   }, [editor, updateLinkState]);

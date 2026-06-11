@@ -15,18 +15,18 @@ import {
 } from "@tabler/icons-react";
 import type { ComponentType, ReactNode } from "react";
 
-import { Button } from "@/primitives/buttons/button";
-import { SaveButton } from "@/primitives/buttons/status-button";
-import { Input } from "@/primitives/inputs/input";
-import { Skeleton } from "@/primitives/skeleton/skeleton";
-import { Textarea } from "@/primitives/textarea/textarea";
+import { Button } from "@buttons/button";
+import { SaveButton } from "@buttons/status-button";
+import { Input } from "@inputs/input";
+import { Skeleton } from "@skeleton/skeleton";
+import { Textarea } from "@textarea/textarea";
 import {
   TypographyH1,
   TypographyH2,
   TypographyH3,
   TypographyP,
   TypographySmall,
-} from "@/primitives/typography";
+} from "@typography";
 import { Badge } from "@/primitives/ui-core/badge";
 import {
   Card,
@@ -34,9 +34,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/primitives/ui-core/card";
-import { Label } from "@/primitives/ui-core/label";
-import { Separator } from "@/primitives/ui-core/separator";
+} from "@ui-core/card";
+import { Label } from "@ui-core/label";
+import { Separator } from "@ui-core/separator";
 import { Switch } from "@/primitives/ui-core/switch";
 
 export type PreviewProps = {

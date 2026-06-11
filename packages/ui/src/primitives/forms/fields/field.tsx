@@ -1,9 +1,9 @@
 "use client"
 
 import { useMemo } from "react"
-import { cn } from "@lib"
-import { Label } from "@ui"
-import { Separator } from "@ui"
+import { cn } from "@/lib/utils"
+import { Label } from "@ui-core/label"
+import { Separator } from "@ui-core/separator"
 import { cva, type VariantProps } from "class-variance-authority"
 
 function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {

@@ -1,4 +1,4 @@
-import { IconCircleFadingArrowUp as CircleFadingArrowUpIcon } from "@tabler/icons-react";
+import { IconCircleArrowUp as CircleFadingArrowUpIcon } from "@tabler/icons-react";
 import { Button } from "./button";
 
 export default function ButtonIcon() {

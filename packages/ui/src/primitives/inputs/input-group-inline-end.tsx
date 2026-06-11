@@ -1,4 +1,4 @@
-import { Field, FieldDescription, FieldLabel } from "@auto-form";
+import { Field, FieldDescription, FieldLabel } from "@auto-form/fields/field";
 import { IconEyeOff } from "@tabler/icons-react";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./input-group";
 

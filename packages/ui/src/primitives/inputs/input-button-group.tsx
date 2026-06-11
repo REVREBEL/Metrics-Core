@@ -1,4 +1,4 @@
-import { Field, FieldLabel } from "@auto-form";
+import { Field, FieldLabel } from "@auto-form/fields/field";
 import { Button } from "@buttons/button";
 import { ButtonGroup } from "@buttons/button-group";
 import { Input } from "./input";

@@ -4,13 +4,13 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@ui";
-import { Button } from "@buttons";
-import { Separator } from "@ui";
+} from "@ui-core/accordion";
+import { Button } from "@buttons/button";
+import { Separator } from "@ui-core/separator";
 import { IconTrash } from "@tabler/icons-react";
 import { useFieldArray, type useForm } from "react-hook-form";
 import type * as z from "zod";
-import { beautifyObjectName } from "@auto-form";
+import { beautifyObjectName } from "@auto-form/helpers";
 import AutoFormObject from "./object";
 import { PlusIcon } from "@radix-ui/react-icons";
 
@@ -106,7 +106,7 @@ export default function AutoFormArray({
           onClick={() => append({})}
           className="mt-4 flex items-center"
         >
-          <PlusIcon className="mr-2" size={16} />
+          <PlusIcon className="mr-2 size-4" />
           Add
         </Button>
       </AccordionContent>

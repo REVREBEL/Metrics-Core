@@ -20,8 +20,7 @@
       "@/registry": ["./registry.json"],
 
       // PRIMITIVES
-      "@auto-form/*": ["./packages/ui/src/primitives/forms/index.ts"],
-      "@auto-form": ["./packages/ui/src/primitives/forms/index.ts"],
+      "@auto-form/*": ["./packages/ui/src/primitives/forms/*"],
       "@buttons/*": ["./packages/ui/src/primitives/buttons/*"],
       "@charts/*": ["./packages/ui/src/primitives/charts/*"],
       "@data-grid/*": ["./packages/ui/src/primitives/data-grid/*"],

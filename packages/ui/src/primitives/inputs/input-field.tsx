@@ -1,4 +1,4 @@
-import { Field, FieldDescription, FieldLabel } from "@auto-form";
+import { Field, FieldDescription, FieldLabel } from "@auto-form/fields/field";
 import { Input } from "./input";
 
 export function InputField() {

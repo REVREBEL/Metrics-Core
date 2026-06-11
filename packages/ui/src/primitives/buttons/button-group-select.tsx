@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@inputs";
+import { Input } from "@inputs/input";
 import { IconChevronRight } from "@tabler/icons-react";
 import {
   Select,
