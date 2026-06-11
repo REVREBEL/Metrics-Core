@@ -3,7 +3,7 @@ import Link from "next/link";
 import {
   MobileSidebarTrigger,
   RegistrySidebar,
-} from "@repo/ui/ui-registry";
+} from "@components/registry-sidebar";
 
 export default function NotFound() {
   return (

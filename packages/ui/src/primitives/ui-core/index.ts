@@ -1,3 +1,21 @@
+// src/primitives/ui-core/index.ts
+
+// Export only migrated foundational primitives
+export * from "./badge";
+export * from "./card";
+export * from "./combobox";
+export * from "./kbd";
+export * from "./label";
+export * from "./scroll-area";
+export * from "./select";
+export * from "./separator";
+export * from "./spinner";
+export * from "./switch";
+export * from "./toggle";
+export * from "./tooltip";
+
+/*
+// Pending further migrations:
 export * from "../dropdowns/dropdown-menu";
 export * from "../layouts/navigation-menu";
 export * from "../layouts/resizable-handle";
@@ -9,14 +27,9 @@ export * from "./alert";
 export * from "./alert-dialog";
 export * from "./aspect-ratio";
 export * from "./avatar";
-export * from "./badge";
-export * from "./breadcrumb";
-export * from "./calendar";
-export * from "./card";
 export * from "./carousel";
 export * from "./checkbox";
 export * from "./collapsible";
-export * from "./combobox";
 export * from "./command";
 export * from "./command-menu";
 export * from "./config-drawer";
@@ -34,8 +47,6 @@ export * from "./group";
 export { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
 export { HoverCardSides } from "./hover-card-sides";
 export * from "./item";
-export * from "./kbd";
-export * from "./label";
 export * from "./logo";
 export * from "./native-select";
 export * from "./number-field";
@@ -54,11 +65,10 @@ export * from "./sheet";
 export * from "./slider";
 export * from "./sonner";
 export * from "./sortable-table-head";
-export * from "./spinner";
 export * from "./switch";
 export * from "./tabs";
 export * from "./textarea";
 export * from "./toast";
 export * from "./toggle";
 export * from "./toggle-group";
-export * from "./tooltip";
+*/

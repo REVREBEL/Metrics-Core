@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "ignoreDeprecations": "5.0",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,7 +20,8 @@
       "@/registry": ["./registry.json"],
 
       // PRIMITIVES
-      "@auto-form/*": ["./packages/ui/src/primitives/auto-form/*"],
+      "@auto-form/*": ["./packages/ui/src/primitives/forms/index.ts"],
+      "@auto-form": ["./packages/ui/src/primitives/forms/index.ts"],
       "@buttons/*": ["./packages/ui/src/primitives/buttons/*"],
       "@charts/*": ["./packages/ui/src/primitives/charts/*"],
       "@data-grid/*": ["./packages/ui/src/primitives/data-grid/*"],
@@ -39,7 +41,8 @@
       "@studio-blocks/*": ["./packages/ui/src/primitives/studio-blocks/*"],
 
       // UI CORE
-      "@ui-core/*": ["./packages/ui/src/primitives/ui-core/*"]
+      "@ui-core/*": ["./packages/ui/src/primitives/ui-core/*"],
+      "@ui-core": ["./packages/ui/src/primitives/ui-core/index.ts"],
 
       // UI REGISTRY
       "@ui-registry/*": ["./packages/ui/src/ui-registry/*"],

@@ -19,6 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/primitives/ui-core/tooltip";
+import { getVisualPreview } from "@/lib/registry.visual-previews";
 import { OpenInV0Button } from "./open-in-v0";
 
 type Component = {
@@ -26,6 +27,7 @@ type Component = {
   type: string;
   title?: string;
   description?: string;
+  files?: Array<{ path: string; type: string; target?: string }>;
 };
 
 interface ComponentCardProps {
@@ -42,6 +44,14 @@ export function ComponentCard({
   hasDemo = true,
 }: ComponentCardProps) {
   const [copied, setCopied] = useState(false);
+  const sourcePath = component.files?.[0]?.path;
+  const Preview = getVisualPreview({
+    description: component.description,
+    name: component.name,
+    sourcePath,
+    title: component.title,
+    type: component.type,
+  });
 
   const isBlock = component.type === "registry:block";
   const v0RegistryUrl = isBlock
@@ -119,11 +129,13 @@ export function ComponentCard({
               />
             </div>
           ) : (
-            <div className="w-full rounded-md border border-border p-6 text-sm text-muted-foreground">
-              No demo page is registered for <code>{component.name}</code> yet.
-              This registry item is available for install/export, but needs a
-              demo entry in <code>registry/app/demo/[name]/index.tsx</code> to
-              render a live preview.
+            <div className="w-full rounded-md border border-border p-6">
+              <Preview
+                description={component.description}
+                name={component.name}
+                sourcePath={sourcePath}
+                title={component.title}
+              />
             </div>
           )}
         </CardContent>

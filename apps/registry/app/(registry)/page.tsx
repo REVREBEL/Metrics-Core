@@ -1,8 +1,11 @@
 import {
+  IconArrowRight,
   IconAwardFilled,
+  IconBinaryTree2Filled,
   IconDeviceGamepad2Filled,
+  IconHierarchy3,
   IconPuzzleFilled,
-  IconSquareRoundedArrowRightFilled,
+  IconSparkles,
 } from "@tabler/icons-react";
 import Link from "next/link";
 
@@ -14,207 +17,299 @@ import {
   CardHeader,
   CardTitle,
 } from "@/primitives/ui-core/card";
-import { getRegistryItems, type Component } from "@lib/registry";
+import {
+  getBlocks,
+  getComponents,
+  getUIPrimitives,
+  type Component,
+} from "@lib/registry";
+import {
+  getFoundationRoots,
+  getRegistryCounts,
+  getRootEntryCount,
+  getRootSummary,
+  getStagedRoots,
+  toFolderHref,
+} from "@lib/site";
 
-const registryItems = getRegistryItems() as Component[];
-const uiItems = registryItems
-  .filter((item) => item.type === "registry:ui")
-  .slice(0, 5);
-const componentItems = registryItems
-  .filter((item) => item.type === "registry:component")
-  .slice(0, 5);
-const blockItems = registryItems
-  .filter((item) => item.type === "registry:block")
-  .slice(0, 5);
+const uiItems = getUIPrimitives().slice(0, 4) as Component[];
+const componentItems = getComponents().slice(0, 3) as Component[];
+const blockItems = getBlocks().slice(0, 4) as Component[];
+const foundationRoots = getFoundationRoots().slice(0, 5);
+const stagedRoots = getStagedRoots();
+const counts = getRegistryCounts();
 
 export default function Home() {
   return (
-    <main className="container mt-4 p-5 md:mt-8 md:p-10">
-      <div className="mb-8">
-        <div className="space-y-2">
-          <h1 className="font-bold text-3xl tracking-tight md:text-4xl">
-            Registry
-          </h1>
-          <p className="text-muted-foreground">
-            Distribute your design system tokens, custom components, hooks,
-            pages, and other files to any React project.
-          </p>
-          <p>
-            <Link href="/catalog" className="text-sm underline">
-              Open visual component catalog
-            </Link>
-          </p>
-        </div>
-      </div>
+    <main className="mx-auto w-full max-w-7xl px-5 py-6 md:px-8 md:py-10">
+      <section className="rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur md:p-8 dark:border-slate-800 dark:bg-slate-950/75">
+        <div className="grid gap-8 xl:grid-cols-[1.35fr_0.9fr]">
+          <div className="space-y-6">
+            <div className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+              Registry website first
+            </div>
+            <div className="space-y-3">
+              <h1 className="max-w-4xl font-semibold text-4xl tracking-tight md:text-6xl">
+                Build the registry foundation before metrics components take over the site.
+              </h1>
+              <p className="max-w-3xl text-base text-muted-foreground md:text-lg">
+                The homepage now centers on primitives, tokens, folder-based browsing, and install paths. Metrics compositions stay staged until the registry shell is stable.
+              </p>
+            </div>
 
-      <Card className="mb-4 shadow-none">
-        <CardHeader className="space-y-1">
-          <div className="flex items-center justify-between">
-            <CardTitle>Blocks</CardTitle>
-            <div className="rounded-md bg-primary p-1">
-              <IconPuzzleFilled className="size-5 text-primary-foreground" />
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/catalog"
+                className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+              >
+                Open folder catalog
+                <IconArrowRight className="size-4" />
+              </Link>
+              <Link
+                href="/tokens"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-3 text-sm font-medium transition hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-900"
+              >
+                Review token sources
+                <IconSparkles className="size-4" />
+              </Link>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div className="rounded-2xl bg-slate-950 px-4 py-4 text-white dark:bg-slate-900">
+                <div className="text-3xl font-semibold tabular-nums">{counts.primitives}</div>
+                <div className="mt-1 text-sm text-slate-300">UI primitives installable now</div>
+              </div>
+              <div className="rounded-2xl border border-slate-200 px-4 py-4 dark:border-slate-800">
+                <div className="text-3xl font-semibold tabular-nums">{counts.folderNodes}</div>
+                <div className="mt-1 text-sm text-muted-foreground">Browsable registry folders</div>
+              </div>
+              <div className="rounded-2xl border border-dashed border-slate-300 px-4 py-4 dark:border-slate-700">
+                <div className="text-3xl font-semibold tabular-nums">{counts.components}</div>
+                <div className="mt-1 text-sm text-muted-foreground">Metrics components still staged</div>
+              </div>
             </div>
           </div>
-          <CardDescription>
-            Pre-built blocks kits for consistent, repeatable generations
-          </CardDescription>
-        </CardHeader>
 
-        <CardContent>
-          <div className="space-y-2">
-            {blockItems.map((item) => (
-              <div
-                key={item.name}
-                className="flex items-center justify-between"
-              >
+          <div className="rounded-[1.75rem] border border-slate-200/80 bg-slate-50/90 p-5 dark:border-slate-800 dark:bg-slate-900/90">
+            <div className="mb-4 flex items-center justify-between">
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                  Focus right now
+                </div>
+                <h2 className="mt-1 font-semibold text-xl">Foundation checklist</h2>
+              </div>
+              <IconHierarchy3 className="size-5 text-muted-foreground" />
+            </div>
+            <div className="space-y-3 text-sm">
+              <div className="rounded-2xl bg-white px-4 py-3 dark:bg-slate-950">
+                <div className="font-medium">1. Folder-first navigation</div>
+                <p className="mt-1 text-muted-foreground">
+                  Keep primitives, tokens, helpers, and source structure easy to inspect without dumping every metrics composition onto the homepage.
+                </p>
+              </div>
+              <div className="rounded-2xl bg-white px-4 py-3 dark:bg-slate-950">
+                <div className="font-medium">2. Reliable install metadata</div>
+                <p className="mt-1 text-muted-foreground">
+                  Registry pages still expose item install paths and MCP config, but the website now frames them inside the actual foundation work.
+                </p>
+              </div>
+              <div className="rounded-2xl bg-white px-4 py-3 dark:bg-slate-950">
+                <div className="font-medium">3. Stage metrics later</div>
+                <p className="mt-1 text-muted-foreground">
+                  Metrics-specific components remain discoverable, but they are visually demoted until the base registry UX is complete.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-6 grid gap-6 xl:grid-cols-[1.25fr_0.95fr]">
+        <Card className="border-white/70 bg-white/85 shadow-none dark:border-slate-800 dark:bg-slate-950/75">
+          <CardHeader className="space-y-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Foundation folders</CardTitle>
+                <CardDescription>
+                  The front page now prioritizes the source areas that make the registry useful before metrics modules land.
+                </CardDescription>
+              </div>
+              <div className="rounded-xl bg-slate-900 p-2 text-white dark:bg-white dark:text-slate-900">
+                <IconBinaryTree2Filled className="size-5" />
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="grid gap-3 md:grid-cols-2">
+            {foundationRoots.map((root) => {
+              const summary = getRootSummary(root.id);
+              return (
                 <Link
-                  href={`/registry/${item.name}`}
-                  className="text-sm hover:underline"
+                  key={root.id}
+                  href={toFolderHref(root.id)}
+                  className="rounded-2xl border border-slate-200 bg-white px-4 py-4 transition hover:-translate-y-0.5 hover:border-slate-400 dark:border-slate-800 dark:bg-slate-950"
                 >
-                  {item.title ?? item.name}
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                    {summary.eyebrow}
+                  </div>
+                  <div className="mt-2 flex items-center justify-between gap-3">
+                    <h3 className="font-medium text-base">{root.title}</h3>
+                    <span className="rounded-full border px-2 py-1 text-xs">
+                      {getRootEntryCount(root)}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {summary.description}
+                  </p>
                 </Link>
-                <IconSquareRoundedArrowRightFilled className="size-4 text-muted-foreground" />
+              );
+            })}
+          </CardContent>
+        </Card>
+
+        <Card className="border-white/70 bg-white/85 shadow-none dark:border-slate-800 dark:bg-slate-950/75">
+          <CardHeader className="space-y-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Installable now</CardTitle>
+                <CardDescription>
+                  Registry items that already have a clean install story while the site foundation is still being hardened.
+                </CardDescription>
               </div>
-            ))}
+              <div className="rounded-xl bg-slate-900 p-2 text-white dark:bg-white dark:text-slate-900">
+                <IconDeviceGamepad2Filled className="size-5" />
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div>
+              <div className="mb-3 flex items-center gap-2 text-sm font-medium">
+                <IconDeviceGamepad2Filled className="size-4 text-muted-foreground" />
+                UI primitives
+              </div>
+              <div className="space-y-2">
+                {uiItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={`/registry/${item.name}`}
+                    className="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2 text-sm transition hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-900"
+                  >
+                    <span>{item.title ?? item.name}</span>
+                    <IconArrowRight className="size-4 text-muted-foreground" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="mb-3 flex items-center gap-2 text-sm font-medium">
+                <IconPuzzleFilled className="size-4 text-muted-foreground" />
+                Blocks
+              </div>
+              <div className="space-y-2">
+                {blockItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={`/registry/${item.name}`}
+                    className="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2 text-sm transition hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-900"
+                  >
+                    <span>{item.title ?? item.name}</span>
+                    <IconArrowRight className="size-4 text-muted-foreground" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="mt-6 grid gap-6 lg:grid-cols-2">
+        <Card className="border-white/70 bg-white/85 shadow-none dark:border-slate-800 dark:bg-slate-950/75">
+          <CardHeader className="space-y-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Staged metrics area</CardTitle>
+                <CardDescription>
+                  These roots stay visible so the migration path is explicit, but they do not lead the website yet.
+                </CardDescription>
+              </div>
+              <div className="rounded-xl bg-slate-900 p-2 text-white dark:bg-white dark:text-slate-900">
+                <IconAwardFilled className="size-5" />
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {stagedRoots.map((root) => {
+              const summary = getRootSummary(root.id);
+              return (
+                <Link
+                  key={root.id}
+                  href={toFolderHref(root.id)}
+                  className="block rounded-2xl border border-dashed border-slate-300 px-4 py-4 transition hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-900"
+                >
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                    {summary.eyebrow}
+                  </div>
+                  <div className="mt-2 font-medium">{root.title}</div>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {summary.description}
+                  </p>
+                </Link>
+              );
+            })}
+            <div className="rounded-2xl border border-slate-200 px-4 py-4 dark:border-slate-800">
+              <div className="mb-2 font-medium text-sm">Representative staged items</div>
+              <div className="space-y-2">
+                {componentItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={`/registry/${item.name}`}
+                    className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-sm transition hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800"
+                  >
+                    <span>{item.title ?? item.name}</span>
+                    <IconArrowRight className="size-4 text-muted-foreground" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="space-y-6">
+          <div className="rounded-[1.75rem] border border-white/70 bg-white/85 p-6 dark:border-slate-800 dark:bg-slate-950/75">
+            <h2 className="font-semibold text-xl">MCP configuration</h2>
+            <p className="mb-4 mt-2 text-sm text-muted-foreground">
+              This registry still exposes MCP wiring, but the page now frames it as part of the registry foundation. Verify the published{" "}
+              <Link href="/r/registry.json" className="underline underline-offset-4">
+                `style:theme`
+              </Link>{" "}
+              matches your token sources before widening the catalog.
+            </p>
+            <MCPTabs rootUrl={process.env.VERCEL_PROJECT_PRODUCTION_URL ?? ""} />
           </div>
-        </CardContent>
-      </Card>
 
-      <div className="mb-4 grid gap-6 md:grid-cols-2">
-        <Card className="shadow-none">
-          <CardHeader className="space-y-1">
-            <div className="flex items-center justify-between">
-              <CardTitle>UI Primitives</CardTitle>
-              <div className="rounded-md bg-foreground p-1">
-                <IconDeviceGamepad2Filled className="size-5 text-primary-foreground" />
+          <div className="rounded-[1.75rem] border border-white/70 bg-white/85 p-6 dark:border-slate-800 dark:bg-slate-950/75">
+            <h2 className="font-semibold text-xl">Current registry shape</h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl bg-slate-50 px-4 py-4 dark:bg-slate-900">
+                <div className="text-2xl font-semibold tabular-nums">{counts.blocks}</div>
+                <div className="mt-1 text-sm text-muted-foreground">Blocks ready to install</div>
+              </div>
+              <div className="rounded-2xl bg-slate-50 px-4 py-4 dark:bg-slate-900">
+                <div className="text-2xl font-semibold tabular-nums">{counts.rootFolders}</div>
+                <div className="mt-1 text-sm text-muted-foreground">Top-level source roots</div>
+              </div>
+              <div className="rounded-2xl bg-slate-50 px-4 py-4 dark:bg-slate-900">
+                <div className="text-2xl font-semibold tabular-nums">{counts.totalItems}</div>
+                <div className="mt-1 text-sm text-muted-foreground">Registry items in manifest</div>
+              </div>
+              <div className="rounded-2xl bg-slate-50 px-4 py-4 dark:bg-slate-900">
+                <div className="text-2xl font-semibold tabular-nums">{counts.components}</div>
+                <div className="mt-1 text-sm text-muted-foreground">Metrics compositions waiting</div>
               </div>
             </div>
-            <CardDescription>
-              Reusable UI primitives to build your components
-            </CardDescription>
-          </CardHeader>
-
-          <CardContent>
-            <div className="space-y-2">
-              {uiItems.map((item) => (
-                <div
-                  key={item.name}
-                  className="flex items-center justify-between"
-                >
-                  <Link
-                    href={`/registry/${item.name}`}
-                    className="text-sm hover:underline"
-                  >
-                    {item.title ?? item.name}
-                  </Link>
-                  <IconSquareRoundedArrowRightFilled className="size-4 text-muted-foreground" />
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-none">
-          <CardHeader className="space-y-1">
-            <div className="flex items-center justify-between">
-              <CardTitle>Components</CardTitle>
-              <div className="rounded-md bg-foreground p-1">
-                <IconAwardFilled className="size-5 text-primary-foreground" />
-              </div>
-            </div>
-            <CardDescription>
-              Compound components using common patterns
-            </CardDescription>
-          </CardHeader>
-
-          <CardContent>
-            <div className="space-y-2">
-              {componentItems.map((item) => (
-                <div
-                  key={item.name}
-                  className="flex items-center justify-between"
-                >
-                  <Link
-                    href={`/registry/${item.name}`}
-                    className="text-sm hover:underline"
-                  >
-                    {item.title ?? item.name}
-                  </Link>
-                  <IconSquareRoundedArrowRightFilled className="size-4 text-muted-foreground" />
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="mb-4 rounded-lg border bg-card p-6">
-        <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">MCP</h2>
-          <p className="mb-4 text-muted-foreground">
-            Integrate this registry with AI IDEs using Model Context Protocol
-            (MCP) using the following configuration. This utilizes this
-            Registry's theme tokens and CSS variables with the Shadcn CLI. To
-            ensure this works, double check that the{" "}
-            <Link href="/r/registry.json">
-              <code className="inline text-sm tabular-nums underline">
-                style:theme
-              </code>
-            </Link>{" "}
-            contains the same colors as your{" "}
-            <code className="inline text-sm tabular-nums">tokens.css</code>
-          </p>
-
-          <MCPTabs rootUrl={process.env.VERCEL_PROJECT_PRODUCTION_URL ?? ""} />
+          </div>
         </div>
-      </div>
-
-      <div className="rounded-lg border bg-card p-6">
-        <div className="flex flex-col gap-2">
-          <h2 className="font-semibold text-xl">About</h2>
-          <p className="text-muted-foreground">
-            This registry serves as a central repository for all UI components
-            and blocks used in your applications. It helps maintain consistency
-            across your products and speeds up development by providing
-            ready-to-use components. Each component and block is documented with
-            examples. You can browse components by category, search for specific
-            components, and view examples of how they are used in different
-            contexts.
-          </p>
-          <p className="mt-2 text-muted-foreground">
-            To get begin, start with a block{" "}
-            <span className="italic">
-              (like the{" "}
-              <a href="/registry/blank" className="underline">
-                blank block
-              </a>
-              )
-            </span>{" "}
-            and click the <span className="font-bold">Open in v0</span> button.
-            You can also open individual UI primitives or components in v0 if
-            you want a smaller or more specific starting point.
-          </p>
-
-          <p className="mt-4 text-[#1B1F23] dark:text-white">
-            <a href="https://github.com/vercel/registry-starter">
-              <svg
-                viewBox="0 0 1024 1024"
-                xmlns="http://www.w3.org/2000/svg"
-                role="graphics-symbol"
-                className="mr-1 inline size-4 fill-[#1B1F23] dark:fill-white"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"
-                  transform="scale(64)"
-                />
-              </svg>
-              <span className="underline">GitHub Repository</span>
-            </a>
-          </p>
-        </div>
-      </div>
+      </section>
     </main>
   );
 }

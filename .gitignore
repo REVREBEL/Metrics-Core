@@ -38,3 +38,4 @@ coverage/
 
 # UI package generated output
 packages/ui/public/r/
+node_modules
