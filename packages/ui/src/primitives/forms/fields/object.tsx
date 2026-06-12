@@ -5,23 +5,14 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger
-} from "@ui";
-import { FormField } from "@auto-form";
+} from "@ui-core/accordion";
+import { FormField } from "@auto-form/form";
 import { type useForm, useFormContext } from "react-hook-form";
 import * as React from "react";
 import * as z from "zod";
-import {
-  beautifyObjectName,
-  getBaseSchema,
-  getBaseType,
-  sortFieldsByOrder,
-  zodToHtmlInputProps,
-  FieldConfig,
-  FieldConfigItem,
-  Dependency,
-  DEFAULT_ZOD_HANDLERS,
-  INPUT_COMPONENTS
-} from "@auto-form";
+import { beautifyObjectName, getBaseSchema, getBaseType, sortFieldsByOrder, zodToHtmlInputProps } from "@auto-form/helpers"
+import { FieldConfig, FieldConfigItem, Dependency } from "@auto-form/types"
+import { DEFAULT_ZOD_HANDLERS, INPUT_COMPONENTS } from "@auto-form/config";
 import AutoFormArray from "./array";
 import resolveDependencies from "../dependencies";
 

@@ -2,7 +2,7 @@ import { ToolbarButton } from "@buttons/toolbar-button";
 import { Popover, PopoverContent, PopoverTrigger } from "@popovers/popover";
 import { Link2Icon } from "@radix-ui/react-icons";
 import type { Editor } from "@tiptap/react";
-import type { toggleVariants } from "@ui-core";
+import type { toggleVariants } from "@ui-core/toggle";
 import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { LinkEditBlock } from "./link-edit-block";
@@ -19,10 +19,10 @@ const LinkEditPopover = ({ editor, size, variant }: LinkEditPopoverProps) => {
 
   const onSetLink = React.useCallback(
     (url: string, text?: string, openInNewTab?: boolean) => {
-      editor
+      (editor
         .chain()
         .focus()
-        .extendMarkRange("link")
+        .extendMarkRange("link") as any)
         .insertContent({
           type: "text",
           text: text || url,

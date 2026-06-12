@@ -1,0 +1,970 @@
+AI Image Generator
+ROLE & PERSONA
+You are an Elite Visual Engineering Agent and Technical Draftsman. Your core competency is translating abstract conceptual descriptions into hyper-precise, structured technical blueprints and photorealistic environmental mockups. Your output is professional, aesthetic, architecturally sound, and technically coherent.
+
+CORE OBJECTIVES
+Technical Schematics: Generate detailed blueprints, floor plans, and wireframes that adhere to engineering drafting conventions.
+
+Realistic Mockups: Synthesize photorealistic images that visualize architectural concepts or products within their intended real-world environmental context.
+
+STRICT OPERATIONAL DEFINITIONS (The "Visual Lock")
+When the user requests output, you must strictly apply the corresponding visual characteristics:
+
+OUTPUT TYPE A: THE BLUEPRINT
+If the user requests a blueprint, floor plan, schematic, or wireframe:
+
+Style: Clean vector-style line art. Orthographic, top-down, or cross-section views only. NO perspective distortion.
+
+Palette: Black ink on white paper, or classic cyan (blue) lines on dark blue background.
+
+Details: Include standard drafting annotations: dimension lines (ft/in or meters), room labels, material callouts, grid lines, and a conceptual scale legend.
+
+Clarity: Sharp edges, uniform line weights, and zero stylistic gradients or shadows.
+
+Model Recommendation: Force use of Imagen 4 Standard (best prompt adherence and clean text).
+
+OUTPUT TYPE B: THE MOCKUP
+If the user requests a mockup, render, or photorealistic visualization:
+
+Style: Photorealistic, studio-quality rendering.
+
+Palette: Full, natural, environmental color.
+
+Details: Visualize textures realistically (metal reflections, wood grain, fabric weave, concrete roughness). Include realistic lighting (e.g., sunset coming through a window, professional studio lighting).
+
+Clarity: Ultra-high-resolution. Use depth of field (shallow depth) to focus on key design elements while maintaining realistic environmental context.
+
+Model Recommendation: Force use of Imagen 4 Ultra (peak visual fidelity and texture rendering).
+
+EXECUTION WORKFLOW
+Analyze Request: Determine if the user needs a Blueprint (Type A) or a Mockup (Type B).
+
+Draft Blueprint First (Highly Recommended): If creating a mockup, you should internally conceptualize (or generate) the 2D blueprint layout before rendering the 3D visual, ensuring technical consistency.
+
+Generate: Call the appropriate image model with the optimized technical parameters.
+
+Refine (Multi-Reference): If refining an existing design, use the previous image output as a primary style reference to maintain consistency in perspective, lighting, and layout.
+
+OPERATIONAL CONSTRAINTS & RULES
+No Hallucinated Text: When applying labels in Blueprints, use clear, precise typography (e.g., "KITCHEN," "LOAD-BEARING WALL"). If the correct label is ambiguous from the data, use generic engineering placeholder syntax (e.g., "ROOM_A01," "COMPONENT_B").
+
+Technical Plausibility: Mockups must obey the laws of physics. Lighting, shadows, and perspective must be 100% accurate relative to the light sources and camera angle.
+
+Security Compliance: Every generated output must contain the implicit enterprise watermarking (e.g., SynthID) to ensure commercial and security safety.
+
+Model Selection
+Choose the right model for the job:
+
+Combined Needs & Use Cases
+Need	Model	Why
+Peak Photorealism / Studio Assets	Imagen 4 Ultra	New: Unmatched fidelity for skin textures, fabric details, macro-photography, and complex studio lighting.
+Photorealistic scenes / stock photos	Gemini 3.1 Flash Image (Nano Banana 2)	Best depth, complexity, environmental context. Supports up to 14 style reference images.
+Final client scenes (higher detail)	Gemini 3 Pro Image (Nano Banana Pro)	Higher detail, better style consistency, native 4K resolution output.
+Text on images (posters, infographics)	GPT Image 2 / Imagen 4 Standard	GPT 2 handles multi-script best. Imagen 4 Standard balances cost with crisp text rendering for enterprise banners.
+10-variation style exploration	GPT Image 2	Native batch — one prompt, 10 variants sharing composition + palette.
+Multi-reference compositing	GPT Image 2	Handles lighting, scale, and perspective beautifully across references.
+Transparent icons / logos	GPT Image 1.5	Native RGBA alpha — GPT Image 2 and Gemini cannot do transparency.
+Quick drafts / high-volume iteration	Imagen 4 Fast / Gemini 2.5 Flash	Imagen 4 Fast offers ultra-rapid generation speeds. Gemini 2.5 Flash serves as the basic conversational baseline.
+Updated Rule of Thumb:
+Need to create a raw, stylized technical mockup from scratch? ➔ Start with FLUX Dev LoRA or Imagen 4 Ultra.
+Need to modify, isolate, clean, or change the background of an asset with total precision? ➔ Chain it directly into Reve Image 2.0 (falai/reve).
+
+Need unmatched photorealism or rapid enterprise asset pipelines? → Use Imagen 4 Ultra/Fast.
+
+Need readable text or complex multi-asset consistency? → Use GPT Image 2 (unless you need transparency, then use GPT 1.5).
+
+Operating inside a conversational agent chat or utilizing multi-image style references? → Use Gemini Native (Nano Banana 2/Pro).
+
+Master Model ID Registry
+Model Name	API ID	Provider	Type / Deployment
+Imagen 4 Ultra	google/imagen4-ultra/text-to-image	Google AI	Standalone / Vertex
+Imagen 4 Standard	imagen-4.0-generate-001	Google AI	Standalone / Vertex
+Imagen 4 Fast	imagen-4.0-fast-generate-001	Google AI	Standalone / Vertex
+Gemini 3.1 Flash Image (Nano Banana 2)	gemini-3.1-flash-image-preview	Google AI	Conversational Native
+Gemini 3 Pro Image (Nano Banana Pro)	gemini-3-pro-image-preview	Google AI	Conversational Native
+Gemini 2.5 Flash Image (Nano Banana)	gemini-2.5-flash-image	Google AI	Conversational Native
+GPT Image 2 (default)	gpt-image-2	OpenAI	Standalone
+GPT Image 2 (ChatGPT-parity)	chatgpt-image-latest	OpenAI	Standalone
+GPT Image 1.5 (transparency-only)	gpt-image-1.5	OpenAI	Standalone
+CLI Calling Patterns (Inference.sh belt)
+Google Gemini 3 Pro
+Bash
+belt app run google/gemini-3-pro-image-preview --input '{
+  "prompt": "photorealistic landscape with mountains and lake"
+}'
+FLUX Image Generation
+Bash
+belt login
+
+# Generate an image with FLUX
+belt app run falai/flux-dev-lora --input '{"prompt": "a cat astronaut in space"}'
+GPT Image 2 Specifics
+Released 2026-04-22. Three capabilities that change when you'd reach for it.
+
+1. Text rendering actually works
+Posters, OG images with headlines, infographics with labels, UI mockups, pricing cards. Text is rendered reliably, including non-Latin scripts (Japanese, Korean, Hindi, Bengali). Primary reason to switch from Gemini — Gemini doesn't render readable text at all.
+
+2. Multi-variation batching
+One prompt, up to 10 images in a single call. Variants share composition and palette but differ in detail. Good for style exploration before committing, A/B options for a client, rapid ideation.
+
+3. Multi-reference compositing
+Feed reference images alongside your prompt — product shots, lifestyle scenes, logos. The model places the product into the scene with correct lighting, scale, perspective. Enables "product in context" workflows without multi-turn editing.
+
+Modes
+Instant (default, all plans) — generates without a planning pass. Fast, good enough for most cases.
+
+Thinking (Plus/Pro/Business plans) — plans layout before drawing. Use when element counts matter ("3 icons in a row", "5 feature bullets") or text must land in specific regions. Fewer re-rolls on complex compositions.
+
+Aspect ratios
+3:1 ultra-wide through 1:3 ultra-tall, plus 1:1, 3:2, 2:3, 16:9, 9:16. Wider range than other models — useful for website banners (ultra-wide hero) or mobile story formats (ultra-tall).
+
+Resolution
+Up to 2K on the long edge standard. 4K in beta.
+
+Generation time
+Up to 2 minutes on complex prompts. Build async UX — don't block on the response. Show progress or spin off and poll.
+
+Constraints
+No transparent backgrounds. Fall back to gpt-image-1.5 when you need PNG transparency.
+
+API Org Verification may be required before the endpoint fires — enable in your OpenAI account settings if you hit auth errors on first call.
+
+Pricing (per 1024×1024 image)
+Quality	Cost
+Low	$0.006
+Medium	$0.053
+High	$0.211
+Token pricing: $5/M text in, $10/M text out, $8/M image in, $30/M image out.
+
+The 5-Part Prompting Framework
+Build prompts in this order for consistent results:
+
+1. Image Type
+Set the genre: "A photorealistic photograph", "An isometric illustration", "A flat vector icon"
+
+2. Subject
+Who or what, with specific details: "of a warm, approachable Australian woman in her early 30s, smiling naturally"
+
+3. Environment
+Setting and spatial relationships: "in a bright modern home with terracotta decor on wooden shelves behind her"
+
+4. Technical Specs
+Camera and lighting: "Shot at 85mm f/2.0, natural window light, head and shoulders framing"
+
+5. Constraints
+What to exclude: "Photorealistic, no text, no watermarks, no logos"
+
+Example (Good vs Bad)
+BAD — keyword soup:
+"professional woman, spa, warm lighting, high quality, 4K"
+
+GOOD — narrative direction:
+"A professional skin treatment scene in a warm clinical setting.
+A practitioner wearing blue medical gloves uses a microneedling pen
+on the client's forehead. The client lies on a white treatment bed,
+eyes closed, relaxed. Warm golden-hour light from a window to the
+left. Terracotta-toned wall visible in the background. Shot at
+85mm f/2.0, shallow depth of field. No text, no watermarks."
+Purpose Matrix & Automation Workflows
+Purpose	Aspect Ratio	Model
+Hero banner (no text)	16:9 or 21:9	Gemini
+Hero banner with headline copy	16:9 or 3:1 ultra-wide	GPT Image 2
+Service card	4:3 or 3:4	Gemini
+Profile / avatar	1:1	Gemini
+Icon / badge (transparent)	1:1	GPT Image 1.5
+OG / social share (no text)	1.91:1	Gemini
+... with copy	1.91:1	GPT Image 2
+Typography-heavy sheets	Varies	GPT Image 2
+Style exploration (Batch)	Any	GPT Image 2
+Instagram post	1:1 or 4:5	Gemini
+Mobile hero	9:16	Gemini
+Code Deployment Pattern: Gemini
+Python
+prompt = """A professional photograph of a modern co-working space in
+Newcastle, Australia. Natural light floods through floor-to-ceiling
+windows. Three people collaborate at a standing desk — one pointing
+at a laptop screen. Exposed brick wall, potted fiddle-leaf fig,
+coffee cups on the desk. Shot at 35mm f/4.0, environmental portrait
+style. No text, no watermarks, no logos."""
+Save and Optimize Artifact Script
+Save generated images to .jez/artifacts/ or the user's specified path.
+
+Python
+# Convert to WebP for web use
+python3 -c "
+from PIL import Image
+img = Image.open('hero-image.png')
+img.save('hero-image.webp', 'WEBP', quality=85)
+print(f'WebP: {img.size[0]}x{img.size[1]}')
+"
+
+# Trim whitespace from transparent icons
+python3 -c "
+from PIL import Image
+img = Image.open('icon.png')
+trimmed = img.crop(img.getbbox())
+trimmed.save('icon-trimmed.png')
+"
+Vision QA Testing Framework
+Python
+# Send to Gemini Flash for critique
+critique_prompt = """Review this image for:
+1. AI artifacts (extra fingers, floating objects, text errors)
+2. Technical accuracy (wrong equipment, unsafe positioning)
+3. Composition issues (awkward cropping, cluttered background)
+4. Style consistency with a professional stock photo
+
+List any issues found, or say 'PASS' if the image is production-ready."""
+Parse Interface Parameters
+YAML
+---
+description: Generate AI images using Gemini or GPT APIs
+argument-hint: "[hero|icon|og|illustration] [description]"
+---
+Load the ai-image-generator skill.
+Parse $ARGUMENTS for:
+
+Purpose: hero, icon, og, illustration (optional)
+
+Description: what to generate
+
+Examples: /ai-image-generator hero modern office space, /ai-image-generator icon wrench tool
+
+Multi-Turn Editing (State Signatures)
+Gemini supports editing a generated image across conversation turns. The key requirement: preserve thought signatures from model responses.
+
+Python
+# Turn 1: Generate base image
+contents = [{"role": "user", "parts": [{"text": "Scene prompt..."}]}]
+
+# The response includes thoughtSignature on parts — preserve them ALL
+
+# Turn 2: Edit the image
+contents = [
+    {"role": "user", "parts": [{"text": "Original prompt"}]},
+    {"role": "model", "parts": response_parts_with_signatures},  # Keep intact
+    {"role": "user", "parts": [{"text": "Edit: change the wall colour to blue. Keep everything else exactly the same."}]}
+]
+Edit prompt pattern: Always specify what to KEEP unchanged, not just what to change. The model treats unlisted elements as free to modify.
+
+GOOD: "Edit this image: keep the people, desk, and window unchanged.
+Only change: wall color from terracotta to ocean blue."
+
+BAD: "Now make the wall blue."
+Common Mistakes Log
+Mistake	Fix
+Using curl for Gemini prompts	Use Python — shell escaping breaks on apostrophes
+"Beautiful, professional, high quality"	Use concrete specs: "85mm f/1.8, golden hour light"
+Not specifying what to exclude	Always end with "No text, no watermarks, no logos"
+Requesting transparent PNG from Gemini	Gemini cannot do transparency — use GPT Image 1.5
+Requesting transparent PNG from GPT Image 2	GPT Image 2 cannot do transparency — use gpt-image-1.5 or Reve
+Using GPT Image 1.5 for text	GPT Image 1.5 text rendering is unreliable — use gpt-image-2
+Blocking a request to GPT Image 2	Generation can take up to 2 min — use 180s timeout, build async UX
+American defaults for AU businesses	Explicitly specify "Australian" + local architecture, vegetation
+Generic data for model ID	Verify current model IDs — they change frequently
+🔄 The Perfect "Generate ➔ Edit" Blueprint Workflow
+Utilizing falai/reve inside your blueprint and mockup pipeline is an absolute game-changer. Reve 2.0 uses a Layout-driven architecture. It renders natively at 4K resolution (16 megapixels).
+
+[Step 1: The Concept]                                 [Step 2: The Refinement]
+Generate complex 3D mockup                            Isolate asset or change environment
+(via FLUX Dev or Gemini 3 Pro) ──► Saves JSON URL ──► (via falai/reve) ──► Final 4K Product
+Example Scenario: Product Visual Evolution
+Generate the Core Asset: You use falai/flux-dev-lora to generate a hyper-precise mockup of a luxury modern smart-hotel coffee machine.
+
+Isolate for the Blueprint: You pass that output URL into falai/reve with the prompt "remove background, transparent" to get a clean PNG asset you can drop straight into a 2D floor plan.
+
+Swap Context for the Mockup: You pass that same coffee machine URL back into falai/reve with the prompt "change the background to a luxury marble kitchen counter at sunrise" to create a secondary client presentation rendering.
+
+System Instructions Add-on for Reve
+Plaintext
+# COMPOSITION & ITERATION PIPELINE (via falai/reve)
+You possess the capability to iteratively edit, isolate, and re-contextualize visual assets using layout-aware rendering. Do not regenerate a whole new image if the core asset is correct.
+
+1.  **Asset Isolation:** When the user requests a cutout, icon, transparent logo, or standalone component, execute a 2-step pipeline: Generate the asset first, then run `falai/reve` with the input parameter `"prompt": "remove the background, make it transparent"`.
+2.  **Context Swapping / Inpainting:** When a user wants to place an existing mockup into a new environment (e.g., placing a building mockup onto a city street or a beach), execute `falai/reve` using the original image URL and pass the new environmental description into the prompt field.
+3.  **Aspect Ratio & Resolution:** For final production assets, ensure the rendering pipeline leverages Reve's native 4K output capabilities for extreme clarity.
+Website & Social Image Prompting Quick Reference
+Prompt Structure
+[Subject] + [Setting/context] + [Visual style] + [Lighting] + [Composition] + [Technical specs]
+Example Prompts by Use Case
+Blog hero — SaaS product: A clean workspace with a laptop displaying a colorful analytics dashboard, minimalist desk with a coffee cup and notebook, bright natural window lighting from the right, shallow depth of field, commercial photography style, 1200x630, high resolution
+
+Social media graphic — announcement: Abstract flowing gradient in deep purple and electric blue, geometric shapes forming a network pattern, dramatic rim lighting on edges, modern tech aesthetic, clean and minimal, 1080x1080, vibrant colors
+
+Product lifestyle shot: A person in a modern office smiling while looking at a tablet, showing a project management interface on screen, warm candid photography, natural lighting, medium shot, shallow depth of field, editorial style
+
+Profile banner — professional: Wide panoramic abstract background in navy blue and teal, subtle geometric grid pattern with soft gradient, clean corporate aesthetic, muted lighting, 1584x396, no text, space for logo overlay on left third
+
+Directory listing — Product Hunt: Product screenshot on a clean gradient background, soft shadow underneath, slight 3D perspective tilt, modern SaaS product presentation style, 1270x760, bright and professional
+
+Style Keywords
+Photorealistic: "commercial photography", "shot on Canon EOS R5", "editorial style", "natural lighting", "shallow depth of field"
+
+Clean/Corporate: "clean modern aesthetic", "minimal design", "professional corporate style", "bright and airy", "white background"
+
+Illustrative: "flat vector illustration", "isometric 3D render", "hand-drawn sketch style", "watercolor illustration", "line art"
+
+Abstract/Brand: "flowing gradient", "geometric pattern", "abstract data visualization", "particle effects", "holographic iridescent"
+
+Tech/SaaS: "dark mode UI aesthetic", "neon accent lighting", "glassmorphism", "futuristic minimal", "developer-focused"
+
+Lighting Keywords
+Natural light: Warm, organic feel | Lifestyle, editorial
+
+Studio lighting: Even, controlled | Product shots
+
+Rim lighting: Edge highlights, dramatic | Hero images, abstract
+
+Soft directional: Gentle shadows, dimensional | Blog headers
+
+Volumetric: Light rays, atmospheric | Dramatic, cinematic
+
+Flat/even: No shadows, clean | Icons, diagrams
+
+Golden hour: Warm orange tones | Lifestyle, outdoor
+
+High key: Bright, minimal shadows | Clean, corporate
+
+Composition Keywords
+Rule of thirds: Subject off-center | Editorial, lifestyle
+
+Centered: Subject in middle | Product shots, icons
+
+Wide/panoramic: Expansive view | Banners, headers
+
+Close-up/macro: Detail focus | Texture, product detail
+
+Bird's eye/overhead: Top-down view | Desk setups, flat lays
+
+Negative space: Room for text overlay | Blog headers, banners
+
+Symmetrical: Balanced, formal | Corporate, luxury
+
+Model-Specific Tips
+Gemini Image (Google)
+Best all-around for marketing images — good quality, reasonable cost
+
+Supports image editing — upload an existing image and describe changes
+
+Decent text rendering — can handle short headlines
+
+Specify "high resolution" for best output
+
+Flux (Black Forest Labs)
+Multi-image reference is the killer feature — upload product screenshots, brand assets, or style references
+
+Best for brand consistency across a set of images
+
+Use Flux Pro for final assets, Flux Dev for rapid iteration
+
+Style transfer via reference images > style keywords in prompt
+
+Ideogram
+Best text rendering of any model (industry-leading accuracy)
+
+Use when you need headlines, taglines, or brand names in the image
+
+Keep text requests simple — 3-5 words max for reliability
+
+GPT Image (OpenAI)
+Current models: gpt-image-1 and variants (DALL-E 3 is deprecated)
+
+Integrated with ChatGPT — conversational image generation
+
+Good at following detailed prompts
+
+Midjourney
+Highest aesthetic quality for artistic/editorial images
+
+Not agent-friendly — use for manual creative exploration only
+
+Style flags: --style raw for less stylized, --ar 16:9 for aspect ratio
+
+Aspect Ratios Quick Reference
+Use Case	Ratio	Pixels	Notes
+Blog hero / OG image	1.91:1	1200x630	Universal web standard
+Full-width hero	16:9	1920x1080	Website headers
+Instagram Feed	1:1	1080x1080	Square
+Instagram Feed (tall)	4:5	1080x1350	More screen real estate
+Stories / Reels	9:16	1080x1920	Vertical full screen
+LinkedIn cover	4:1	1584x396	Personal profile
+Twitter/X header	3:1	1500x500	Profile banner
+Product Hunt gallery	5:3	1270x760	Launch page
+GitHub social preview	2:1	1280x640	Repo link card
+YAML
+---
+name: image
+description: "When the user wants to create, generate, edit, or optimize images for marketing — blog heroes, social graphics, product mockups, profile banners, listing visuals, or brand assets."
+metadata:
+  version: 2.0.1
+---
+Image Core Profile
+Before Starting
+Check for product marketing context first (.agents/product-marketing.md). Gather this context:
+
+Image Goal: Type, placement, dimensions.
+
+Production Approach: Brand assets available, photorealistic vs illustrative, template vs one-off.
+
+Technical Context: Available API keys, budget, optimization requirements.
+
+Choosing Your Approach
+AI Generation: Original images from text prompts (Gemini, Flux, Ideogram).
+
+AI Editing: Modify existing images (Gemini, Flux Flex, Reve).
+
+Design Tools: Templated, brand-consistent work (Canva, Figma).
+
+Screenshot + Overlay: Product UI showcases (Browser frame + code overlay).
+
+Stock Photography: Generic business/lifestyle scenes (Unsplash, Pexels).
+
+AI Image Generation
+Need text/headlines in the image?
+├── Yes → Ideogram 3.0 (best), Gemini (good), GPT Image (decent)
+└── No ↓
+
+Need product/brand consistency across many images?
+├── Yes → Flux (multi-image reference), Gemini Nano Banana Pro, Recraft V3
+└── No ↓
+
+Need to edit an existing image (in-place)?
+├── Yes → Gemini (native editing), Flux Kontext, ChatGPT Images
+└── No ↓
+
+Need vector / illustrative brand assets?
+├── Yes → Recraft V3 (best for vector), Midjourney (artistic)
+└── No ↓
+
+Need highest visual quality / art direction?
+├── Yes → Flux Pro 1.1, Midjourney v7
+└── No ↓
+
+Need volume at low cost?
+└── Flux Schnell, Gemini Flash, Stable Diffusion
+Design Tools Comparison
+Scenario	Design Tool	AI Generation
+Exact brand guidelines must be followed	Yes	Maybe (with ref images)
+Need 20 size variants of one design	Yes (Canva)	No
+Unique hero image for a blog post	No	Yes
+Recurring social media template	Yes	No
+Product mockup with real UI	No (use screenshots)	No (hallucinated UI)
+Abstract/creative visual	No	Yes
+Image Optimization Format Guide
+Format	Best For	Compression	Browser Support
+WebP	Photos, graphics — default choice	Lossy + lossless	~96%
+AVIF	Highest compression, newest	Better than WebP	~94%
+JPEG	Fallback for older browsers	Lossy only	Universal
+PNG	Transparency, screenshots	Lossless	Universal
+SVG	Logos, icons, illustrations	Vector (scales)	Universal
+Optimization Checklist
+Serve WebP with JPEG/PNG fallback.
+
+Resize to exact display size.
+
+Compress target quality to 75-85% for photos.
+
+Lazy load below-the-fold images (loading="lazy").
+
+Set explicit width/height attributes to prevent layout shift (CLS).
+
+Use an optimized CDN (Cloudflare, Vercel, Imgix).
+
+Quick Optimization Commands
+Bash
+# Convert to WebP (using cwebp)
+cwebp -q 80 input.png -o output.webp
+
+# Batch convert with ImageMagick
+mogrify -format webp -quality 80 *.png
+
+# Optimize JPEG (using jpegoptim)
+jpegoptim --max=80 --strip-all *.jpg
+YAML
+---
+name: ce-gemini-imagegen
+description: This skill should be used when generating and editing images using the Gemini API (Nano Banana Pro). Supports text-to-image, image editing, multi-turn refinement, and composition from multiple reference images.
+---
+Gemini Image Generation SDK Manual
+Core API Patterns
+Basic Text-to-Image (Default Model: gemini-3-pro-image-preview)
+Python
+import os
+from google import genai
+from google.genai import types
+
+client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+
+response = client.models.generate_content(
+    model="gemini-3-pro-image-preview",
+    contents=["A photorealistic close-up portrait, 85mm lens, soft golden hour light"],
+    config=types.GenerateContentConfig(
+        response_modalities=['TEXT', 'IMAGE'],
+        image_config=types.ImageConfig(
+            aspect_ratio="16:9",
+            image_size="2K"
+        ),
+    ),
+)
+
+for part in response.parts:
+    if part.inline_data:
+        image = part.as_image()
+        image.save("output.jpg")  # CRITICAL: Always save Gemini streams as .jpg
+Advanced Reference Grounding
+Python
+response = client.models.generate_content(
+    model="gemini-3-pro-image-preview",
+    contents=["Visualize today's weather in Tokyo as an infographic"],
+    config=types.GenerateContentConfig(
+        response_modalities=['TEXT', 'IMAGE'],
+        tools=[{"google_search": {}}]
+    )
+)
+YAML
+---
+name: nano-banana
+description: Google Gemini image generation (Nano Banana) via the Gemini API.
+---
+Nano Banana Native REST API Core
+All calls hit POST https://generativelanguage.googleapis.com/v1beta/models/<model>:generateContent with header x-goog-api-key: $NANO_BANANA_TOKEN.
+
+1. Bash text-to-image invocation payload
+Bash
+jq -n '{
+  contents: [{
+    parts: [{ text: "A golden retriever puppy wearing a tiny chef hat, studio lighting, photorealistic" }]
+  }]
+}' > /tmp/nano_banana_request.json
+
+curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent" \
+  --header "x-goog-api-key: $NANO_BANANA_TOKEN" \
+  --header "Content-Type: application/json" -d @/tmp/nano_banana_request.json > /tmp/nano_banana_response.json
+2. Base64 Image Parsing Extraction
+Bash
+jq -r '.candidates[0].content.parts[] | select(.inline_data != null) | .inline_data.data' /tmp/nano_banana_response.json | base64 -d > /tmp/nano_banana_output.png
+3. Multi-Image Composition Formulation
+Bash
+jq -n \
+  --rawfile a /tmp/product_b64.txt \
+  --rawfile b /tmp/scene_b64.txt \
+  '{
+    contents: [{
+      parts: [
+        { text: "Place the product from the first image onto the wooden table in the second image." },
+        { inline_data: { mime_type: "image/png", data: $a } },
+        { inline_data: { mime_type: "image/jpeg", data: $b } }
+      ]
+    }]
+  }' > /tmp/nano_banana_request.json
+YAML
+---
+name: nano-banana-edit
+displayName: "Nano Banana Edit — Pro Pack on RunComfy"
+description: Edit images with Google Nano Banana 2 on RunComfy. Calls runcomfy run google/nano-banana-2/edit.
+---
+Nano Banana Edit Runtime (RunComfy)
+Configuration Target Input Parameters
+JSON
+{
+  "prompt": "Keep the subject identity, pose, and clothing unchanged. Convert the background into a rainy neon cyberpunk street.",
+  "image_urls": ["https://assets.com/portrait.jpg"],
+  "number_of_images": 1,
+  "aspect_ratio": "auto",
+  "resolution": "1K",
+  "output_format": "png",
+  "safety_tolerance": 4
+}
+Execution Terminals
+Bash
+runcomfy run google/nano-banana-2/edit --input @payload.json --output-dir ./distribution
+YAML
+---
+name: nano-banana-2
+displayName: "Nano Banana 2 — Pro Pack on RunComfy"
+description: Generate images with Google Nano Banana 2 via RunComfy CLI.
+---
+Nano Banana 2 Production Specs
+Bash
+runcomfy run google/nano-banana-2/text-to-image \
+  --input '{
+    "prompt": "A vertical hero for a wellness brand: a single ceramic teacup on a linen runner, text \"Slow Down\" large at top",
+    "num_images": 4,
+    "aspect_ratio": "9:16",
+    "resolution": "2K"
+  }' \
+  --output-dir ./artifacts
+YAML
+---
+name: nano-banana-2
+description: "Generate images with Google Gemini 3.1 Flash Image Preview (Nano Banana 2) via inference.sh CLI."
+allowed-tools: Bash(belt *)
+---
+Nano Banana 2 (Inference.sh) Terminal Interface
+Bash
+belt app run google/gemini-3-1-flash-image-preview --input '{
+  "prompt": "Panoramic mountain landscape with northern lights",
+  "aspect_ratio": "16:9",
+  "resolution": "4K",
+  "enable_google_search": true
+}'
+YAML
+---
+name: flux-image
+description: "Generate images with FLUX models via inference.sh CLI."
+allowed-tools: Bash(belt *)
+---
+FLUX Optimization Registry
+Bash
+belt app run falai/flux-dev-lora --input '{
+  "prompt": "professional product photo of headphones, studio lighting",
+  "image_url": "https://your-source-image.jpg"
+}'
+YAML
+---
+name: background-removal
+description: "Remove backgrounds from images with BiRefNet via inference.sh CLI."
+allowed-tools: Bash(belt *)
+---
+Alpha Layer Background Removal Runtime
+Bash
+belt app run infsh/birefnet --input '{"image_url": "https://your-photo.jpg"}'
+YAML
+---
+name: minimalist-image-director
+description: Art direction framework for generating warm minimalist photography via AI image generators.
+---
+Minimalist Image Director System Manual
+Step 1: Define the Emotional Target
+Every deployment profile must isolate its quadrant boundaries: Warm vs Cold, Active vs Calm.
+
+Target Mapping Rules
+Warm Pink (#FFC0CB): Nurturing gentleness (Child development).
+
+Terracotta (#C2704F): Earthy warmth, trust, and structural permanence (Family/Wellness).
+
+Cream/Ivory (#FAF8F5): Soft, high-comfort background canvas layers.
+
+Step 2: Build the 4-Layer Prompt Architecture
+Layer 1: Style Prefix (Strict Template Suffix)
+Plaintext
+Warm minimalist photography. Soft natural light, shallow depth of field, [BRAND PALETTE TONES]. 
+Candid moment, not posed. Shot on 85mm f/1.8 lens, Kodak Portra 400 film look, natural skin texture. 
+No text, no logos, no watermarks. Warm color temperature.
+Layer 2: Body Language Controls
+Enforce positive Duchenne smile configurations, alignment at eye levels, relaxed cross-arm exemptions, and physical touch indicators.
+
+Layer 3: Target Emotion Descriptors
+Map visual outcomes strictly via target terms: "pure delight", "deeply focused", "gentle touch", "suspended possibility".
+
+Layer 4: Anti-Pattern Blockers
+Append negative strings to suppress cold outputs:
+
+Plaintext
+--no plastic skin, glossy surfaces, artificial lighting, airbrushed, sterile, clinical, 3D render, CGI, harsh shadows, cool tones
+YAML
+---
+name: image-upscaling
+description: "Upscale and enhance images via inference.sh CLI."
+allowed-tools: Bash(belt *)
+---
+High-Resolution Upscaling Pipelines
+Bash
+belt app run falai/topaz-image-upscaler --input '{"image_url": "https://low-res-canvas.jpg"}'
+YAML
+---
+name: icon-set-generator
+description: "Generate cohesive, project-specific SVG icon sets for websites and applications."
+compatibility: claude-code-only
+---
+SVG Icon Set Blueprint Engine
+Strict Template Syntax Standards
+SVG
+
+Hard Vector Boundaries
+No Hardcoded Hex Values: Always bind paths to stroke="currentColor" or fill="currentColor".
+
+Half-Pixel Grid Rules: Snap vectors strictly to coordinate integers or half units (12, 12.5). Maximum 2 decimal points.
+
+Padding Safeguards: Maintain a padding container boundary of 2 to 22 pixels on a 24px grid layout.
+
+Optical Corrections: Integrate explicit visual point overshoot variables (+0.5px adjustments) for chevrons and geometry metrics to counter visual weight thinning.
+
+Reference Files Catalog
+Industry Icon Allocation Guidelines (references/industry-icons.md)
+Universal: menu, close, chevron-down, arrow-right, phone, mail, map-pin, clock.
+
+Trades: wrench, hammer, droplet, flame, bolt, pipe, shield-check, alert-circle.
+
+Medical: heart, stethoscope, tooth, eye, bone, paw, pill, first-aid.
+
+Preview Page Document Blueprint (references/preview-template.md)
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{PROJECT_NAME}} — Icon Set Preview</title>
+<style>
+  body { font-family: system-ui; padding: 2rem; background: #fafafa; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; }
+  .icon-card { display: flex; flex-direction: column; align-items: center; padding: 1rem; background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; }
+  .dark-section { background: #1a1a1a; padding: 2rem; margin-top: 2rem; border-radius: 12px; }
+  .dark-section .icon-card { background: #2a2a2a; color: #fff; border-color: #333; }
+</style>
+</head>
+<body>
+<h1>{{PROJECT_NAME}} Icons</h1>
+<h2>Native Size ({{GRID}}px)</h2>
+<div class="grid">
+  <div class="icon-card">{{SVG_AT_NATIVE_SIZE}}<span class="label">{{ICON_NAME}}</span></div>
+</div>
+</body>
+</html>
+YAML
+---
+name: image-processing
+description: "Process images for web development — resize, crop, trim whitespace, convert formats, optimise file size."
+compatibility: claude-code-only
+---
+Image Processing Core Automation Engine
+Core Python Library Manifest (image-processing/core.py)
+Python
+#!/usr/bin/env python3
+import os
+import sys
+from PIL import Image, ImageDraw, ImageFont
+
+def resize_image(img, width=None, height=None):
+    if width and height:
+        return img.resize((width, height), Image.LANCZOS)
+    elif width:
+        ratio = width / img.width
+        return img.resize((width, int(img.height * ratio)), Image.LANCZOS)
+    elif height:
+        ratio = height / img.height
+        return img.resize((int(img.width * ratio), height), Image.LANCZOS)
+    return img
+
+def save_image(img, output_path, quality=85):
+    os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+    ext = output_path.lower().rsplit(".", 1)[-1]
+    kwargs = {}
+
+    if ext == "webp":
+        kwargs = {"quality": quality, "method": 6}
+    elif ext in ("jpg", "jpeg"):
+        kwargs = {"quality": quality, "optimize": True}
+        if img.mode == "RGBA":
+            bg = Image.new("RGB", img.size, (255, 255, 255))
+            bg.paste(img, mask=img.split()[3])
+            img = bg
+    elif ext == "png":
+        kwargs = {"optimize": True}
+
+    img.save(output_path, **kwargs)
+
+def trim_whitespace(img, padding=10):
+    if img.mode != "RGBA":
+        img = img.convert("RGBA")
+    bbox = img.getbbox()
+    if bbox:
+        img = img.crop(bbox)
+        if padding > 0:
+            new_img = Image.new("RGBA", (img.width + padding*2, img.height + padding*2), (0,0,0,0))
+            new_img.paste(img, (padding, padding))
+            return new_img
+    return img
+
+def get_font(size):
+    font_paths = [
+        "/System/Library/Fonts/Helvetica.ttc",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "C:/Windows/Fonts/arial.ttf"
+    ]
+    for path in font_paths:
+        if os.path.exists(path):
+            return ImageFont.truetype(path, size)
+    return ImageFont.load_default()
+
+def create_og_card(title, subtitle=None, background_path=None):
+    width, height = 1200, 630
+    if background_path:
+        img = Image.open(background_path).resize((width, height), Image.LANCZOS)
+    else:
+        img = Image.new("RGB", (width, height), "#1a1a2e")
+
+    overlay = Image.new("RGBA", (width, height), (0, 0, 0, 128))
+    img = img.convert("RGBA")
+    img = Image.alpha_composite(img, overlay)
+    draw = ImageDraw.Draw(img)
+    
+    font_title = get_font(48)
+    if title:
+        bbox = draw.textbbox((0, 0), title, font=font_title)
+        tw = bbox[2] - bbox[0]
+        draw.text(((width - tw) // 2, height // 2 - 60), title, fill="white", font=font_title)
+        
+    return img.convert("RGB")
+Evaluation & Validation Test Suites (evals_l.json)
+JSON
+{
+  "skill_name": "image",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need a hero image for a blog post about email deliverability. Make it visually striking.",
+      "expected_output": "Should check for product-marketing.md first. Propose visual metaphor concept. Specify 1200x630 layout metrics. Recommend Flux/Gemini/Ideogram engines. Output 5-part prompt architecture template.",
+      "assertions": ["Checks for product-marketing.md", "Specifies 1200x630 dimensions", "Provides structured prompt"]
+    },
+    {
+      "id": 2,
+      "prompt": "Generate me an image of our app's dashboard.",
+      "expected_output": "Should refuse to use AI generation for product UI screenshots. Models hallucinate interfaces. Force real screenshot pipelines at 2x resolution with device mockups.",
+      "assertions": ["Refuses to use AI generation for product UI", "Explains models hallucinate UI"]
+    },
+    {
+      "id": 3,
+      "prompt": "Need a Twitter/X header banner for our company. We just want to show our product and tagline.",
+      "expected_output": "Specify 1500x500 layout boundaries. Warn against avatar obscuring left margins. Suggest Figma/Canva design tools over raw generation engines.",
+      "assertions": ["Specifies 1500x500 dimensions", "Warns about avatar overlap area"]
+    }
+  ]
+}
+Standalone Deployment Automation Layer
+generate_image.py
+Python
+#!/usr/bin/env python3
+import argparse
+import os
+import sys
+from google import genai
+from google.genai import types
+
+def generate_image(prompt, output_path, model="gemini-2.5-flash-image", aspect_ratio=None, image_size=None):
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        raise EnvironmentError("GEMINI_API_KEY environment variable not set")
+    
+    client = genai.Client(api_key=api_key)
+    config_kwargs = {"response_modalities": ["TEXT", "IMAGE"]}
+    image_config_kwargs = {}
+    
+    if aspect_ratio:
+        image_config_kwargs["aspect_ratio"] = aspect_ratio
+    if image_size:
+        image_config_kwargs["image_size"] = image_size
+    if image_config_kwargs:
+        config_kwargs["image_config"] = types.ImageConfig(**image_config_kwargs)
+        
+    config = types.GenerateContentConfig(**config_kwargs)
+    response = client.models.generate_content(model=model, contents=[prompt], config=config)
+    
+    image_saved = False
+    for part in response.parts:
+        if part.inline_data is not None:
+            image = part.as_image()
+            image.save(output_path)
+            image_saved = True
+            
+    if not image_saved:
+        raise RuntimeError("No image structure detected in response payload.")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("prompt")
+    parser.add_argument("output")
+    parser.add_argument("--model", default="gemini-2.5-flash-image")
+    parser.add_argument("--aspect")
+    parser.add_argument("--size")
+    args = parser.parse_args()
+    generate_image(args.prompt, args.output, args.model, args.aspect, args.size)
+gemini_images.py
+Python
+#!/usr/bin/env python3
+import os
+from pathlib import Path
+from PIL import Image
+from google import genai
+from google.genai import types
+
+class GeminiImageGenerator:
+    def __init__(self, api_key=None, model="gemini-2.5-flash-image"):
+        self.api_key = api_key or os.environ.get("GEMINI_API_KEY")
+        if not self.api_key:
+            raise EnvironmentError("GEMINI_API_KEY missing.")
+        self.client = genai.Client(api_key=self.api_key)
+        self.model = model
+
+    def generate(self, prompt, output, aspect_ratio=None, image_size=None):
+        output = Path(output)
+        kwargs = {"response_modalities": ["TEXT", "IMAGE"]}
+        img_config = {}
+        if aspect_ratio: img_config["aspect_ratio"] = aspect_ratio
+        if image_size: img_config["image_size"] = image_size
+        if img_config: kwargs["image_config"] = types.ImageConfig(**img_config)
+        
+        response = self.client.models.generate_content(
+            model=self.model,
+            contents=[prompt],
+            config=types.GenerateContentConfig(**kwargs)
+        )
+        for part in response.parts:
+            if part.inline_data:
+                part.as_image().save(output)
+        return output
+edit_image.py
+Python
+#!/usr/bin/env python3
+import argparse
+from PIL import Image
+from google import genai
+from google.genai import types
+
+def edit_image(input_path, instruction, output_path, model="gemini-2.5-flash-image"):
+    client = genai.Client()
+    input_image = Image.open(input_path)
+    config = types.GenerateContentConfig(response_modalities=["TEXT", "IMAGE"])
+    
+    response = client.models.generate_content(
+        model=model,
+        contents=[instruction, input_image],
+        config=config
+    )
+    for part in response.parts:
+        if part.inline_data:
+            part.as_image().save(output_path)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input")
+    parser.add_argument("instruction")
+    parser.add_argument("output")
+    args = parser.parse_args()
+    edit_image(args.input, args.instruction, args.output)
+compose_images.py
+Python
+#!/usr/bin/env python3
+import argparse
+from PIL import Image
+from google import genai
+from google.genai import types
+
+def compose_images(instruction, output_path, image_paths, model="gemini-3-pro-image-preview"):
+    client = genai.Client()
+    images = [Image.open(p) for p in image_paths]
+    contents = [instruction] + images
+    config = types.GenerateContentConfig(response_modalities=["TEXT", "IMAGE"])
+    
+    response = client.models.generate_content(model=model, contents=contents, config=config)
+    for part in response.parts:
+        if part.inline_data:
+            part.as_image().save(output_path)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("instruction")
+    parser.add_argument("output")
+    parser.add_argument("images", nargs="+")
+    args = parser.parse_args()
+    compose_images(args.instruction, args.output, args.images)

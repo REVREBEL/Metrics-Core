@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "baseUrl": "../..",
+    "jsx": "react-jsx",
+    "noEmit": true
+  },
+  "include": [
+    "src/primitives/**/*.ts",
+    "src/primitives/**/*.tsx",
+    "src/types/**/*.ts",
+    "next-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".next",
+    "src/primitives/index.ts",
+    "src/primitives/index.tsx",
+    "src/primitives/users/**/*"
+  ]
+}

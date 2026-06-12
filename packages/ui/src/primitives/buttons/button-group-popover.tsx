@@ -1,17 +1,10 @@
-import { Field, FieldDescription, FieldLabel } from "@auto-form";
-import {
-  Popover,
-  PopoverContent,
-  PopoverDescription,
-  PopoverHeader,
-  PopoverTitle,
-  PopoverTrigger,
-} from "@popovers";
+import { Field, FieldDescription, FieldLabel } from "@auto-form/fields/field";
+import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from "@popovers/popover";
 import {
   IconBoltFilled,
   IconSquareRoundedChevronDownFilled,
 } from "@tabler/icons-react";
-import { Textarea } from "@textarea";
+import { Textarea } from "@textarea/textarea";
 import { Button } from "./button";
 import { ButtonGroup } from "./button-group";
 

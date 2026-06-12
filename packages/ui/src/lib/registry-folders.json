@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-10T20:13:02.997Z",
+  "generatedAt": "2026-06-11T21:48:24.646Z",
   "roots": [
     "primitives",
     "components",
@@ -8,6 +8,7 @@
     "styles",
     "types",
     "ui-registry",
+    "context",
     "icons",
     "lib"
   ],
@@ -52,6 +53,48 @@
       "directFileCount": 27,
       "childCount": 0
     },
+    "primitives/charts": {
+      "id": "primitives/charts",
+      "title": "Charts",
+      "sourcePath": "packages/ui/src/primitives/charts",
+      "parentId": "primitives",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/primitives/charts/chart-demos.tsx",
+        "packages/ui/src/primitives/charts/chart-sales-metrics.tsx",
+        "packages/ui/src/primitives/charts/chart.tsx",
+        "packages/ui/src/primitives/charts/line-chart.tsx",
+        "packages/ui/src/primitives/charts/statistics-card.tsx",
+        "packages/ui/src/primitives/charts/statistics-with-status.tsx",
+        "packages/ui/src/primitives/charts/widget-product-insights.tsx",
+        "packages/ui/src/primitives/charts/widget-total-earning.tsx"
+      ],
+      "children": [],
+      "directFileCount": 8,
+      "childCount": 0
+    },
+    "primitives/data-grid": {
+      "id": "primitives/data-grid",
+      "title": "Data Grid",
+      "sourcePath": "packages/ui/src/primitives/data-grid",
+      "parentId": "primitives",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/primitives/data-grid/data-grid-column-filter.tsx",
+        "packages/ui/src/primitives/data-grid/data-grid-column-header.tsx",
+        "packages/ui/src/primitives/data-grid/data-grid-column-visibility.tsx",
+        "packages/ui/src/primitives/data-grid/data-grid-pagination.tsx",
+        "packages/ui/src/primitives/data-grid/data-grid-table-dnd-rows.tsx",
+        "packages/ui/src/primitives/data-grid/data-grid-table-dnd.tsx",
+        "packages/ui/src/primitives/data-grid/data-grid-table.tsx",
+        "packages/ui/src/primitives/data-grid/data-grid.tsx"
+      ],
+      "children": [],
+      "directFileCount": 8,
+      "childCount": 0
+    },
     "primitives/dropdowns": {
       "id": "primitives/dropdowns",
       "title": "Dropdowns",
@@ -60,10 +103,24 @@
       "kind": "group",
       "depth": 1,
       "directFiles": [
-        "packages/ui/src/primitives/dropdowns/dropdown-menu.tsx"
+        "packages/ui/src/primitives/dropdowns/dropdown-language.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-menu-avatar.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-menu-basic.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-menu-checkboxes-icons.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-menu-checkboxes.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-menu-destructive.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-menu-icons.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-menu-radio-group.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-menu-radio-icons.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-menu-shortcuts.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-menu-submenu.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-menu.tsx",
+        "packages/ui/src/primitives/dropdowns/dropdown-profile.tsx",
+        "packages/ui/src/primitives/dropdowns/select-dropdown.tsx",
+        "packages/ui/src/primitives/dropdowns/smooth-dropdown.tsx"
       ],
       "children": [],
-      "directFileCount": 1,
+      "directFileCount": 15,
       "childCount": 0
     },
     "primitives/forms/common": {
@@ -129,6 +186,21 @@
       "directFileCount": 6,
       "childCount": 2
     },
+    "primitives/image-blocks": {
+      "id": "primitives/image-blocks",
+      "title": "Image Blocks",
+      "sourcePath": "packages/ui/src/primitives/image-blocks",
+      "parentId": "primitives",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/primitives/image-blocks/image-edit-block.tsx",
+        "packages/ui/src/primitives/image-blocks/image-edit-dialog.tsx"
+      ],
+      "children": [],
+      "directFileCount": 2,
+      "childCount": 0
+    },
     "primitives/inputs": {
       "id": "primitives/inputs",
       "title": "Inputs",
@@ -189,6 +261,50 @@
       "directFileCount": 47,
       "childCount": 0
     },
+    "primitives/layouts/data": {
+      "id": "primitives/layouts/data",
+      "title": "Data",
+      "sourcePath": "packages/ui/src/primitives/layouts/data",
+      "parentId": "primitives/layouts",
+      "kind": "group",
+      "depth": 2,
+      "directFiles": [
+        "packages/ui/src/primitives/layouts/data/sidebar-data.ts"
+      ],
+      "children": [],
+      "directFileCount": 1,
+      "childCount": 0
+    },
+    "primitives/layouts": {
+      "id": "primitives/layouts",
+      "title": "Layouts",
+      "sourcePath": "packages/ui/src/primitives/layouts",
+      "parentId": "primitives",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/primitives/layouts/brand-header.tsx",
+        "packages/ui/src/primitives/layouts/brand-sidebar.tsx",
+        "packages/ui/src/primitives/layouts/coming-soon.tsx",
+        "packages/ui/src/primitives/layouts/hero.tsx",
+        "packages/ui/src/primitives/layouts/measured-container.tsx",
+        "packages/ui/src/primitives/layouts/navigation-menu.tsx",
+        "packages/ui/src/primitives/layouts/navigation-progress.tsx",
+        "packages/ui/src/primitives/layouts/resizable-handle.tsx",
+        "packages/ui/src/primitives/layouts/resizable-vertical.tsx",
+        "packages/ui/src/primitives/layouts/sidebar.tsx",
+        "packages/ui/src/primitives/layouts/social-proof-01.tsx",
+        "packages/ui/src/primitives/layouts/social-proof-07.tsx",
+        "packages/ui/src/primitives/layouts/sub-nav.tsx",
+        "packages/ui/src/primitives/layouts/swap-layout-loader.tsx",
+        "packages/ui/src/primitives/layouts/swap-layout.tsx"
+      ],
+      "children": [
+        "primitives/layouts/data"
+      ],
+      "directFileCount": 15,
+      "childCount": 1
+    },
     "primitives/links": {
       "id": "primitives/links",
       "title": "Links",
@@ -220,6 +336,28 @@
       "directFileCount": 1,
       "childCount": 0
     },
+    "primitives/menus": {
+      "id": "primitives/menus",
+      "title": "Menus",
+      "sourcePath": "packages/ui/src/primitives/menus",
+      "parentId": "primitives",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/primitives/menus/menu-option.tsx",
+        "packages/ui/src/primitives/menus/menu-other.tsx",
+        "packages/ui/src/primitives/menus/menu.tsx",
+        "packages/ui/src/primitives/menus/menubar-checkbox.tsx",
+        "packages/ui/src/primitives/menus/menubar-icons.tsx",
+        "packages/ui/src/primitives/menus/menubar-radio.tsx",
+        "packages/ui/src/primitives/menus/menubar-submenu.tsx",
+        "packages/ui/src/primitives/menus/menubar.tsx",
+        "packages/ui/src/primitives/menus/navigation-menu.tsx"
+      ],
+      "children": [],
+      "directFileCount": 9,
+      "childCount": 0
+    },
     "primitives/popovers": {
       "id": "primitives/popovers",
       "title": "Popovers",
@@ -228,10 +366,53 @@
       "kind": "group",
       "depth": 1,
       "directFiles": [
+        "packages/ui/src/primitives/popovers/popover-alignments.tsx",
+        "packages/ui/src/primitives/popovers/popover-basic.tsx",
+        "packages/ui/src/primitives/popovers/popover-form.tsx",
         "packages/ui/src/primitives/popovers/popover.tsx"
       ],
       "children": [],
-      "directFileCount": 1,
+      "directFileCount": 4,
+      "childCount": 0
+    },
+    "primitives/registry": {
+      "id": "primitives/registry",
+      "title": "Registry",
+      "sourcePath": "packages/ui/src/primitives/registry",
+      "parentId": "primitives",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/primitives/registry/add-to-cursor.tsx",
+        "packages/ui/src/primitives/registry/component-card.tsx",
+        "packages/ui/src/primitives/registry/mcp-tabs.tsx",
+        "packages/ui/src/primitives/registry/open-in-v0.tsx",
+        "packages/ui/src/primitives/registry/registry-logo.tsx",
+        "packages/ui/src/primitives/registry/registry-sidebar.tsx",
+        "packages/ui/src/primitives/registry/theme-toggle.tsx"
+      ],
+      "children": [],
+      "directFileCount": 7,
+      "childCount": 0
+    },
+    "primitives/sections": {
+      "id": "primitives/sections",
+      "title": "Sections",
+      "sourcePath": "packages/ui/src/primitives/sections",
+      "parentId": "primitives",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/primitives/sections/five.tsx",
+        "packages/ui/src/primitives/sections/four.tsx",
+        "packages/ui/src/primitives/sections/one.tsx",
+        "packages/ui/src/primitives/sections/shortcut-key.tsx",
+        "packages/ui/src/primitives/sections/three.tsx",
+        "packages/ui/src/primitives/sections/toolbar-section.tsx",
+        "packages/ui/src/primitives/sections/two.tsx"
+      ],
+      "children": [],
+      "directFileCount": 7,
       "childCount": 0
     },
     "primitives/skeleton": {
@@ -255,6 +436,42 @@
       "directFileCount": 8,
       "childCount": 0
     },
+    "primitives/tables": {
+      "id": "primitives/tables",
+      "title": "Tables",
+      "sourcePath": "packages/ui/src/primitives/tables",
+      "parentId": "primitives",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/primitives/tables/datatable-transaction.tsx",
+        "packages/ui/src/primitives/tables/table-actions.tsx",
+        "packages/ui/src/primitives/tables/table-footer.tsx",
+        "packages/ui/src/primitives/tables/table.tsx"
+      ],
+      "children": [],
+      "directFileCount": 4,
+      "childCount": 0
+    },
+    "primitives/tabs": {
+      "id": "primitives/tabs",
+      "title": "Tabs",
+      "sourcePath": "packages/ui/src/primitives/tabs",
+      "parentId": "primitives",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/primitives/tabs/discrete-tabs.tsx",
+        "packages/ui/src/primitives/tabs/tabs-disabled.tsx",
+        "packages/ui/src/primitives/tabs/tabs-icons.tsx",
+        "packages/ui/src/primitives/tabs/tabs-line.tsx",
+        "packages/ui/src/primitives/tabs/tabs-vertical.tsx",
+        "packages/ui/src/primitives/tabs/tabs.tsx"
+      ],
+      "children": [],
+      "directFileCount": 6,
+      "childCount": 0
+    },
     "primitives/textarea": {
       "id": "primitives/textarea",
       "title": "Textarea",
@@ -273,6 +490,38 @@
       "children": [],
       "directFileCount": 6,
       "childCount": 0
+    },
+    "primitives/timelines/content": {
+      "id": "primitives/timelines/content",
+      "title": "Content",
+      "sourcePath": "packages/ui/src/primitives/timelines/content",
+      "parentId": "primitives/timelines",
+      "kind": "group",
+      "depth": 2,
+      "directFiles": [
+        "packages/ui/src/primitives/timelines/content/v1-1-0.tsx",
+        "packages/ui/src/primitives/timelines/content/v1-2-0.tsx",
+        "packages/ui/src/primitives/timelines/content/v1-3-0.tsx"
+      ],
+      "children": [],
+      "directFileCount": 3,
+      "childCount": 0
+    },
+    "primitives/timelines": {
+      "id": "primitives/timelines",
+      "title": "Timelines",
+      "sourcePath": "packages/ui/src/primitives/timelines",
+      "parentId": "primitives",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/primitives/timelines/timeline-component-05.tsx"
+      ],
+      "children": [
+        "primitives/timelines/content"
+      ],
+      "directFileCount": 1,
+      "childCount": 1
     },
     "primitives/typography": {
       "id": "primitives/typography",
@@ -308,21 +557,98 @@
       "kind": "group",
       "depth": 1,
       "directFiles": [
+        "packages/ui/src/primitives/ui-core/accordion.tsx",
+        "packages/ui/src/primitives/ui-core/alert-dialog.tsx",
+        "packages/ui/src/primitives/ui-core/alert.tsx",
+        "packages/ui/src/primitives/ui-core/aspect-ratio.tsx",
+        "packages/ui/src/primitives/ui-core/avatar.tsx",
         "packages/ui/src/primitives/ui-core/badge.tsx",
+        "packages/ui/src/primitives/ui-core/breadcrumb.tsx",
+        "packages/ui/src/primitives/ui-core/calendar.tsx",
         "packages/ui/src/primitives/ui-core/card.tsx",
+        "packages/ui/src/primitives/ui-core/carousel.tsx",
+        "packages/ui/src/primitives/ui-core/checkbox.tsx",
+        "packages/ui/src/primitives/ui-core/collapsible.tsx",
         "packages/ui/src/primitives/ui-core/combobox.tsx",
+        "packages/ui/src/primitives/ui-core/command-menu.tsx",
+        "packages/ui/src/primitives/ui-core/command.tsx",
+        "packages/ui/src/primitives/ui-core/config-drawer.tsx",
+        "packages/ui/src/primitives/ui-core/context-menu.tsx",
+        "packages/ui/src/primitives/ui-core/copy-code.tsx",
+        "packages/ui/src/primitives/ui-core/date-picker.tsx",
+        "packages/ui/src/primitives/ui-core/day-picker.tsx",
+        "packages/ui/src/primitives/ui-core/dialog.tsx",
+        "packages/ui/src/primitives/ui-core/direction.tsx",
+        "packages/ui/src/primitives/ui-core/drawer.tsx",
+        "packages/ui/src/primitives/ui-core/edit-switch.tsx",
+        "packages/ui/src/primitives/ui-core/empty.tsx",
+        "packages/ui/src/primitives/ui-core/filters.tsx",
+        "packages/ui/src/primitives/ui-core/group.tsx",
+        "packages/ui/src/primitives/ui-core/hover-card-sides.tsx",
+        "packages/ui/src/primitives/ui-core/hover-card.tsx",
+        "packages/ui/src/primitives/ui-core/item.tsx",
         "packages/ui/src/primitives/ui-core/kbd.tsx",
         "packages/ui/src/primitives/ui-core/label.tsx",
+        "packages/ui/src/primitives/ui-core/logo.tsx",
+        "packages/ui/src/primitives/ui-core/native-select.tsx",
+        "packages/ui/src/primitives/ui-core/navigation-menu.tsx",
+        "packages/ui/src/primitives/ui-core/number-field.tsx",
+        "packages/ui/src/primitives/ui-core/pagination.tsx",
+        "packages/ui/src/primitives/ui-core/preview-card.tsx",
+        "packages/ui/src/primitives/ui-core/product-grid.tsx",
+        "packages/ui/src/primitives/ui-core/progress.tsx",
+        "packages/ui/src/primitives/ui-core/promo.tsx",
+        "packages/ui/src/primitives/ui-core/radio-group.tsx",
+        "packages/ui/src/primitives/ui-core/rating.tsx",
+        "packages/ui/src/primitives/ui-core/resizable.tsx",
         "packages/ui/src/primitives/ui-core/scroll-area.tsx",
         "packages/ui/src/primitives/ui-core/select.tsx",
         "packages/ui/src/primitives/ui-core/separator.tsx",
+        "packages/ui/src/primitives/ui-core/sheet.tsx",
+        "packages/ui/src/primitives/ui-core/slider.tsx",
+        "packages/ui/src/primitives/ui-core/sonner.tsx",
+        "packages/ui/src/primitives/ui-core/sortable-table-head.tsx",
         "packages/ui/src/primitives/ui-core/spinner.tsx",
         "packages/ui/src/primitives/ui-core/switch.tsx",
+        "packages/ui/src/primitives/ui-core/tabs.tsx",
+        "packages/ui/src/primitives/ui-core/textarea.tsx",
+        "packages/ui/src/primitives/ui-core/toast.tsx",
+        "packages/ui/src/primitives/ui-core/toggle-group.tsx",
         "packages/ui/src/primitives/ui-core/toggle.tsx",
         "packages/ui/src/primitives/ui-core/tooltip.tsx"
       ],
       "children": [],
-      "directFileCount": 12,
+      "directFileCount": 59,
+      "childCount": 0
+    },
+    "primitives/users": {
+      "id": "primitives/users",
+      "title": "Users",
+      "sourcePath": "packages/ui/src/primitives/users",
+      "parentId": "primitives",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/primitives/users/account-settings.tsx",
+        "packages/ui/src/primitives/users/connect-account.tsx",
+        "packages/ui/src/primitives/users/danger-zone.tsx",
+        "packages/ui/src/primitives/users/email-password.tsx",
+        "packages/ui/src/primitives/users/forgot-password-form.tsx",
+        "packages/ui/src/primitives/users/forgot-password.tsx",
+        "packages/ui/src/primitives/users/login-form.tsx",
+        "packages/ui/src/primitives/users/login-page.tsx",
+        "packages/ui/src/primitives/users/login.tsx",
+        "packages/ui/src/primitives/users/password-input.tsx",
+        "packages/ui/src/primitives/users/personal-info.tsx",
+        "packages/ui/src/primitives/users/profile-dropdown.tsx",
+        "packages/ui/src/primitives/users/register-form.tsx",
+        "packages/ui/src/primitives/users/register.tsx",
+        "packages/ui/src/primitives/users/sign-out-dialog.tsx",
+        "packages/ui/src/primitives/users/social-url.tsx",
+        "packages/ui/src/primitives/users/verify-email.tsx"
+      ],
+      "children": [],
+      "directFileCount": 17,
       "childCount": 0
     },
     "primitives": {
@@ -332,22 +658,35 @@
       "parentId": null,
       "kind": "landing",
       "depth": 0,
-      "directFiles": [],
+      "directFiles": [
+        "packages/ui/src/primitives/utils.ts"
+      ],
       "children": [
         "primitives/buttons",
+        "primitives/charts",
+        "primitives/data-grid",
         "primitives/dropdowns",
         "primitives/forms",
+        "primitives/image-blocks",
         "primitives/inputs",
+        "primitives/layouts",
         "primitives/links",
         "primitives/lists",
+        "primitives/menus",
         "primitives/popovers",
+        "primitives/registry",
+        "primitives/sections",
         "primitives/skeleton",
+        "primitives/tables",
+        "primitives/tabs",
         "primitives/textarea",
+        "primitives/timelines",
         "primitives/typography",
-        "primitives/ui-core"
+        "primitives/ui-core",
+        "primitives/users"
       ],
-      "directFileCount": 0,
-      "childCount": 11
+      "directFileCount": 1,
+      "childCount": 22
     },
     "components/metrics-layouts/help-desk": {
       "id": "components/metrics-layouts/help-desk",
@@ -754,6 +1093,7 @@
       "kind": "landing",
       "depth": 0,
       "directFiles": [
+        "packages/ui/src/hooks/use-container-size.ts",
         "packages/ui/src/hooks/use-copy-to-clipboard.ts",
         "packages/ui/src/hooks/use-copy-to-clipboard.tsx",
         "packages/ui/src/hooks/use-copy.ts",
@@ -772,10 +1112,11 @@
         "packages/ui/src/hooks/use-store.ts",
         "packages/ui/src/hooks/use-table-url-state.ts",
         "packages/ui/src/hooks/use-tailwind-worker.ts",
+        "packages/ui/src/hooks/use-theme.ts",
         "packages/ui/src/hooks/use-transpile.ts"
       ],
       "children": [],
-      "directFileCount": 19,
+      "directFileCount": 21,
       "childCount": 0
     },
     "styles": {
@@ -802,10 +1143,12 @@
       "kind": "landing",
       "depth": 0,
       "directFiles": [
-        "packages/ui/src/types/registry.ts"
+        "packages/ui/src/types/products.ts",
+        "packages/ui/src/types/registry.ts",
+        "packages/ui/src/types/sections.ts"
       ],
       "children": [],
-      "directFileCount": 1,
+      "directFileCount": 3,
       "childCount": 0
     },
     "ui-registry": {
@@ -826,6 +1169,24 @@
       ],
       "children": [],
       "directFileCount": 7,
+      "childCount": 0
+    },
+    "context": {
+      "id": "context",
+      "title": "Context",
+      "sourcePath": "packages/ui/src/context",
+      "parentId": null,
+      "kind": "landing",
+      "depth": 0,
+      "directFiles": [
+        "packages/ui/src/context/direction-provider.tsx",
+        "packages/ui/src/context/font-provider.tsx",
+        "packages/ui/src/context/layout-provider.tsx",
+        "packages/ui/src/context/search-provider.tsx",
+        "packages/ui/src/context/theme-provider.tsx"
+      ],
+      "children": [],
+      "directFileCount": 5,
       "childCount": 0
     },
     "icons/BrandIcons": {
@@ -5548,6 +5909,7 @@
         "packages/ui/src/lib/build-global-css.ts",
         "packages/ui/src/lib/calendar.ts",
         "packages/ui/src/lib/categories.ts",
+        "packages/ui/src/lib/cn.ts",
         "packages/ui/src/lib/colors.ts",
         "packages/ui/src/lib/column-detection.ts",
         "packages/ui/src/lib/component-metadata.ts",
@@ -5583,7 +5945,7 @@
         "lib/lookups",
         "lib/mapping-tables"
       ],
-      "directFileCount": 33,
+      "directFileCount": 34,
       "childCount": 3
     }
   }

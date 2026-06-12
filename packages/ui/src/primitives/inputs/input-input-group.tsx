@@ -1,4 +1,4 @@
-import { Field, FieldLabel } from "@auto-form";
+import { Field, FieldLabel } from "@auto-form/fields/field";
 import { IconInfoCircle } from "@tabler/icons-react";
 import {
   InputGroup,

@@ -1,8 +1,8 @@
-import { FormControl, FormItem, FormMessage } from "@auto-form";
-import { Input } from "@inputs";
-import { AutoFormLabel } from "@auto-form";
-import { AutoFormTooltip } from "@auto-form";
-import type { AutoFormInputComponentProps } from "@auto-form";
+import { FormControl, FormItem, FormMessage } from "@auto-form/form";
+import { Input } from "@inputs/input";
+import AutoFormLabel from "../common/label";
+import AutoFormTooltip from "../common/tooltip";
+import type { AutoFormInputComponentProps } from "../types";
 
 export default function AutoFormNumber({
   label,

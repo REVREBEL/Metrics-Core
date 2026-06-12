@@ -1,8 +1,8 @@
-import { FormControl, FormItem, FormMessage } from "@auto-form";
-import { Textarea } from "@ui";
-import { AutoFormLabel } from "@auto-form";
-import { AutoFormTooltip } from "@auto-form";
-import type { AutoFormInputComponentProps } from "@auto-form";
+import { FormControl, FormItem, FormMessage } from "@auto-form/form";
+import { Textarea } from "@ui-core/textarea";
+import AutoFormLabel from "../common/label";
+import AutoFormTooltip from "../common/tooltip";
+import type { AutoFormInputComponentProps } from "../types";
 
 export default function AutoFormTextarea({
   label,

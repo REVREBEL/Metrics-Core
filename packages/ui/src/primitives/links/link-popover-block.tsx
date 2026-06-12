@@ -59,12 +59,6 @@ export const LinkPopoverBlock: React.FC<LinkPopoverBlockProps> = ({
         <ToolbarButton
           tooltip={copyTitle}
           onClick={handleCopy}
-          tooltipOptions={{
-            // biome-ignore lint/suspicious/noExplicitAny: event type from radix/base-ui tooltips
-            onPointerDownOutside: (e: any) => {
-              if (e.target === e.currentTarget) e.preventDefault();
-            },
-          }}
         >
           <CopyIcon />
         </ToolbarButton>

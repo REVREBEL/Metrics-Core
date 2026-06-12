@@ -1,5 +1,5 @@
 import { FormLabel } from "../form";
-import { cn } from "@lib";
+import { cn } from "@/lib/utils";
 
 function AutoFormLabel({
   label,

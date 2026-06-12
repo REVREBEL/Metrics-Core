@@ -1,25 +1,32 @@
 "use client";
 
 import {
+  IconArchive,
   IconChartBar,
   IconDatabase,
+  IconChevronDown,
+  IconDots,
   IconLayoutDashboard,
   IconLayoutGrid,
+  IconPlus,
+  IconSearch,
+  IconStar,
   IconTable,
 } from "@tabler/icons-react";
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 
-import { Button } from "@/primitives/buttons/button";
-import { Input } from "@/primitives/inputs/input";
-import { Skeleton } from "@/primitives/skeleton/skeleton";
-import { Textarea } from "@/primitives/textarea/textarea";
+import { Button } from "@buttons/button";
+import { SaveButton } from "@buttons/status-button";
+import { Input } from "@inputs/input";
+import { Skeleton } from "@skeleton/skeleton";
+import { Textarea } from "@textarea/textarea";
 import {
   TypographyH1,
   TypographyH2,
   TypographyH3,
   TypographyP,
   TypographySmall,
-} from "@/primitives/typography";
+} from "@typography";
 import { Badge } from "@/primitives/ui-core/badge";
 import {
   Card,
@@ -27,9 +34,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/primitives/ui-core/card";
-import { Label } from "@/primitives/ui-core/label";
-import { Separator } from "@/primitives/ui-core/separator";
+} from "@ui-core/card";
+import { Label } from "@ui-core/label";
+import { Separator } from "@ui-core/separator";
 import { Switch } from "@/primitives/ui-core/switch";
 
 export type PreviewProps = {
@@ -68,6 +75,14 @@ export type RegistryPreviewSpec = {
   layout: RegistryPreviewLayout;
   template: RegistryPreviewTemplate;
 };
+
+export type RegistryButtonPreviewGroupId =
+  | "core"
+  | "icon"
+  | "rounded"
+  | "group"
+  | "menu"
+  | "toolbar";
 
 function GenericPrimitivePreview({ name, sourcePath }: PreviewProps) {
   return (
@@ -164,28 +179,73 @@ function TabsNavigationPreview() {
 function FormFieldPreview({ name }: PreviewProps) {
   return (
     <div className="space-y-4">
-      <div className="grid gap-3 md:grid-cols-2">
-        <div className="rounded-xl border bg-background p-4">
-          <div className="mb-3 text-muted-foreground text-xs">Field states</div>
-          <div className="space-y-3">
-            <Input defaultValue={name} />
-            <Input aria-invalid defaultValue="Needs attention" />
-            <Textarea defaultValue="Previewing interactive states with real primitives." />
-          </div>
-        </div>
-        <div className="rounded-xl border bg-background p-4">
-          <div className="mb-3 text-muted-foreground text-xs">Toggle states</div>
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <Switch defaultChecked id="preview-switch" />
-              <Label htmlFor="preview-switch">Enabled</Label>
+      <div className="rounded-2xl border bg-card p-5">
+        <div className="grid gap-4 lg:grid-cols-[0.72fr_1.28fr]">
+          <div className="space-y-3 rounded-xl border bg-background p-4">
+            <div className="text-muted-foreground text-xs">Field states</div>
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <Label htmlFor="preview-email">Your email address</Label>
+                <Input id="preview-email" defaultValue={name} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="preview-error">Validation state</Label>
+                <Input id="preview-error" aria-invalid defaultValue="Needs attention" />
+              </div>
+              <div className="rounded-md border border-dashed p-3 text-sm text-muted-foreground">
+                Labels, field descriptions, and inline validation should read as one composed unit.
+              </div>
             </div>
-            <label className="flex items-center gap-2 text-sm">
-              <input defaultChecked type="checkbox" />
-              Checked
-            </label>
-            <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm">
-              Error: field requires a value.
+          </div>
+          <div className="rounded-xl border bg-background p-5">
+            <div className="mb-4">
+              <div className="font-medium text-sm">Payment Method</div>
+              <p className="mt-1 text-muted-foreground text-xs">
+                All transactions are secure and encrypted.
+              </p>
+            </div>
+            <div className="grid gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="payment-name">Name on Card</Label>
+                <Input id="payment-name" defaultValue="Evil Rabbit" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="payment-number">Card Number</Label>
+                <Input id="payment-number" defaultValue="1234 5678 9012 3456" />
+                <p className="text-muted-foreground text-xs">Enter your 16-digit card number</p>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div className="space-y-2">
+                  <Label htmlFor="payment-month">Month</Label>
+                  <Input id="payment-month" defaultValue="MM" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="payment-year">Year</Label>
+                  <Input id="payment-year" defaultValue="YYYY" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="payment-cvv">CVV</Label>
+                  <Input id="payment-cvv" defaultValue="123" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="payment-comments">Comments</Label>
+                <Textarea
+                  id="payment-comments"
+                  defaultValue="Add any additional comments"
+                  className="min-h-24"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <input id="same-shipping" defaultChecked type="checkbox" />
+                <Label htmlFor="same-shipping">Same as shipping address</Label>
+              </div>
+              <div className="flex gap-2">
+                <Button size="sm">Submit</Button>
+                <Button size="sm" variant="outline">
+                  Cancel
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -196,22 +256,65 @@ function FormFieldPreview({ name }: PreviewProps) {
 
 function TypographySpecimenPreview() {
   return (
-    <div className="space-y-4 rounded-2xl border bg-card p-5">
-      <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="space-y-3">
-          <TypographyH1>Registry Heading</TypographyH1>
-          <TypographyH2>Section hierarchy stays visible.</TypographyH2>
+    <div className="rounded-2xl border bg-card p-6">
+      <div className="space-y-6">
+        <div className="max-w-3xl space-y-3">
           <TypographyP>
-            Typography previews need actual specimens, not metadata-only cards.
+            We do not ship any typography styles by default. This preview shows how hierarchy, spacing, paragraphs, lists, blockquotes, and tables work together.
           </TypographyP>
-          <TypographySmall>Supporting copy and annotation.</TypographySmall>
         </div>
-        <div className="rounded-xl border bg-background p-4">
-          <div className="text-muted-foreground text-xs">Scale preview</div>
-          <div className="mt-3 space-y-2">
-            <TypographyH3>H3 / Panel title</TypographyH3>
-            <TypographyP>Paragraph rhythm</TypographyP>
-            <TypographySmall>12-14px support text</TypographySmall>
+        <div className="rounded-xl border bg-background p-6">
+          <div className="max-w-3xl space-y-6">
+            <div className="space-y-3">
+              <TypographyH1>Taxing Laughter: The Joke Tax Chronicles</TypographyH1>
+              <TypographyP className="text-muted-foreground">
+                Once upon a time, in a far-off land, there was a very lazy king who spent all day lounging on his throne.
+              </TypographyP>
+            </div>
+            <div className="space-y-3">
+              <TypographyH2>The King's Plan</TypographyH2>
+              <TypographyP>
+                The king thought long and hard, and finally came up with a brilliant plan: he would tax the jokes in the kingdom.
+              </TypographyP>
+              <blockquote className="border-l-2 pl-6 italic text-sm">
+                “After all,” he said, “everyone enjoys a good joke, so it's only fair that they should pay for the privilege.”
+              </blockquote>
+            </div>
+            <div className="space-y-3">
+              <TypographyH3>The Joke Tax</TypographyH3>
+              <ul className="list-disc space-y-2 pl-6 text-sm">
+                <li>1st level of puns: 5 gold coins</li>
+                <li>2nd level of jokes: 10 gold coins</li>
+                <li>3rd level of one-liners: 20 gold coins</li>
+              </ul>
+            </div>
+            <div className="space-y-3">
+              <TypographyH3>The People's Rebellion</TypographyH3>
+              <div className="overflow-hidden rounded-lg border">
+                <table className="w-full text-sm">
+                  <thead className="bg-muted/40">
+                    <tr className="[&>th]:border-b [&>th]:px-4 [&>th]:py-2 [&>th]:text-left [&>th]:font-medium">
+                      <th>King's Treasury</th>
+                      <th>People's happiness</th>
+                    </tr>
+                  </thead>
+                  <tbody className="[&>tr:not(:last-child)]:border-b [&_td]:px-4 [&_td]:py-2">
+                    <tr>
+                      <td>Empty</td>
+                      <td>Overflowing</td>
+                    </tr>
+                    <tr className="bg-muted/20">
+                      <td>Modest</td>
+                      <td>Satisfied</td>
+                    </tr>
+                    <tr>
+                      <td>Full</td>
+                      <td>Ecstatic</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -308,14 +411,46 @@ function TablePreview({ name, sourcePath }: PreviewProps) {
         </CardTitle>
         <CardDescription>{sourcePath}</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-2">
-        {["Transient", "Group", "Crew"].map((row, index) => (
-          <div key={row} className="grid grid-cols-3 gap-2 rounded-xl border bg-background p-3 text-sm">
-            <span>{row}</span>
-            <span className="text-muted-foreground">{80 + index * 7} rooms</span>
-            <span className="text-right font-medium">${(180 + index * 24).toLocaleString()}</span>
-          </div>
-        ))}
+      <CardContent>
+        <div className="overflow-hidden rounded-xl border bg-background">
+          <table className="w-full text-sm">
+            <thead className="bg-muted/30">
+              <tr className="[&>th]:border-b [&>th]:px-4 [&>th]:py-2.5 [&>th]:text-left [&>th]:font-medium">
+                <th>Invoice</th>
+                <th>Status</th>
+                <th>Method</th>
+                <th className="text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody className="[&>tr:not(:last-child)]:border-b [&_td]:px-4 [&_td]:py-2.5">
+              {[
+                ["INV001", "Paid", "Credit Card", "$250.00"],
+                ["INV002", "Pending", "PayPal", "$150.00"],
+                ["INV003", "Unpaid", "Bank Transfer", "$350.00"],
+                ["INV004", "Paid", "Credit Card", "$450.00"],
+                ["INV005", "Paid", "PayPal", "$550.00"],
+              ].map(([invoice, status, method, amount]) => (
+                <tr key={invoice}>
+                  <td>{invoice}</td>
+                  <td>{status}</td>
+                  <td>{method}</td>
+                  <td className="text-right font-medium">{amount}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot className="bg-muted/20">
+              <tr className="[&>td]:px-4 [&>td]:py-2.5">
+                <td colSpan={3} className="font-medium">
+                  Total
+                </td>
+                <td className="text-right font-semibold">$1,750.00</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <p className="mt-3 text-center text-muted-foreground text-xs">
+          A list of your recent invoices.
+        </p>
       </CardContent>
     </Card>
   );
@@ -389,7 +524,303 @@ function DataPreview({ name, sourcePath }: PreviewProps) {
   );
 }
 
+function PreviewPane({
+  children,
+  title,
+}: {
+  children: ReactNode;
+  title: string;
+}) {
+  return (
+    <div className="rounded-xl border bg-background p-4">
+      <div className="mb-3 text-muted-foreground text-xs">{title}</div>
+      {children}
+    </div>
+  );
+}
+
+export function RegistryButtonFamilyPreview({
+  previewId,
+}: {
+  previewId: RegistryButtonPreviewGroupId;
+}) {
+  switch (previewId) {
+    case "core":
+      return (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <PreviewPane title="Variants">
+            <div className="flex flex-wrap gap-2">
+              <Button>Default</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="outline">Outline</Button>
+              <Button variant="destructive">Destructive</Button>
+              <Button variant="ghost">Ghost</Button>
+            </div>
+          </PreviewPane>
+          <PreviewPane title="Sizes and states">
+            <div className="flex flex-wrap items-center gap-2">
+              <Button size="sm">Small</Button>
+              <Button size="lg">Large</Button>
+              <Button disabled>Disabled</Button>
+              <Button className="min-w-28">Primary action</Button>
+            </div>
+          </PreviewPane>
+        </div>
+      );
+    case "icon":
+      return (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <PreviewPane title="Icon-only actions">
+            <div className="flex flex-wrap gap-2">
+              <Button size="icon" variant="outline" aria-label="Search">
+                <IconSearch className="size-4" />
+              </Button>
+              <Button size="icon" aria-label="Favorite">
+                <IconStar className="size-4" />
+              </Button>
+              <Button size="icon" variant="secondary" aria-label="Add">
+                <IconPlus className="size-4" />
+              </Button>
+            </div>
+          </PreviewPane>
+          <PreviewPane title="Inline icons and utility states">
+            <div className="flex flex-wrap items-center gap-2">
+              <Button variant="outline">
+                <IconPlus className="size-4" />
+                New Branch
+              </Button>
+              <Button variant="outline">
+                Compare
+                <IconChevronDown className="size-4" />
+              </Button>
+              <Button variant="ghost" className="px-0">
+                View details
+              </Button>
+            </div>
+          </PreviewPane>
+        </div>
+      );
+    case "rounded":
+      return (
+        <PreviewPane title="Rounded pills and circular controls">
+          <div className="flex flex-wrap items-center gap-2">
+            <Button className="rounded-full">Get Started</Button>
+            <Button className="rounded-full" variant="secondary">
+              Continue
+            </Button>
+            <Button variant="outline" size="icon" className="rounded-full" aria-label="Open options">
+              <IconChevronDown className="size-4" />
+            </Button>
+          </div>
+        </PreviewPane>
+      );
+    case "group":
+      return (
+        <div className="grid gap-3 lg:grid-cols-2">
+          <PreviewPane title="Horizontal, separator, split sizing">
+            <div className="space-y-3">
+              <div className="flex w-fit items-stretch">
+                <Button variant="outline">Archive</Button>
+                <Button variant="outline">Report</Button>
+                <Button variant="outline">Snooze</Button>
+              </div>
+              <div className="flex w-fit items-stretch">
+                <Button variant="secondary">Create</Button>
+                <div className="w-px self-stretch bg-border" />
+                <Button variant="secondary" size="icon" aria-label="Add">
+                  <IconPlus className="size-4" />
+                </Button>
+              </div>
+            </div>
+          </PreviewPane>
+          <PreviewPane title="Orientation and nesting">
+            <div className="flex flex-wrap items-start gap-4">
+              <div className="flex w-fit flex-col items-stretch">
+                <Button variant="outline" size="icon" aria-label="Increase">
+                  <IconPlus className="size-4" />
+                </Button>
+                <Button variant="outline" size="icon" aria-label="More">
+                  <IconDots className="size-4" />
+                </Button>
+              </div>
+              <div className="flex w-fit items-stretch">
+                <Button variant="outline">Publish</Button>
+                <div className="ml-2 flex w-fit items-stretch">
+                  <Button variant="outline" size="sm">
+                    Draft
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    Live
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </PreviewPane>
+        </div>
+      );
+    case "menu":
+      return (
+        <div className="grid gap-3 lg:grid-cols-[1.1fr_0.9fr]">
+          <PreviewPane title="Dropdown and split triggers">
+            <div className="space-y-4">
+              <div className="flex w-fit items-stretch">
+                <Button variant="outline">Follow</Button>
+                <Button variant="outline" className="pl-2" aria-label="Open follow menu">
+                  <IconChevronDown className="size-4" />
+                </Button>
+              </div>
+              <div className="flex w-fit items-stretch">
+                <Button variant="secondary">Button</Button>
+                <div className="w-px self-stretch bg-border" />
+                <Button size="icon" variant="secondary" aria-label="Add">
+                  <IconPlus className="size-4" />
+                </Button>
+              </div>
+            </div>
+          </PreviewPane>
+          <PreviewPane title="Attached menu surface">
+            <div className="w-full max-w-56 rounded-xl border bg-card p-2 shadow-sm">
+              {["Mute Conversation", "Mark as Read", "Report Conversation"].map((label) => (
+                <div key={label} className="rounded-lg px-3 py-2 text-sm hover:bg-muted">
+                  {label}
+                </div>
+              ))}
+              <div className="my-1 border-t" />
+              <div className="rounded-lg px-3 py-2 text-sm text-destructive hover:bg-destructive/5">
+                Delete Conversation
+              </div>
+            </div>
+          </PreviewPane>
+        </div>
+      );
+    case "toolbar":
+      return (
+        <div className="grid gap-3">
+          <PreviewPane title="Toolbar, status, and discovery actions">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-1 rounded-xl border bg-background p-1">
+                <button
+                  type="button"
+                  aria-label="Archive"
+                  className="inline-flex size-9 items-center justify-center rounded-lg border bg-background"
+                >
+                  <IconArchive className="size-4" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Favorite"
+                  className="inline-flex size-9 items-center justify-center rounded-lg bg-accent text-accent-foreground"
+                >
+                  <IconStar className="size-4" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="More options"
+                  className="inline-flex size-9 items-center justify-center rounded-lg border bg-background"
+                >
+                  <IconDots className="size-4" />
+                </button>
+              </div>
+              <SaveButton />
+              <Button className="rounded-full" variant="outline">
+                <IconSearch className="size-4" />
+                Discover
+              </Button>
+            </div>
+          </PreviewPane>
+        </div>
+      );
+  }
+}
+
 const exactPreviews: Record<string, VisualPreview> = {
+  "src/primitives/ui/label.tsx": () => (
+    <div className="rounded-2xl border bg-card p-5">
+      <div className="rounded-xl border bg-background p-8">
+        <div className="flex min-h-40 items-center justify-center">
+          <div className="flex items-center gap-2">
+            <input id="accept-terms" type="checkbox" className="size-4" />
+            <Label htmlFor="accept-terms">Accept terms and conditions</Label>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  "src/primitives/auto-form/common/label.tsx": () => (
+    <div className="rounded-2xl border bg-card p-5">
+      <div className="grid gap-4 rounded-xl border bg-background p-6 lg:grid-cols-[0.7fr_1.3fr]">
+        <div className="space-y-2">
+          <div className="font-medium text-sm">Label In Field</div>
+          <p className="text-muted-foreground text-xs">
+            Field labels should read as part of the full form composition.
+          </p>
+        </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="auto-form-email">Your email address</Label>
+            <Input id="auto-form-email" defaultValue="name@example.com" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="auto-form-card">Card Number</Label>
+            <Input id="auto-form-card" defaultValue="1234 5678 9012 3456" />
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  "src/primitives/typography/typography-p.tsx": () => (
+    <div className="rounded-2xl border bg-card p-5">
+      <div className="rounded-xl border bg-background p-8">
+        <div className="flex min-h-40 items-center">
+          <TypographyP className="max-w-xl">
+            The king, seeing how much happier his subjects were, realized the error of his ways and repealed the joke tax.
+          </TypographyP>
+        </div>
+      </div>
+    </div>
+  ),
+  "src/primitives/typography/typography-blockquote.tsx": () => (
+    <div className="rounded-2xl border bg-card p-5">
+      <div className="rounded-xl border bg-background p-8">
+        <div className="flex min-h-40 items-center">
+          <blockquote className="max-w-2xl border-l-2 pl-6 italic text-sm">
+            “After all,” he said, “everyone enjoys a good joke, so it's only fair that they should pay for the privilege.”
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  ),
+  "src/primitives/typography/typography-table.tsx": () => (
+    <div className="rounded-2xl border bg-card p-5">
+      <div className="rounded-xl border bg-background p-8">
+        <div className="overflow-hidden rounded border">
+          <table className="w-full text-sm">
+            <thead className="bg-muted/30">
+              <tr className="[&>th]:border-b [&>th]:px-4 [&>th]:py-2 [&>th]:text-left [&>th]:font-medium">
+                <th>King's Treasury</th>
+                <th>People's happiness</th>
+              </tr>
+            </thead>
+            <tbody className="[&>tr:not(:last-child)]:border-b [&_td]:px-4 [&_td]:py-2">
+              <tr>
+                <td>Empty</td>
+                <td>Overflowing</td>
+              </tr>
+              <tr className="bg-muted/20">
+                <td>Modest</td>
+                <td>Satisfied</td>
+              </tr>
+              <tr>
+                <td>Full</td>
+                <td>Ecstatic</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  ),
+  "src/primitives/tables/table.tsx": TablePreview,
   "src/primitives/ui-core/badge.tsx": () => (
     <div className="flex flex-wrap gap-2">
       <Badge>Default</Badge>

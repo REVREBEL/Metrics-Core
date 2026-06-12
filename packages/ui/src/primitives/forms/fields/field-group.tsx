@@ -1,12 +1,5 @@
-import { Checkbox } from "@ui"
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-  FieldSeparator,
-  FieldSet,
-} from "@auto-form"
+import { Checkbox } from "@ui-core/checkbox"
+import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet, FieldSeparator } from "@auto-form/fields/field"
 
 export default function FieldGroupExample() {
   return (

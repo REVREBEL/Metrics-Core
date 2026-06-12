@@ -18,6 +18,8 @@ import {
   getPreviewLayoutClasses,
   getRegistryPreviewSpec,
   getVisualPreview,
+  RegistryButtonFamilyPreview,
+  type RegistryButtonPreviewGroupId,
   type RegistryPreviewInput,
 } from "@lib/registry-preview";
 import {
@@ -29,6 +31,104 @@ import {
 type FolderViewProps = {
   folderFilter?: string;
 };
+
+type RegistryCatalogItem = {
+  description?: string;
+  files?: Array<{ path: string; type: string; target?: string }>;
+  name: string;
+  title?: string;
+  type: string;
+};
+
+type ButtonPreviewGroupId =
+  RegistryButtonPreviewGroupId;
+
+type GroupedPreviewEntry = {
+  description?: string;
+  items: RegistryCatalogItem[];
+  layout: ReturnType<typeof getRegistryPreviewSpec>["layout"];
+  previewId?: ButtonPreviewGroupId;
+  previewInput: RegistryPreviewInput;
+  title?: string;
+};
+
+const BUTTON_PREVIEW_GROUPS: Array<{
+  description: string;
+  itemNames: string[];
+  layout: GroupedPreviewEntry["layout"];
+  previewId: ButtonPreviewGroupId;
+  title: string;
+}> = [
+  {
+    title: "Core Button Variants",
+    description: "Default, secondary, outline, destructive, ghost, and size states shown as one base family.",
+    itemNames: [
+      "button",
+      "button-default",
+      "button-secondary",
+      "button-outline",
+      "button-destructive",
+      "button-ghost",
+      "button-size",
+    ],
+    previewId: "core",
+    layout: "half",
+  },
+  {
+    title: "Icon And Inline Actions",
+    description: "Compact icon buttons, inline icon placements, spinner affordances, and link-style actions.",
+    itemNames: [
+      "button-icon",
+      "button-with-icon",
+      "button-link",
+      "button-spinner",
+      "button-render",
+    ],
+    previewId: "icon",
+    layout: "half",
+  },
+  {
+    title: "Rounded Buttons",
+    description: "Rounded pill treatments and icon controls should render as their own visual pattern.",
+    itemNames: ["button-rounded"],
+    previewId: "rounded",
+    layout: "half",
+  },
+  {
+    title: "Button Group Composition",
+    description: "Horizontal, vertical, nested, separator, and grouped compositions belong together.",
+    itemNames: [
+      "button-group",
+      "button-group-size",
+      "button-group-orientation",
+      "button-group-nested",
+      "button-group-separator",
+      "button-group-input",
+      "button-group-input-group",
+    ],
+    previewId: "group",
+    layout: "full",
+  },
+  {
+    title: "Dropdown, Popover, Split",
+    description: "Grouped actions with menus and split-button patterns need a wider preview canvas.",
+    itemNames: [
+      "button-group-dropdown",
+      "button-group-popover",
+      "button-group-select",
+      "button-group-split",
+    ],
+    previewId: "menu",
+    layout: "full",
+  },
+  {
+    title: "Toolbar And Status Actions",
+    description: "Toolbar toggles, async save states, and discovery-style actions should be previewed together.",
+    itemNames: ["toolbar-button", "status-button", "discover-button"],
+    previewId: "toolbar",
+    layout: "half",
+  },
+];
 
 function toTitle(value: string) {
   return value
@@ -47,6 +147,94 @@ function getNodeText(node: RegistryFolderNode) {
   return [node.id, node.title, node.sourcePath, ...node.directFiles]
     .join(" ")
     .toLowerCase();
+}
+
+function isButtonsFolder(node: RegistryFolderNode | null) {
+  if (!node) return false;
+  return (
+    node.id === "primitives/buttons" ||
+    node.sourcePath.endsWith("/primitives/buttons") ||
+    node.sourcePath.includes("/primitives/buttons")
+  );
+}
+
+function buildDefaultGroupedEntries(items: RegistryCatalogItem[]): GroupedPreviewEntry[] {
+  const groups = new Map<string, GroupedPreviewEntry>();
+
+  for (const item of items) {
+    const previewInput = {
+      description: item.description,
+      name: item.name,
+      sourcePath: item.files?.[0]?.path,
+      title: item.title,
+      type: item.type,
+    };
+    const spec = getRegistryPreviewSpec(previewInput);
+
+    if (spec.layout !== "grouped") {
+      groups.set(`${item.name}:${spec.template}`, {
+        items: [item],
+        layout: spec.layout,
+        previewInput,
+      });
+      continue;
+    }
+
+    const sourcePath = previewInput.sourcePath ?? "";
+    const familyKey = sourcePath.split("/").slice(0, 3).join("/") || item.type;
+    const key = `${spec.template}:${familyKey}`;
+    const existing = groups.get(key);
+
+    if (existing) {
+      existing.items.push(item);
+    } else {
+      groups.set(key, {
+        items: [item],
+        layout: spec.layout,
+        previewInput: {
+          ...previewInput,
+          name: item.title ?? toTitle(familyKey.split("/").pop() ?? item.name),
+          title: item.title ?? toTitle(familyKey.split("/").pop() ?? item.name),
+        },
+      });
+    }
+  }
+
+  return Array.from(groups.values());
+}
+
+function buildButtonGroupedEntries(items: RegistryCatalogItem[]): GroupedPreviewEntry[] {
+  const itemMap = new Map(items.map((item) => [item.name, item]));
+  const assigned = new Set<string>();
+  const entries: GroupedPreviewEntry[] = [];
+
+  for (const group of BUTTON_PREVIEW_GROUPS) {
+    const groupedItems = group.itemNames
+      .map((name) => itemMap.get(name))
+      .filter((item): item is RegistryCatalogItem => Boolean(item));
+
+    if (groupedItems.length === 0) continue;
+
+    groupedItems.forEach((item) => assigned.add(item.name));
+
+    entries.push({
+      title: group.title,
+      description: group.description,
+      items: groupedItems,
+      layout: group.layout,
+      previewId: group.previewId,
+      previewInput: {
+        name: group.title,
+        title: group.title,
+        description: group.description,
+        sourcePath: groupedItems[0]?.files?.[0]?.path,
+        type: groupedItems[0]?.type,
+      },
+    });
+  }
+
+  const leftovers = items.filter((item) => !assigned.has(item.name));
+  return entries.concat(buildDefaultGroupedEntries(leftovers));
 }
 
 function hasMatchingDescendant(node: RegistryFolderNode, query: string): boolean {
@@ -152,59 +340,12 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
   }, [currentNode, visibleFiles]);
 
   const groupedPreviewEntries = useMemo(() => {
-    const groups = new Map<
-      string,
-      {
-        items: typeof matchedItems;
-        layout: ReturnType<typeof getRegistryPreviewSpec>["layout"];
-        previewInput: RegistryPreviewInput;
-        template: ReturnType<typeof getRegistryPreviewSpec>["template"];
-      }
-    >();
-
-    for (const item of matchedItems) {
-      const previewInput = {
-        description: item.description,
-        name: item.name,
-        sourcePath: item.files?.[0]?.path,
-        title: item.title,
-        type: item.type,
-      };
-      const spec = getRegistryPreviewSpec(previewInput);
-
-      if (spec.layout !== "grouped") {
-        groups.set(`${item.name}:${spec.template}`, {
-          items: [item],
-          layout: spec.layout,
-          previewInput,
-          template: spec.template,
-        });
-        continue;
-      }
-
-      const sourcePath = previewInput.sourcePath ?? "";
-      const familyKey = sourcePath.split("/").slice(0, 3).join("/") || item.type;
-      const key = `${spec.template}:${familyKey}`;
-      const existing = groups.get(key);
-
-      if (existing) {
-        existing.items.push(item);
-      } else {
-        groups.set(key, {
-          items: [item],
-          layout: spec.layout,
-          previewInput: {
-            ...previewInput,
-            name: item.title ?? toTitle(familyKey.split("/").pop() ?? item.name),
-            title: item.title ?? toTitle(familyKey.split("/").pop() ?? item.name),
-          },
-          template: spec.template,
-        });
-      }
+    if (isButtonsFolder(currentNode)) {
+      return buildButtonGroupedEntries(matchedItems);
     }
 
-    return Array.from(groups.values());
-  }, [matchedItems]);
+    return buildDefaultGroupedEntries(matchedItems);
+  }, [currentNode, matchedItems]);
 
   const breadcrumb = useMemo(() => {
     if (!currentNode) return [];
@@ -304,7 +445,7 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
               <div className="mt-5 grid gap-4 xl:grid-cols-2">
                 {groupedPreviewEntries.map((entry) => (
                   <div
-                    key={`${entry.template}:${entry.previewInput.name}:${entry.items.map((item) => item.name).join(",")}`}
+                    key={`${entry.previewId ?? "default"}:${entry.previewInput.name}:${entry.items.map((item) => item.name).join(",")}`}
                     className={[
                       "rounded-2xl border bg-background p-4",
                       getPreviewLayoutClasses(entry.layout),
@@ -316,14 +457,16 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
                           {entry.items[0]?.type.replace("registry:", "")}
                         </div>
                         <h2 className="mt-2 font-semibold text-xl">
-                          {entry.layout === "grouped"
-                            ? entry.previewInput.title ?? entry.previewInput.name
-                            : entry.items[0]?.title ?? toTitle(entry.items[0]?.name ?? entry.previewInput.name)}
+                          {entry.title
+                            ?? (entry.layout === "grouped"
+                              ? entry.previewInput.title ?? entry.previewInput.name
+                              : entry.items[0]?.title ?? toTitle(entry.items[0]?.name ?? entry.previewInput.name))}
                         </h2>
                         <p className="mt-2 text-sm text-muted-foreground">
-                          {entry.layout === "grouped"
-                            ? `${entry.items.length} related registry items shown together.`
-                            : entry.items[0]?.description || "Registry item available for install and preview."}
+                          {entry.description
+                            ?? (entry.layout === "grouped"
+                              ? `${entry.items.length} related registry items shown together.`
+                              : entry.items[0]?.description || "Registry item available for install and preview.")}
                         </p>
                       </div>
                       {entry.items.length === 1 ? (
@@ -403,13 +546,7 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
 function RegistryItemPreview({
   item,
 }: {
-  item: {
-    description?: string;
-    files?: Array<{ path: string; type: string; target?: string }>;
-    name: string;
-    title?: string;
-    type: string;
-  };
+  item: RegistryCatalogItem;
 }) {
   const Preview = getVisualPreview({
     description: item.description,
@@ -446,28 +583,22 @@ function RegistryItemPreview({
 function RegistryGroupPreview({
   entry,
 }: {
-  entry: {
-    items: Array<{
-      description?: string;
-      files?: Array<{ path: string; type: string; target?: string }>;
-      name: string;
-      title?: string;
-      type: string;
-    }>;
-    layout: ReturnType<typeof getRegistryPreviewSpec>["layout"];
-    previewInput: RegistryPreviewInput;
-  };
+  entry: GroupedPreviewEntry;
 }) {
   const Preview = getVisualPreview(entry.previewInput);
 
   return (
     <div className="rounded-2xl border bg-card p-4">
-      <Preview
-        description={entry.previewInput.description}
-        name={entry.previewInput.name}
-        sourcePath={entry.previewInput.sourcePath}
-        title={entry.previewInput.title}
-      />
+      {entry.previewId ? (
+        <RegistryButtonFamilyPreview previewId={entry.previewId} />
+      ) : (
+        <Preview
+          description={entry.previewInput.description}
+          name={entry.previewInput.name}
+          sourcePath={entry.previewInput.sourcePath}
+          title={entry.previewInput.title}
+        />
+      )}
       <div className="mt-4 border-t pt-4">
         <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
           {entry.items.length === 1 ? "Install view" : "Items in this preview"}
