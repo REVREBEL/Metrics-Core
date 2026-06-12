@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
-import { PLAYGROUND_REGISTRY } from "@/lib/registry";
+import { REGISTRY } from "@/lib/registry";
 
 type PlaygroundEntry = {
   name: string;
@@ -55,7 +55,7 @@ function folderHref(folder: string) {
 }
 
 const sourceFolderGroups: FolderGroup[] = Object.entries(
-  PLAYGROUND_REGISTRY as Record<string, PlaygroundEntry>,
+  REGISTRY as Record<string, PlaygroundEntry>,
 ).reduce<FolderGroup[]>((groups, [id, entry]) => {
   if (!entry || typeof entry !== "object") return groups;
 
