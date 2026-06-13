@@ -19,6 +19,9 @@
 
       "@/registry": ["./registry.json"],
 
+      // NEW COMPONENT INSTALLS ONLY
+      "@staging_new-files/*": ["./packages/ui/src/primitives/staging_new-files/*"],
+
       // PRIMITIVES
       "@auto-form/*": ["./packages/ui/src/primitives/forms/*"],
       "@buttons/*": ["./packages/ui/src/primitives/buttons/*"],
@@ -36,6 +39,7 @@
       "@tabs/*": ["./packages/ui/src/primitives/tabs/*"],
       "@tables/*": ["./packages/ui/src/primitives/tables/*"],
       "@textarea/*": ["./packages/ui/src/primitives/textarea/*"],
+      "@typography": ["./packages/ui/src/primitives/typography/index.ts"],
       "@typography/*": ["./packages/ui/src/primitives/typography/*"],
       "@studio-blocks/*": ["./packages/ui/src/primitives/studio-blocks/*"],
 
@@ -44,6 +48,7 @@
       "@ui-core": ["./packages/ui/src/primitives/ui-core/index.ts"],
 
       // UI REGISTRY
+      "@ui-registry": ["./packages/ui/src/ui-registry/index.ts"],
       "@ui-registry/*": ["./packages/ui/src/ui-registry/*"],
 
       // METRIC COMPONENTS

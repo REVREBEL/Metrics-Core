@@ -15,7 +15,16 @@
       "@/*": ["../../packages/ui/src/*"],
       "@buttons/*": ["../../packages/ui/src/primitives/buttons/*"],
       "@components/*": ["./components/*"],
-      "@lib/*": ["./lib/*", "../../packages/ui/src/lib/*"]
+      "@inputs/*": ["../../packages/ui/src/primitives/inputs/*"],
+      "@lib/*": ["./lib/*", "../../packages/ui/src/lib/*"],
+      "@skeleton/*": ["../../packages/ui/src/primitives/skeleton/*"],
+      "@textarea/*": ["../../packages/ui/src/primitives/textarea/*"],
+      "@typography": ["../../packages/ui/src/primitives/typography/index.ts"],
+      "@typography/*": ["../../packages/ui/src/primitives/typography/*"],
+      "@ui-core": ["../../packages/ui/src/primitives/ui-core/index.ts"],
+      "@ui-core/*": ["../../packages/ui/src/primitives/ui-core/*"],
+      "@ui-registry": ["../../packages/ui/src/ui-registry/index.ts"],
+      "@ui-registry/*": ["../../packages/ui/src/ui-registry/*"]
     },
     "plugins": [
       {

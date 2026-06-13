@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-11T21:48:24.646Z",
+  "generatedAt": "2026-06-13T08:37:16.645Z",
   "roots": [
     "primitives",
     "components",
@@ -531,22 +531,23 @@
       "kind": "group",
       "depth": 1,
       "directFiles": [
-        "packages/ui/src/primitives/typography/typography-blockquote.tsx",
-        "packages/ui/src/primitives/typography/typography-h1.tsx",
-        "packages/ui/src/primitives/typography/typography-h2.tsx",
-        "packages/ui/src/primitives/typography/typography-h3.tsx",
-        "packages/ui/src/primitives/typography/typography-h4.tsx",
-        "packages/ui/src/primitives/typography/typography-inline-code.tsx",
-        "packages/ui/src/primitives/typography/typography-large.tsx",
-        "packages/ui/src/primitives/typography/typography-lead.tsx",
-        "packages/ui/src/primitives/typography/typography-list.tsx",
-        "packages/ui/src/primitives/typography/typography-muted.tsx",
-        "packages/ui/src/primitives/typography/typography-p.tsx",
-        "packages/ui/src/primitives/typography/typography-small.tsx",
-        "packages/ui/src/primitives/typography/typography-table.tsx"
+        "packages/ui/src/primitives/typography/TypographyBlockquoteProps.tsx",
+        "packages/ui/src/primitives/typography/TypographyH1.tsx",
+        "packages/ui/src/primitives/typography/TypographyH2.tsx",
+        "packages/ui/src/primitives/typography/TypographyH3.tsx",
+        "packages/ui/src/primitives/typography/TypographyH4.tsx",
+        "packages/ui/src/primitives/typography/TypographyH5.tsx",
+        "packages/ui/src/primitives/typography/TypographyLarge.tsx",
+        "packages/ui/src/primitives/typography/TypographyLead.tsx",
+        "packages/ui/src/primitives/typography/TypographyList.tsx",
+        "packages/ui/src/primitives/typography/TypographyMuted.tsx",
+        "packages/ui/src/primitives/typography/TypographyP.tsx",
+        "packages/ui/src/primitives/typography/TypographySmall.tsx",
+        "packages/ui/src/primitives/typography/TypographyTable.tsx",
+        "packages/ui/src/primitives/typography/TyypographyLineCode.tsx"
       ],
       "children": [],
-      "directFileCount": 13,
+      "directFileCount": 14,
       "childCount": 0
     },
     "primitives/ui-core": {

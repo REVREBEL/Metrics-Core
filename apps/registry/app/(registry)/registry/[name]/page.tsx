@@ -2,7 +2,7 @@ import { IconSquareRoundedArrowLeftFilled } from "@tabler/icons-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { ComponentCard } from "@repo/ui/ui-registry";
+import { ComponentCard } from "@ui-registry";
 import { getRegistryItem, getRegistryItems } from "@lib/registry";
 import { getPrompt } from "@lib/utils";
 
