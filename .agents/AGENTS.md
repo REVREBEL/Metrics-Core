@@ -1,12 +1,14 @@
 # Agent Instructions
 
+
+
 Before changing Next.js code:
 1. Use the next-devtools MCP server when available.
 2. Check the running dev server for current errors and route context.
 3. Use version-matched Next.js documentation/context rather than relying on memory.
 4. Prefer project conventions already present in this repo.
 5. Explain which MCP context was used before making broad architectural changes.
-
+6. Review ./docs
 
 
 Repo Rule: Path Aliases and Next.js Configuration
