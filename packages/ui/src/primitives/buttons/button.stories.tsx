@@ -2,17 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "./button";
 
-const meta = {
+const meta: Meta<typeof Button> = {
   title: "Primitives/Button",
   component: Button,
   parameters: {
     layout: "centered",
-  },
-  args: {
-    children: "Continue",
-    variant: "default",
-    size: "default",
-    asChild: false,
   },
   argTypes: {
     variant: {
@@ -43,15 +37,27 @@ const meta = {
       control: "boolean",
     },
   },
-} satisfies Meta<typeof Button>;
+};
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Button>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    children: "Continue",
+    variant: "default",
+    size: "default",
+    asChild: false,
+  },
+};
 
 export const Variants: Story = {
+  parameters: {
+    controls: {
+      disable: true,
+    },
+  },
   render: () => (
     <div className="flex flex-wrap items-center gap-3">
       <Button>Default</Button>
