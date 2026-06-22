@@ -2,16 +2,7 @@ import { IconSquareRoundedArrowLeftFilled } from "@tabler/icons-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-<<<<<<< Updated upstream
 import { ComponentCard } from "@ui-registry";
-=======
-<<<<<<< Updated upstream
-import { ComponentCard } from "@repo/ui/ui-registry";
-=======
-import { RegistryMetadataPanel } from "../../../../components/registry-metadata-panel";
-import { ComponentCard } from "@ui-registry";
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 import { getRegistryItem, getRegistryItems } from "@lib/registry";
 import { getPrompt } from "@lib/utils";
 
