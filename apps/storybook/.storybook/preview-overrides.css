@@ -1,3 +1,5 @@
+@source "../../../packages/ui/src";
+
 #storybook-root *,
 #storybook-root *::before,
 #storybook-root *::after {
