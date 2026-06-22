@@ -1,6 +1,8 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+
 import { Button } from "./button";
 
-export default {
+const meta = {
   title: "Primitives/Button",
   component: Button,
   parameters: {
@@ -8,12 +10,48 @@ export default {
   },
   args: {
     children: "Continue",
+    variant: "default",
+    size: "default",
+    asChild: false,
   },
-};
+  argTypes: {
+    variant: {
+      control: "select",
+      options: [
+        "default",
+        "secondary",
+        "outline",
+        "ghost",
+        "destructive",
+        "link",
+      ],
+    },
+    size: {
+      control: "select",
+      options: [
+        "default",
+        "xs",
+        "sm",
+        "lg",
+        "icon",
+        "icon-xs",
+        "icon-sm",
+        "icon-lg",
+      ],
+    },
+    asChild: {
+      control: "boolean",
+    },
+  },
+} satisfies Meta<typeof Button>;
 
-export const Default = {};
+export default meta;
 
-export const Variants = {
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+
+export const Variants: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-3">
       <Button>Default</Button>

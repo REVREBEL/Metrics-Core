@@ -2,6 +2,7 @@ import type { Preview } from "@storybook/react-vite";
 
 // import "../storybook.css";
 import "@styles/globals.css";
+import "./preview-overrides.css";
 
 const preview: Preview = {
   parameters: {
