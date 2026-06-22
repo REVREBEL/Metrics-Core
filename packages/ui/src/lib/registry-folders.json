@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-22T06:36:12.584Z",
+  "generatedAt": "2026-06-22T11:09:15.197Z",
   "roots": [
     "primitives",
     "components",
@@ -689,6 +689,20 @@
       "directFileCount": 1,
       "childCount": 22
     },
+    "components/metrics-core": {
+      "id": "components/metrics-core",
+      "title": "Metrics Core",
+      "sourcePath": "packages/ui/src/components/metrics-core",
+      "parentId": "components",
+      "kind": "group",
+      "depth": 1,
+      "directFiles": [
+        "packages/ui/src/components/metrics-core/metrics-button.tsx"
+      ],
+      "children": [],
+      "directFileCount": 1,
+      "childCount": 0
+    },
     "components/metrics-layouts/help-desk": {
       "id": "components/metrics-layouts/help-desk",
       "title": "Help Desk",
@@ -814,10 +828,11 @@
       "depth": 0,
       "directFiles": [],
       "children": [
+        "components/metrics-core",
         "components/metrics-layouts"
       ],
       "directFileCount": 0,
-      "childCount": 1
+      "childCount": 2
     },
     "fonts/barlow": {
       "id": "fonts/barlow",

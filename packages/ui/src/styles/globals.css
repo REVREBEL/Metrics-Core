@@ -1,11 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-
-@source "../";
-
 @import "../fonts/fonts.css";
 @import "./theme-reference.css";
+
+@source "../";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -13,10 +12,32 @@
 }
 
 @layer base {
+
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    font-size: 100%;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
+
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: subpixel-antialiased;
+    font-size: 100%;
+    /* stylelint-disable-next-line */
+    font-smooth: always;
+    /* stylelint-disable-next-line */
+    font-smoothing: antialiased;
+    font-variant-ligatures: none;
+    text-rendering: optimizeLegibility;
+    text-shadow: rgb(0 0 0 / 1%) 0 0 1px;
+    text-size-adjust: 100%;
+
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
   }

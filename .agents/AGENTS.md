@@ -678,7 +678,7 @@ next.config.mjs should not duplicate them.
 
 ### Icon Usage Rules
 
-Before adding a new Tabler icon, check docs/icon-inventory.md first.
+Before adding a new Tabler icon, check ./apps/docs/src/content/design-system/icon-inventory.md first.
 
 If an existing icon already represents the intended action or concept, reuse it.
 
@@ -686,6 +686,9 @@ Only introduce a new icon when:
 1. no existing icon matches the intended meaning,
 2. the new icon improves clarity,
 3. and docs/icon-inventory.md is updated in the same change.
+
+If adding a new icon to a component not on the list, also make sure to add it to the main icon reference file as well here:
+./apps/docs/src/content/design-system/icon-inventory.md
 
 
 ---

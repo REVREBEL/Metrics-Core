@@ -1,4 +1,28 @@
 {
+  "components/metrics-core/metrics-button": {
+    "displayName": "metrics-button",
+    "description": "",
+    "props": [
+      {
+        "name": "variant",
+        "type": "\"default\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"active\" | \"active\" | \"active\" | \"active\" | \"active\" | \"outline\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"active\" | \"active\" | \"active\" | \"active\" | \"active\" | \"secondary\" | \"destructive\" | \"ghost\" | \"hover\" | \"hover\" | \"link\" | \"hover\"",
+        "required": false,
+        "description": "Generated from cva variant variants."
+      },
+      {
+        "name": "size",
+        "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"",
+        "required": false,
+        "description": "Generated from cva size variants."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
   "components/metrics-layouts/help-desk/documentation_page": {
     "displayName": "documentation_page",
     "description": "",
@@ -951,7 +975,7 @@
       },
       {
         "name": "size",
-        "type": "\"default\" | \"sm\" | \"lg\" | \"icon\" | \"xs\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"",
+        "type": "\"default\" | \"sm\" | \"lg\" | \"icon\"",
         "required": false,
         "description": "Generated from cva size variants."
       },
