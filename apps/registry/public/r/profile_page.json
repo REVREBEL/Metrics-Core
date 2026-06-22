@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "profile_page",
+  "title": "Profile Page",
+  "description": "Auto-generated registry entry for profile_page.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/settings/profile_page.tsx",
+      "content": "import { ContentSection } from \"../components/content-section\";\nimport { ProfileForm } from \"./profile-form\";\n\nexport default function SettingsProfilePage() {\n  return (\n    <ContentSection\n      title=\"Profile\"\n      desc=\"This is how others will see you on the site.\"\n    >\n      <ProfileForm />\n    </ContentSection>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/settings/profile_page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

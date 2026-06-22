@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "preview-card",
+  "title": "Preview Card",
+  "description": "Auto-generated registry entry for preview-card.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/preview-card.tsx",
+      "content": "\"use client\";\n\nimport { PreviewCard as PreviewCardPrimitive } from \"@base-ui/react/preview-card\";\n\nimport { cn } from \"@/lib/utils\";\n\nconst PreviewCard = PreviewCardPrimitive.Root;\n\nfunction PreviewCardTrigger({ ...props }: PreviewCardPrimitive.Trigger.Props) {\n\treturn (\n\t\t<PreviewCardPrimitive.Trigger data-slot=\"preview-card-trigger\" {...props} />\n\t);\n}\n\nfunction PreviewCardPopup({\n\tclassName,\n\tchildren,\n\talign = \"center\",\n\tsideOffset = 4,\n\tanchor,\n\t...props\n}: PreviewCardPrimitive.Popup.Props & {\n\talign?: PreviewCardPrimitive.Positioner.Props[\"align\"];\n\tsideOffset?: PreviewCardPrimitive.Positioner.Props[\"sideOffset\"];\n\tanchor?: PreviewCardPrimitive.Positioner.Props[\"anchor\"];\n}) {\n\treturn (\n\t\t<PreviewCardPrimitive.Portal>\n\t\t\t<PreviewCardPrimitive.Positioner\n\t\t\t\talign={align}\n\t\t\t\tanchor={anchor}\n\t\t\t\tclassName=\"z-50\"\n\t\t\t\tdata-slot=\"preview-card-positioner\"\n\t\t\t\tsideOffset={sideOffset}\n\t\t\t>\n\t\t\t\t<PreviewCardPrimitive.Popup\n\t\t\t\t\tclassName={cn(\n\t\t\t\t\t\t\"relative flex w-64 origin-(--transform-origin) text-balance rounded-lg border bg-popover not-dark:bg-clip-padding p-4 text-popover-foreground text-sm shadow-lg/5 transition-[scale,opacity] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] data-ending-style:scale-98 data-starting-style:scale-98 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]\",\n\t\t\t\t\t\tclassName,\n\t\t\t\t\t)}\n\t\t\t\t\tdata-slot=\"preview-card-content\"\n\t\t\t\t\t{...props}\n\t\t\t\t>\n\t\t\t\t\t{children}\n\t\t\t\t</PreviewCardPrimitive.Popup>\n\t\t\t</PreviewCardPrimitive.Positioner>\n\t\t</PreviewCardPrimitive.Portal>\n\t);\n}\n\nexport {\n\tPreviewCard,\n\tPreviewCard as HoverCard,\n\tPreviewCardTrigger,\n\tPreviewCardTrigger as HoverCardTrigger,\n\tPreviewCardPopup,\n\tPreviewCardPopup as HoverCardContent,\n\tPreviewCardPrimitive,\n};\n",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/preview-card.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

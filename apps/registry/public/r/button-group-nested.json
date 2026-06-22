@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-group-nested",
+  "title": "Button Group Nested",
+  "description": "Auto-generated registry entry for button-group-nested.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-group-nested.tsx",
+      "content": "import AudioLinesIcon from \"@icons/AudioLinesStrokeRounded\";\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"@inputs/input-group\";\nimport { IconPlus } from \"@tabler/icons-react\";\nimport { Tooltip, TooltipContent, TooltipTrigger } from \"@ui-core\";\nimport { Button } from \"./button\";\nimport { ButtonGroup } from \"./button-group\";\n\nexport function ButtonGroupNested() {\n  return (\n    <ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"outline\" size=\"icon\">\n          <IconPlus />\n        </Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <InputGroup>\n          <InputGroupInput placeholder=\"Send a message...\" />\n          <Tooltip>\n            <TooltipTrigger render={<InputGroupAddon align=\"inline-end\" />}>\n              <AudioLinesIcon />\n            </TooltipTrigger>\n            <TooltipContent>Voice Mode</TooltipContent>\n          </Tooltip>\n        </InputGroup>\n      </ButtonGroup>\n    </ButtonGroup>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-group-nested.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

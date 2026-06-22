@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography-h4",
+  "title": "Typography H4",
+  "description": "Auto-generated registry entry for typography-h4.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TypographyH4.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographyH4Props extends HTMLAttributes<HTMLHeadingElement> {}\n\nexport function TypographyH4({\n  children,\n  className,\n  ...props\n}: TypographyH4Props) {\n  return (\n    <h4\n      className={cn(\n        \"scroll-m-20 text-xl font-semibold tracking-tight uppercase\",\n        className,\n      )}\n      {...props}\n    >\n      {children}\n    </h4>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TypographyH4.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

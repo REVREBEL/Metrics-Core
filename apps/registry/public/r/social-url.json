@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "social-url",
+  "title": "Social Url",
+  "description": "Auto-generated registry entry for social-url.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/users/social-url.tsx",
+      "content": "'use client'\n\nimport { useState } from 'react'\n\nimport { PlusIcon } from 'lucide-react'\n\nimport { Input } from '@ui-core'\nimport { Button } from '@ui-core'\n\nconst SocialUrl = () => {\n  const [urls, setUrls] = useState<string[]>(['', '', ''])\n\n  const addUrl = () => setUrls(prev => [...prev, ''])\n\n  const updateUrl = (index: number, value: string) => setUrls(prev => prev.map((u, i) => (i === index ? value : u)))\n\n  return (\n    <div className='grid grid-cols-1 gap-10 lg:grid-cols-3'>\n      {/* Vertical Tabs List */}\n      <div className='flex flex-col'>\n        <h3 className='text-foreground font-semibold'>Social URLs</h3>\n        <p className='text-muted-foreground text-sm'>Manage your social URLs.</p>\n      </div>\n\n      {/* Content */}\n      <div className='space-y-6 lg:col-span-2'>\n        <div className='space-y-4'>\n          {urls.map((url, idx) => (\n            <Input\n              key={idx}\n              type='text'\n              placeholder='Link to social profile'\n              value={url}\n              onChange={e => updateUrl(idx, e.target.value)}\n            />\n          ))}\n        </div>\n        <div className='flex items-center justify-between gap-4'>\n          <Button type='button' variant='outline' onClick={addUrl}>\n            <PlusIcon className='size-4' />\n            Add URL\n          </Button>\n          <Button type='submit'>Save Changes</Button>\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport default SocialUrl\n",
+      "type": "registry:ui",
+      "target": "src/primitive/users/social-url.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

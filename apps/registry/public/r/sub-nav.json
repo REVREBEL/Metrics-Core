@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sub-nav",
+  "title": "Sub Nav",
+  "description": "Auto-generated registry entry for sub-nav.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/sub-nav.tsx",
+      "content": "type SubNavProps = React.HTMLAttributes<HTMLDivElement>\n\nexport function SubNav({ className, ...props }: SubNavProps) {\n    return (\n        <div className={className} {...props} />\n    )\n}",
+      "type": "registry:ui",
+      "target": "src/primitive/layouts/sub-nav.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

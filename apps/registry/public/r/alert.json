@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert",
+  "title": "Alert",
+  "description": "Displays a callout for user attention.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/alert.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\nimport { type VariantProps, cva } from \"class-variance-authority\";\nimport type * as React from \"react\";\n\nconst alertVariants = cva(\n\t\"relative w-full rounded-lg border px-4 py-3 text-sm grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current\",\n\t{\n\t\tvariants: {\n\t\t\tvariant: {\n\t\t\t\tdefault: \"bg-card text-card-foreground\",\n\t\t\t\tdestructive:\n\t\t\t\t\t\"text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90\",\n\t\t\t},\n\t\t},\n\t\tdefaultVariants: {\n\t\t\tvariant: \"default\",\n\t\t},\n\t},\n);\n\nfunction Alert({\n\tclassName,\n\tvariant,\n\t...props\n}: React.ComponentProps<\"div\"> & VariantProps<typeof alertVariants>) {\n\treturn (\n\t\t<div\n\t\t\tdata-slot=\"alert\"\n\t\t\trole=\"alert\"\n\t\t\tclassName={cn(alertVariants({ variant }), className)}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\nfunction AlertTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n\treturn (\n\t\t<div\n\t\t\tdata-slot=\"alert-title\"\n\t\t\tclassName={cn(\n\t\t\t\t\"col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight\",\n\t\t\t\tclassName,\n\t\t\t)}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\nfunction AlertDescription({\n\tclassName,\n\t...props\n}: React.ComponentProps<\"div\">) {\n\treturn (\n\t\t<div\n\t\t\tdata-slot=\"alert-description\"\n\t\t\tclassName={cn(\n\t\t\t\t\"col-start-2 grid justify-items-start gap-1 text-sm text-muted-foreground [&_p]:leading-relaxed\",\n\t\t\t\tclassName,\n\t\t\t)}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\nexport { Alert, AlertTitle, AlertDescription };\n",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/alert.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

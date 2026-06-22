@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography-table",
+  "title": "Typography Table",
+  "description": "Auto-generated registry entry for typography-table.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TypographyTable.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographyTableProps extends HTMLAttributes<HTMLDivElement> {}\n\nexport function TypographyTable({\n  children,\n  className,\n  ...props\n}: TypographyTableProps) {\n  return (\n    <div className={cn(\"my-6 w-full overflow-y-auto\", className)} {...props}>\n      {children}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TypographyTable.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

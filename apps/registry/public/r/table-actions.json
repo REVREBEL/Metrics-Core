@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table-actions",
+  "title": "Table Actions",
+  "description": "Auto-generated registry entry for table-actions.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/tables/table-actions.tsx",
+      "content": "import { IconDots } from \"@tabler/icons-react\"\n\nimport { Button } from \"@buttons/button\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@dropdowns/dropdown-menu\"\nimport {\n  Table,\n  TableBody,\n  TableCell,\n  TableHead,\n  TableHeader,\n  TableRow,\n} from \"./table\"\n\nfunction ActionsMenu() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant=\"ghost\" size=\"icon\" className=\"size-8\">\n          <IconDots />\n          <span className=\"sr-only\">Open menu</span>\n        </Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent align=\"end\">\n        <DropdownMenuItem>Edit</DropdownMenuItem>\n        <DropdownMenuItem>Duplicate</DropdownMenuItem>\n        <DropdownMenuSeparator />\n        <DropdownMenuItem variant=\"destructive\">Delete</DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\nexport function TableActions() {\n  return (\n    <Table>\n      <TableHeader>\n        <TableRow>\n          <TableHead>Product</TableHead>\n          <TableHead>Price</TableHead>\n          <TableHead className=\"text-right\">Actions</TableHead>\n        </TableRow>\n      </TableHeader>\n      <TableBody>\n        <TableRow>\n          <TableCell className=\"font-medium\">Wireless Mouse</TableCell>\n          <TableCell>$29.99</TableCell>\n          <TableCell className=\"text-right\">\n            <ActionsMenu />\n          </TableCell>\n        </TableRow>\n        <TableRow>\n          <TableCell className=\"font-medium\">Mechanical Keyboard</TableCell>\n          <TableCell>$129.99</TableCell>\n          <TableCell className=\"text-right\">\n            <ActionsMenu />\n          </TableCell>\n        </TableRow>\n        <TableRow>\n          <TableCell className=\"font-medium\">USB-C Hub</TableCell>\n          <TableCell>$49.99</TableCell>\n          <TableCell className=\"text-right\">\n            <ActionsMenu />\n          </TableCell>\n        </TableRow>\n      </TableBody>\n    </Table>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/tables/table-actions.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

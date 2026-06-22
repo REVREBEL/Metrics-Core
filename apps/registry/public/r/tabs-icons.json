@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs-icons",
+  "title": "Tabs Icons",
+  "description": "Auto-generated registry entry for tabs-icons.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/tabs/tabs-icons.tsx",
+      "content": "import { IconAppWindow, IconCode } from \"@tabler/icons-react\"\n\nimport { Tabs, TabsList, TabsTrigger } from \"./tabs\"\n\nexport function TabsIcons() {\n  return (\n    <Tabs defaultValue=\"preview\">\n      <TabsList>\n        <TabsTrigger value=\"preview\">\n          <IconAppWindow />\n          Preview\n        </TabsTrigger>\n        <TabsTrigger value=\"code\">\n          <IconCode />\n          Code\n        </TabsTrigger>\n      </TabsList>\n    </Tabs>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/tabs/tabs-icons.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

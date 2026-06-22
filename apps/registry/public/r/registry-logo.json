@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "registry-logo",
+  "title": "Registry Logo",
+  "description": "Auto-generated registry entry for registry-logo.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/registry/registry-logo.tsx",
+      "content": "import { Squirrel } from \"lucide-react\";\n\nexport function RegistryLogo() {\n  return (\n    <>\n      <div className=\"flex-shrink-0 rounded-md bg-primary p-1\">\n        <Squirrel className=\"size-5 text-secondary\" />\n      </div>\n      <span className=\"font-semibold\">Registry</span>\n    </>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/registry/registry-logo.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

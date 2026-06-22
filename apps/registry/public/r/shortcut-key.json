@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shortcut-key",
+  "title": "Shortcut Key",
+  "description": "Auto-generated registry entry for shortcut-key.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/sections/shortcut-key.tsx",
+      "content": "import * as React from \"react\"\nimport { Kbd, KbdGroup } from \"../ui-core/kbd\"\nimport { getShortcutKey } from \"../utils\"\n\ninterface ShortcutKeyProps {\n  keys?: string[]\n}\n\nexport function ShortcutKey({ keys }: ShortcutKeyProps) {\n  if (!keys || keys.length === 0) return null\n\n  return (\n    <KbdGroup>\n      {keys.map((key, index) => {\n        const { symbol } = getShortcutKey(key)\n        return <Kbd key={index}>{symbol}</Kbd>\n      })}\n    </KbdGroup>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/sections/shortcut-key.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

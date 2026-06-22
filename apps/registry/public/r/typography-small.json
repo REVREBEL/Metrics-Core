@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography-small",
+  "title": "Typography Small",
+  "description": "Auto-generated registry entry for typography-small.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TypographySmall.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographySmallProps extends HTMLAttributes<HTMLElement> {}\n\nexport function TypographySmall({\n  children,\n  className,\n  ...props\n}: TypographySmallProps) {\n  return (\n    <small\n      className={cn(\"text-sm leading-none font-medium\", className)}\n      {...props}\n    >\n      {children}\n    </small>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TypographySmall.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

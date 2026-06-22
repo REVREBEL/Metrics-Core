@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography-blockquote",
+  "title": "Typography Blockquote",
+  "description": "Auto-generated registry entry for typography-blockquote.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TypographyBlockquoteProps.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographyBlockquoteProps\n  extends HTMLAttributes<HTMLQuoteElement> {}\n\nexport function TypographyBlockquote({\n  children,\n  className,\n  ...props\n}: TypographyBlockquoteProps) {\n  return (\n    <blockquote\n      className={cn(\"mt-6 border-l-2 pl-6 italic\", className)}\n      {...props}\n    >\n      {children}\n    </blockquote>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TypographyBlockquoteProps.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

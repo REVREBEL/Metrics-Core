@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-group-input",
+  "title": "Button Group Input",
+  "description": "Auto-generated registry entry for button-group-input.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-group-input.tsx",
+      "content": "import { Input } from \"@inputs/input\";\nimport { IconSearch as SearchIcon } from \"@tabler/icons-react\";\nimport { Button } from \"./button\";\nimport { ButtonGroup } from \"./button-group\";\n\nexport default function ButtonGroupInput() {\n  return (\n    <ButtonGroup>\n      <Input placeholder=\"Search...\" />\n      <Button variant=\"outline\" aria-label=\"Search\">\n        <SearchIcon />\n      </Button>\n    </ButtonGroup>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-group-input.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

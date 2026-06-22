@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-otp-pattern",
+  "title": "Input Otp Pattern",
+  "description": "Auto-generated registry entry for input-otp-pattern.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-otp-pattern.tsx",
+      "content": "\"use client\";\n\nimport { Field, FieldLabel } from \"@auto-form/fields/field\";\nimport { REGEXP_ONLY_DIGITS } from \"input-otp\";\nimport { InputOTP, InputOTPGroup, InputOTPSlot } from \"./input-otp\";\n\nexport function InputOTPPattern() {\n  return (\n    <Field className=\"w-fit\">\n      <FieldLabel htmlFor=\"digits-only\">Digits Only</FieldLabel>\n      <InputOTP id=\"digits-only\" maxLength={6} pattern={REGEXP_ONLY_DIGITS}>\n        <InputOTPGroup>\n          <InputOTPSlot index={0} />\n          <InputOTPSlot index={1} />\n          <InputOTPSlot index={2} />\n          <InputOTPSlot index={3} />\n          <InputOTPSlot index={4} />\n          <InputOTPSlot index={5} />\n        </InputOTPGroup>\n      </InputOTP>\n    </Field>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-otp-pattern.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

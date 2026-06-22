@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-disabled",
+  "title": "Textarea Disabled",
+  "description": "Auto-generated registry entry for textarea-disabled.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/textarea/textarea-disabled.tsx",
+      "content": "import { Field, FieldLabel } from \"@auto-form/fields/field\";\nimport { Textarea } from \"./textarea\";\n\nexport function TextareaDisabled() {\n  return (\n    <Field data-disabled>\n      <FieldLabel htmlFor=\"textarea-disabled\">Message</FieldLabel>\n      <Textarea\n        id=\"textarea-disabled\"\n        placeholder=\"Type your message here.\"\n        disabled\n      />\n    </Field>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/textarea/textarea-disabled.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

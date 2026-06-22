@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-destructive",
+  "title": "Button Destructive",
+  "description": "Auto-generated registry entry for button-destructive.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-destructive.tsx",
+      "content": "import { Button } from \"./button\";\n\nexport default function ButtonDestructive() {\n  return <Button variant=\"destructive\">Destructive</Button>;\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-destructive.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

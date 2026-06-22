@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero",
+  "title": "Hero",
+  "description": "Attention-grabbing section for the top of your landing pages.",
+  "registryDependencies": [
+    "@metrics/metrics",
+    "@metrics/badge",
+    "@metrics/button"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/hero.tsx",
+      "content": "import Image from \"next/image\";\nimport Link from \"next/link\";\n\nimport { Button } from \"@buttons/button\";\nimport { Badge } from \"@ui-core/badge\";\n\nexport function Hero({\n\ttitle,\n\tdescription,\n\tbuttonText,\n\tbuttonLink,\n\tbackgroundImage,\n}: {\n\ttitle: string;\n\tdescription: string;\n\tbuttonText: string;\n\tbuttonLink: string;\n\tbackgroundImage: string;\n}) {\n\treturn (\n\t\t<div className=\"relative h-[600px] w-full bg-foreground/10\">\n\t\t\t<div className=\"relative z-10 flex h-full flex-col items-center justify-center px-4 text-center sm:px-6 lg:px-8\">\n\t\t\t\t<div className=\"mx-auto max-w-3xl\">\n\t\t\t\t\t<Badge variant=\"secondary\" className=\"mb-4\">\n\t\t\t\t\t\tComing soon\n\t\t\t\t\t</Badge>\n\t\t\t\t\t<h1 className=\"font-bold text-4xl tracking-tight sm:text-5xl md:text-6xl\">\n\t\t\t\t\t\t{title}\n\t\t\t\t\t</h1>\n\t\t\t\t\t<p className=\"mt-6 text-xl\">{description}</p>\n\t\t\t\t\t<div className=\"mt-10\">\n\t\t\t\t\t\t<Button\n\t\t\t\t\t\t\tasChild\n\t\t\t\t\t\t\tvariant=\"secondary\"\n\t\t\t\t\t\t\tsize=\"lg\"\n\t\t\t\t\t\t\tclassName=\"rounded-md px-8\"\n\t\t\t\t\t\t>\n\t\t\t\t\t\t\t<Link href={buttonLink}>{buttonText}</Link>\n\t\t\t\t\t\t</Button>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:component",
+      "target": "src/components/hero.tsx"
+    },
+    {
+      "path": "apps/registry/app/demo/[name]/blocks/minimal-layout.tsx",
+      "content": "import React, { type ReactNode } from \"react\";\n\nexport default function MinimalLayout({\n  children,\n}: Readonly<{\n  children: ReactNode;\n}>) {\n  return (\n    <main className=\"mt-16 flex w-full justify-center\">\n      <div className=\"container\">{children}</div>\n    </main>\n  );\n}\n",
+      "type": "registry:file",
+      "target": "src/app/layout.tsx"
+    },
+    {
+      "path": "apps/registry/app/demo/[name]/blocks/blank-page.tsx",
+      "content": "export default function BlankPage() {\n  return (\n    <div className=\"flex flex-col items-center justify-center gap-4 rounded-md py-96\">\n      <div className=\"text-muted-foreground\">\n        Start prompting to use your component!\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:page",
+      "target": "src/app/page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

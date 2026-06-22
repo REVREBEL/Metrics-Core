@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "helpdesk_page",
+  "title": "Helpdesk Page",
+  "description": "Auto-generated registry entry for helpdesk_page.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/help-desk/helpdesk_page.tsx",
+      "content": "import { ProductAreaPage } from \"@/app/(app)/product-area-page\";\n\nexport default function ContactRevrebelPage() {\n  return (\n    <ProductAreaPage\n      title=\"Contact REVREBEL\"\n      description=\"Support contact path for Metrics users.\"\n    />\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/help-desk/helpdesk_page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

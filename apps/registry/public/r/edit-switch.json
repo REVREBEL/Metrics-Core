@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "edit-switch",
+  "title": "Edit Switch",
+  "description": "Auto-generated registry entry for edit-switch.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/edit-switch.tsx",
+      "content": "\"use client\"\n\nimport { Label } from \"./label\"\nimport { Switch } from \"./switch\"\n\ninterface EditSwitchProps {\n  defaultEditing: boolean\n  onCheckedChange: (checked: boolean) => void\n}\n\nexport function EditSwitch({ defaultEditing, onCheckedChange }: EditSwitchProps) {\n  return (\n    <div className=\"flex items-center space-x-2 pb-4\">\n      <Switch\n        id=\"edit-mode\"\n        defaultChecked={defaultEditing}\n        onCheckedChange={onCheckedChange}\n      />\n      <Label htmlFor=\"edit-mode\">Edit Layout</Label>\n    </div>\n  )\n}",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/edit-switch.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}
