@@ -684,3 +684,18 @@ Only introduce a new icon when:
 1. no existing icon matches the intended meaning,
 2. the new icon improves clarity,
 3. and docs/icon-inventory.md is updated in the same change.
+
+
+---
+# Themes
+
+  @styles/globals.css
+  Main Storybook and application stylesheet entry point
+  
+  @styles/theme-reference.css
+  Tailwind @theme mappings and Metrics design tokens
+  Already loaded through globals.css
+  
+  @styles/tailwind-reference.css
+  Lightweight reference stylesheet
+  Not required in Storybook preview when globals.css is loaded
