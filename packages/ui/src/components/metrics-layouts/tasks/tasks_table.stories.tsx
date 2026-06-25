@@ -3,7 +3,7 @@
 
 // TODO(story): Provide representative values for required props:
 // - data: Task[]
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { TasksTable } from "./tasks_table";
 

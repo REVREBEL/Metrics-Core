@@ -4,7 +4,7 @@
 // TODO(story): Provide representative values for required props:
 // - view: GrowthPlanView
 // - mode: "initiatives" | "tasks"
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { EmptyState } from "./growth-plan_states";
 

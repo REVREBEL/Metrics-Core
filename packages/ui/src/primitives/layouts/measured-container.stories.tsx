@@ -3,7 +3,7 @@
 
 // TODO(story): Provide representative values for required props:
 // - as: T
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { MeasuredContainer } from "./measured-container";
 

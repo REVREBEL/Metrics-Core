@@ -3,7 +3,7 @@
 
 // TODO(story): Provide representative values for required props:
 // - products: Product[]
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { ProductGrid } from "./product-grid";
 

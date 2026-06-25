@@ -3,7 +3,7 @@
 
 // TODO(story): Provide representative values for required props:
 // - initiatives: Initiative[]
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { GrowthPlanSidebar } from "./growth-plan_sidebar";
 

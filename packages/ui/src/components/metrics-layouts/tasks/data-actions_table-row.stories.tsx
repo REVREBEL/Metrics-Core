@@ -3,7 +3,7 @@
 
 // TODO(story): Provide representative values for required props:
 // - row: Row<TData>
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { DataTableRowActions } from "./data-actions_table-row";
 

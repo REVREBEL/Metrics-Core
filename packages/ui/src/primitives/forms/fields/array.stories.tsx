@@ -4,7 +4,7 @@
 // TODO(story): Provide representative values for required props:
 // - item: z.ZodArray<any> | z.ZodDefault<any>
 // - form: ReturnType<typeof useForm>
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { AutoFormArray } from "./array";
 

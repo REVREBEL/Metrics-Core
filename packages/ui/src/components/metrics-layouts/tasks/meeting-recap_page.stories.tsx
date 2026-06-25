@@ -4,7 +4,7 @@
 // TODO(story): Provide representative values for required props:
 // - initiatives: Initiative[]
 // - tasks: Task[]
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { MeetingRecapView } from "./meeting-recap_page";
 

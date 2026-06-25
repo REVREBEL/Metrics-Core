@@ -3,7 +3,7 @@
 
 // TODO(story): Provide representative values for required props:
 // - mode: GrowthPlanMode
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { GrowthPlanHeader } from "./growth-plan_header";
 

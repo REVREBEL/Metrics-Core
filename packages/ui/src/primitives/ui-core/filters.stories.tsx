@@ -4,7 +4,7 @@
 // TODO(story): Provide representative values for required props:
 // - filters: Filter<T>[]
 // - fields: FilterFieldsConfig<T>
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { FiltersContent } from "./filters";
 

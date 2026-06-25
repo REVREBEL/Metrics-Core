@@ -4,7 +4,7 @@
 // TODO(story): Provide representative values for required props:
 // - schema: SchemaType | z.ZodType<z.infer<SchemaType>>
 // - form: ReturnType<typeof useForm>
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { AutoFormObject } from "./object";
 

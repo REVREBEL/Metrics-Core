@@ -3,7 +3,7 @@
 
 // TODO(story): Provide representative values for required props:
 // - component: Component
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { ComponentCard } from "./component-card";
 

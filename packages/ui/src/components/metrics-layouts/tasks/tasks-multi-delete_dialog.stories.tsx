@@ -3,7 +3,7 @@
 
 // TODO(story): Provide representative values for required props:
 // - table: Table<TData>
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { TasksMultiDeleteDialog } from "./tasks-multi-delete_dialog";
 

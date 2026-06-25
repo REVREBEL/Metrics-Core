@@ -3,7 +3,7 @@
 
 // TODO(story): Provide representative values for required props:
 // - tasks: Task[]
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { CalendarView } from "./calendar-view_page";
 

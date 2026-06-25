@@ -2,10 +2,8 @@
 // @source-hash: f4e0cc944d270e92
 
 // TODO(story): Provide representative values for required props:
-// - sections: {
-//     [key in SectionKey]: ReactNode;
-//   }
-import type { Meta, StoryObj } from "@storybook/react";
+// - sections: { [key in SectionKey]: ReactNode; }
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { SwapLayout } from "./swap-layout";
 

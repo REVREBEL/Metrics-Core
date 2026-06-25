@@ -5,7 +5,7 @@
 // - initiatives: Initiative[]
 // - tasks: Task[]
 // - mode: "initiatives" | "tasks"
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { KanbanView } from "./kanban_page";
 

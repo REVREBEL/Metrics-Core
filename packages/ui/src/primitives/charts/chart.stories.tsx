@@ -3,7 +3,7 @@
 
 // TODO(story): Provide representative values for required props:
 // - config: ChartConfig
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { ChartContainer } from "./chart";
 

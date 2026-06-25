@@ -3,7 +3,7 @@
 
 // TODO(story): Provide representative values for required props:
 // - activeView: GrowthPlanView
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { GrowthPlanViewSwitcher } from "./growth-plan-view_switcher";
 
