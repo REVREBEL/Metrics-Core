@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-menu-icons",
+  "title": "Dropdown Menu Icons",
+  "description": "Auto-generated registry entry for dropdown-menu-icons.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/dropdowns/dropdown-menu-icons.tsx",
+      "content": "\"use client\"\n\nimport { Button } from \"@buttons/button\"\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuSeparator,\n  DropdownMenuTrigger,\n} from \"./dropdown-menu\"\nimport { \n  IconCreditCardFilled, \n  IconSettingsFilled, \n  IconUserFilled, \n  IconWritingSignFilled\n} from '@tabler/icons-react';\n\nexport function DropdownMenuIcons() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant=\"outline\">Open</Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent>\n        <DropdownMenuItem>\n          <IconUserFilled />\n          Profile\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <IconCreditCardFilled />\n          Billing\n        </DropdownMenuItem>\n        <DropdownMenuItem>\n          <IconSettingsFilled />\n          Settings\n        </DropdownMenuItem>\n        <DropdownMenuSeparator />\n        <DropdownMenuItem variant=\"destructive\">\n          <IconWritingSignFilled />\n          Log out\n        </DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/dropdowns/dropdown-menu-icons.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

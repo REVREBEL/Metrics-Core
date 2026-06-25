@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "image-edit-dialog",
+  "title": "Image Edit Dialog",
+  "description": "Auto-generated registry entry for image-edit-dialog.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/image-blocks/image-edit-dialog.tsx",
+      "content": "'use client'\n\nimport type { Editor } from \"@tiptap/react\"\nimport type { VariantProps } from \"class-variance-authority\"\nimport type { toggleVariants } from \"@ui-core/toggle\"\nimport { useState } from \"react\"\nimport { ImageIcon } from \"@radix-ui/react-icons\"\nimport { ToolbarButton } from \"@buttons/toolbar-button\"\nimport {\n  Dialog,\n  DialogContent,\n  DialogHeader,\n  DialogDescription,\n  DialogTitle,\n  DialogTrigger,\n} from \"@ui-core/dialog\"\nimport { ImageEditBlock } from \"./image-edit-block\"\n\ninterface ImageEditDialogProps extends VariantProps<typeof toggleVariants> {\n  editor: Editor\n}\n\nconst ImageEditDialog = ({ editor, size, variant }: ImageEditDialogProps) => {\n  const [open, setOpen] = useState(false)\n\n  return (\n    <Dialog open={open} onOpenChange={setOpen}>\n      <DialogTrigger asChild>\n        <ToolbarButton\n          isActive={editor.isActive(\"image\")}\n          tooltip=\"Image\"\n          aria-label=\"Image\"\n          size={size}\n          variant={variant}\n        >\n          <ImageIcon className=\"size-5\" />\n        </ToolbarButton>\n      </DialogTrigger>\n      <DialogContent className=\"sm:max-w-lg\">\n        <DialogHeader>\n          <DialogTitle>Select image</DialogTitle>\n          <DialogDescription className=\"sr-only\">\n            Upload an image from your computer\n          </DialogDescription>\n        </DialogHeader>\n        <ImageEditBlock editor={editor} close={() => setOpen(false)} />\n      </DialogContent>\n    </Dialog>\n  )\n}\n\nexport { ImageEditDialog }\n",
+      "type": "registry:ui",
+      "target": "src/primitive/image-blocks/image-edit-dialog.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

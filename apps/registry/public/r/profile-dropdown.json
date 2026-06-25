@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "profile-dropdown",
+  "title": "Profile Dropdown",
+  "description": "Auto-generated registry entry for profile-dropdown.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/users/profile-dropdown.tsx",
+      "content": "\"use client\"\n\nimport Link from 'next/link'\nimport useDialogState from '@/hooks/use-dialog-state'\nimport { Avatar, AvatarFallback, AvatarImage } from '@ui-core'\nimport { Button } from '@ui-core'\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuLabel,\n  DropdownMenuSeparator,\n  DropdownMenuShortcut,\n  DropdownMenuTrigger,\n} from '@ui-core'\nimport { SignOutDialog } from '@/components/sign-out-dialog'\n\nexport function ProfileDropdown() {\n  const [open, setOpen] = useDialogState()\n\n  return (\n    <>\n      <DropdownMenu modal={false}>\n        <DropdownMenuTrigger asChild>\n          <Button variant='ghost' className='relative h-8 w-8 rounded-full'>\n            <Avatar className='h-8 w-8'>\n              <AvatarImage src='/avatars/01.png' alt='@shadcn' />\n              <AvatarFallback>SN</AvatarFallback>\n            </Avatar>\n          </Button>\n        </DropdownMenuTrigger>\n        <DropdownMenuContent className='w-56' align='end' forceMount>\n          <DropdownMenuLabel className='font-normal'>\n            <div className='flex flex-col gap-1.5'>\n              <p className='text-sm leading-none font-medium'>satnaing</p>\n              <p className='text-xs leading-none text-muted-foreground'>\n                satnaingdev@gmail.com\n              </p>\n            </div>\n          </DropdownMenuLabel>\n          <DropdownMenuSeparator />\n          <DropdownMenuGroup>\n            <DropdownMenuItem asChild>\n              <Link href='/settings'>\n                Profile\n                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>\n              </Link>\n            </DropdownMenuItem>\n            <DropdownMenuItem asChild>\n              <Link href='/settings'>\n                Billing\n                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>\n              </Link>\n            </DropdownMenuItem>\n            <DropdownMenuItem asChild>\n              <Link href='/settings'>\n                Settings\n                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>\n              </Link>\n            </DropdownMenuItem>\n            <DropdownMenuItem>New Team</DropdownMenuItem>\n          </DropdownMenuGroup>\n          <DropdownMenuSeparator />\n          <DropdownMenuItem variant='destructive' onClick={() => setOpen(true)}>\n            Sign out\n            <DropdownMenuShortcut className='text-current'>\n              ⇧⌘Q\n            </DropdownMenuShortcut>\n          </DropdownMenuItem>\n        </DropdownMenuContent>\n      </DropdownMenu>\n\n      <SignOutDialog open={!!open} onOpenChange={setOpen} />\n    </>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/users/profile-dropdown.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

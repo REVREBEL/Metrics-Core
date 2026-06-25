@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "register_page",
+  "title": "Register Page",
+  "description": "Auto-generated registry entry for register_page.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/settings/register_page.tsx",
+      "content": "import Register from \"@/components/shadcn-studio/blocks/register-01/register-01\";\n\nconst RegisterPage = () => {\n  return <Register />;\n};\n\nexport default RegisterPage;\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/settings/register_page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

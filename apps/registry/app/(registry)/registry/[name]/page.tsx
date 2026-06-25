@@ -46,6 +46,8 @@ export default async function RegistryItemPage({
         prompt={getPrompt()}
         hasDemo={false}
       />
+
+      <RegistryMetadataPanel metadata={component.metadata} />
     </div>
   );
 }

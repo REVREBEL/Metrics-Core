@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-menu-submenu",
+  "title": "Dropdown Menu Submenu",
+  "description": "Auto-generated registry entry for dropdown-menu-submenu.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/dropdowns/dropdown-menu-submenu.tsx",
+      "content": "\"use client\"\n\nimport { Button } from \"@buttons/button\"\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuPortal,\n  DropdownMenuSeparator,\n  DropdownMenuShortcut,\n  DropdownMenuSub,\n  DropdownMenuSubContent,\n  DropdownMenuSubTrigger,\n  DropdownMenuTrigger,\n} from \"./dropdown-menu\"\n\nexport function DropdownMenuSubmenu() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant=\"outline\">Open</Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent>\n        <DropdownMenuGroup>\n          <DropdownMenuItem>Team</DropdownMenuItem>\n          <DropdownMenuSub>\n            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>\n            <DropdownMenuPortal>\n              <DropdownMenuSubContent>\n                <DropdownMenuItem>Email</DropdownMenuItem>\n                <DropdownMenuItem>Message</DropdownMenuItem>\n                <DropdownMenuSub>\n                  <DropdownMenuSubTrigger>More options</DropdownMenuSubTrigger>\n                  <DropdownMenuPortal>\n                    <DropdownMenuSubContent>\n                      <DropdownMenuItem>Calendly</DropdownMenuItem>\n                      <DropdownMenuItem>Slack</DropdownMenuItem>\n                      <DropdownMenuSeparator />\n                      <DropdownMenuItem>Webhook</DropdownMenuItem>\n                    </DropdownMenuSubContent>\n                  </DropdownMenuPortal>\n                </DropdownMenuSub>\n                <DropdownMenuSeparator />\n                <DropdownMenuItem>Advanced...</DropdownMenuItem>\n              </DropdownMenuSubContent>\n            </DropdownMenuPortal>\n          </DropdownMenuSub>\n          <DropdownMenuItem>\n            New Team\n            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/dropdowns/dropdown-menu-submenu.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,12 +1,12 @@
 import { promises as fs } from "node:fs"
 import path from "node:path"
 
-const ROOT = process.cwd()
+import { REGISTRY_METADATA_JSON, UI_SOURCE_ROOT } from "./lib/paths.mjs"
+
 const SOURCE_ROOTS = [
-  path.join(ROOT, "src/components"),
-  path.join(ROOT, "src/primitives"),
+  path.join(UI_SOURCE_ROOT, "components"),
+  path.join(UI_SOURCE_ROOT, "primitives"),
 ]
-const OUT_FILE = path.join(ROOT, "src/lib/registry.metadata.json")
 
 async function walk(dir) {
   const entries = await fs.readdir(dir, { withFileTypes: true })
@@ -27,8 +27,8 @@ async function walk(dir) {
   return out
 }
 
-function toRelComponentKey(abs) {
-  const rel = path.relative(path.join(ROOT, "src"), abs).replace(/\\/g, "/")
+function toRelComponentKey(absPath) {
+  const rel = path.relative(UI_SOURCE_ROOT, absPath).replace(/\\/g, "/")
   return rel.replace(/\.tsx$/, "")
 }
 
@@ -38,10 +38,7 @@ function pushProp(props, prop) {
 }
 
 function cleanType(type) {
-  return type
-    .replace(/\s+/g, " ")
-    .replace(/,$/, "")
-    .trim()
+  return type.replace(/\s+/g, " ").replace(/,$/, "").trim()
 }
 
 function parsePropBlock(body) {
@@ -186,7 +183,6 @@ function inferProps(raw) {
 function parseMetadataTs(raw) {
   const displayName = raw.match(/displayName\s*:\s*["'`](.*?)["'`]/)?.[1]
   const description = raw.match(/description\s*:\s*["'`]([\s\S]*?)["'`]/)?.[1]
-
   const propsBlockMatch = raw.match(/props\s*:\s*\[([\s\S]*?)\]/)
   const props = []
 
@@ -222,8 +218,7 @@ function parseMetadataTs(raw) {
 }
 
 async function loadColocatedMetadata(absComponentFile) {
-  const dir = path.dirname(absComponentFile)
-  const metadataPath = path.join(dir, "metadata.ts")
+  const metadataPath = path.join(path.dirname(absComponentFile), "metadata.ts")
 
   try {
     const raw = await fs.readFile(metadataPath, "utf8")
@@ -238,34 +233,35 @@ async function main() {
   for (const sourceRoot of SOURCE_ROOTS) {
     files.push(...(await walk(sourceRoot)))
   }
-  const existingRaw = await fs.readFile(OUT_FILE, "utf8").catch(() => "{}")
+
+  const existingRaw = await fs.readFile(REGISTRY_METADATA_JSON, "utf8").catch(() => "{}")
   const existing = JSON.parse(existingRaw)
 
   const next = {}
   let mergedFromColocated = 0
 
-  for (const abs of files) {
-    const key = toRelComponentKey(abs)
-    const raw = await fs.readFile(abs, "utf8")
+  for (const absPath of files) {
+    const key = toRelComponentKey(absPath)
+    const raw = await fs.readFile(absPath, "utf8")
     const inferredProps = inferProps(raw)
-
     const base = existing[key] ?? {
       displayName: key.split("/").pop(),
       description: "",
       props: inferredProps,
     }
 
-    const colocated = await loadColocatedMetadata(abs)
+    const colocated = await loadColocatedMetadata(absPath)
     if (colocated) {
       mergedFromColocated += 1
       next[key] = {
         ...base,
         ...colocated,
-        props: Array.isArray(colocated.props) && colocated.props.length > 0
-          ? colocated.props
-          : inferredProps.length > 0
-            ? inferredProps
-            : base.props ?? [],
+        props:
+          Array.isArray(colocated.props) && colocated.props.length > 0
+            ? colocated.props
+            : inferredProps.length > 0
+              ? inferredProps
+              : base.props ?? [],
       }
     } else {
       next[key] = {
@@ -275,13 +271,11 @@ async function main() {
     }
   }
 
-  await fs.writeFile(OUT_FILE, `${JSON.stringify(next, null, 2)}\n`, "utf8")
-  console.log(
-    `[registry:sync] wrote ${Object.keys(next).length} entries to ${path.relative(ROOT, OUT_FILE)} (merged ${mergedFromColocated} colocated metadata files)`
-  )
+  await fs.writeFile(REGISTRY_METADATA_JSON, `${JSON.stringify(next, null, 2)}\n`, "utf8")
+  console.log(`[registry:metadata:sync] wrote ${Object.keys(next).length} entries (merged ${mergedFromColocated} colocated metadata files)`)
 }
 
-main().catch((err) => {
-  console.error(err)
+main().catch((error) => {
+  console.error(error)
   process.exit(1)
 })

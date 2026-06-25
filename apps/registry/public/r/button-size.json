@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-size",
+  "title": "Button Size",
+  "description": "Auto-generated registry entry for button-size.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-size.tsx",
+      "content": "import { IconSquareRoundedChevronRightFilled } from \"@tabler/icons-react\";\nimport { Button } from \"./button\";\n\nexport default function ButtonSize() {\n  return (\n    <div className=\"flex flex-col items-start gap-8 sm:flex-row\">\n      <div className=\"flex items-start gap-2\">\n        <Button size=\"xs\" variant=\"outline\">\n          Extra Small\n        </Button>\n        <Button size=\"icon-xs\" aria-label=\"Submit\" variant=\"outline\">\n          <IconSquareRoundedChevronRightFilled />\n        </Button>\n      </div>\n      <div className=\"flex items-start gap-2\">\n        <Button size=\"sm\" variant=\"outline\">\n          Small\n        </Button>\n        <Button size=\"icon-sm\" aria-label=\"Submit\" variant=\"outline\">\n          <IconSquareRoundedChevronRightFilled />\n        </Button>\n      </div>\n      <div className=\"flex items-start gap-2\">\n        <Button variant=\"outline\">Default</Button>\n        <Button size=\"icon\" aria-label=\"Submit\" variant=\"outline\">\n          <IconSquareRoundedChevronRightFilled />\n        </Button>\n      </div>\n      <div className=\"flex items-start gap-2\">\n        <Button variant=\"outline\" size=\"lg\">\n          Large\n        </Button>\n        <Button size=\"icon-lg\" aria-label=\"Submit\" variant=\"outline\">\n          <IconSquareRoundedChevronRightFilled />\n        </Button>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-size.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "config",
+  "title": "Config",
+  "description": "Auto-generated registry entry for config.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/forms/config.ts",
+      "content": "import AutoFormCheckbox from \"./fields/checkbox\";\nimport AutoFormDate from \"./fields/date\";\nimport AutoFormEnum from \"./fields/enum\";\nimport AutoFormInput from \"./fields/input\";\nimport AutoFormNumber from \"./fields/number\";\nimport AutoFormRadioGroup from \"./fields/radio-group\";\nimport AutoFormSwitch from \"./fields/switch\";\nimport AutoFormTextarea from \"./fields/textarea\";\n\nexport const INPUT_COMPONENTS = {\n  checkbox: AutoFormCheckbox,\n  date: AutoFormDate,\n  select: AutoFormEnum,\n  radio: AutoFormRadioGroup,\n  switch: AutoFormSwitch,\n  textarea: AutoFormTextarea,\n  number: AutoFormNumber,\n  fallback: AutoFormInput,\n};\n\n/**\n * Define handlers for specific Zod types.\n * You can expand this object to support more types.\n * \n * Supports both:\n * - Zod v3 style: \"ZodBoolean\", \"ZodEnum\", etc. (from _def.typeName)\n * - Zod v4 style: \"boolean\", \"enum\", etc. (from _def.type)\n */\nexport const DEFAULT_ZOD_HANDLERS: {\n  [key: string]: keyof typeof INPUT_COMPONENTS;\n} = {\n  // Zod v3 style type names\n  ZodBoolean: \"checkbox\",\n  ZodDate: \"date\",\n  ZodEnum: \"select\",\n  ZodNativeEnum: \"select\",\n  ZodNumber: \"number\",\n  // Zod v4 style type names (lowercase, no \"Zod\" prefix)\n  boolean: \"checkbox\",\n  date: \"date\",\n  enum: \"select\",\n  nativeEnum: \"select\",\n  number: \"number\",\n  int: \"number\",\n  float: \"number\",\n};\n",
+      "type": "registry:ui",
+      "target": "src/primitive/forms/config.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

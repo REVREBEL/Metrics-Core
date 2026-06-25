@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "statistics-card",
+  "title": "Statistics Card",
+  "description": "Auto-generated registry entry for statistics-card.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/charts/statistics-card.tsx",
+      "content": "import type { ReactNode } from 'react'\n\nimport { Card, CardContent, CardHeader } from '@ui-core/card'\n\nimport { cn } from '@/lib/utils'\n\n// Statistics card data type\ntype StatisticsCardProps = {\n  icon: ReactNode\n  value: string\n  title: string\n  changePercentage: string\n  className?: string\n}\n\nconst StatisticsCard = ({ icon, value, title, changePercentage, className }: StatisticsCardProps) => {\n  return (\n    <Card className={cn('gap-4', className)}>\n      <CardHeader className='flex items-center'>\n        <div className='bg-primary/10 text-primary flex size-8 shrink-0 items-center justify-center rounded-md'>\n          {icon}\n        </div>\n        <span className='text-2xl'>{value}</span>\n      </CardHeader>\n      <CardContent className='flex flex-col gap-2'>\n        <span className='font-display font-bold uppercase tracking-widest text-[10px] text-dark-blue'>{title}</span>\n        <p className='space-x-2'>\n          <span className='text-sm'>{changePercentage}</span>\n          <span className='text-muted-foreground text-sm'>than last week</span>\n        </p>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default StatisticsCard\n",
+      "type": "registry:ui",
+      "target": "src/primitive/charts/statistics-card.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

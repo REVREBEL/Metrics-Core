@@ -1,99 +1,76 @@
-import { promises as fs } from "fs"
-import path from "path"
-import { z } from "zod"
-
-const registryEntrySchema = z.object({
-  name: z.string().regex(/^@[a-zA-Z0-9][a-zA-Z0-9-_]*$/),
-  homepage: z.string().url(),
-  url: z.string().refine((url) => url.includes("{name}"), {
-    message: "URL must include {name} placeholder",
-  }),
-  description: z.string(),
-})
-
-const registriesSchema = z.array(registryEntrySchema)
-
-const directoryEntrySchema = registryEntrySchema.extend({
-  logo: z.string(),
-})
-
-const directorySchema = z.array(directoryEntrySchema)
+import { promises as fs } from "node:fs"
+import { REGISTRY_JSON } from "./lib/paths.mjs"
 
 async function main() {
-  let hasErrors = false
+  const raw = await fs.readFile(REGISTRY_JSON, "utf8")
+  const manifest = JSON.parse(raw)
+  const errors = []
 
-  // 1. Validate registries.json.
-  const registriesFile = path.join(process.cwd(), "public/r/registries.json")
+  if (!manifest || typeof manifest !== "object") {
+    errors.push("manifest must be an object")
+  }
+
+  if (typeof manifest.name !== "string" || manifest.name.trim().length === 0) {
+    errors.push("manifest.name must be a non-empty string")
+  }
+
   try {
-    await fs.access(registriesFile)
+    new URL(String(manifest.homepage ?? ""))
   } catch {
-    console.log("ℹ️ Skipping registries.json validation (file not found)")
-    console.log("✅ Registry validation skipped: optional files are absent in this workspace")
-    return
-  }
-  const registriesContent = await fs.readFile(registriesFile, "utf-8")
-  const registriesData = JSON.parse(registriesContent)
-
-  const registriesResult = registriesSchema.safeParse(registriesData)
-  if (!registriesResult.success) {
-    console.error("❌ registries.json validation failed:")
-    console.error(registriesResult.error.format())
-    hasErrors = true
-  } else {
-    console.log("✅ registries.json is valid")
+    errors.push("manifest.homepage must be a valid URL")
   }
 
-  // 2. Validate directory.json.
-  const directoryFile = path.join(process.cwd(), "registry/directory.json")
-  try {
-    await fs.access(directoryFile)
-  } catch {
-    console.log("ℹ️ Skipping directory.json validation (file not found)")
-    if (hasErrors) process.exit(1)
-    console.log("\n✅ Registry validation completed for available files.")
-    return
-  }
-  const directoryContent = await fs.readFile(directoryFile, "utf-8")
-  const directoryData = JSON.parse(directoryContent)
-
-  const directoryResult = directorySchema.safeParse(directoryData)
-  if (!directoryResult.success) {
-    console.error("❌ directory.json validation failed:")
-    console.error(directoryResult.error.format())
-    hasErrors = true
-  } else {
-    console.log("✅ directory.json is valid")
+  if (!Array.isArray(manifest.items) || manifest.items.length === 0) {
+    errors.push("manifest.items must be a non-empty array")
   }
 
-  // 3. Check that all directory.json entries are in registries.json.
-  if (registriesResult.success && directoryResult.success) {
-    const registryNames = new Set(
-      registriesResult.data.map((entry) => entry.name)
-    )
-    const directoryNames = new Set(
-      directoryResult.data.map((entry) => entry.name)
-    )
+  const items = Array.isArray(manifest.items) ? manifest.items : []
 
-    const missingInRegistries = Array.from(directoryNames).filter(
-      (name) => !registryNames.has(name)
-    )
-
-    if (missingInRegistries.length > 0) {
-      console.error(
-        "\n❌ The following registries are in directory.json but missing from registries.json:"
-      )
-      missingInRegistries.forEach((name) => console.error(`   ${name}`))
-      hasErrors = true
-    } else {
-      console.log("✅ All directory entries are present in registries.json")
+  for (const [index, item] of items.entries()) {
+    if (typeof item?.name !== "string" || item.name.trim().length === 0) {
+      errors.push(`items[${index}].name must be a non-empty string`)
+    }
+    if (typeof item?.type !== "string" || item.type.trim().length === 0) {
+      errors.push(`items[${index}].type must be a non-empty string`)
+    }
+    if (item.files !== undefined && !Array.isArray(item.files)) {
+      errors.push(`items[${index}].files must be an array when present`)
+      continue
+    }
+    for (const [fileIndex, file] of (item.files ?? []).entries()) {
+      if (typeof file?.path !== "string" || file.path.trim().length === 0) {
+        errors.push(`items[${index}].files[${fileIndex}].path must be a non-empty string`)
+      }
+      if (typeof file?.type !== "string" || file.type.trim().length === 0) {
+        errors.push(`items[${index}].files[${fileIndex}].type must be a non-empty string`)
+      }
     }
   }
 
-  if (hasErrors) {
+  if (errors.length > 0) {
+    console.error("❌ registry.json validation failed:")
+    for (const error of errors) {
+      console.error(`- ${error}`)
+    }
     process.exit(1)
   }
 
-  console.log("\n✅ All registries passed validation.")
+  const missingPaths = []
+  for (const item of items) {
+    for (const file of item.files ?? []) {
+      if (!file.path) {
+        missingPaths.push({ item: item.name, reason: "missing path" })
+      }
+    }
+  }
+
+  if (missingPaths.length > 0) {
+    console.error("❌ registry.json contains files without paths:")
+    console.error(JSON.stringify(missingPaths.slice(0, 20), null, 2))
+    process.exit(1)
+  }
+
+  console.log(`✅ registry.json is valid (${items.length} items)`)
 }
 
 main().catch((error) => {

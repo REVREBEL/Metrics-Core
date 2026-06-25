@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover-basic",
+  "title": "Popover Basic",
+  "description": "Auto-generated registry entry for popover-basic.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/popovers/popover-basic.tsx",
+      "content": "import { Button } from \"@buttons/button\";\nimport {\n  Popover,\n  PopoverContent,\n  PopoverDescription,\n  PopoverHeader,\n  PopoverTitle,\n  PopoverTrigger,\n} from \"./popover\";\n\nexport function PopoverBasic() {\n  return (\n    <>\n      <Popover>\n        <PopoverTrigger render={<Button variant=\"outline\" className=\"w-fit\" />}>\n          Open Popover\n        </PopoverTrigger>\n        <PopoverContent align=\"start\">\n          <PopoverHeader>\n            <PopoverTitle>Dimensions</PopoverTitle>\n            <PopoverDescription>\n              Set the dimensions for the layer.\n            </PopoverDescription>\n          </PopoverHeader>\n        </PopoverContent>\n      </Popover>\n    </>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/popovers/popover-basic.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

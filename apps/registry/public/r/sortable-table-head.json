@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sortable-table-head",
+  "title": "Sortable Table Head",
+  "description": "Auto-generated registry entry for sortable-table-head.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/sortable-table-head.tsx",
+      "content": "import { IconArrowDown, IconArrowUp } from \"@tabler/icons-react\";\nimport type * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\nimport { TableHead } from \"@tables/table\";\n\ninterface SortableTableHeadProps extends React.ComponentProps<typeof TableHead> {\n\tisSorted?: boolean;\n\tisSortedDesc?: boolean;\n\tonSort?: () => void;\n}\n\nexport function SortableTableHead({\n\tchildren,\n\tclassName,\n\tisSorted,\n\tisSortedDesc,\n\tonSort,\n\t...props\n}: SortableTableHeadProps) {\n\treturn (\n\t\t<TableHead\n\t\t\tclassName={cn(\n\t\t\t\t\"group cursor-pointer select-none whitespace-nowrap\",\n\t\t\t\tclassName,\n\t\t\t)}\n\t\t\tonClick={onSort}\n\t\t\t{...props}\n\t\t>\n\t\t\t<div className=\"flex items-center gap-1\">\n\t\t\t\t{children}\n\t\t\t\t<div className=\"flex h-4 w-4 items-center justify-center opacity-0 group-hover:opacity-100\">\n\t\t\t\t\t{isSorted ? (\n\t\t\t\t\t\tisSortedDesc ? (\n\t\t\t\t\t\t\t<IconArrowDown className=\"h-3 w-3\" />\n\t\t\t\t\t\t) : (\n\t\t\t\t\t\t\t<IconArrowUp className=\"h-3 w-3\" />\n\t\t\t\t\t\t)\n\t\t\t\t\t) : (\n\t\t\t\t\t\t<IconArrowUp className=\"h-3 w-3 text-muted-foreground/50\" />\n\t\t\t\t\t)}\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</TableHead>\n\t);\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/sortable-table-head.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

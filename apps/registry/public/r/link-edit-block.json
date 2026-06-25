@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "link-edit-block",
+  "title": "Link Edit Block",
+  "description": "Auto-generated registry entry for link-edit-block.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/links/link-edit-block.tsx",
+      "content": "import { Button } from \"@buttons/button\";\nimport { Input } from \"@inputs/input\";\nimport { Label, Switch } from \"@ui-core\";\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface LinkEditorProps extends React.ComponentProps<\"div\"> {\n  defaultUrl?: string;\n  defaultText?: string;\n  defaultIsNewTab?: boolean;\n  onSave: (url: string, text?: string, isNewTab?: boolean) => void;\n}\n\nexport const LinkEditBlock = ({\n  onSave,\n  defaultIsNewTab,\n  defaultUrl,\n  defaultText,\n  className,\n}: LinkEditorProps) => {\n  const formRef = React.useRef<HTMLDivElement>(null);\n  const [url, setUrl] = React.useState(defaultUrl || \"\");\n  const [text, setText] = React.useState(defaultText || \"\");\n  const [isNewTab, setIsNewTab] = React.useState(defaultIsNewTab || false);\n\n  const handleSave = React.useCallback(\n    (e: React.FormEvent) => {\n      e.preventDefault();\n      if (formRef.current) {\n        const isValid = Array.from(\n          formRef.current.querySelectorAll(\"input\"),\n        ).every((input) => input.checkValidity());\n\n        if (isValid) {\n          onSave(url, text, isNewTab);\n        } else {\n          formRef.current.querySelectorAll(\"input\").forEach((input) => {\n            if (!input.checkValidity()) {\n              input.reportValidity();\n            }\n          });\n        }\n      }\n    },\n    [onSave, url, text, isNewTab],\n  );\n\n  return (\n    <div ref={formRef}>\n      <div className={cn(\"space-y-4\", className)}>\n        <div className=\"space-y-1\">\n          <Label>URL</Label>\n          <Input\n            type=\"url\"\n            required\n            placeholder=\"Enter URL\"\n            value={url}\n            onChange={(e) => setUrl(e.target.value)}\n          />\n        </div>\n\n        <div className=\"space-y-1\">\n          <Label>Display Text (optional)</Label>\n          <Input\n            type=\"text\"\n            placeholder=\"Enter display text\"\n            value={text}\n            onChange={(e) => setText(e.target.value)}\n          />\n        </div>\n\n        <div className=\"flex items-center space-x-2\">\n          <Label>Open in New Tab</Label>\n          <Switch checked={isNewTab} onCheckedChange={setIsNewTab} />\n        </div>\n\n        <div className=\"flex justify-end space-x-2\">\n          <Button type=\"button\" onClick={handleSave}>\n            Save\n          </Button>\n        </div>\n      </div>\n    </div>\n  );\n};\n\nLinkEditBlock.displayName = \"LinkEditBlock\";\n\nexport default LinkEditBlock;\n",
+      "type": "registry:ui",
+      "target": "src/primitive/links/link-edit-block.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

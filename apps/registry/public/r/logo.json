@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "logo",
+  "title": "Brand Logo",
+  "description": "A styled, simple, reusable logo",
+  "registryDependencies": [
+    "@metrics/metrics"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/logo.tsx",
+      "content": "export function Logo() {\n\treturn (\n\t\t<div className=\"flex items-center gap-2\">\n\t\t\t<svg\n\t\t\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\t\t\tviewBox=\"0 0 24 24\"\n\t\t\t\tstrokeWidth=\"2\"\n\t\t\t\tstrokeLinecap=\"round\"\n\t\t\t\tstrokeLinejoin=\"round\"\n\t\t\t\tclassName=\"size-8\"\n\t\t\t\trole=\"graphics-symbol\"\n\t\t\t>\n\t\t\t\t<circle className=\"fill-primary\" cx=\"13.5\" cy=\"6.5\" r=\"2.5\" />\n\t\t\t\t<circle className=\"fill-primary\" cx=\"19\" cy=\"13\" r=\"2.5\" />\n\t\t\t\t<circle className=\"fill-primary\" cx=\"13.5\" cy=\"19.5\" r=\"2.5\" />\n\t\t\t\t<circle className=\"fill-primary\" cx=\"6.5\" cy=\"13\" r=\"2.5\" />\n\t\t\t</svg>\n\n\t\t\t<h1 className=\"font-bold\">Brand Name</h1>\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:component",
+      "target": "src/components/logo.tsx"
+    },
+    {
+      "path": "apps/registry/app/demo/[name]/blocks/minimal-layout.tsx",
+      "content": "import React, { type ReactNode } from \"react\";\n\nexport default function MinimalLayout({\n  children,\n}: Readonly<{\n  children: ReactNode;\n}>) {\n  return (\n    <main className=\"mt-16 flex w-full justify-center\">\n      <div className=\"container\">{children}</div>\n    </main>\n  );\n}\n",
+      "type": "registry:file",
+      "target": "src/app/layout.tsx"
+    },
+    {
+      "path": "apps/registry/app/demo/[name]/blocks/blank-page.tsx",
+      "content": "export default function BlankPage() {\n  return (\n    <div className=\"flex flex-col items-center justify-center gap-4 rounded-md py-96\">\n      <div className=\"text-muted-foreground\">\n        Start prompting to use your component!\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:page",
+      "target": "src/app/page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

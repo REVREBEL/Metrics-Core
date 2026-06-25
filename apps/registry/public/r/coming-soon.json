@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "coming-soon",
+  "title": "Coming Soon",
+  "description": "Auto-generated registry entry for coming-soon.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/coming-soon.tsx",
+      "content": "\nimport { IconBuildingBroadcastTowerFilled } from '@tabler/icons-react';\n\nexport function ComingSoon() {\n  return (\n    <div className='h-svh'>\n      <div className='m-auto flex h-full w-full flex-col items-center justify-center gap-2'>\n        <IconBuildingBroadcastTowerFilled size={72} />\n        <h1 className='text-4xl leading-tight font-bold'>Coming Soon!</h1>\n        <p className='text-center text-muted-foreground'>\n          This page has not been created yet. <br />\n          Stay tuned though!\n        </p>\n      </div>\n    </div>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/layouts/coming-soon.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

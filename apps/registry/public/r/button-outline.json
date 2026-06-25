@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-outline",
+  "title": "Button Outline",
+  "description": "Auto-generated registry entry for button-outline.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-outline.tsx",
+      "content": "import { Button } from \"./button\";\n\nexport default function ButtonOutline() {\n  return <Button variant=\"outline\">Outline</Button>;\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-outline.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

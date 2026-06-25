@@ -4,5 +4,10 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"**/apps/storybook/.storybook/*.css": "tailwindcss",
+			"**/packages/ui/src/styles/*.css": "tailwindcss"
+		}
+	}
 }

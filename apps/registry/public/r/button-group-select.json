@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-group-select",
+  "title": "Button Group Select",
+  "description": "Auto-generated registry entry for button-group-select.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-group-select.tsx",
+      "content": "\"use client\";\n\nimport { Input } from \"@inputs/input\";\nimport { IconChevronRight } from \"@tabler/icons-react\";\nimport {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectTrigger,\n} from \"@ui-core\";\nimport * as React from \"react\";\nimport { Button } from \"./button\";\nimport { ButtonGroup } from \"./button-group\";\n\nconst CURRENCIES = [\n  { label: \"US Dollar\", value: \"$\" },\n  { label: \"Euro\", value: \"€\" },\n  { label: \"British Pound\", value: \"£\" },\n];\n\nexport default function ButtonGroupSelect() {\n  const [currency, setCurrency] = React.useState(\"$\");\n\n  return (\n    <ButtonGroup>\n      <ButtonGroup>\n        <Select\n          value={currency}\n          onValueChange={(value: string) => setCurrency(value)}\n        >\n          <SelectTrigger className=\"font-mono\">{currency}</SelectTrigger>\n          <SelectContent align=\"start\">\n            <SelectGroup>\n              {CURRENCIES.map((item) => (\n                <SelectItem key={item.value} value={item.value}>\n                  {item.value}{\" \"}\n                  <span className=\"text-muted-foreground\">{item.label}</span>\n                </SelectItem>\n              ))}\n            </SelectGroup>\n          </SelectContent>\n        </Select>\n        <Input placeholder=\"10.00\" pattern=\"[0-9]*\" />\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button aria-label=\"Send\" size=\"icon\" variant=\"outline\">\n          <IconChevronRight />\n        </Button>\n      </ButtonGroup>\n    </ButtonGroup>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-group-select.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "aspect-ratio",
+  "title": "Aspect Ratio",
+  "description": "Displays content within a desired ratio.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/aspect-ratio.tsx",
+      "content": "\"use client\";\n\nimport { AspectRatio as AspectRatioPrimitive } from \"radix-ui\";\n\nfunction AspectRatio({\n\t...props\n}: React.ComponentProps<typeof AspectRatioPrimitive.Root>) {\n\treturn <AspectRatioPrimitive.Root data-slot=\"aspect-ratio\" {...props} />;\n}\n\nexport { AspectRatio };\n",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/aspect-ratio.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-otp-four-digits",
+  "title": "Input Otp Four Digits",
+  "description": "Auto-generated registry entry for input-otp-four-digits.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-otp-four-digits.tsx",
+      "content": "\"use client\";\n\nimport { REGEXP_ONLY_DIGITS } from \"input-otp\";\nimport { InputOTP, InputOTPGroup, InputOTPSlot } from \"./input-otp\";\n\nexport function InputOTPFourDigits() {\n  return (\n    <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS}>\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n        <InputOTPSlot index={3} />\n      </InputOTPGroup>\n    </InputOTP>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-otp-four-digits.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

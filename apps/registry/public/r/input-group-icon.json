@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-group-icon",
+  "title": "Input Group Icon",
+  "description": "Auto-generated registry entry for input-group-icon.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-group-icon.tsx",
+      "content": "import {\n  IconCheck,\n  IconCreditCard,\n  IconInfoCircle,\n  IconMail,\n  IconSearch,\n  IconStar,\n} from \"@tabler/icons-react\";\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"./input-group\";\n\nexport default function InputGroupIcon() {\n  return (\n    <div className=\"grid w-full max-w-sm gap-6\">\n      <InputGroup>\n        <InputGroupInput placeholder=\"Search...\" />\n        <InputGroupAddon>\n          <IconSearch />\n        </InputGroupAddon>\n      </InputGroup>\n      <InputGroup>\n        <InputGroupInput type=\"email\" placeholder=\"Enter your email\" />\n        <InputGroupAddon>\n          <IconMail />\n        </InputGroupAddon>\n      </InputGroup>\n      <InputGroup>\n        <InputGroupInput placeholder=\"Card number\" />\n        <InputGroupAddon>\n          <IconCreditCard />\n        </InputGroupAddon>\n        <InputGroupAddon align=\"inline-end\">\n          <IconCheck />\n        </InputGroupAddon>\n      </InputGroup>\n      <InputGroup>\n        <InputGroupInput placeholder=\"Card number\" />\n        <InputGroupAddon align=\"inline-end\">\n          <IconStar />\n          <IconInfoCircle />\n        </InputGroupAddon>\n      </InputGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-group-icon.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

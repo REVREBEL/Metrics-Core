@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-group",
+  "title": "Radio Group",
+  "description": "A set of checkable buttons where only one button can be checked at a time.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/radio-group.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\nimport * as RadioGroupPrimitive from \"@radix-ui/react-radio-group\";\nimport type * as React from \"react\";\n\nfunction RadioGroup({\n\tclassName,\n\t...props\n}: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {\n\treturn (\n\t\t<RadioGroupPrimitive.Root\n\t\t\tdata-slot=\"radio-group\"\n\t\t\tclassName={cn(\"grid gap-3\", className)}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\nfunction RadioGroupItem({\n\tclassName,\n\t...props\n}: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {\n\treturn (\n\t\t<RadioGroupPrimitive.Item\n\t\t\tdata-slot=\"radio-group-item\"\n\t\t\tclassName={cn(\n\t\t\t\t\"aspect-square size-4 shrink-0 rounded-full border border-input text-primary shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:aria-invalid:ring-destructive/40\",\n\t\t\t\tclassName,\n\t\t\t)}\n\t\t\t{...props}\n\t\t>\n\t\t\t<RadioGroupPrimitive.Indicator\n\t\t\t\tdata-slot=\"radio-group-indicator\"\n\t\t\t\tclassName=\"relative flex items-center justify-center\"\n\t\t\t>\n\t\t\t\t<span className=\"absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary\" />\n\t\t\t</RadioGroupPrimitive.Indicator>\n\t\t</RadioGroupPrimitive.Item>\n\t);\n}\n\nexport { RadioGroup, RadioGroupItem };\n",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/radio-group.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

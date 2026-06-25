@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dependencies",
+  "title": "Dependencies",
+  "description": "Auto-generated registry entry for dependencies.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/forms/dependencies.ts",
+      "content": "import type { FieldValues, UseFormWatch } from \"react-hook-form\";\nimport type { Dependency, EnumValues } from \"./types\";\nimport { DependencyType } from \"./types\";\nimport type * as z from \"zod\";\n\nexport default function resolveDependencies<\n  SchemaType extends z.infer<z.ZodObject<any, any>>,\n>(\n  dependencies: Dependency<SchemaType>[],\n  currentFieldName: keyof SchemaType,\n  watch: UseFormWatch<FieldValues>,\n) {\n  let isDisabled = false;\n  let isHidden = false;\n  let isRequired = false;\n  let overrideOptions: EnumValues | undefined;\n\n  const currentFieldValue = watch(currentFieldName as string);\n\n  const currentFieldDependencies = dependencies.filter(\n    (dependency) => dependency.targetField === currentFieldName,\n  );\n  for (const dependency of currentFieldDependencies) {\n    const watchedValue = watch(dependency.sourceField as string);\n\n    const conditionMet = dependency.when(watchedValue, currentFieldValue);\n\n    switch (dependency.type) {\n      case DependencyType.DISABLES:\n        if (conditionMet) {\n          isDisabled = true;\n        }\n        break;\n      case DependencyType.REQUIRES:\n        if (conditionMet) {\n          isRequired = true;\n        }\n        break;\n      case DependencyType.HIDES:\n        if (conditionMet) {\n          isHidden = true;\n        }\n        break;\n      case DependencyType.SETS_OPTIONS:\n        if (conditionMet) {\n          overrideOptions = dependency.options;\n        }\n        break;\n    }\n  }\n\n  return {\n    isDisabled,\n    isHidden,\n    isRequired,\n    overrideOptions,\n  };\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/forms/dependencies.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

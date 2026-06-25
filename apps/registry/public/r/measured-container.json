@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "measured-container",
+  "title": "Measured Container",
+  "description": "Auto-generated registry entry for measured-container.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/measured-container.tsx",
+      "content": "import * as React from \"react\"\nimport { useContainerSize } from \"../../hooks/use-container-size\"\n\ninterface MeasuredContainerProps<T extends React.ElementType> {\n  as: T\n  name: string\n  children?: React.ReactNode\n}\n\nexport const MeasuredContainer = <T extends React.ElementType>({\n  as: Component,\n  name,\n  children,\n  style = {},\n  ...props\n}: MeasuredContainerProps<T> & React.ComponentProps<T>) => {\n  const innerRef = React.useRef<HTMLElement>(null)\n  const rect = useContainerSize(innerRef.current)\n\n  const customStyle = {\n    [`--${name}-width`]: `${rect.width}px`,\n    [`--${name}-height`]: `${rect.height}px`,\n  }\n\n  return (\n    <Component {...props} ref={innerRef} style={{ ...customStyle, ...style }}>\n      {children}\n    </Component>\n  )\n}\n\nMeasuredContainer.displayName = \"MeasuredContainer\"\n",
+      "type": "registry:ui",
+      "target": "src/primitive/layouts/measured-container.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

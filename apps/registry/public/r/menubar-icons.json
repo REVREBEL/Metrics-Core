@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "menubar-icons",
+  "title": "Menubar Icons",
+  "description": "Auto-generated registry entry for menubar-icons.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/menus/menubar-icons.tsx",
+      "content": "import {\n  Menubar,\n  MenubarContent,\n  MenubarGroup,\n  MenubarItem,\n  MenubarMenu,\n  MenubarSeparator,\n  MenubarShortcut,\n  MenubarTrigger,\n} from \"./menubar\"\nimport { IconFileFilled, IconFolderFilled, IconInfoSquareRoundedFilled, IconDeviceFloppyFilled, IconSettingsFilled, IconTrashFilled } from \"@tabler/icons-react\"\n\nexport function MenubarIcons() {\n  return (\n    <Menubar className=\"w-72\">\n      <MenubarMenu>\n        <MenubarTrigger>File</MenubarTrigger>\n        <MenubarContent>\n          <MenubarItem>\n            <IconFileFilled />\n            New File <MenubarShortcut>⌘N</MenubarShortcut>\n          </MenubarItem>\n          <MenubarItem>\n            <IconFolderFilled />\n            Open Folder\n          </MenubarItem>\n          <MenubarSeparator />\n          <MenubarItem>\n            <IconDeviceFloppyFilled />\n            Save <MenubarShortcut>⌘S</MenubarShortcut>\n          </MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n      <MenubarMenu>\n        <MenubarTrigger>More</MenubarTrigger>\n        <MenubarContent>\n          <MenubarGroup>\n            <MenubarItem>\n              <IconSettingsFilled />\n              Settings\n            </MenubarItem>\n            <MenubarItem>\n              <IconInfoSquareRoundedFilled />\n              Help\n            </MenubarItem>\n            <MenubarSeparator />\n            <MenubarItem variant=\"destructive\">\n              <IconTrashFilled />\n              Delete\n            </MenubarItem>\n          </MenubarGroup>\n        </MenubarContent>\n      </MenubarMenu>\n    </Menubar>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/menus/menubar-icons.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

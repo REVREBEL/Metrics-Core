@@ -1,13 +1,16 @@
 import { promises as fs } from "node:fs"
 import path from "node:path"
 
-const ROOT = process.cwd()
-const REGISTRY_JSON = path.join(ROOT, "registry.json")
+import {
+  REGISTRY_JSON,
+  REGISTRY_TOKENS_JSON,
+  UI_SOURCE_ROOT,
+} from "./lib/paths.mjs"
+
 const TOKEN_SOURCES = [
-  "src/styles/theme-reference.css",
-  "src/styles/metric-theme-tokens.css",
+  "styles/theme-reference.css",
+  "styles/tailwind-reference.css",
 ]
-const TOKEN_METADATA_OUT = path.join(ROOT, "src/lib/registry.tokens.json")
 
 const TOKEN_GROUPS = [
   {
@@ -72,9 +75,9 @@ const TOKEN_GROUPS = [
 function parseVars(css, source) {
   const vars = {}
   const re = /--([a-zA-Z0-9-_]+)\s*:\s*([^;]+);/g
-  let m
-  while ((m = re.exec(css)) !== null) {
-    vars[m[1]] = { name: m[1], value: m[2].trim(), source }
+  let match
+  while ((match = re.exec(css)) !== null) {
+    vars[match[1]] = { name: match[1], value: match[2].trim(), source }
   }
   return vars
 }
@@ -103,9 +106,9 @@ function getTokenType(name) {
       "border",
       "input",
       "ring",
-    ].includes(name)
-    || /^chart-\d+$/.test(name)
-    || name.startsWith("sidebar")
+    ].includes(name) ||
+    /^chart-\d+$/.test(name) ||
+    name.startsWith("sidebar")
   ) {
     return "color"
   }
@@ -139,48 +142,55 @@ function groupTokens(tokens) {
   return groups
 }
 
-const registryRaw = await fs.readFile(REGISTRY_JSON, "utf8")
-const registry = JSON.parse(registryRaw)
+async function main() {
+  const registryRaw = await fs.readFile(REGISTRY_JSON, "utf8")
+  const registry = JSON.parse(registryRaw)
 
-const allVars = {}
-for (const source of TOKEN_SOURCES) {
-  const cssRaw = await fs.readFile(path.join(ROOT, source), "utf8")
-  Object.assign(allVars, parseVars(cssRaw, source))
-}
-
-const themeItem = (registry.items || []).find((i) => i?.type === "registry:theme")
-if (!themeItem) {
-  throw new Error("No registry:theme item found in registry.json")
-}
-
-themeItem.cssVars = themeItem.cssVars || {}
-themeItem.cssVars.light = themeItem.cssVars.light || {}
-themeItem.cssVars.dark = themeItem.cssVars.dark || {}
-
-let addedLight = 0
-let addedDark = 0
-for (const [key, value] of Object.entries(allVars)) {
-  if (!(key in themeItem.cssVars.light)) {
-    themeItem.cssVars.light[key] = value.value
-    addedLight += 1
+  const allVars = {}
+  for (const source of TOKEN_SOURCES) {
+    const cssRaw = await fs.readFile(path.join(UI_SOURCE_ROOT, source), "utf8")
+    Object.assign(allVars, parseVars(cssRaw, `src/${source}`))
   }
-  if (!(key in themeItem.cssVars.dark)) {
-    themeItem.cssVars.dark[key] = value.value
-    addedDark += 1
+
+  const themeItem = (registry.items || []).find((item) => item?.type === "registry:theme")
+  if (!themeItem) {
+    throw new Error("No registry:theme item found in apps/registry/registry.json")
   }
+
+  themeItem.cssVars = themeItem.cssVars || {}
+  themeItem.cssVars.light = themeItem.cssVars.light || {}
+  themeItem.cssVars.dark = themeItem.cssVars.dark || {}
+
+  let addedLight = 0
+  let addedDark = 0
+  for (const [key, value] of Object.entries(allVars)) {
+    if (!(key in themeItem.cssVars.light)) {
+      themeItem.cssVars.light[key] = value.value
+      addedLight += 1
+    }
+    if (!(key in themeItem.cssVars.dark)) {
+      themeItem.cssVars.dark[key] = value.value
+      addedDark += 1
+    }
+  }
+
+  const tokens = Object.values(allVars)
+    .map((token) => ({ ...token, type: getTokenType(token.name) }))
+    .sort((left, right) => left.name.localeCompare(right.name))
+
+  const metadata = {
+    generatedAt: new Date().toISOString(),
+    sources: TOKEN_SOURCES.map((source) => `src/${source}`),
+    total: tokens.length,
+    groups: groupTokens(tokens),
+  }
+
+  await fs.writeFile(REGISTRY_JSON, `${JSON.stringify(registry, null, 2)}\n`)
+  await fs.writeFile(REGISTRY_TOKENS_JSON, `${JSON.stringify(metadata, null, 2)}\n`)
+  console.log(`[registry:tokens:sync] merged ${Object.keys(allVars).length} vars; added light=${addedLight}, dark=${addedDark}`)
 }
 
-const tokens = Object.values(allVars)
-  .map((token) => ({ ...token, type: getTokenType(token.name) }))
-  .sort((a, b) => a.name.localeCompare(b.name))
-
-const metadata = {
-  generatedAt: new Date().toISOString(),
-  sources: TOKEN_SOURCES,
-  total: tokens.length,
-  groups: groupTokens(tokens),
-}
-
-await fs.writeFile(REGISTRY_JSON, `${JSON.stringify(registry, null, 2)}\n`)
-await fs.writeFile(TOKEN_METADATA_OUT, `${JSON.stringify(metadata, null, 2)}\n`)
-console.log(`[registry:tokens:sync] merged ${Object.keys(allVars).length} vars from ${TOKEN_SOURCES.join(", ")}; added light=${addedLight}, dark=${addedDark}; wrote ${path.relative(ROOT, TOKEN_METADATA_OUT)}`)
+main().catch((error) => {
+  console.error(error)
+  process.exit(1)
+})

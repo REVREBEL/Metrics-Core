@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-menu-avatar",
+  "title": "Dropdown Menu Avatar",
+  "description": "Auto-generated registry entry for dropdown-menu-avatar.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/dropdowns/dropdown-menu-avatar.tsx",
+      "content": "\"use client\"\n\nimport { Avatar, AvatarFallback, AvatarImage } from \"@ui-core/avatar\"\nimport { Button } from \"@buttons/button\"\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuSeparator,\n  DropdownMenuTrigger,\n} from \"./dropdown-menu\"\nimport { IconJewishStarFilled, IconBell, IconCreditCard, IconWritingSignFilled } from \"@tabler/icons-react\"\n\nexport function DropdownMenuAvatar() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant=\"ghost\" size=\"icon\" className=\"rounded-full\">\n          <Avatar>\n            <AvatarImage src=\"https://github.com/shadcn.png\" alt=\"shadcn\" />\n            <AvatarFallback>LR</AvatarFallback>\n          </Avatar>\n        </Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent align=\"end\">\n        <DropdownMenuGroup>\n          <DropdownMenuItem>\n            <IconJewishStarFilled />\n            Account\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <IconCreditCard />\n            Billing\n          </DropdownMenuItem>\n          <DropdownMenuItem>\n            <IconBell />\n            Notifications\n          </DropdownMenuItem>\n        </DropdownMenuGroup>\n        <DropdownMenuSeparator />\n        <DropdownMenuItem>\n          <IconWritingSignFilled />\n          Sign Out\n        </DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/dropdowns/dropdown-menu-avatar.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

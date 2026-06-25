@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "calendar",
+  "title": "Calendar",
+  "description": "A date field component that allows users to enter and edit date.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/calendar.tsx",
+      "content": "\"use client\";\n\nimport type * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\ntype CalendarProps = Omit<React.ComponentProps<\"div\">, \"onSelect\"> & {\n\tselected?: Date;\n\tonSelect?: (date: Date | undefined) => void;\n\tdisabled?: boolean | ((date: Date) => boolean);\n\tmode?: \"single\" | string;\n\tdefaultMonth?: Date;\n\tinitialFocus?: boolean;\n\tcaptionLayout?: string;\n\tshowOutsideDays?: boolean;\n\tclassNames?: Record<string, string>;\n\tcomponents?: Record<string, React.ComponentType<unknown>>;\n};\n\nfunction toDateInputValue(date: Date | undefined) {\n\tif (!date) return \"\";\n\n\tconst year = date.getFullYear();\n\tconst month = String(date.getMonth() + 1).padStart(2, \"0\");\n\tconst day = String(date.getDate()).padStart(2, \"0\");\n\n\treturn `${year}-${month}-${day}`;\n}\n\nfunction fromDateInputValue(value: string) {\n\tif (!value) return undefined;\n\n\tconst [year, month, day] = value.split(\"-\").map(Number);\n\n\tif (!year || !month || !day) return undefined;\n\n\treturn new Date(year, month - 1, day);\n}\n\nfunction Calendar({\n\tclassName,\n\tselected,\n\tonSelect,\n\tdisabled,\n\tmode: _mode,\n\tdefaultMonth: _defaultMonth,\n\tinitialFocus: _initialFocus,\n\tcaptionLayout: _captionLayout,\n\tshowOutsideDays: _showOutsideDays,\n\tclassNames: _classNames,\n\tcomponents: _components,\n\t...props\n}: CalendarProps) {\n\tconst isDisabled = typeof disabled === \"boolean\" ? disabled : false;\n\n\treturn (\n\t\t<div\n\t\t\tclassName={cn(\n\t\t\t\t\"w-fit rounded-md border bg-popover p-3 text-popover-foreground shadow-md\",\n\t\t\t\tclassName,\n\t\t\t)}\n\t\t\t{...props}\n\t\t>\n\t\t\t<input\n\t\t\t\ttype=\"date\"\n\t\t\t\tvalue={toDateInputValue(selected)}\n\t\t\t\tdisabled={isDisabled}\n\t\t\t\tonChange={(event) => {\n\t\t\t\t\tconst nextDate = fromDateInputValue(event.target.value);\n\n\t\t\t\t\tif (\n\t\t\t\t\t\tnextDate &&\n\t\t\t\t\t\ttypeof disabled === \"function\" &&\n\t\t\t\t\t\tdisabled(nextDate)\n\t\t\t\t\t) {\n\t\t\t\t\t\treturn;\n\t\t\t\t\t}\n\n\t\t\t\t\tonSelect?.(nextDate);\n\t\t\t\t}}\n\t\t\t\tclassName={cn(\n\t\t\t\t\t\"h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-xs outline-none transition-colors\",\n\t\t\t\t\t\"focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50\",\n\t\t\t\t\t\"disabled:cursor-not-allowed disabled:opacity-50\",\n\t\t\t\t)}\n\t\t\t/>\n\t\t</div>\n\t);\n}\n\nexport { Calendar };\n",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/calendar.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}
