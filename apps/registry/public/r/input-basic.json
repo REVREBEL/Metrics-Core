@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-basic",
+  "title": "Input Basic",
+  "description": "Auto-generated registry entry for input-basic.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-basic.tsx",
+      "content": "import { Input } from \"./input\";\n\nexport function InputBasic() {\n  return <Input placeholder=\"Enter text\" />;\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-basic.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

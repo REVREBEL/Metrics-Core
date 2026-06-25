@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-default",
+  "title": "Button Default",
+  "description": "Auto-generated registry entry for button-default.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-default.tsx",
+      "content": "import { Button } from \"./button\";\n\nexport default function ButtonDefault() {\n  return <Button>Button</Button>;\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-default.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

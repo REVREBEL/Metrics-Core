@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tasks_dialogs",
+  "title": "Tasks Dialogs",
+  "description": "Auto-generated registry entry for tasks_dialogs.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/tasks/tasks_dialogs.tsx",
+      "content": "import { ConfirmDialog } from \"@/components/confirm-dialog\";\nimport { showSubmittedData } from \"@/lib/show-submitted-data\";\nimport { TasksImportDialog } from \"./tasks-import-dialog\";\nimport { TasksMutateDrawer } from \"./tasks-mutate-drawer\";\nimport { useTasks } from \"./tasks-provider\";\n\nexport function TasksDialogs() {\n  const { open, setOpen, currentRow, setCurrentRow } = useTasks();\n  return (\n    <>\n      <TasksMutateDrawer\n        key=\"task-create\"\n        open={open === \"create\"}\n        onOpenChange={(nextOpen) => setOpen(nextOpen ? \"create\" : null)}\n      />\n\n      <TasksImportDialog\n        key=\"tasks-import\"\n        open={open === \"import\"}\n        onOpenChange={(nextOpen) => setOpen(nextOpen ? \"import\" : null)}\n      />\n\n      {currentRow && (\n        <>\n          <TasksMutateDrawer\n            key={`task-update-${currentRow.id}`}\n            open={open === \"update\"}\n            onOpenChange={(nextOpen) => {\n              setOpen(nextOpen ? \"update\" : null);\n              if (!nextOpen) {\n                setCurrentRow(null);\n              }\n            }}\n            currentRow={currentRow}\n          />\n\n          <ConfirmDialog\n            key=\"task-delete\"\n            destructive\n            open={open === \"delete\"}\n            onOpenChange={(nextOpen) => {\n              setOpen(nextOpen ? \"delete\" : null);\n              if (!nextOpen) {\n                setCurrentRow(null);\n              }\n            }}\n            handleConfirm={() => {\n              setOpen(null);\n              setCurrentRow(null);\n              showSubmittedData(\n                currentRow,\n                \"The following task has been deleted:\",\n              );\n            }}\n            className=\"max-w-md\"\n            title={`Delete this task: ${currentRow.id} ?`}\n            desc={\n              <>\n                You are about to delete a task with the ID{\" \"}\n                <strong>{currentRow.id}</strong>. <br />\n                This action cannot be undone.\n              </>\n            }\n            confirmText=\"Delete\"\n          />\n        </>\n      )}\n    </>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/tasks/tasks_dialogs.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

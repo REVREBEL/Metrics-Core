@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 
-import { MCPTabs } from "@repo/ui/ui-registry";
+import { MCPTabs } from "@ui-registry";
 import {
   Card,
   CardContent,

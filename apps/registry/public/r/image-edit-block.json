@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "image-edit-block",
+  "title": "Image Edit Block",
+  "description": "Auto-generated registry entry for image-edit-block.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/image-blocks/image-edit-block.tsx",
+      "content": "import * as React from \"react\"\nimport type { Editor } from \"@tiptap/react\"\nimport { Button } from \"@buttons/button\"\nimport { Label } from \"@ui-core/label\"\nimport { Input } from \"@inputs/input\"\n\ninterface ImageEditBlockProps {\n  editor: Editor\n  close: () => void\n}\n\nexport const ImageEditBlock: React.FC<ImageEditBlockProps> = ({\n  editor,\n  close,\n}) => {\n  const fileInputRef = React.useRef<HTMLInputElement>(null)\n  const [link, setLink] = React.useState(\"\")\n\n  const handleClick = React.useCallback(() => {\n    fileInputRef.current?.click()\n  }, [])\n\n  const handleFile = React.useCallback(\n    async (e: React.ChangeEvent<HTMLInputElement>) => {\n      const files = e.target.files\n      if (!files?.length) return\n\n      const insertImages = async () => {\n        const contentBucket = []\n        const filesArray = Array.from(files)\n\n        for (const file of filesArray) {\n          contentBucket.push({ src: file })\n        }\n\n        (editor.commands as any).setImages(contentBucket)\n      }\n\n      await insertImages()\n      close()\n    },\n    [editor, close]\n  )\n\n  const handleSubmit = React.useCallback(\n    (e: React.FormEvent<HTMLFormElement>) => {\n      e.preventDefault()\n      e.stopPropagation()\n\n      if (link) {\n        (editor.commands as any).setImages([{ src: link }])\n        close()\n      }\n    },\n    [editor, link, close]\n  )\n\n  return (\n    <form onSubmit={handleSubmit} className=\"space-y-6\">\n      <div className=\"space-y-1\">\n        <Label htmlFor=\"image-link\">Attach an image link</Label>\n        <div className=\"flex\">\n          <Input\n            id=\"image-link\"\n            type=\"url\"\n            required\n            placeholder=\"https://example.com\"\n            value={link}\n            className=\"grow\"\n            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>\n              setLink(e.target.value)\n            }\n          />\n          <Button type=\"submit\" className=\"ml-2\">\n            Submit\n          </Button>\n        </div>\n      </div>\n      <Button type=\"button\" className=\"w-full\" onClick={handleClick}>\n        Upload from your computer\n      </Button>\n      <input\n        type=\"file\"\n        accept=\"image/*\"\n        ref={fileInputRef}\n        multiple\n        className=\"hidden\"\n        onChange={handleFile}\n      />\n    </form>\n  )\n}\n\nexport default ImageEditBlock\n",
+      "type": "registry:ui",
+      "target": "src/primitive/image-blocks/image-edit-block.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

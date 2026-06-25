@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "brand-header",
+  "title": "Brand Header",
+  "description": "A styled, simple, reusable header",
+  "registryDependencies": [
+    "@metrics/metrics",
+    "@metrics/button",
+    "@metrics/input",
+    "@metrics/avatar",
+    "@metrics/sidebar",
+    "@metrics/sonner",
+    "@metrics/logo"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/brand-header.tsx",
+      "content": "\"use client\";\n\nimport { HelpCircle, Menu, Search, X } from \"lucide-react\";\nimport Link from \"next/link\";\nimport { useState } from \"react\";\n\nimport { Button } from \"@buttons/button\";\nimport { Input } from \"@inputs/input\";\nimport { Avatar, AvatarFallback } from \"@ui-core/avatar\";\nimport { Logo } from \"@ui-core/logo\";\nimport { useSidebar } from \"./sidebar\";\n\nexport function BrandHeader() {\n\tconst [isSearchOpen, setIsSearchOpen] = useState(false);\n\tconst { state, toggleSidebar } = useSidebar();\n\tconst isCollapsed = state === \"collapsed\";\n\n\treturn (\n\t\t<header className=\"fixed z-50 w-full border-border border-b bg-background\">\n\t\t\t<div className=\"flex h-16 items-center justify-between px-2\">\n\t\t\t\t<div className=\"flex items-center space-x-4\">\n\t\t\t\t\t<Button\n\t\t\t\t\t\tvariant=\"ghost\"\n\t\t\t\t\t\tsize=\"icon\"\n\t\t\t\t\t\tclassName=\"hidden size-8 md:flex\"\n\t\t\t\t\t\tonClick={toggleSidebar}\n\t\t\t\t\t>\n\t\t\t\t\t\t{isCollapsed ? (\n\t\t\t\t\t\t\t<Menu className=\"size-4\" />\n\t\t\t\t\t\t) : (\n\t\t\t\t\t\t\t<X className=\"size-4\" />\n\t\t\t\t\t\t)}\n\t\t\t\t\t</Button>\n\n\t\t\t\t\t<Button\n\t\t\t\t\t\tvariant=\"ghost\"\n\t\t\t\t\t\tsize=\"icon\"\n\t\t\t\t\t\tclassName=\"size-8 md:hidden\"\n\t\t\t\t\t\tonClick={toggleSidebar}\n\t\t\t\t\t>\n\t\t\t\t\t\t<Menu className=\"size-4\" />\n\t\t\t\t\t</Button>\n\n\t\t\t\t\t<Link href=\"/\" className=\"flex items-center\">\n\t\t\t\t\t\t<Logo />\n\t\t\t\t\t</Link>\n\t\t\t\t</div>\n\n\t\t\t\t<div className=\"hidden items-center space-x-1 md:flex\">\n\t\t\t\t\t{isSearchOpen ? (\n\t\t\t\t\t\t<div className=\"relative\">\n\t\t\t\t\t\t\t<Input\n\t\t\t\t\t\t\t\ttype=\"text\"\n\t\t\t\t\t\t\t\tplaceholder=\"Search\"\n\t\t\t\t\t\t\t\tclassName=\"h-9 w-64 pl-9\"\n\t\t\t\t\t\t\t\tautoFocus\n\t\t\t\t\t\t\t\tonBlur={() => setIsSearchOpen(false)}\n\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t<Search className=\"absolute top-2.5 left-3 size-4 text-foreground\" />\n\t\t\t\t\t\t</div>\n\t\t\t\t\t) : (\n\t\t\t\t\t\t<Button\n\t\t\t\t\t\t\tvariant=\"ghost\"\n\t\t\t\t\t\t\tsize=\"sm\"\n\t\t\t\t\t\t\tclassName=\"text-foreground\"\n\t\t\t\t\t\t\tonClick={() => setIsSearchOpen(true)}\n\t\t\t\t\t\t>\n\t\t\t\t\t\t\t<Search className=\"mr-2 size-4\" />\n\t\t\t\t\t\t\tSearch\n\t\t\t\t\t\t</Button>\n\t\t\t\t\t)}\n\n\t\t\t\t\t<Button variant=\"ghost\" size=\"sm\" className=\"text-foreground\">\n\t\t\t\t\t\t<HelpCircle className=\"mr-2 size-4\" />\n\t\t\t\t\t\tSupport\n\t\t\t\t\t</Button>\n\n\t\t\t\t\t<Button variant=\"ghost\" size=\"sm\" className=\"text-foreground\">\n\t\t\t\t\t\tUpgrade Trial\n\t\t\t\t\t</Button>\n\n\t\t\t\t\t<Avatar className=\"size-8\">\n\t\t\t\t\t\t<AvatarFallback className=\"bg-primary text-primary-foreground\">\n\t\t\t\t\t\t\t<span className=\"text-xs\">ME</span>\n\t\t\t\t\t\t</AvatarFallback>\n\t\t\t\t\t</Avatar>\n\t\t\t\t</div>\n\n\t\t\t\t<div className=\"flex gap-2 md:hidden\">\n\t\t\t\t\t<Button variant=\"ghost\" size=\"sm\" className=\"text-foreground\">\n\t\t\t\t\t\t<Search className=\"h-5 w-5\" />\n\t\t\t\t\t</Button>\n\t\t\t\t\t<Avatar className=\"size-8\">\n\t\t\t\t\t\t<AvatarFallback className=\"bg-primary text-primary-foreground\">\n\t\t\t\t\t\t\t<span className=\"text-xs\">ME</span>\n\t\t\t\t\t\t</AvatarFallback>\n\t\t\t\t\t</Avatar>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</header>\n\t);\n}\n",
+      "type": "registry:component",
+      "target": "src/components/brand-header.tsx"
+    },
+    {
+      "path": "apps/registry/app/demo/[name]/blocks/shell-layout.tsx",
+      "content": "import React, { type ReactNode } from \"react\";\n\nimport { BrandHeader } from \"@/components/brand-header\";\nimport { BrandSidebar } from \"@/components/brand-sidebar\";\nimport { SidebarProvider } from \"@ui\";\nimport { Toaster } from \"@ui\";\n\nexport default function ShellLayout({\n  children,\n}: Readonly<{\n  children: ReactNode;\n}>) {\n  return (\n    <SidebarProvider>\n      <BrandHeader />\n      <BrandSidebar />\n      <main className=\"flex w-full justify-center\">\n        <div className=\"container\">{children}</div>\n      </main>\n      <Toaster />\n    </SidebarProvider>\n  );\n}\n",
+      "type": "registry:file",
+      "target": "src/app/layout.tsx"
+    },
+    {
+      "path": "apps/registry/app/demo/[name]/blocks/blank-page.tsx",
+      "content": "export default function BlankPage() {\n  return (\n    <div className=\"flex flex-col items-center justify-center gap-4 rounded-md py-96\">\n      <div className=\"text-muted-foreground\">\n        Start prompting to use your component!\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:page",
+      "target": "src/app/page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

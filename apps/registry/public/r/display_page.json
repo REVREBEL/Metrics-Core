@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "display_page",
+  "title": "Display Page",
+  "description": "Auto-generated registry entry for display_page.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/settings/display_page.tsx",
+      "content": "import { ContentSection } from \"../components/content-section\";\nimport { DisplayForm } from \"./display-form\";\n\nexport default function SettingsDisplayPage() {\n  return (\n    <ContentSection\n      title=\"Display\"\n      desc=\"Turn items on or off to control what's displayed in the app.\"\n    >\n      <DisplayForm />\n    </ContentSection>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/settings/display_page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

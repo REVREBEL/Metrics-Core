@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-fieldgroup",
+  "title": "Input Fieldgroup",
+  "description": "Auto-generated registry entry for input-fieldgroup.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-fieldgroup.tsx",
+      "content": "import { Field, FieldDescription, FieldGroup, FieldLabel } from \"@auto-form/fields/field\";\nimport { Button } from \"@buttons/button\";\nimport { Input } from \"./input\";\n\nexport function InputFieldgroup() {\n  return (\n    <FieldGroup>\n      <Field>\n        <FieldLabel htmlFor=\"fieldgroup-name\">Name</FieldLabel>\n        <Input id=\"fieldgroup-name\" placeholder=\"Jordan Lee\" />\n      </Field>\n      <Field>\n        <FieldLabel htmlFor=\"fieldgroup-email\">Email</FieldLabel>\n        <Input\n          id=\"fieldgroup-email\"\n          type=\"email\"\n          placeholder=\"name@example.com\"\n        />\n        <FieldDescription>\n          We&apos;ll send updates to this address.\n        </FieldDescription>\n      </Field>\n      <Field orientation=\"horizontal\">\n        <Button type=\"reset\" variant=\"outline\">\n          Reset\n        </Button>\n        <Button type=\"submit\">Submit</Button>\n      </Field>\n    </FieldGroup>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-fieldgroup.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-menu-radio-group",
+  "title": "Dropdown Menu Radio Group",
+  "description": "Auto-generated registry entry for dropdown-menu-radio-group.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/dropdowns/dropdown-menu-radio-group.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Button } from \"@buttons/button\"\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuLabel,\n  DropdownMenuRadioGroup,\n  DropdownMenuRadioItem,\n  DropdownMenuTrigger,\n} from \"./dropdown-menu\"\n\nexport function DropdownMenuRadioGroupDemo() {\n  const [position, setPosition] = React.useState(\"bottom\")\n\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant=\"outline\">Open</Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className=\"w-32\">\n        <DropdownMenuGroup>\n          <DropdownMenuLabel>Panel Position</DropdownMenuLabel>\n          <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>\n            <DropdownMenuRadioItem value=\"top\">Top</DropdownMenuRadioItem>\n            <DropdownMenuRadioItem value=\"bottom\">Bottom</DropdownMenuRadioItem>\n            <DropdownMenuRadioItem value=\"right\">Right</DropdownMenuRadioItem>\n          </DropdownMenuRadioGroup>\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/dropdowns/dropdown-menu-radio-group.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

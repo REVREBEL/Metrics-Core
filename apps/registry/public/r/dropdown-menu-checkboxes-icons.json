@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-menu-checkboxes-icons",
+  "title": "Dropdown Menu Checkboxes Icons",
+  "description": "Auto-generated registry entry for dropdown-menu-checkboxes-icons.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/dropdowns/dropdown-menu-checkboxes-icons.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Button } from \"@buttons/button\"\nimport {\n  DropdownMenu,\n  DropdownMenuCheckboxItem,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuLabel,\n  DropdownMenuTrigger,\n} from \"./dropdown-menu\"\nimport { IconBell, IconMail, IconMessage } from \"@tabler/icons-react\"\n\nexport function DropdownMenuCheckboxesIcons() {\n  const [notifications, setNotifications] = React.useState({\n    email: true,\n    sms: false,\n    push: true,\n  })\n\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant=\"outline\">Notifications</Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className=\"w-48\">\n        <DropdownMenuGroup>\n          <DropdownMenuLabel>Notification Preferences</DropdownMenuLabel>\n          <DropdownMenuCheckboxItem\n            checked={notifications.email}\n            onCheckedChange={(checked) =>\n              setNotifications({ ...notifications, email: checked === true })\n            }\n          >\n            <IconMail />\n            Email notifications\n          </DropdownMenuCheckboxItem>\n          <DropdownMenuCheckboxItem\n            checked={notifications.sms}\n            onCheckedChange={(checked) =>\n              setNotifications({ ...notifications, sms: checked === true })\n            }\n          >\n            <IconMessage />\n            SMS notifications\n          </DropdownMenuCheckboxItem>\n          <DropdownMenuCheckboxItem\n            checked={notifications.push}\n            onCheckedChange={(checked) =>\n              setNotifications({ ...notifications, push: checked === true })\n            }\n          >\n            <IconBell />\n            Push notifications\n          </DropdownMenuCheckboxItem>\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/dropdowns/dropdown-menu-checkboxes-icons.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

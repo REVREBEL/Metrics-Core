@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "login-form",
+  "title": "Login Form",
+  "description": "Auto-generated registry entry for login-form.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/users/login-form.tsx",
+      "content": "'use client'\n\nimport { useState } from 'react'\n\nimport { EyeIcon, EyeOffIcon } from 'lucide-react'\n\nimport { Button } from '@ui-core'\nimport { Checkbox } from '@ui-core'\nimport { Input } from '@ui-core'\nimport { Label } from '@ui-core'\n\nconst LoginForm = () => {\n  const [isVisible, setIsVisible] = useState(false)\n\n  return (\n    <form className='space-y-4' onSubmit={e => e.preventDefault()}>\n      {/* Email */}\n      <div className='space-y-1'>\n        <Label htmlFor='userEmail' className='leading-5'>\n          Email address*\n        </Label>\n        <Input type='email' id='userEmail' placeholder='Enter your email address' />\n      </div>\n\n      {/* Password */}\n      <div className='w-full space-y-1'>\n        <Label htmlFor='password' className='leading-5'>\n          Password*\n        </Label>\n        <div className='relative'>\n          <Input id='password' type={isVisible ? 'text' : 'password'} placeholder='••••••••••••••••' className='pr-9' />\n          <Button\n            variant='ghost'\n            size='icon'\n            onClick={() => setIsVisible(prevState => !prevState)}\n            className='text-muted-foreground focus-visible:ring-ring/50 absolute inset-y-0 right-0 rounded-l-none hover:bg-transparent'\n          >\n            {isVisible ? <EyeOffIcon /> : <EyeIcon />}\n            <span className='sr-only'>{isVisible ? 'Hide password' : 'Show password'}</span>\n          </Button>\n        </div>\n      </div>\n\n      {/* Remember Me and Forgot Password */}\n      <div className='flex items-center justify-between gap-y-2'>\n        <div className='flex items-center gap-3'>\n          <Checkbox id='rememberMe' className='size-6' />\n          <Label htmlFor='rememberMe' className='text-muted-foreground'>\n            {' '}\n            Remember Me\n          </Label>\n        </div>\n\n        <a href='#' className='hover:underline'>\n          Forgot Password?\n        </a>\n      </div>\n\n      <Button className='w-full' type='submit'>\n        Sign in to Shadcn Studio\n      </Button>\n    </form>\n  )\n}\n\nexport default LoginForm\n",
+      "type": "registry:ui",
+      "target": "src/primitive/users/login-form.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-button",
+  "title": "Textarea Button",
+  "description": "Auto-generated registry entry for textarea-button.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/textarea/textarea-button.tsx",
+      "content": "import { Button } from \"@buttons/button\";\nimport { Textarea } from \"./textarea\";\n\nexport function TextareaButton() {\n  return (\n    <div className=\"grid w-full gap-2\">\n      <Textarea placeholder=\"Type your message here.\" />\n      <Button>Send message</Button>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/textarea/textarea-button.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

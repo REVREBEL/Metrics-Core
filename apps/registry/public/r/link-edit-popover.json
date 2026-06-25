@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "link-edit-popover",
+  "title": "Link Edit Popover",
+  "description": "Auto-generated registry entry for link-edit-popover.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/links/link-edit-popover.tsx",
+      "content": "import { ToolbarButton } from \"@buttons/toolbar-button\";\nimport { Popover, PopoverContent, PopoverTrigger } from \"@popovers/popover\";\nimport { Link2Icon } from \"@radix-ui/react-icons\";\nimport type { Editor } from \"@tiptap/react\";\nimport type { toggleVariants } from \"@ui-core/toggle\";\nimport type { VariantProps } from \"class-variance-authority\";\nimport * as React from \"react\";\nimport { LinkEditBlock } from \"./link-edit-block\";\n\ninterface LinkEditPopoverProps extends VariantProps<typeof toggleVariants> {\n  editor: Editor;\n}\n\nconst LinkEditPopover = ({ editor, size, variant }: LinkEditPopoverProps) => {\n  const [open, setOpen] = React.useState(false);\n\n  const { from, to } = editor.state.selection;\n  const text = editor.state.doc.textBetween(from, to, \" \");\n\n  const onSetLink = React.useCallback(\n    (url: string, text?: string, openInNewTab?: boolean) => {\n      (editor\n        .chain()\n        .focus()\n        .extendMarkRange(\"link\") as any)\n        .insertContent({\n          type: \"text\",\n          text: text || url,\n          marks: [\n            {\n              type: \"link\",\n              attrs: {\n                href: url,\n                target: openInNewTab ? \"_blank\" : \"\",\n              },\n            },\n          ],\n        })\n        .setLink({ href: url })\n        .run();\n\n      editor.commands.enter();\n    },\n    [editor],\n  );\n\n  return (\n    <Popover open={open} onOpenChange={setOpen}>\n      <PopoverTrigger asChild>\n        <ToolbarButton\n          isActive={editor.isActive(\"link\")}\n          tooltip=\"Link\"\n          aria-label=\"Insert link\"\n          disabled={editor.isActive(\"codeBlock\")}\n          size={size}\n          variant={variant}\n        >\n          <Link2Icon className=\"size-5\" />\n        </ToolbarButton>\n      </PopoverTrigger>\n      <PopoverContent align=\"end\" side=\"bottom\">\n        <LinkEditBlock onSave={onSetLink} defaultText={text} />\n      </PopoverContent>\n    </Popover>\n  );\n};\n\nexport { LinkEditPopover };\n",
+      "type": "registry:ui",
+      "target": "src/primitive/links/link-edit-popover.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

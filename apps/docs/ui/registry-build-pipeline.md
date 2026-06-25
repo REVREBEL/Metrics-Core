@@ -174,7 +174,7 @@ https://metrics-ui.revrebel.io/catalog
 Data sources:
 
 ```txt
-component render entries -> PLAYGROUND_REGISTRY
+component render entries -> REGISTRY_ITEMSISTRY
 props/description metadata -> registry.metadata.json
 co-located metadata.ts -> merged by registry:sync
 expanded theme variables -> registry:tokens:sync

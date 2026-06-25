@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-otp-controlled",
+  "title": "Input Otp Controlled",
+  "description": "Auto-generated registry entry for input-otp-controlled.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-otp-controlled.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { InputOTP, InputOTPGroup, InputOTPSlot } from \"./input-otp\";\n\nexport default function InputOTPControlled() {\n  const [value, setValue] = React.useState(\"\");\n\n  return (\n    <div className=\"space-y-2\">\n      <InputOTP\n        maxLength={6}\n        value={value}\n        onChange={(value) => setValue(value)}\n      >\n        <InputOTPGroup>\n          <InputOTPSlot index={0} />\n          <InputOTPSlot index={1} />\n          <InputOTPSlot index={2} />\n          <InputOTPSlot index={3} />\n          <InputOTPSlot index={4} />\n          <InputOTPSlot index={5} />\n        </InputOTPGroup>\n      </InputOTP>\n      <div className=\"text-center text-sm\">\n        {value === \"\" ? (\n          <>Enter your one-time password.</>\n        ) : (\n          <>You entered: {value}</>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-otp-controlled.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

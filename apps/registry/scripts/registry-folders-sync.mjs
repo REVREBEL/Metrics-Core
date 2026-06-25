@@ -1,10 +1,7 @@
 import { promises as fs } from "node:fs"
 import path from "node:path"
-import { fileURLToPath } from "node:url"
 
-const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url))
-const APP_ROOT = path.resolve(SCRIPT_DIR, "..")
-const WORKSPACE_ROOT = path.resolve(APP_ROOT, "../..")
+import { REGISTRY_FOLDERS_JSON, WORKSPACE_ROOT } from "./lib/paths.mjs"
 const SOURCE_ROOTS = [
   { key: "primitives", source: "packages/ui/src/primitives", kind: "group" },
   { key: "components", source: "packages/ui/src/components", kind: "group" },
@@ -140,10 +137,9 @@ async function buildTree() {
 
 async function main() {
   const manifest = await buildTree()
-  const outFile = path.join(WORKSPACE_ROOT, "packages/ui/src/lib/registry-folders.json")
-  await fs.writeFile(outFile, `${JSON.stringify(manifest, null, 2)}\n`)
+  await fs.writeFile(REGISTRY_FOLDERS_JSON, `${JSON.stringify(manifest, null, 2)}\n`)
   console.log(
-    `[registry:folders:sync] wrote ${manifest.roots.length} roots and ${Object.keys(manifest.nodes).length} folder nodes to ${path.relative(WORKSPACE_ROOT, outFile)}`
+    `[registry:folders:sync] wrote ${manifest.roots.length} roots and ${Object.keys(manifest.nodes).length} folder nodes to ${path.relative(WORKSPACE_ROOT, REGISTRY_FOLDERS_JSON)}`
   )
 }
 

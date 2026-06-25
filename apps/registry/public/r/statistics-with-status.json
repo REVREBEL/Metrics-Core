@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "statistics-with-status",
+  "title": "Statistics With Status",
+  "description": "Auto-generated registry entry for statistics-with-status.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/charts/statistics-with-status.tsx",
+      "content": "import { TrendingUpIcon, TrendingDownIcon, MinusIcon, ShieldAlertIcon } from 'lucide-react'\n\nimport { Badge } from '@ui-core/badge'\nimport { Card, CardContent, CardHeader, CardTitle } from '@ui-core/card'\n\nimport { cn } from '@/lib/utils'\n\nexport type StatisticsCardProps = {\n  value: string\n  title: string\n  status: 'within' | 'observe' | 'exceed' | 'unknown'\n  className?: string\n  range: string\n  icon?: React.ReactNode\n}\n\nconst statusConfig = {\n  within: {\n    color: 'bg-green-600/10 dark:bg-green-400/10 text-green-600 dark:text-green-400',\n    icon: <TrendingUpIcon />,\n    label: 'On Track'\n  },\n  observe: {\n    color: 'bg-amber-600/10 dark:bg-amber-400/10 text-amber-600 dark:text-amber-400',\n    icon: <MinusIcon />,\n    label: 'Stable'\n  },\n  exceed: { color: 'bg-destructive/10 text-destructive', icon: <TrendingDownIcon />, label: 'At Risk' },\n  unknown: {\n    color: 'bg-sky-600/10 dark:bg-sky-400/10 text-sky-600 dark:text-sky-400',\n    icon: <ShieldAlertIcon />,\n    label: 'Under Review'\n  }\n}\n\nconst StatisticsCard = ({ status, value, title, className, range, icon }: StatisticsCardProps) => {\n  return (\n    <Card className={cn('flex flex-col gap-3', className)}>\n      <CardHeader className='flex items-center justify-between'>\n        <CardTitle className='text-sm'>{title}</CardTitle>\n        {icon && (\n          <div className='bg-primary/10 text-primary flex size-8 shrink-0 items-center justify-center rounded-md [&>svg]:size-4.5'>\n            {icon}\n          </div>\n        )}\n      </CardHeader>\n\n      <CardContent className='flex flex-col gap-3'>\n        <p className='text-3xl font-semibold tracking-tight'>{value}</p>\n\n        <Badge className={cn(statusConfig[status].color, 'gap-1.5 [&>svg]:size-3.5')}>\n          {statusConfig[status].icon}\n          <span>{statusConfig[status].label}:</span>\n          <span>{range}</span>\n        </Badge>\n      </CardContent>\n    </Card>\n  )\n}\n\nexport default StatisticsCard\n",
+      "type": "registry:ui",
+      "target": "src/primitive/charts/statistics-with-status.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

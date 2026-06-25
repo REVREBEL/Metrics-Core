@@ -92,7 +92,7 @@ The catalog uses that generated metadata whenever inline registry metadata is mi
 Catalog population uses:
 
 ```txt
-component render entries -> PLAYGROUND_REGISTRY
+component render entries -> REGISTRY_ITEMS
 props/description metadata -> registry.metadata.json
 co-located metadata.ts -> merged by registry:sync
 ```

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "notifications_page",
+  "title": "Notifications Page",
+  "description": "Auto-generated registry entry for notifications_page.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/settings/notifications_page.tsx",
+      "content": "import { ContentSection } from \"../components/content-section\";\nimport { NotificationsForm } from \"./notifications-form\";\n\nexport default function SettingsNotificationsPage() {\n  return (\n    <ContentSection\n      title=\"Notifications\"\n      desc=\"Configure how you receive notifications.\"\n    >\n      <NotificationsForm />\n    </ContentSection>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/settings/notifications_page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

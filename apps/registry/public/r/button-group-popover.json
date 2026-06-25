@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-group-popover",
+  "title": "Button Group Popover",
+  "description": "Auto-generated registry entry for button-group-popover.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-group-popover.tsx",
+      "content": "import { Field, FieldDescription, FieldLabel } from \"@auto-form/fields/field\";\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@popovers/popover\";\nimport {\n  IconBoltFilled,\n  IconSquareRoundedChevronDownFilled,\n} from \"@tabler/icons-react\";\nimport { Textarea } from \"@textarea/textarea\";\nimport { Button } from \"./button\";\nimport { ButtonGroup } from \"./button-group\";\n\nexport default function ButtonGroupPopover() {\n  return (\n    <ButtonGroup>\n      <Button variant=\"outline\">\n        <IconBoltFilled /> Copilot\n      </Button>\n      <Popover>\n        <PopoverTrigger\n          render={\n            <Button variant=\"outline\" size=\"icon\" aria-label=\"Open Popover\" />\n          }\n        >\n          <IconSquareRoundedChevronDownFilled />\n        </PopoverTrigger>\n        <PopoverContent align=\"end\" className=\"rounded-xl text-sm\">\n          <PopoverHeader>\n            <PopoverTitle>Start a new task with Copilot</PopoverTitle>\n            <PopoverDescription>\n              Describe your task in natural language.\n            </PopoverDescription>\n          </PopoverHeader>\n          <Field>\n            <FieldLabel htmlFor=\"task\" className=\"sr-only\">\n              Task Description\n            </FieldLabel>\n            <Textarea\n              id=\"task\"\n              placeholder=\"I need to...\"\n              className=\"resize-none\"\n            />\n            <FieldDescription>\n              Copilot will open a pull request for review.\n            </FieldDescription>\n          </Field>\n        </PopoverContent>\n      </Popover>\n    </ButtonGroup>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-group-popover.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

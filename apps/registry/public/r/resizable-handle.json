@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "resizable-handle",
+  "title": "Resizable Handle",
+  "description": "Auto-generated registry entry for resizable-handle.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/resizable-handle.tsx",
+      "content": "import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from \"@ui-core/resizable\";\n\nexport default function ResizableHandleDemo() {\n\treturn (\n\t\t<ResizablePanelGroup\n\t\t\torientation=\"horizontal\"\n\t\t\tclassName=\"min-h-[200px] max-w-sm rounded-lg border\"\n\t\t>\n\t\t\t<ResizablePanel defaultSize=\"25%\">\n\t\t\t\t<div className=\"flex h-full items-center justify-center p-6\">\n\t\t\t\t\t<span className=\"font-semibold\">Sidebar</span>\n\t\t\t\t</div>\n\t\t\t</ResizablePanel>\n\t\t\t<ResizableHandle withHandle />\n\t\t\t<ResizablePanel defaultSize=\"75%\">\n\t\t\t\t<div className=\"flex h-full items-center justify-center p-6\">\n\t\t\t\t\t<span className=\"font-semibold\">Content</span>\n\t\t\t\t</div>\n\t\t\t</ResizablePanel>\n\t\t</ResizablePanelGroup>\n\t);\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/layouts/resizable-handle.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

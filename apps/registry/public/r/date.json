@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date",
+  "title": "Date",
+  "description": "Auto-generated registry entry for date.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/forms/fields/date.tsx",
+      "content": "import { DatePicker } from \"@ui-core/date-picker\";\nimport { FormControl, FormItem, FormMessage } from \"@auto-form/form\";\nimport AutoFormLabel from \"../common/label\";\nimport AutoFormTooltip from \"../common/tooltip\";\nimport type { AutoFormInputComponentProps } from \"../types\";\nimport { getBaseType } from \"../helpers\";\n\n/**\n * Convert a value to a Date object if needed.\n * Handles both Date objects (from z.date()) and ISO strings (from z.fromJSONSchema with format: date-time)\n */\nfunction toDate(value: unknown): Date | undefined {\n  if (!value) return undefined;\n  if (value instanceof Date) return value;\n  if (typeof value === \"string\") {\n    const date = new Date(value);\n    return isNaN(date.getTime()) ? undefined : date;\n  }\n  return undefined;\n}\n\nexport default function AutoFormDate({\n  label,\n  isRequired,\n  field,\n  fieldConfigItem,\n  fieldProps,\n  zodItem,\n}: AutoFormInputComponentProps) {\n  // Determine if the underlying schema expects a Date object or string\n  // z.date() has base type \"ZodDate\", while z.fromJSONSchema with format: date-time creates a ZodString\n  const baseType = getBaseType(zodItem);\n  const expectsDateObject = baseType === \"ZodDate\";\n  \n  const handleChange = (date: Date | undefined) => {\n    if (!date) {\n      field.onChange(undefined);\n      return;\n    }\n    // If the schema is z.date(), pass Date object\n    // If the schema is string (from JSON Schema), pass ISO string\n    if (expectsDateObject) {\n      field.onChange(date);\n    } else {\n      field.onChange(date.toISOString());\n    }\n  };\n\n  return (\n    <FormItem>\n      <AutoFormLabel\n        label={fieldConfigItem?.label || label}\n        isRequired={isRequired}\n      />\n      <FormControl>\n        <DatePicker\n          date={toDate(field.value)}\n          setDate={handleChange}\n          {...fieldProps}\n        />\n      </FormControl>\n      <AutoFormTooltip fieldConfigItem={fieldConfigItem} />\n\n      <FormMessage />\n    </FormItem>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/forms/fields/date.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

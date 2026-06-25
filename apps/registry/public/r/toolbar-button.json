@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toolbar-button",
+  "title": "Toolbar Button",
+  "description": "Auto-generated registry entry for toolbar-button.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/toolbar-button.tsx",
+      "content": "import { Toggle, Tooltip, TooltipContent, TooltipTrigger } from \"@ui-core\";\nimport type * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ToolbarButtonProps\n  extends React.ComponentProps<typeof Toggle> {\n  isActive?: boolean;\n  tooltip?: string;\n  tooltipOptions?: React.ComponentProps<typeof TooltipContent>;\n}\n\nexport const ToolbarButton = ({\n  isActive,\n  children,\n  tooltip,\n  className,\n  tooltipOptions,\n  ...props\n}: ToolbarButtonProps) => {\n  const toggleButton = (\n    <Toggle className={cn({ \"bg-accent\": isActive }, className)} {...props}>\n      {children}\n    </Toggle>\n  );\n\n  if (!tooltip) {\n    return toggleButton;\n  }\n\n  return (\n    <Tooltip>\n      <TooltipTrigger asChild>{toggleButton}</TooltipTrigger>\n      <TooltipContent {...tooltipOptions}>\n        <div className=\"flex flex-col items-center text-center\">{tooltip}</div>\n      </TooltipContent>\n    </Tooltip>\n  );\n};\n\nToolbarButton.displayName = \"ToolbarButton\";\n\nexport default ToolbarButton;\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/toolbar-button.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

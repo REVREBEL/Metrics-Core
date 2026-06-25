@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography-large",
+  "title": "Typography Large",
+  "description": "Auto-generated registry entry for typography-large.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TypographyLarge.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographyLargeProps extends HTMLAttributes<HTMLDivElement> {}\n\nexport function TypographyLarge({\n  children,\n  className,\n  ...props\n}: TypographyLargeProps) {\n  return (\n    <div className={cn(\"text-lg font-semibold\", className)} {...props}>\n      {children}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TypographyLarge.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

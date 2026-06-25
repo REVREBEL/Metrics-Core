@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-menu-radio-icons",
+  "title": "Dropdown Menu Radio Icons",
+  "description": "Auto-generated registry entry for dropdown-menu-radio-icons.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/dropdowns/dropdown-menu-radio-icons.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Button } from \"@buttons/button\"\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuLabel,\n  DropdownMenuRadioGroup,\n  DropdownMenuRadioItem,\n  DropdownMenuTrigger,\n} from \"./dropdown-menu\"\nimport { IconBuilding, IconCreditCard, IconWallet } from \"@tabler/icons-react\"\n\nexport function DropdownMenuRadioIcons() {\n  const [paymentMethod, setPaymentMethod] = React.useState(\"card\")\n\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant=\"outline\">Payment Method</Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className=\"min-w-56\">\n        <DropdownMenuGroup>\n          <DropdownMenuLabel>Select Payment Method</DropdownMenuLabel>\n          <DropdownMenuRadioGroup\n            value={paymentMethod}\n            onValueChange={setPaymentMethod}\n          >\n            <DropdownMenuRadioItem value=\"card\">\n              <IconCreditCard />\n              Credit Card\n            </DropdownMenuRadioItem>\n            <DropdownMenuRadioItem value=\"paypal\">\n              <IconWallet />\n              PayPal\n            </DropdownMenuRadioItem>\n            <DropdownMenuRadioItem value=\"bank\">\n              <IconBuilding />\n              Bank Transfer\n            </DropdownMenuRadioItem>\n          </DropdownMenuRadioGroup>\n        </DropdownMenuGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/dropdowns/dropdown-menu-radio-icons.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

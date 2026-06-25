@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-group-split",
+  "title": "Button Group Split",
+  "description": "Auto-generated registry entry for button-group-split.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-group-split.tsx",
+      "content": "import { IconPlus } from \"@tabler/icons-react\";\nimport { Button } from \"./button\";\nimport { ButtonGroup, ButtonGroupSeparator } from \"./button-group\";\n\nexport default function ButtonGroupSplit() {\n  return (\n    <ButtonGroup>\n      <Button variant=\"secondary\">Button</Button>\n      <ButtonGroupSeparator />\n      <Button size=\"icon\" variant=\"secondary\">\n        <IconPlus strokeWidth={1.5} size={20} />\n      </Button>\n    </ButtonGroup>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-group-split.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

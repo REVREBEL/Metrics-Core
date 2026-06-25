@@ -1,2 +1,3 @@
-// Registry generation placeholder — no-op in Replit environment
-console.log("[registry] Skipping registry generation (no registry source)")
+console.log(
+  "[registry] generate-registry.mjs is deprecated. Use `pnpm registry:bootstrap` if you need to create apps/registry/registry.json`.",
+)

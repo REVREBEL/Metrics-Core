@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "helpdesk_layout",
+  "title": "Helpdesk Layout",
+  "description": "Auto-generated registry entry for helpdesk_layout.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/help-desk/helpdesk_layout.tsx",
+      "content": "import { ProductAreaPage } from \"@/app/(app)/product-area-page\";\n\nexport default function HelpDeskPage() {\n  return (\n    <ProductAreaPage\n      title=\"Help Desk\"\n      description=\"Support, documentation, and REVREBEL contact paths.\"\n      items={[\"Support\", \"Documentation\", \"Contact REVREBEL\"]}\n    />\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/help-desk/helpdesk_layout.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

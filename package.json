@@ -12,6 +12,7 @@
     "dev:admin": "turbo run dev --filter=@apps/admin",
     "dev:docs": "turbo run dev --filter=@apps/docs",
     "dev:registry": "turbo run generate-registry && dev --filter=@apps/registry",
+    "dev:storybook": "turbo run dev --filter=@apps/storybook",
     "generate-registry": "--filter=@apps/registry/scripts/generate-registry.mjs",
     "dev:db": "turbo run dev --filer=@repo/db",
     "dev:ui": "turbo run dev --filer=@repo/ui",

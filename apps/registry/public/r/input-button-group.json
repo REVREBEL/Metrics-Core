@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-button-group",
+  "title": "Input Button Group",
+  "description": "Auto-generated registry entry for input-button-group.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-button-group.tsx",
+      "content": "import { Field, FieldLabel } from \"@auto-form/fields/field\";\nimport { Button } from \"@buttons/button\";\nimport { ButtonGroup } from \"@buttons/button-group\";\nimport { Input } from \"./input\";\n\nexport function InputButtonGroup() {\n  return (\n    <Field>\n      <FieldLabel htmlFor=\"input-button-group\">Search</FieldLabel>\n      <ButtonGroup>\n        <Input id=\"input-button-group\" placeholder=\"Type to search...\" />\n        <Button variant=\"outline\">Search</Button>\n      </ButtonGroup>\n    </Field>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-button-group.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}
