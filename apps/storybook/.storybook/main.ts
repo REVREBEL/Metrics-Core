@@ -44,6 +44,9 @@ const config: StorybookConfig = {
   },
   async viteFinal(currentConfig) {
     return mergeConfig(currentConfig, {
+      server: {
+        allowedHosts: ["localhost", "127.0.0.1"],
+      },
       plugins: [
         tsconfigPaths({
           projects: [resolve(repositoryRoot, "tsconfig.json")],

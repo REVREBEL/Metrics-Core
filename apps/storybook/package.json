@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "storybook dev -p 6006 --no-open",
+    "dev": "storybook dev -p 6006 --host 0.0.0.0 --no-open",
     "build": "storybook build",
     "lint": "tsc --noEmit",
     "test": "echo \"No tests configured\""

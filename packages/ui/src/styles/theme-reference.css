@@ -572,7 +572,7 @@
   --base-color-2-inverse-fade: oklch(94.00% 0.05 85.21);
 
   /* {Light-Green} */
-  --base-color-3: #71c9c5;
+  --base-color-3: oklch(77.91% 0.07 187.56);
   --base-color-3-fade: oklch(86.35% 0.054 193.29);
   --base-color-3-inverse: oklch(45% 0.14 340);
   --base-color-3-inverse-fade: oklch(56.00% 0.112 340);
@@ -586,9 +586,9 @@
   /* {Yellow} */
   --base-color-5: oklch(84% 0.14 85.21);
   --base-color-5-fade: oklch(94.00% 0.05 85.21);
-  --base-color-5-inverse: oklch(27% 0.09 254.4);
-  --base-color-5-inverse-fade: oklch(61.56% 0.0494 258.73);
-
+  --base-color-5-inverse: oklch(55% 0.21 32);
+  --base-color-5-inverse-fade: oklch(68.73% 0.144 25.6);
+  
   /* {Orange} */
   --base-color-6: oklch(66% 0.18 45);
   --base-color-6-fade: oklch(82.08% 0.088 38.17);
