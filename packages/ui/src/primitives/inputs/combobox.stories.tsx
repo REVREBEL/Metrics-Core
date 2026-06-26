@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Particle } from "./combobox";
 
 const meta = {
-  title: "Primitives/Inputs/Particle",
+  title: "Primitives/Inputs/Combobox",
   component: Particle,
   tags: ["autodocs"],
   parameters: {

@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import {
   Combobox,
-  ComboboxContent,
   ComboboxEmpty,
   ComboboxInput,
   ComboboxItem,
   ComboboxList,
+  ComboboxPopup,
 } from "./combobox";
 
 const meta: Meta<typeof Combobox> = {
@@ -33,7 +33,7 @@ export const Default: Story = {
   render: (args) => (
     <Combobox {...args}>
       <ComboboxInput placeholder="Select framework..." />
-      <ComboboxContent>
+      <ComboboxPopup>
         <ComboboxList>
           <ComboboxEmpty>No framework found.</ComboboxEmpty>
           {frameworks.map((framework) => (
@@ -42,7 +42,7 @@ export const Default: Story = {
             </ComboboxItem>
           ))}
         </ComboboxList>
-      </ComboboxContent>
+      </ComboboxPopup>
     </Combobox>
   ),
 };
