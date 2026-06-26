@@ -101,6 +101,10 @@ export const Variants: Story = {
         Secondary
       </MetricsButton>
 
+      <MetricsButton variant="monocolor">
+        MonoColor
+      </MetricsButton>
+
       <MetricsButton variant="outline">
         Outline
       </MetricsButton>
@@ -130,6 +134,27 @@ export const Colors: Story = {
     <div className="flex max-w-3xl flex-wrap items-center gap-3">
       {colorOptions.map((color) => (
         <MetricsButton key={color} color={color}>
+          {color}
+        </MetricsButton>
+      ))}
+    </div>
+  ),
+};
+
+export const MonoColors: Story = {
+  parameters: {
+    controls: {
+      disable: true,
+    },
+  },
+  render: () => (
+    <div className="flex max-w-3xl flex-wrap items-center gap-3">
+      {colorOptions.map((color) => (
+        <MetricsButton
+          key={color}
+          variant="monocolor"
+          color={color}
+        >
           {color}
         </MetricsButton>
       ))}
