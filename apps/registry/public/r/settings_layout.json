@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings_layout",
+  "title": "Settings Layout",
+  "description": "Auto-generated registry entry for settings_layout.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/settings/settings_layout.tsx",
+      "content": "\"use client\";\n\nimport {\n  IconBell,\n  IconDeviceDesktop,\n  IconPalette,\n  IconTool,\n  IconUserCog,\n} from \"@tabler/icons-react\";\nimport { Header } from \"@/components/layout/header\";\nimport { Main } from \"@/components/layout/main\";\nimport { ThemeSwitch } from \"@/components/theme-switch\";\nimport { Separator } from \"@/components/ui/separator\";\nimport { ContentSection } from \"./components/content-section\";\nimport { SidebarNav } from \"./components/sidebar-nav\";\nimport { ProfileForm } from \"./profile/profile-form\";\n\nconst sidebarNavItems = [\n  {\n    title: \"Profile\",\n    href: \"/settings\",\n    icon: <IconUserCog size={20} strokeWidth={1.5} />,\n  },\n  {\n    title: \"Account\",\n    href: \"/settings/account\",\n    icon: <IconTool size={20} strokeWidth={1.5} />,\n  },\n  {\n    title: \"Appearance\",\n    href: \"/settings/appearance\",\n    icon: <IconPalette size={20} strokeWidth={1.5} />,\n  },\n  {\n    title: \"Notifications\",\n    href: \"/settings/notifications\",\n    icon: <IconBell size={20} strokeWidth={1.5} />,\n  },\n  {\n    title: \"Display\",\n    href: \"/settings/display\",\n    icon: <IconDeviceDesktop size={20} strokeWidth={1.5} />,\n  },\n];\n\nexport default function SettingsPage() {\n  return (\n    <>\n      {/* ===== Top Heading ===== */}\n      <Header>\n        <div className=\"ms-auto flex items-center space-x-4\">\n          <ThemeSwitch />\n        </div>\n      </Header>\n\n      <Main fixed>\n        <div className=\"space-y-0.5\">\n          <h1 className=\"text-2xl font-bold tracking-tight md:text-3xl\">\n            Settings\n          </h1>\n          <p className=\"text-muted-foreground\">\n            Manage your account settings and set e-mail preferences.\n          </p>\n        </div>\n        <Separator className=\"my-4 lg:my-6\" />\n        <div className=\"flex flex-1 flex-col space-y-2 overflow-hidden md:space-y-2 lg:flex-row lg:space-y-0 lg:space-x-12\">\n          <aside className=\"top-0 lg:sticky lg:w-1/5\">\n            <SidebarNav items={sidebarNavItems} />\n          </aside>\n          <div className=\"flex w-full overflow-y-hidden p-1\">\n            <ContentSection\n              title=\"Profile\"\n              desc=\"This is how others will see you on the site.\"\n            >\n              <ProfileForm />\n            </ContentSection>\n          </div>\n        </div>\n      </Main>\n    </>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/settings/settings_layout.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

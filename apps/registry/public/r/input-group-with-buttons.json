@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-group-with-buttons",
+  "title": "Input Group With Buttons",
+  "description": "Auto-generated registry entry for input-group-with-buttons.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-group-with-buttons.tsx",
+      "content": "import { Field, FieldGroup, FieldLabel } from \"@auto-form/fields/field\";\nimport { IconCopy, IconTrash } from \"@tabler/icons-react\";\nimport {\n  InputGroup,\n  InputGroupAddon,\n  InputGroupButton,\n  InputGroupInput,\n} from \"./input-group\";\n\nexport function InputGroupWithButtons() {\n  return (\n    <FieldGroup>\n      <Field>\n        <FieldLabel htmlFor=\"input-button-13\">Button</FieldLabel>\n        <InputGroup>\n          <InputGroupInput id=\"input-button-13\" />\n          <InputGroupAddon>\n            <InputGroupButton>Default</InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n        <InputGroup>\n          <InputGroupInput id=\"input-button-14\" />\n          <InputGroupAddon>\n            <InputGroupButton variant=\"outline\">Outline</InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n        <InputGroup>\n          <InputGroupInput id=\"input-button-15\" />\n          <InputGroupAddon>\n            <InputGroupButton variant=\"secondary\">Secondary</InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n        <InputGroup>\n          <InputGroupInput id=\"input-button-16\" />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupButton variant=\"secondary\">Button</InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n        <InputGroup>\n          <InputGroupInput id=\"input-button-17\" />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupButton size=\"icon-xs\">\n              <IconCopy />\n            </InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n        <InputGroup>\n          <InputGroupInput id=\"input-button-18\" />\n          <InputGroupAddon align=\"inline-end\">\n            <InputGroupButton variant=\"secondary\" size=\"icon-xs\">\n              <IconTrash />\n            </InputGroupButton>\n          </InputGroupAddon>\n        </InputGroup>\n      </Field>\n    </FieldGroup>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-group-with-buttons.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

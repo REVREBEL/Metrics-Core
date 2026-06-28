@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "navigation-progress",
+  "title": "Navigation Progress",
+  "description": "Auto-generated registry entry for navigation-progress.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/navigation-progress.tsx",
+      "content": "\"use client\"\n\nimport { useEffect, useState } from 'react'\nimport { usePathname, useSearchParams } from 'next/navigation'\n\nexport function NavigationProgress() {\n  const pathname = usePathname()\n  const searchParams = useSearchParams()\n  const [progress, setProgress] = useState(0)\n  const [visible, setVisible] = useState(false)\n\n  useEffect(() => {\n    // Start simulation on route change\n    setVisible(true)\n    setProgress(10)\n    \n    const timer1 = setTimeout(() => setProgress(30), 100)\n    const timer2 = setTimeout(() => setProgress(60), 300)\n    const timer3 = setTimeout(() => setProgress(85), 600)\n    \n    const completeTimer = setTimeout(() => {\n      setProgress(100)\n      const hideTimer = setTimeout(() => {\n        setVisible(false)\n        setProgress(0)\n      }, 200)\n      return () => clearTimeout(hideTimer)\n    }, 800)\n\n    return () => {\n      clearTimeout(timer1)\n      clearTimeout(timer2)\n      clearTimeout(timer3)\n      clearTimeout(completeTimer)\n    }\n  }, [pathname, searchParams])\n\n  if (!visible) return null\n\n  return (\n    <div\n      className=\"fixed top-0 left-0 right-0 z-[9999] h-0.5 bg-muted-foreground transition-all duration-300 ease-out\"\n      style={{ width: `${progress}%` }}\n    />\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/layouts/navigation-progress.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

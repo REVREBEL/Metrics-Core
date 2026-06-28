@@ -7,7 +7,9 @@
     "./buttons": "./src/primitives/buttons/index.ts",
     "./ui-registry": "./src/ui-registry/index.ts",
     "./types": "./src/types/index.ts",
-    "./styles.css": "./src/styles.css",
+    "./styles.css": "./src/styles/globals.css",
+    "./globals.css": "./src/styles/globals.css",
+    "./fonts.css": "./src/fonts/fonts.css",
     "./metrics-layouts": "./src/components/metrics-layouts/index.ts",
     "./primitive-registry": "./src/ui-registry/index.ts"
   },

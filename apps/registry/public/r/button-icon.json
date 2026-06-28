@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-icon",
+  "title": "Button Icon",
+  "description": "Auto-generated registry entry for button-icon.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-icon.tsx",
+      "content": "import { IconCircleArrowUp as CircleFadingArrowUpIcon } from \"@tabler/icons-react\";\nimport { Button } from \"./button\";\n\nexport default function ButtonIcon() {\n  return (\n    <Button variant=\"outline\" size=\"icon\">\n      <CircleFadingArrowUpIcon />\n    </Button>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-icon.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

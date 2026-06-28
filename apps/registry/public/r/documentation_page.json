@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "documentation_page",
+  "title": "Documentation Page",
+  "description": "Auto-generated registry entry for documentation_page.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/help-desk/documentation_page.tsx",
+      "content": "import { ProductAreaPage } from \"@/app/(app)/product-area-page\";\n\nexport default function HelpDeskDocumentationPage() {\n  return (\n    <ProductAreaPage\n      title=\"Documentation\"\n      description=\"Lightweight product documentation for Metrics users.\"\n    />\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/help-desk/documentation_page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

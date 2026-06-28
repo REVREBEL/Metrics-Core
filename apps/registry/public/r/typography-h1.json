@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography-h1",
+  "title": "Typography H1",
+  "description": "Auto-generated registry entry for typography-h1.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TypographyH1.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographyH1Props extends HTMLAttributes<HTMLHeadingElement> {}\n\nexport function TypographyH1({\n  children,\n  className,\n  ...props\n}: TypographyH1Props) {\n  return (\n    <h1\n      className={cn(\n        \"scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance uppercase\",\n        className,\n      )}\n      {...props}\n    >\n      {children}\n    </h1>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TypographyH1.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "product-grid",
+  "title": "Product Grid",
+  "description": "Product grid displaying all products with API to fetch data",
+  "registryDependencies": [
+    "@metrics/metrics"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/product-grid.tsx",
+      "content": "\"use client\";\n\nimport { ShoppingCart } from \"lucide-react\";\nimport Link from \"next/link\";\nimport { useState } from \"react\";\n\nimport { Button } from \"@buttons/button\";\nimport type { Product } from \"../../types/products\";\nimport { Card, CardContent, CardFooter } from \"./card\";\n\nexport default function ProductGrid({\n\tcategories,\n\tproducts,\n}: {\n\tcategories: string[];\n\tproducts: Product[];\n}) {\n\tconst [selectedCategory, setSelectedCategory] = useState<string | null>(null);\n\n\tconst filteredProducts = selectedCategory\n\t\t? products.filter((product) => product.category === selectedCategory)\n\t\t: products;\n\n\treturn (\n\t\t<div className=\"space-y-6\">\n\t\t\t<div className=\"flex flex-wrap gap-2\">\n\t\t\t\t<Button\n\t\t\t\t\tvariant={selectedCategory === null ? \"default\" : \"outline\"}\n\t\t\t\t\tonClick={() => setSelectedCategory(null)}\n\t\t\t\t\tclassName=\"rounded-full\"\n\t\t\t\t>\n\t\t\t\t\tAll\n\t\t\t\t</Button>\n\n\t\t\t\t{categories.map((category) => (\n\t\t\t\t\t<Button\n\t\t\t\t\t\tkey={category}\n\t\t\t\t\t\tvariant={selectedCategory === category ? \"default\" : \"outline\"}\n\t\t\t\t\t\tonClick={() => setSelectedCategory(category)}\n\t\t\t\t\t\tclassName=\"rounded-full\"\n\t\t\t\t\t>\n\t\t\t\t\t\t{category}\n\t\t\t\t\t</Button>\n\t\t\t\t))}\n\t\t\t</div>\n\n\t\t\t<div className=\"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4\">\n\t\t\t\t{filteredProducts.map((product) => (\n\t\t\t\t\t<Card key={product.id} className=\"overflow-hidden p-0\">\n\t\t\t\t\t\t<Link href={`/products/${product.id}`}>\n\t\t\t\t\t\t\t<div className=\"flex aspect-square items-center justify-center bg-white p-6\" />\n\t\t\t\t\t\t</Link>\n\n\t\t\t\t\t\t<CardContent className=\"p-4\">\n\t\t\t\t\t\t\t<Link href={`/products/${product.id}`}>\n\t\t\t\t\t\t\t\t<h3 className=\"font-semibold\">{product.name}</h3>\n\t\t\t\t\t\t\t\t<p className=\"line-clamp-2 text-gray-500 text-sm\">\n\t\t\t\t\t\t\t\t\t{product.description}\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t</Link>\n\t\t\t\t\t\t</CardContent>\n\n\t\t\t\t\t\t<CardFooter className=\"flex items-center justify-between p-4 pt-0\">\n\t\t\t\t\t\t\t<div className=\"font-semibold\">${product.price.toFixed(2)}</div>\n\t\t\t\t\t\t\t<Button size=\"sm\">\n\t\t\t\t\t\t\t\t<ShoppingCart className=\"mr-2 size-4\" /> Add\n\t\t\t\t\t\t\t</Button>\n\t\t\t\t\t\t</CardFooter>\n\t\t\t\t\t</Card>\n\t\t\t\t))}\n\t\t\t</div>\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:component",
+      "target": "src/components/product-grid.tsx"
+    },
+    {
+      "path": "packages/ui/src/primitives/ui-core/product-grid.tsx",
+      "content": "\"use client\";\n\nimport { ShoppingCart } from \"lucide-react\";\nimport Link from \"next/link\";\nimport { useState } from \"react\";\n\nimport { Button } from \"@buttons/button\";\nimport type { Product } from \"../../types/products\";\nimport { Card, CardContent, CardFooter } from \"./card\";\n\nexport default function ProductGrid({\n\tcategories,\n\tproducts,\n}: {\n\tcategories: string[];\n\tproducts: Product[];\n}) {\n\tconst [selectedCategory, setSelectedCategory] = useState<string | null>(null);\n\n\tconst filteredProducts = selectedCategory\n\t\t? products.filter((product) => product.category === selectedCategory)\n\t\t: products;\n\n\treturn (\n\t\t<div className=\"space-y-6\">\n\t\t\t<div className=\"flex flex-wrap gap-2\">\n\t\t\t\t<Button\n\t\t\t\t\tvariant={selectedCategory === null ? \"default\" : \"outline\"}\n\t\t\t\t\tonClick={() => setSelectedCategory(null)}\n\t\t\t\t\tclassName=\"rounded-full\"\n\t\t\t\t>\n\t\t\t\t\tAll\n\t\t\t\t</Button>\n\n\t\t\t\t{categories.map((category) => (\n\t\t\t\t\t<Button\n\t\t\t\t\t\tkey={category}\n\t\t\t\t\t\tvariant={selectedCategory === category ? \"default\" : \"outline\"}\n\t\t\t\t\t\tonClick={() => setSelectedCategory(category)}\n\t\t\t\t\t\tclassName=\"rounded-full\"\n\t\t\t\t\t>\n\t\t\t\t\t\t{category}\n\t\t\t\t\t</Button>\n\t\t\t\t))}\n\t\t\t</div>\n\n\t\t\t<div className=\"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4\">\n\t\t\t\t{filteredProducts.map((product) => (\n\t\t\t\t\t<Card key={product.id} className=\"overflow-hidden p-0\">\n\t\t\t\t\t\t<Link href={`/products/${product.id}`}>\n\t\t\t\t\t\t\t<div className=\"flex aspect-square items-center justify-center bg-white p-6\" />\n\t\t\t\t\t\t</Link>\n\n\t\t\t\t\t\t<CardContent className=\"p-4\">\n\t\t\t\t\t\t\t<Link href={`/products/${product.id}`}>\n\t\t\t\t\t\t\t\t<h3 className=\"font-semibold\">{product.name}</h3>\n\t\t\t\t\t\t\t\t<p className=\"line-clamp-2 text-gray-500 text-sm\">\n\t\t\t\t\t\t\t\t\t{product.description}\n\t\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t\t</Link>\n\t\t\t\t\t\t</CardContent>\n\n\t\t\t\t\t\t<CardFooter className=\"flex items-center justify-between p-4 pt-0\">\n\t\t\t\t\t\t\t<div className=\"font-semibold\">${product.price.toFixed(2)}</div>\n\t\t\t\t\t\t\t<Button size=\"sm\">\n\t\t\t\t\t\t\t\t<ShoppingCart className=\"mr-2 size-4\" /> Add\n\t\t\t\t\t\t\t</Button>\n\t\t\t\t\t\t</CardFooter>\n\t\t\t\t\t</Card>\n\t\t\t\t))}\n\t\t\t</div>\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:lib",
+      "target": "src/lib/products.ts"
+    },
+    {
+      "path": "apps/registry/app/demo/[name]/blocks/minimal-layout.tsx",
+      "content": "import React, { type ReactNode } from \"react\";\n\nexport default function MinimalLayout({\n  children,\n}: Readonly<{\n  children: ReactNode;\n}>) {\n  return (\n    <main className=\"mt-16 flex w-full justify-center\">\n      <div className=\"container\">{children}</div>\n    </main>\n  );\n}\n",
+      "type": "registry:file",
+      "target": "src/app/layout.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

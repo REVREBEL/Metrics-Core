@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sonner",
+  "title": "Sonner",
+  "description": "An opinionated toast component for React.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/sonner.tsx",
+      "content": "\"use client\";\n\nimport { useTheme } from \"../../context/theme-provider\";\nimport { Toaster as Sonner, type ToasterProps } from \"sonner\";\n\nexport function Toaster({ ...props }: ToasterProps) {\n\tconst { theme = \"system\" } = useTheme();\n\n\treturn (\n\t\t<Sonner\n\t\t\ttheme={theme as ToasterProps[\"theme\"]}\n\t\t\tclassName=\"toaster group [&_div[data-content]]:w-full\"\n\t\t\tstyle={\n\t\t\t\t{\n\t\t\t\t\t\"--normal-bg\": \"var(--popover)\",\n\t\t\t\t\t\"--normal-text\": \"var(--popover-foreground)\",\n\t\t\t\t\t\"--normal-border\": \"var(--border)\",\n\t\t\t\t} as React.CSSProperties\n\t\t\t}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/sonner.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

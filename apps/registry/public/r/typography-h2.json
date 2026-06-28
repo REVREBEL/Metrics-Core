@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography-h2",
+  "title": "Typography H2",
+  "description": "Auto-generated registry entry for typography-h2.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TypographyH2.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographyH2Props extends HTMLAttributes<HTMLHeadingElement> {}\n\nexport function TypographyH2({\n  children,\n  className,\n  ...props\n}: TypographyH2Props) {\n  return (\n    <h2\n      className={cn(\n        \"scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight uppercase first:mt-0\",\n        className,\n      )}\n      {...props}\n    >\n      {children}\n    </h2>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TypographyH2.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

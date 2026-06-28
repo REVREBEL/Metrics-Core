@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-language",
+  "title": "Dropdown Language",
+  "description": "Auto-generated registry entry for dropdown-language.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/dropdowns/dropdown-language.tsx",
+      "content": "'use client'\n\nimport { useState } from 'react'\nimport type { ReactNode } from 'react'\n\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuRadioGroup,\n  DropdownMenuRadioItem,\n  DropdownMenuTrigger\n} from './dropdown-menu'\n\ntype Props = {\n  trigger: ReactNode\n  defaultOpen?: boolean\n  align?: 'start' | 'center' | 'end'\n}\n\nconst LanguageDropdown = ({ defaultOpen, align, trigger }: Props) => {\n  const [language, setLanguage] = useState('english')\n\n  return (\n    <DropdownMenu defaultOpen={defaultOpen}>\n      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>\n      <DropdownMenuContent className='w-50' align={align || 'end'}>\n        <DropdownMenuRadioGroup value={language} onValueChange={setLanguage}>\n          <DropdownMenuRadioItem\n            value='english'\n            className='data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground pl-2 text-base [&>span]:hidden'\n          >\n            English\n          </DropdownMenuRadioItem>\n          <DropdownMenuRadioItem\n            value='german'\n            className='data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground pl-2 text-base [&>span]:hidden'\n          >\n            Deutsch\n          </DropdownMenuRadioItem>\n          <DropdownMenuRadioItem\n            value='spanish'\n            className='data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground pl-2 text-base [&>span]:hidden'\n          >\n            Española\n          </DropdownMenuRadioItem>\n          <DropdownMenuRadioItem\n            value='portuguese'\n            className='data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground pl-2 text-base [&>span]:hidden'\n          >\n            Português\n          </DropdownMenuRadioItem>\n          <DropdownMenuRadioItem\n            value='korean'\n            className='data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground pl-2 text-base [&>span]:hidden'\n          >\n            한국인\n          </DropdownMenuRadioItem>\n        </DropdownMenuRadioGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\nexport default LanguageDropdown\n",
+      "type": "registry:ui",
+      "target": "src/primitive/dropdowns/dropdown-language.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

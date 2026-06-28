@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-data",
+  "title": "Sidebar Data",
+  "description": "Auto-generated registry entry for sidebar-data.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/data/sidebar-data.ts",
+      "content": "import { IconChartBarPopular, IconChecklist, IconBuilding, IconDatabase, IconHeadphones, IconListCheck, IconSpeakerphone, IconMessage, IconSignalE, Icon } from \"@tabler/icons-react\"\nimport { IconInnerShadowTop } from '@tabler/icons-react'\nimport type { ElementType } from 'react'\n\ntype User = {\n  name: string\n  email: string\n  avatar: string\n}\n\ntype Team = {\n  name: string\n  logo: ElementType\n  plan: string\n}\n\ntype BaseNavItem = {\n  title: string\n  badge?: string\n  icon?: ElementType\n}\n\ntype NavLink = BaseNavItem & {\n  url: string\n  items?: never\n}\n\ntype NavCollapsible = BaseNavItem & {\n  items: (BaseNavItem & { url: string })[]\n  url?: never\n}\n\ntype NavItem = NavCollapsible | NavLink\n\ntype NavGroup = {\n  title: string\n  items: NavItem[]\n}\n\ntype SidebarData = {\n  user: User\n  teams: Team[]\n  navGroups: NavGroup[]\n}\n\nexport const sidebarData: SidebarData = {\n  user: {\n    name: '',\n    email: '',\n    avatar: '',\n  },\n  teams: [\n    {\n      name: 'Portfolio / All Properties',\n      logo: IconInnerShadowTop,\n      plan: 'Portfolio View',\n    },\n    {\n      name: 'Property A',\n      logo: IconBuilding,\n      plan: 'Hotel',\n    },\n    {\n      name: 'Property B',\n      logo: IconBuilding,\n      plan: 'Hotel',\n    },\n  ],\n  navGroups: [\n    {\n      title: 'Metrics',\n      items: [\n        {\n          title: 'Metrics',\n          url: '/dashboard',\n          icon: IconChartBarPopular,\n        },\n        {\n          title: 'Properties',\n          url: '/properties',\n          icon: IconBuilding,\n        },\n        {\n          title: 'Growth Plan',\n          url: '/tasks',\n          icon: IconListCheck,\n        },\n        {\n          title: 'Broadcast',\n          url: '/campaigns',\n          icon: IconSpeakerphone,\n        },\n        {\n          title: 'Signals',\n          url: '/metric-library',\n          icon: IconSignalE,\n        },\n        {\n          title: 'Data Library',\n          url: '/data-library',\n          icon: IconDatabase,\n        },\n        {\n          title: 'The Playbook',\n          url: '/strategies',\n          icon: IconChecklist,\n        },\n        {\n          title: 'Threads',\n          url: '/chats',\n          icon: IconMessage,\n        },\n        {\n          title: 'Help Desk',\n          url: '/help-desk',\n          icon: IconHeadphones,\n        },\n      ],\n    },\n  ],\n}",
+      "type": "registry:ui",
+      "target": "src/primitive/layouts/data/sidebar-data.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

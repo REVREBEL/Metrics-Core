@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-group-dropdown",
+  "title": "Button Group Dropdown",
+  "description": "Auto-generated registry entry for button-group-dropdown.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-group-dropdown.tsx",
+      "content": "\"use client\";\n\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from \"@dropdowns/dropdown-menu\";\nimport {\n  IconAlertSquareRoundedFilled,\n  IconBellXFilled,\n  IconCopyFilled,\n  IconSquareRoundedCheckFilled,\n  IconSquareRoundedChevronDownFilled,\n  IconSquareRoundedPlusFilled,\n  IconSquareRoundedXFilled,\n} from \"@tabler/icons-react\";\nimport { Button } from \"./button\";\nimport { ButtonGroup } from \"./button-group\";\n\nexport default function ButtonGroupDropdown() {\n  return (\n    <ButtonGroup>\n      <Button variant=\"outline\">Follow</Button>\n      <DropdownMenu>\n        <DropdownMenuTrigger asChild>\n          <Button variant=\"outline\" className=\"pl-2!\">\n            <IconSquareRoundedChevronDownFilled />\n          </Button>\n        </DropdownMenuTrigger>\n        <DropdownMenuContent align=\"end\" className=\"w-44\">\n          <DropdownMenuGroup>\n            <DropdownMenuItem>\n              <IconBellXFilled />\n              Mute Conversation\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <IconSquareRoundedCheckFilled />\n              Mark as Read\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <IconAlertSquareRoundedFilled />\n              Report Conversation\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <IconSquareRoundedXFilled />\n              Block User\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <IconSquareRoundedPlusFilled />\n              Share Conversation\n            </DropdownMenuItem>\n            <DropdownMenuItem>\n              <IconCopyFilled />\n              Copy Conversation\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n          <DropdownMenuSeparator />\n          <DropdownMenuGroup>\n            <DropdownMenuItem variant=\"destructive\">\n              <IconSquareRoundedXFilled />\n              Delete Conversation\n            </DropdownMenuItem>\n          </DropdownMenuGroup>\n        </DropdownMenuContent>\n      </DropdownMenu>\n    </ButtonGroup>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-group-dropdown.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

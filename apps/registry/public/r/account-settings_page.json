@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "account-settings_page",
+  "title": "Account Settings Page",
+  "description": "Auto-generated registry entry for account-settings_page.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/settings/account-settings_page.tsx",
+      "content": "import UserGeneral from \"@/components/shadcn-studio/blocks/account-settings-01/account-settings-01\";\nimport { Tabs, TabsList, TabsTrigger } from \"@/components/ui/tabs\";\n\nconst tabs = [\n  { name: \"General\", value: \"general\" },\n  { name: \"Preferences\", value: \"preferences\" },\n  { name: \"Users\", value: \"users\" },\n];\n\nconst TabsUnderlineDemo = () => {\n  return (\n    <div className=\"w-full py-8\">\n      <div className=\"mx-auto min-h-screen max-w-7xl px-4 sm:px-6 lg:px-8\">\n        <Tabs defaultValue=\"general\" className=\"gap-4\">\n          <TabsList className=\"h-fit! w-full rounded-none border-b bg-transparent p-0 sm:justify-start\">\n            {tabs.map((tab) => (\n              <TabsTrigger\n                key={tab.value}\n                value={tab.value}\n                className=\"data-[state=active]:border-primary dark:data-[state=active]:border-primary rounded-none border-0 border-b-2 border-transparent data-[state=active]:shadow-none! sm:flex-0 dark:data-[state=active]:bg-transparent\"\n              >\n                {tab.name}\n              </TabsTrigger>\n            ))}\n          </TabsList>\n        </Tabs>\n        <div className=\"mt-4\">\n          <UserGeneral />\n        </div>\n      </div>\n    </div>\n  );\n};\n\nexport default TabsUnderlineDemo;\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/settings/account-settings_page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

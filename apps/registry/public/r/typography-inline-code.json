@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography-inline-code",
+  "title": "Typography Inline Code",
+  "description": "Auto-generated registry entry for typography-inline-code.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TyypographyLineCode.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographyInlineCodeProps\n  extends HTMLAttributes<HTMLElement> {}\n\nexport function TypographyInlineCode({\n  children,\n  className,\n  ...props\n}: TypographyInlineCodeProps) {\n  return (\n    <code\n      className={cn(\n        \"relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold\",\n        className,\n      )}\n      {...props}\n    >\n      {children}\n    </code>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TyypographyLineCode.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

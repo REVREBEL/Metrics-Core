@@ -1,26 +1,29 @@
 {
-  "generatedAt": "2026-06-07T21:41:55.158Z",
+  "generatedAt": "2026-06-13T11:24:36.534Z",
   "sources": [
     "src/styles/theme-reference.css",
-    "src/styles/metric-theme-tokens.css"
+    "src/styles/tailwind-reference.css"
   ],
-  "total": 669,
+  "total": 566,
   "groups": [
     {
       "id": "theme",
       "title": "Core Theme",
       "description": "Standard shadcn and app-level surface, content, state, chart, and sidebar tokens.",
-      "patterns": [{}, {}],
+      "patterns": [
+        {},
+        {}
+      ],
       "tokens": [
         {
           "name": "accent",
-          "value": "oklch(0.7170 0.1537 37.7036)",
+          "value": "oklch(0.717 0.1537 37.7036)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "accent-foreground",
-          "value": "oklch(1.0000 0 0)",
+          "value": "oklch(1 0 0)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
@@ -32,55 +35,55 @@
         },
         {
           "name": "border",
-          "value": "oklch(0.3373 0.0925 258.5200)",
+          "value": "oklch(0.3373 0.0925 258.52)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "card",
-          "value": "oklch(1.0000 0 0)",
+          "value": "oklch(1 0 0)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "card-foreground",
-          "value": "oklch(0.3373 0.0925 258.5200)",
+          "value": "oklch(0.3373 0.0925 258.52)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "chart-1",
-          "value": "oklch(0.8300 0.0400 219.3500)",
+          "value": "oklch(0.83 0.04 219.35)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "chart-2",
-          "value": "oklch(0.8400 0.1400 85.2100)",
+          "value": "oklch(0.84 0.14 85.21)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "chart-3",
-          "value": "oklch(0.6600 0.1800 44.7300)",
+          "value": "oklch(0.66 0.18 44.73)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "chart-4",
-          "value": "oklch(0.5500 0.2100 32)",
+          "value": "oklch(0.55 0.21 32)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "chart-5",
-          "value": "oklch(0.4500 0.1400 340.2100)",
+          "value": "oklch(0.45 0.14 340.21)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "chart-6",
-          "value": "oklch(52% 0.10 230.09)",
+          "value": "oklch(52% 0.1 230.09)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
@@ -308,13 +311,13 @@
         },
         {
           "name": "destructive-foreground",
-          "value": "oklch(1.0000 0 0)",
+          "value": "oklch(1 0 0)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "foreground",
-          "value": "oklch(0.3373 0.0925 258.5200)",
+          "value": "oklch(0.3373 0.0925 258.52)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
@@ -332,25 +335,25 @@
         },
         {
           "name": "muted-foreground",
-          "value": "oklch(0.3373 0.0925 258.5200)",
+          "value": "oklch(0.3373 0.0925 258.52)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "popover",
-          "value": "oklch(1.0000 0 0)",
+          "value": "oklch(1 0 0)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "popover-foreground",
-          "value": "oklch(0.3373 0.0925 258.5200)",
+          "value": "oklch(0.3373 0.0925 258.52)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "primary",
-          "value": "oklch(0.3373 0.0925 258.5200)",
+          "value": "oklch(0.3373 0.0925 258.52)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
@@ -368,7 +371,7 @@
         },
         {
           "name": "ring",
-          "value": "oklch(0.3373 0.0925 258.5200)",
+          "value": "oklch(0.3373 0.0925 258.52)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
@@ -380,7 +383,7 @@
         },
         {
           "name": "secondary-foreground",
-          "value": "oklch(0.3373 0.0925 258.5200)",
+          "value": "oklch(0.3373 0.0925 258.52)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
@@ -410,13 +413,13 @@
         },
         {
           "name": "sidebar-foreground",
-          "value": "oklch(27% 0.09 254.40)",
+          "value": "oklch(27% 0.09 254.4)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
         {
           "name": "sidebar-primary",
-          "value": "oklch(27% 0.09 254.40)",
+          "value": "oklch(27% 0.09 254.4)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
@@ -435,668 +438,12 @@
       ]
     },
     {
-      "id": "metrics",
-      "title": "Metric Indicators",
-      "description": "Positive, negative, total, and public metric indicator aliases.",
-      "patterns": [{}, {}],
-      "tokens": [
-        {
-          "name": "color-indicator-negative-inverse",
-          "value": "var(--color-red-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-indicator-negative-normal",
-          "value": "var(--color-red)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-indicator-negative-var",
-          "value": "var(--color-red)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-indicator-positive-inverse",
-          "value": "var(--color-green-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-indicator-positive-normal",
-          "value": "var(--color-green)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-indicator-positive-var",
-          "value": "var(--color-green)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-indicator-total-inverse",
-          "value": "var(--color-dark-blue-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-indicator-total-normal",
-          "value": "var(--color-dark-blue)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-indicator-total-var",
-          "value": "var(--color-dark-blue-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-negative",
-          "value": "var(--color-indicator-negative-normal)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-negative-inverse",
-          "value": "var(--color-indicator-negative-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-positive",
-          "value": "var(--color-indicator-positive-normal)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-positive-inverse",
-          "value": "var(--color-indicator-positive-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        }
-      ]
-    },
-    {
-      "id": "segments",
-      "title": "Hotel Segments",
-      "description": "Room production segment colors for total, transient, group, crew, complimentary, and other.",
-      "patterns": [{}],
-      "tokens": [
-        {
-          "name": "color-segment-complimentary-inverse",
-          "value": "var(--base-grey-l400)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-complimentary-normal",
-          "value": "var(--base-grey-l700)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-complimentary-var",
-          "value": "var(--base-grey-l400)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-crew-inverse",
-          "value": "var(--color-purple)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-crew-normal",
-          "value": "var(--color-yellow)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-crew-var",
-          "value": "var(--color-purple)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-group-inverse",
-          "value": "var(--color-orange)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-group-normal",
-          "value": "var(--color-light-green)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-group-var",
-          "value": "var(--color-orange)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-other-inverse",
-          "value": "var(--color-grey-250)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-other-normal",
-          "value": "var(--color-grey-550)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-other-var",
-          "value": "var(--color-grey-250)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-total-inverse",
-          "value": "var(--color-indicator-total-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-total-normal",
-          "value": "var(--color-indicator-total-normal)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-total-var",
-          "value": "var(--color-indicator-total-var)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-transient-inverse",
-          "value": "var(--color-yellow)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-transient-normal",
-          "value": "var(--color-light-blue)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-segment-transient-var",
-          "value": "var(--color-yellow)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        }
-      ]
-    },
-    {
-      "id": "channels",
-      "title": "Booking Channels",
-      "description": "OTA and source channel tokens for channel mix and ranking visualizations.",
-      "patterns": [{}],
-      "tokens": [
-        {
-          "name": "color-channel-agoda-inverse",
-          "value": "var(--color-dark-blue-700-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-agoda-normal",
-          "value": "var(--color-dark-blue-700)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-agoda-var",
-          "value": "var(--color-dark-blue-700)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-airbnb-inverse",
-          "value": "var(--color-red-200-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-airbnb-normal",
-          "value": "var(--color-red-200)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-airbnb-var",
-          "value": "var(--color-red-200)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-booking-inverse",
-          "value": "var(--color-light-blue-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-booking-normal",
-          "value": "var(--color-light-blue)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-booking-var",
-          "value": "var(--color-light-blue)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-expedia-inverse",
-          "value": "var(--color-yellow-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-expedia-normal",
-          "value": "var(--color-yellow)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-expedia-var",
-          "value": "var(--color-yellow)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hopper-inverse",
-          "value": "var(--color-red-600-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hopper-normal",
-          "value": "var(--color-red-600)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hopper-var",
-          "value": "var(--color-red-600)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hotelbeds-inverse",
-          "value": "var(--color-purple-700-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hotelbeds-normal",
-          "value": "var(--color-purple-700)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hotelbeds-var",
-          "value": "var(--color-purple-700)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hoteltonight-inverse",
-          "value": "var(--color-purple-700-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hoteltonight-normal",
-          "value": "var(--color-purple-700)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hoteltonight-var",
-          "value": "var(--color-purple-700)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hotwire-inverse",
-          "value": "var(--color-red-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hotwire-normal",
-          "value": "var(--color-red)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-hotwire-var",
-          "value": "var(--color-red)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-priceline-inverse",
-          "value": "var(--color-dark-blue-500-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-priceline-normal",
-          "value": "var(--color-dark-blue-500)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-channel-priceline-var",
-          "value": "var(--color-dark-blue-500)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        }
-      ]
-    },
-    {
-      "id": "social",
-      "title": "Social Sources",
-      "description": "Social, content, and audience source color tokens.",
-      "patterns": [{}],
-      "tokens": [
-        {
-          "name": "color-social-blog-inverse",
-          "value": "var(--color-yellow-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-blog-normal",
-          "value": "var(--color-yellow)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-blog-var",
-          "value": "var(--color-yellow)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-facebook-inverse",
-          "value": "var(--color-purple-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-facebook-normal",
-          "value": "var(--color-purple)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-facebook-var",
-          "value": "var(--color-purple)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-github-inverse",
-          "value": "var(--color-grey-250)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-github-normal",
-          "value": "var(--color-grey-650)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-github-var",
-          "value": "var(--color-grey-650)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-instagram-inverse",
-          "value": "var(--color-red-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-instagram-normal",
-          "value": "var(--color-red)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-instagram-var",
-          "value": "var(--color-red)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-linkedin-inverse",
-          "value": "var(--color-green-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-linkedin-normal",
-          "value": "var(--color-green)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-linkedin-var",
-          "value": "var(--color-green)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-pinterest-inverse",
-          "value": "var(--color-red-200-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-pinterest-normal",
-          "value": "var(--color-red-200)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-pinterest-var",
-          "value": "var(--color-red-200)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-slack-inverse",
-          "value": "var(--color-orange-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-slack-normal",
-          "value": "var(--color-orange)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-slack-var",
-          "value": "var(--color-orange)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-telegram-inverse",
-          "value": "var(--color-light-blue-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-telegram-normal",
-          "value": "var(--color-light-blue)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-telegram-var",
-          "value": "var(--color-light-blue)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-tiktok-inverse",
-          "value": "var(--color-light-green-100-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-tiktok-normal",
-          "value": "var(--color-light-green-100)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-tiktok-var",
-          "value": "var(--color-light-green-100)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-x-inverse",
-          "value": "var(--color-light-green-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-x-normal",
-          "value": "var(--color-light-green)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-x-var",
-          "value": "var(--color-light-green)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-youtube-inverse",
-          "value": "var(--color-red-600-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-youtube-normal",
-          "value": "var(--color-red-600)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-social-youtube-var",
-          "value": "var(--color-red-600)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        }
-      ]
-    },
-    {
-      "id": "reviews",
-      "title": "Review Sources",
-      "description": "Review and reputation source tokens.",
-      "patterns": [{}],
-      "tokens": [
-        {
-          "name": "color-review-booking-inverse",
-          "value": "var(--color-channel-booking-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-review-booking-normal",
-          "value": "var(--color-channel-booking-normal)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-review-booking-var",
-          "value": "var(--color-channel-booking-var)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-review-expedia-inverse",
-          "value": "var(--color-channel-expedia-inverse)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-review-expedia-normal",
-          "value": "var(--color-channel-expedia-normal)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-review-expedia-var",
-          "value": "var(--color-channel-expedia-var)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-review-tripadvisor-inverse",
-          "value": "var(--color-dark-green-700-inverse, var(--background))",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-review-tripadvisor-normal",
-          "value": "var(--color-dark-green-700)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-review-tripadvisor-var",
-          "value": "var(--color-dark-green-700)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-review-yelp-inverse",
-          "value": "var(--color-red-700-inverse, var(--background))",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-review-yelp-normal",
-          "value": "var(--color-red-700)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        },
-        {
-          "name": "color-review-yelp-var",
-          "value": "var(--color-red-700)",
-          "source": "src/styles/metric-theme-tokens.css",
-          "type": "color"
-        }
-      ]
-    },
-    {
       "id": "brand-colors",
       "title": "Brand Palette",
       "description": "Metrics brand palette and inverse color scales exposed to Tailwind.",
-      "patterns": [{}],
+      "patterns": [
+        {}
+      ],
       "tokens": [
         {
           "name": "color-blue-100",
@@ -1911,12 +1258,6 @@
         {
           "name": "color-light-blue-inverse-fade",
           "value": "var(--base-color-4-inverse-fade)",
-          "source": "src/styles/theme-reference.css",
-          "type": "color"
-        },
-        {
-          "name": "color-light-green",
-          "value": "var(--base-color-3)",
           "source": "src/styles/theme-reference.css",
           "type": "color"
         },
@@ -2826,7 +2167,9 @@
       "id": "fonts",
       "title": "Typography",
       "description": "Font family design tokens.",
-      "patterns": [{}],
+      "patterns": [
+        {}
+      ],
       "tokens": [
         {
           "name": "font-brand",
@@ -2848,7 +2191,7 @@
         },
         {
           "name": "font-eyebrow",
-          "value": "\"Supreme\", \"Segoe UI Variable\", \"Segoe UI\", \"Aptos\", \"Calibri\", \"Arial\", sans-serif",
+          "value": "\"Supreme\", \"Segoe UI Variable\", \"Segoe UI\", \"Aptos\", \"Calibri\", \"Arial\",\n    sans-serif",
           "source": "src/styles/theme-reference.css",
           "type": "font"
         },
@@ -2882,11 +2225,13 @@
       "id": "effects",
       "title": "Effects",
       "description": "Shadow, tracking, and spacing tokens.",
-      "patterns": [{}],
+      "patterns": [
+        {}
+      ],
       "tokens": [
         {
           "name": "shadow",
-          "value": "0.95px .5px 0 currentColor,1.45px 1px 0 currentColor,1.95px 1.5px 0 currentColor,2.45px 2px 0 currentColor,2.95px 2.5px 0 currentColor,3.45px 3px 0 currentColor,3.95px 3.5px 0 currentColor,4.45px 4px 0 currentColor, currentColor,4.95px 4.5px 0 currentColor,5.45px 5px 0",
+          "value": "0.95px 0.5px 0 currentColor, 1.45px 1px 0 currentColor, 1.95px 1.5px 0 currentColor, 2.45px 2px 0 currentColor, 2.95px 2.5px 0 currentColor, 3.45px 3px 0 currentColor, 3.95px 3.5px 0 currentColor, 4.45px 4px 0 currentColor, currentColor, 4.95px 4.5px 0 currentColor, 5.45px 5px 0",
           "source": "src/styles/theme-reference.css",
           "type": "effect"
         },
@@ -2904,25 +2249,25 @@
         },
         {
           "name": "shadow-lg",
-          "value": "0.95px .5px 0 currentColor,1.45px 1px 0 currentColor,1.95px 1.5px 0 currentColor,2.45px 2px 0 currentColor,2.95px 2.5px 0 currentColor,3.45px 3px 0 currentColor,3.95px 3.5px 0 currentColor,4.45px 4px 0 currentColor,4.95px 4.5px 0 currentColor,5.45px 5px 0 currentColor,5.95px 5.5px 0 currentColor,6.45px 6px 0 currentColor,6.95px 6.5px 0 currentColor,7.45px 7px 0 currentColor,7.95px 7.5px 0 currentColor,8.45px 8px 0",
+          "value": "0.95px 0.5px 0 currentColor, 1.45px 1px 0 currentColor, 1.95px 1.5px 0 currentColor, 2.45px 2px 0 currentColor, 2.95px 2.5px 0 currentColor, 3.45px 3px 0 currentColor, 3.95px 3.5px 0 currentColor, 4.45px 4px 0 currentColor, 4.95px 4.5px 0 currentColor, 5.45px 5px 0 currentColor, 5.95px 5.5px 0 currentColor, 6.45px 6px 0 currentColor, 6.95px 6.5px 0 currentColor, 7.45px 7px 0 currentColor, 7.95px 7.5px 0 currentColor, 8.45px 8px 0",
           "source": "src/styles/theme-reference.css",
           "type": "effect"
         },
         {
           "name": "shadow-md",
-          "value": "0.95px .5px 0 currentColor,1.45px 1px 0 currentColor,1.95px 1.5px 0 currentColor,2.45px 2px 0 currentColor,2.95px 2.5px 0 currentColor,3.45px 3px 0 currentColor,3.95px 3.5px 0 currentColor,4.45px 4px 0 currentColor",
+          "value": "0.95px 0.5px 0 currentColor, 1.45px 1px 0 currentColor, 1.95px 1.5px 0 currentColor, 2.45px 2px 0 currentColor, 2.95px 2.5px 0 currentColor, 3.45px 3px 0 currentColor, 3.95px 3.5px 0 currentColor, 4.45px 4px 0 currentColor",
           "source": "src/styles/theme-reference.css",
           "type": "effect"
         },
         {
           "name": "shadow-sm",
-          "value": "0.95px .5px 0 currentColor,1.45px 1px 0 currentColor,1.95px 1.5px 0 currentColor,2.45px 2px 0 currentColor,2.95px 2.5px 0 currentColor,3.45px 3px 0 currentColor,3.95px 3.5px 0 currentColor",
+          "value": "0.95px 0.5px 0 currentColor, 1.45px 1px 0 currentColor, 1.95px 1.5px 0 currentColor, 2.45px 2px 0 currentColor, 2.95px 2.5px 0 currentColor, 3.45px 3px 0 currentColor, 3.95px 3.5px 0 currentColor",
           "source": "src/styles/theme-reference.css",
           "type": "effect"
         },
         {
           "name": "shadow-xl",
-          "value": "0.95px .5px 0 currentColor,1.45px 1px 0 currentColor,1.95px 1.5px 0 currentColor,2.45px 2px 0 currentColor,2.95px 2.5px 0 currentColor,3.45px 3px 0 currentColor,3.95px 3.5px 0 currentColor,4.45px 4px 0 currentColor,4.95px 4.5px 0 currentColor,5.45px 5px 0 currentColor,5.95px 5.5px 0 currentColor,6.45px 6px 0 currentColor,6.95px 6.5px 0 currentColor,7.45px 7px 0 currentColor,7.95px 7.5px 0 currentColor,8.45px 8px 0 currentColor,8.95px 8.5px 0 currentColor,9.45px 9px 0 currentColor,9.95px 9.5px 0 currentColor,10.45px 10px 0 currentColor",
+          "value": "0.95px 0.5px 0 currentColor, 1.45px 1px 0 currentColor, 1.95px 1.5px 0 currentColor, 2.45px 2px 0 currentColor, 2.95px 2.5px 0 currentColor, 3.45px 3px 0 currentColor, 3.95px 3.5px 0 currentColor, 4.45px 4px 0 currentColor, 4.95px 4.5px 0 currentColor, 5.45px 5px 0 currentColor, 5.95px 5.5px 0 currentColor, 6.45px 6px 0 currentColor, 6.95px 6.5px 0 currentColor, 7.45px 7px 0 currentColor, 7.95px 7.5px 0 currentColor, 8.45px 8px 0 currentColor, 8.95px 8.5px 0 currentColor, 9.45px 9px 0 currentColor, 9.95px 9.5px 0 currentColor, 10.45px 10px 0 currentColor",
           "source": "src/styles/theme-reference.css",
           "type": "effect"
         },
@@ -3073,7 +2418,7 @@
         },
         {
           "name": "base-color-1-fade",
-          "value": "oklch(71.63% 0.0762 214.60)",
+          "value": "oklch(71.63% 0.0762 214.6)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3109,19 +2454,19 @@
         },
         {
           "name": "base-color-1-l400",
-          "value": "oklch(71.63% 0.0762 214.60)",
+          "value": "oklch(71.63% 0.0762 214.6)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
         {
           "name": "base-color-2",
-          "value": "oklch(66.27% 0.114 206.90)",
+          "value": "oklch(66.27% 0.114 206.9)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
         {
           "name": "base-color-2-b000",
-          "value": "oklch(66.27% 0.114 206.90)",
+          "value": "oklch(66.27% 0.114 206.9)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3169,7 +2514,7 @@
         },
         {
           "name": "base-color-2-inverse-fade",
-          "value": "oklch(94.00% 0.050 85.21)",
+          "value": "oklch(94.00% 0.05 85.21)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3229,7 +2574,7 @@
         },
         {
           "name": "base-color-3-d300",
-          "value": "oklch(59.81% 0.064 191.50)",
+          "value": "oklch(59.81% 0.064 191.5)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3265,7 +2610,7 @@
         },
         {
           "name": "base-color-3-l200",
-          "value": "oklch(81.97% 0.070 192.45)",
+          "value": "oklch(81.97% 0.07 192.45)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3325,7 +2670,7 @@
         },
         {
           "name": "base-color-4-inverse",
-          "value": "oklch(27% 0.09 254.40)",
+          "value": "oklch(27% 0.09 254.4)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3337,13 +2682,13 @@
         },
         {
           "name": "base-color-4-l100",
-          "value": "oklch(86.03% 0.035 219.90)",
+          "value": "oklch(86.03% 0.035 219.9)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
         {
           "name": "base-color-4-l200",
-          "value": "oklch(87.50% 0.030 220.61)",
+          "value": "oklch(87.50% 0.03 220.61)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3379,7 +2724,7 @@
         },
         {
           "name": "base-color-5-d200",
-          "value": "oklch(73.06% 0.095 79.20)",
+          "value": "oklch(73.06% 0.095 79.2)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3397,13 +2742,13 @@
         },
         {
           "name": "base-color-5-fade",
-          "value": "oklch(94.00% 0.050 85.21)",
+          "value": "oklch(94.00% 0.05 85.21)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
         {
           "name": "base-color-5-inverse",
-          "value": "oklch(27% 0.09 254.40)",
+          "value": "oklch(27% 0.09 254.4)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3415,25 +2760,25 @@
         },
         {
           "name": "base-color-5-l100",
-          "value": "oklch(86.00% 0.120 85.21)",
+          "value": "oklch(86.00% 0.12 85.21)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
         {
           "name": "base-color-5-l200",
-          "value": "oklch(88.04% 0.100 85.13)",
+          "value": "oklch(88.04% 0.1 85.13)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
         {
           "name": "base-color-5-l300",
-          "value": "oklch(91.00% 0.070 85.21)",
+          "value": "oklch(91.00% 0.07 85.21)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
         {
           "name": "base-color-5-l400",
-          "value": "oklch(94.00% 0.050 85.21)",
+          "value": "oklch(94.00% 0.05 85.21)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3445,7 +2790,7 @@
         },
         {
           "name": "base-color-6-b000",
-          "value": "oklch(71.70% 0.154 37.70)",
+          "value": "oklch(71.70% 0.154 37.7)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3487,7 +2832,7 @@
         },
         {
           "name": "base-color-6-inverse",
-          "value": "oklch(27% 0.09 254.40)",
+          "value": "oklch(27% 0.09 254.4)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3571,7 +2916,7 @@
         },
         {
           "name": "base-color-7-fade",
-          "value": "oklch(68.73% 0.144 25.60)",
+          "value": "oklch(68.73% 0.144 25.6)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3595,7 +2940,7 @@
         },
         {
           "name": "base-color-7-l200",
-          "value": "oklch(68.73% 0.144 25.60)",
+          "value": "oklch(68.73% 0.144 25.6)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3637,7 +2982,7 @@
         },
         {
           "name": "base-color-8-d200",
-          "value": "oklch(42.15% 0.090 350.34)",
+          "value": "oklch(42.15% 0.09 350.34)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3655,7 +3000,7 @@
         },
         {
           "name": "base-color-8-d500",
-          "value": "oklch(31.14% 0.060 349.81)",
+          "value": "oklch(31.14% 0.06 349.81)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3703,7 +3048,7 @@
         },
         {
           "name": "base-color-8-l500",
-          "value": "oklch(75.12% 0.050 345.99)",
+          "value": "oklch(75.12% 0.05 345.99)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3751,7 +3096,7 @@
         },
         {
           "name": "base-color-9-inverse",
-          "value": "oklch(27% 0.09 254.40)",
+          "value": "oklch(27% 0.09 254.4)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3775,7 +3120,7 @@
         },
         {
           "name": "base-color-9-l300",
-          "value": "oklab(97.63% -0.003 -0.00)",
+          "value": "oklab(97.63% -0.003 -0)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3799,7 +3144,7 @@
         },
         {
           "name": "base-grey-d300",
-          "value": "oklch(50.0% 0.000 254)",
+          "value": "oklch(50.0% 0 254)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3877,7 +3222,7 @@
         },
         {
           "name": "base-primary",
-          "value": "oklch(0.3373 0.0925 258.5200)",
+          "value": "oklch(0.3373 0.0925 258.52)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },
@@ -3898,6 +3243,12 @@
           "value": "oklch(86.40% 0.032 220)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
+        },
+        {
+          "name": "color-lght-green",
+          "value": "var(--base-color-3)",
+          "source": "src/styles/theme-reference.css",
+          "type": "color"
         },
         {
           "name": "color-opacity-25",
@@ -4045,7 +3396,7 @@
         },
         {
           "name": "primary-l500",
-          "value": "oklch(68.50% 0.0399 258.40)",
+          "value": "oklch(68.50% 0.0399 258.4)",
           "source": "src/styles/theme-reference.css",
           "type": "value"
         },

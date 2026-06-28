@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "login_page",
+  "title": "Login Page",
+  "description": "Auto-generated registry entry for login_page.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/settings/login_page.tsx",
+      "content": "import Login from \"@/components/shadcn-studio/blocks/login-page-01/login-page-01\";\n\nconst LoginPage = () => {\n  return <Login />;\n};\n\nexport default LoginPage;\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/settings/login_page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

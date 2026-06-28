@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sign-out-dialog",
+  "title": "Sign Out Dialog",
+  "description": "Auto-generated registry entry for sign-out-dialog.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/users/sign-out-dialog.tsx",
+      "content": "\"use client\"\n\nimport { useRouter, usePathname } from 'next/navigation';\nimport { useAuthStore } from '@/stores/auth-store'\nimport { ConfirmDialog } from '@/components/confirm-dialog'\n\ninterface SignOutDialogProps {\n  open: boolean\n  onOpenChange: (open: boolean) => void\n}\n\nexport function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {\n  const navigate = useRouter()\n  const pathname = usePathname()\n  const { auth } = useAuthStore()\n\n  const handleSignOut = () => {\n    auth.reset()\n    // Preserve current location for redirect after sign-in\n    const currentPath = pathname\n    navigate.push(`/sign-in?redirect=${encodeURIComponent(currentPath)}`)\n  }\n\n  return (\n    <ConfirmDialog\n      open={open}\n      onOpenChange={onOpenChange}\n      title='Sign out'\n      desc='Are you sure you want to sign out? You will need to sign in again to access your account.'\n      confirmText='Sign out'\n      destructive\n      handleConfirm={handleSignOut}\n      className='sm:max-w-sm'\n    />\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/users/sign-out-dialog.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

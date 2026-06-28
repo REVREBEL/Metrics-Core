@@ -1,4 +1,4 @@
-import { PLAYGROUND_REGISTRY } from "@/lib/playground/registry";
+import { REGISTRY_ITEMSISTRY } from "@/lib/playground/registry";
 
 export type RegistryItem = {
   id: string;
@@ -31,7 +31,7 @@ function toDefaultGroupLabel(type: string): string {
 }
 
 export function adaptPlaygroundRegistry(
-  registry: Record<string, unknown> = PLAYGROUND_REGISTRY as Record<
+  registry: Record<string, unknown> = REGISTRY_ITEMSISTRY as Record<
     string,
     unknown
   >,

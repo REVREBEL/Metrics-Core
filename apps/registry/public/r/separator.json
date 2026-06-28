@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator",
+  "title": "Separator",
+  "description": "Visually or semantically separates content.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/separator.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\nimport * as SeparatorPrimitive from \"@radix-ui/react-separator\";\nimport type * as React from \"react\";\n\nfunction Separator({\n\tclassName,\n\torientation = \"horizontal\",\n\tdecorative = true,\n\t...props\n}: React.ComponentProps<typeof SeparatorPrimitive.Root>) {\n\treturn (\n\t\t<SeparatorPrimitive.Root\n\t\t\tdata-slot=\"separator\"\n\t\t\tdecorative={decorative}\n\t\t\torientation={orientation}\n\t\t\tclassName={cn(\n\t\t\t\t\"shrink-0 bg-border data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-px\",\n\t\t\t\tclassName,\n\t\t\t)}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\nexport { Separator };\n",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/separator.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

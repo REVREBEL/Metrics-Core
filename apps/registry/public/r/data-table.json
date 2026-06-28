@@ -1,0 +1,11 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "data-table",
+  "title": "Data Table",
+  "description": "Powerful table and datagrids built using TanStack Table.",
+  "registryDependencies": [
+    "@metrics/table"
+  ],
+  "files": [],
+  "type": "registry:ui"
+}

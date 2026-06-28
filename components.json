@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "@syles/global.css",
+    "baseColor": "zinc",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@staging_new-files",
+    "ui": "@layouts",
+    "lib": "@lib",
+    "hooks": "@hooks",
+    "utils": "@utils"
+  }
+}
+
+
+{
+  "$schema": "./.schemas/shadcn-components.schema.json",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "packages/ui/src/styles.css",
+    "baseColor": "zinc",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@metrics-components",
+    "ui": "@layouts",
+    "lib": "@lib",
+    "hooks": "@hooks",
+    "utils": "@utils"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox",
+  "title": "Checkbox",
+  "description": "Allows users to select multiple items from a list of options.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/checkbox.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\nimport * as CheckboxPrimitive from \"@radix-ui/react-checkbox\";\nimport { IconCheck } from \"@tabler/icons-react\";\nimport type * as React from \"react\";\n\nfunction Checkbox({\n\tclassName,\n\t...props\n}: React.ComponentProps<typeof CheckboxPrimitive.Root>) {\n\treturn (\n\t\t<CheckboxPrimitive.Root\n\t\t\tdata-slot=\"checkbox\"\n\t\t\tclassName={cn(\n\t\t\t\t\"peer size-4 shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground dark:bg-input/30 dark:aria-invalid:ring-destructive/40 dark:data-[state=checked]:bg-primary\",\n\t\t\t\tclassName,\n\t\t\t)}\n\t\t\t{...props}\n\t\t>\n\t\t\t<CheckboxPrimitive.Indicator\n\t\t\t\tdata-slot=\"checkbox-indicator\"\n\t\t\t\tclassName=\"flex items-center justify-center text-current transition-none\"\n\t\t\t>\n\t\t\t\t<IconCheck className=\"size-3.5\" strokeWidth={1.5} size={20} />\n\t\t\t</CheckboxPrimitive.Indicator>\n\t\t</CheckboxPrimitive.Root>\n\t);\n}\n\nexport { Checkbox };\n",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/checkbox.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

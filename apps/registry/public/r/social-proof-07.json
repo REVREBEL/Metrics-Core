@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "social-proof-07",
+  "title": "Social Proof 07",
+  "description": "Auto-generated registry entry for social-proof-07.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/social-proof-07.tsx",
+      "content": "import type { ComponentType } from 'react'\n\nimport { Card, CardContent, CardDescription, CardTitle } from \"@ui-core/card\"\n\ntype MetricItem = {\n  icon: ComponentType\n  value: string\n  label: string\n}\n\nconst SocialProof = ({ metrics }: { metrics: MetricItem[] }) => {\n  return (\n    <section className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='bg-muted rounded-md px-4 py-10 sm:px-6 lg:px-8'>\n          <div className='mb-12 space-y-4 sm:mb-16 lg:mb-24'>\n            <h2 className='text-2xl font-display font-bold uppercase tracking-widest md:text-3xl lg:text-4xl'>Key Performance Metrics</h2>\n            <p className='text-muted-foreground max-w-4xl text-xl'>\n              Unlock your business potential with our expert guidance. Discover innovative strategies to elevate your\n              success.\n            </p>\n          </div>\n\n          <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>\n            {metrics.map((metric, index) => (\n              <Card key={index}>\n                <CardContent className='[&>svg]:text-muted-foreground flex flex-col items-center [&>svg]:size-7'>\n                  <metric.icon />\n                  <h2 className='text-2xl font-display font-bold uppercase tracking-widest md:text-3xl lg:text-4xl'>{metric.value}</h2>\n                  <CardDescription className='text-sm font-display font-bold uppercase tracking-widest text-dark-blue'>{metric.label}</CardDescription>\n                </CardContent>\n              </Card>\n            ))}\n          </div>\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport default SocialProof\n",
+      "type": "registry:ui",
+      "target": "src/primitive/layouts/social-proof-07.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

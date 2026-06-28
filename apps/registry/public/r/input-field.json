@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-field",
+  "title": "Input Field",
+  "description": "Auto-generated registry entry for input-field.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-field.tsx",
+      "content": "import { Field, FieldDescription, FieldLabel } from \"@auto-form/fields/field\";\nimport { Input } from \"./input\";\n\nexport function InputField() {\n  return (\n    <Field>\n      <FieldLabel htmlFor=\"input-field-username\">Username</FieldLabel>\n      <Input\n        id=\"input-field-username\"\n        type=\"text\"\n        placeholder=\"Enter your username\"\n      />\n      <FieldDescription>\n        Choose a unique username for your account.\n      </FieldDescription>\n    </Field>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-field.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

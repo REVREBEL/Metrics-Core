@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton-card",
+  "title": "Skeleton Card",
+  "description": "Auto-generated registry entry for skeleton-card.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/skeleton/skeleton-card.tsx",
+      "content": "import { Card, CardContent, CardHeader } from \"@ui-core\";\nimport { Skeleton } from \"./skeleton\";\n\nexport function SkeletonCard() {\n  return (\n    <Card className=\"w-full max-w-xs\">\n      <CardHeader>\n        <Skeleton className=\"h-4 w-2/3\" />\n        <Skeleton className=\"h-4 w-1/2\" />\n      </CardHeader>\n      <CardContent>\n        <Skeleton className=\"aspect-video w-full\" />\n      </CardContent>\n    </Card>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/skeleton/skeleton-card.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

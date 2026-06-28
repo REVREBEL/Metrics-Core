@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date-picker",
+  "title": "Date Picker",
+  "description": "A date picker component with range and presets.",
+  "registryDependencies": [
+    "@metrics/button",
+    "@metrics/calendar",
+    "@metrics/popover"
+  ],
+  "files": [],
+  "type": "registry:ui"
+}

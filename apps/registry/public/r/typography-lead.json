@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography-lead",
+  "title": "Typography Lead",
+  "description": "Auto-generated registry entry for typography-lead.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TypographyLead.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographyLeadProps\n  extends HTMLAttributes<HTMLParagraphElement> {}\n\nexport function TypographyLead({\n  children,\n  className,\n  ...props\n}: TypographyLeadProps) {\n  return (\n    <p className={cn(\"text-xl text-muted-foreground\", className)} {...props}>\n      {children}\n    </p>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TypographyLead.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

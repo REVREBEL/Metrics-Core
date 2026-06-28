@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-group-button-group",
+  "title": "Input Group Button Group",
+  "description": "Auto-generated registry entry for input-group-button-group.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-group-button-group.tsx",
+      "content": "import { ButtonGroup, ButtonGroupText } from \"@buttons/button-group\";\nimport { IconLink } from \"@tabler/icons-react\";\nimport { Label } from \"@ui-core\";\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"./input-group\";\n\nexport default function InputGroupButtonGroup() {\n  return (\n    <div className=\"grid w-full max-w-sm gap-6\">\n      <ButtonGroup>\n        <ButtonGroupText asChild>\n          <Label htmlFor=\"url\">https://</Label>\n        </ButtonGroupText>\n        <InputGroup>\n          <InputGroupInput id=\"url\" />\n          <InputGroupAddon align=\"inline-end\">\n            <IconLink />\n          </InputGroupAddon>\n        </InputGroup>\n        <ButtonGroupText>.com</ButtonGroupText>\n      </ButtonGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-group-button-group.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

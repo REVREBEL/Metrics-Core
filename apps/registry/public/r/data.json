@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "data",
+  "title": "Data",
+  "description": "Auto-generated registry entry for data.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/tasks/data/data.ts",
+      "content": "import {\n  IconArrowDown,\n  IconArrowRight,\n  IconArrowUp,\n  IconCircle,\n  IconCircleCheck,\n  IconCircleX,\n  IconClockHour1Filled,\n  IconHelpCircleFilled,\n} from \"@tabler/icons-react\";\n\nexport const labels = [\n  {\n    value: \"bug\",\n    label: \"Bug\",\n  },\n  {\n    value: \"feature\",\n    label: \"Feature\",\n  },\n  {\n    value: \"documentation\",\n    label: \"Documentation\",\n  },\n];\n\nexport const taskStatuses = [\n  {\n    value: \"backlog\",\n    label: \"Backlog\",\n    icon: IconHelpCircleFilled,\n  },\n  {\n    value: \"todo\",\n    label: \"Todo\",\n    icon: IconCircle,\n  },\n  {\n    value: \"in progress\",\n    label: \"In Progress\",\n    icon: IconClockHour1Filled,\n  },\n  {\n    value: \"done\",\n    label: \"Done\",\n    icon: IconCircleCheck,\n  },\n  {\n    value: \"canceled\",\n    label: \"Canceled\",\n    icon: IconCircleX,\n  },\n];\n\nexport const initiativeStatuses = [\n  {\n    value: \"discussed\",\n    label: \"Discussed\",\n    icon: IconHelpCircleFilled,\n  },\n  {\n    value: \"planning\",\n    label: \"Planning\",\n    icon: IconClockHour1Filled,\n  },\n  {\n    value: \"active\",\n    label: \"Active\",\n    icon: IconArrowRight,\n  },\n  {\n    value: \"blocked\",\n    label: \"Blocked\",\n    icon: IconCircleX,\n  },\n  {\n    value: \"at_risk\",\n    label: \"At Risk\",\n    icon: IconArrowDown,\n  },\n  {\n    value: \"completed\",\n    label: \"Completed\",\n    icon: IconCircleCheck,\n  },\n  {\n    value: \"canceled\",\n    label: \"Canceled\",\n    icon: IconCircleX,\n  },\n  {\n    value: \"archived\",\n    label: \"Archived\",\n    icon: IconCircle,\n  },\n];\n\nexport const priorities = [\n  {\n    value: \"low\",\n    label: \"Low\",\n    icon: IconArrowDown,\n  },\n  {\n    value: \"medium\",\n    label: \"Medium\",\n    icon: IconArrowRight,\n  },\n  {\n    value: \"high\",\n    label: \"High\",\n    icon: IconArrowUp,\n  },\n];\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/tasks/data/data.ts"
+    }
+  ],
+  "type": "registry:component"
+}

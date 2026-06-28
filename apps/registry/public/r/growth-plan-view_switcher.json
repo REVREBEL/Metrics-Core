@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "growth-plan-view_switcher",
+  "title": "Growth Plan View Switcher",
+  "description": "Auto-generated registry entry for growth-plan-view_switcher.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/tasks/growth-plan-view_switcher.tsx",
+      "content": "\"use client\";\n\nimport { Tabs, TabsList, TabsTrigger } from \"@/components/ui/tabs\";\nimport { cn } from \"@/lib/utils\";\n\nexport type GrowthPlanView =\n  | \"kanban\"\n  | \"list\"\n  | \"by-person\"\n  | \"by-department\"\n  | \"calendar\"\n  | \"owner-rollup\"\n  | \"meeting-recap\";\n\ntype GrowthPlanViewSwitcherProps = {\n  activeView: GrowthPlanView;\n  onViewChange: (view: GrowthPlanView) => void;\n  className?: string;\n};\n\nconst views: { value: GrowthPlanView; label: string }[] = [\n  { value: \"kanban\", label: \"Kanban\" },\n  { value: \"list\", label: \"List\" },\n  { value: \"by-person\", label: \"By Person\" },\n  { value: \"by-department\", label: \"By Department\" },\n  { value: \"calendar\", label: \"Calendar\" },\n  { value: \"owner-rollup\", label: \"Owner Rollup\" },\n  { value: \"meeting-recap\", label: \"Meeting Recap\" },\n];\n\nexport function GrowthPlanViewSwitcher({\n  activeView,\n  onViewChange,\n  className,\n}: GrowthPlanViewSwitcherProps) {\n  return (\n    <Tabs\n      value={activeView}\n      onValueChange={(value) => onViewChange(value as GrowthPlanView)}\n      className={cn(\"w-full\", className)}\n    >\n      <div className=\"overflow-x-auto pb-2\">\n        <TabsList className=\"inline-flex h-9 w-fit items-center justify-start gap-0.5 rounded-lg bg-muted p-1\">\n          {views.map((view) => (\n            <TabsTrigger\n              key={view.value}\n              value={view.value}\n              className={cn(\n                \"h-7 min-w-20 justify-center rounded-md px-3 font-display text-sm font-semibold uppercase\",\n                \"text-muted-foreground transition-colors\",\n                \"data-[state=active]:bg-primary data-[state=active]:text-primary-foreground\",\n                \"hover:bg-primary/10 hover:text-primary\",\n                \"disabled:cursor-not-allowed disabled:opacity-35\",\n              )}\n            >\n              {view.label}\n            </TabsTrigger>\n          ))}\n        </TabsList>\n      </div>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/tasks/growth-plan-view_switcher.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

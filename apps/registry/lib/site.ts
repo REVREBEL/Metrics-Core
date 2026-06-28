@@ -120,16 +120,12 @@ export function toFolderHref(folderId: string) {
     .join("/")}`;
 }
 
-function normalizeWorkspaceFile(filePath: string) {
-  return filePath.replace(/^packages\/ui\//, "").replace(/\\/g, "/");
-}
-
 export function getRegistryItemsForFiles(filePaths: string[]) {
   const seen = new Set<string>();
   const items: Component[] = [];
 
   for (const filePath of filePaths) {
-    const normalizedPath = normalizeWorkspaceFile(filePath);
+    const normalizedPath = filePath.replace(/\\/g, "/");
     const match = getRegistryItems().find((item) =>
       item.files?.some((file) => file.path === normalizedPath),
     );

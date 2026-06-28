@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "menu-option",
+  "title": "Menu Option",
+  "description": "Auto-generated registry entry for menu-option.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/menus/menu-option.tsx",
+      "content": "import {\n  Menu,\n  MenuCheckboxItem,\n  MenuPopup,\n  MenuTrigger,\n} from \"./menu\";\n\nexport default function Particle() {\n  return (\n    <Menu>\n      <MenuTrigger className=\"inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50\">\n        Open menu\n      </MenuTrigger>\n      <MenuPopup>\n        <MenuCheckboxItem defaultChecked>Auto save</MenuCheckboxItem>\n        <MenuCheckboxItem>Notifications</MenuCheckboxItem>\n      </MenuPopup>\n    </Menu>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/menus/menu-option.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}
