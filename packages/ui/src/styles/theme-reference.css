@@ -179,7 +179,7 @@
   --color-green-900-inverse: var(--base-color-5-l400);
 
   /* {Light-Green} */
-  --color-lght-green: var(--base-color-3);
+  --color-light-green: var(--base-color-3);
   --color-light-green-fade: var(--base-color-3-fade);
   --color-light-green-inverse: var(--base-color-3-inverse);
   --color-light-green-inverse-fade: var(--base-color-3-inverse-fade);
@@ -586,9 +586,9 @@
   /* {Yellow} */
   --base-color-5: oklch(84% 0.14 85.21);
   --base-color-5-fade: oklch(94.00% 0.05 85.21);
-  --base-color-5-inverse: oklch(55% 0.21 32);
+  --base-color-5-inverse:  oklch(55% 0.21 32);
   --base-color-5-inverse-fade: oklch(68.73% 0.144 25.6);
-  
+
   /* {Orange} */
   --base-color-6: oklch(66% 0.18 45);
   --base-color-6-fade: oklch(82.08% 0.088 38.17);
