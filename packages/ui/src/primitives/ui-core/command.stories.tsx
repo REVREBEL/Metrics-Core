@@ -3,8 +3,8 @@ import {
   IconCalculator,
   IconCalendar,
   IconCreditCard,
+  IconMoodSmile,
   IconSettings,
-  IconSmile,
   IconUser,
 } from "@tabler/icons-react";
 
@@ -43,7 +43,7 @@ export const Default: Story = {
             <span>Calendar</span>
           </CommandItem>
           <CommandItem>
-            <IconSmile className="mr-2 h-4 w-4" />
+            <IconMoodSmile className="mr-2 h-4 w-4" />
             <span>Search Emoji</span>
           </CommandItem>
           <CommandItem>

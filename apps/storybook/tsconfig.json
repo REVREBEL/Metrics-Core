@@ -5,12 +5,6 @@
     "jsx": "react-jsx",
     "types": ["node", "vite/client"]
   },
-  "include": [
-    "vite-env.d.ts",
-    ".storybook/**/*.ts",
-    ".storybook/**/*.tsx",
-    "../../packages/ui/src/**/*.stories.ts",
-    "../../packages/ui/src/**/*.stories.tsx"
-  ],
+  "include": ["vite-env.d.ts", ".storybook/**/*.ts", ".storybook/**/*.tsx"],
   "exclude": ["node_modules", "storybook-static"]
 }
