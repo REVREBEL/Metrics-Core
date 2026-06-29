@@ -12,7 +12,7 @@
     "dev:admin": "turbo run dev --filter=@apps/admin",
     "dev:docs": "turbo run dev --filter=@apps/docs",
     "dev:registry": "turbo run generate-registry && dev --filter=@apps/registry",
-    "dev:storybook": "turbo run dev --filter=@apps/storybook",
+    "dev:storybook": "apps/storybook/node_modules/.bin/storybook dev -c apps/storybook/.storybook -p 6006 --host 0.0.0.0 --no-open",
     "generate-registry": "--filter=@apps/registry/scripts/generate-registry.mjs",
     "storybook:stories:generate": "node apps/storybook/scripts/generate-stories.mjs",
     "storybook:stories:check": "node apps/storybook/scripts/generate-stories.mjs --check",

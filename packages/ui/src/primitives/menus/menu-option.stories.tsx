@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Particle } from "./menu-option";
 
 const meta = {
-  title: "Primitives/Menus/Particle",
+  title: "Primitives/Menus/Menu Option",
   component: Particle,
   tags: ["autodocs"],
   parameters: {

@@ -8,7 +8,7 @@ const metricsButtonVariants = cva(
   [
     "inline-flex shrink-0 items-center justify-center gap-2",
     "whitespace-nowrap rounded-md",
-    "font-brand text-sm font-medium uppercase tracking-[0.125em]",
+    "font-buttons text-sm font-bold uppercase tracking-[0.125em]",
     "transition-all",
     "mix-blend-normal",
     "disabled:pointer-events-none disabled:opacity-50",

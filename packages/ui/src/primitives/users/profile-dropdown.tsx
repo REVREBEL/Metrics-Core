@@ -1,9 +1,6 @@
-"use client"
+"use client";
 
-import Link from 'next/link'
-import useDialogState from '@/hooks/use-dialog-state'
-import { Avatar, AvatarFallback, AvatarImage } from '@ui-core'
-import { Button } from '@ui-core'
+import { Button } from "@buttons/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,8 +10,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from '@ui-core'
-import { SignOutDialog } from '@/components/sign-out-dialog'
+} from "@dropdowns/dropdown-menu";
+import Link from "next/link";
+import { SignOutDialog } from "@/components/sign-out-dialog";
+import useDialogState from "@/hooks/use-dialog-state";
 
 export function ProfileDropdown() {
   const [open, setOpen] = useDialogState()

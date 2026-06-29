@@ -1,10 +1,10 @@
-import { Button } from '@ui-core'
+import { Button } from '@buttons/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui-core'
 import { Separator } from '@ui-core'
 
-import Logo from '@/components/shadcn-studio/logo'
-import AuthBackgroundShape from '@/assets/svg/auth-background-shape'
-import LoginForm from '@/components/shadcn-studio/blocks/login-page-01/login-form'
+import Logo from '@icons/revrebel.png'
+import AuthBackgroundShape from '@icons/AuthBackgroundShape'
+import LoginForm from '@users/login-page-01/login-form'
 
 const Login = () => {
   return (
