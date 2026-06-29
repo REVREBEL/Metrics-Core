@@ -1,4 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import V1_1_0_Content from "./content/v1-1-0";
+import V1_2_0_Content from "./content/v1-2-0";
+import V1_3_0_Content from "./content/v1-3-0";
 import ChangelogContent from "./timeline-component-05";
 
 const meta: Meta<typeof ChangelogContent> = {
@@ -8,32 +11,29 @@ const meta: Meta<typeof ChangelogContent> = {
   parameters: {
     layout: "padded",
   },
-} satisfies Meta<typeof ChangelogContent>;
+};
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ChangelogContent>;
 
 export const Default: Story = {
   args: {
     releases: [
       {
         version: "v1.3.0",
-        date: "Jan 12, 2024",
-        content: (
-          <div className="space-y-2 text-sm">
-            <p>Major update with new features and bug fixes.</p>
-            <ul className="list-disc pl-4">
-              <li>Improved performance</li>
-              <li>New dashboard layout</li>
-            </ul>
-          </div>
-        ),
+        date: "May 24, 2025",
+        content: <V1_3_0_Content />,
       },
       {
         version: "v1.2.0",
-        date: "Dec 20, 2023",
-        content: <p className="text-sm">Fixed various UI glitches and enhanced mobile responsiveness.</p>,
+        date: "May 18, 2025",
+        content: <V1_2_0_Content />,
+      },
+      {
+        version: "v1.1.0",
+        date: "May 12, 2025",
+        content: <V1_1_0_Content />,
       },
     ],
   },
