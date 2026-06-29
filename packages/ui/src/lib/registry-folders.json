@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-25T19:28:46.181Z",
+  "generatedAt": "2026-06-29T10:15:33.980Z",
   "roots": [
     "primitives",
     "components",
@@ -622,6 +622,40 @@
       "directFileCount": 59,
       "childCount": 0
     },
+    "primitives/users/account-settings-01/content": {
+      "id": "primitives/users/account-settings-01/content",
+      "title": "Content",
+      "sourcePath": "packages/ui/src/primitives/users/account-settings-01/content",
+      "parentId": "primitives/users/account-settings-01",
+      "kind": "group",
+      "depth": 3,
+      "directFiles": [
+        "packages/ui/src/primitives/users/account-settings-01/content/connect-account.tsx",
+        "packages/ui/src/primitives/users/account-settings-01/content/danger-zone.tsx",
+        "packages/ui/src/primitives/users/account-settings-01/content/email-password.tsx",
+        "packages/ui/src/primitives/users/account-settings-01/content/personal-info.tsx",
+        "packages/ui/src/primitives/users/account-settings-01/content/social-url.tsx"
+      ],
+      "children": [],
+      "directFileCount": 5,
+      "childCount": 0
+    },
+    "primitives/users/account-settings-01": {
+      "id": "primitives/users/account-settings-01",
+      "title": "Account Settings 01",
+      "sourcePath": "packages/ui/src/primitives/users/account-settings-01",
+      "parentId": "primitives/users",
+      "kind": "group",
+      "depth": 2,
+      "directFiles": [
+        "packages/ui/src/primitives/users/account-settings-01/account-settings-01.tsx"
+      ],
+      "children": [
+        "primitives/users/account-settings-01/content"
+      ],
+      "directFileCount": 1,
+      "childCount": 1
+    },
     "primitives/users": {
       "id": "primitives/users",
       "title": "Users",
@@ -630,6 +664,7 @@
       "kind": "group",
       "depth": 1,
       "directFiles": [
+        "packages/ui/src/primitives/users/account-settings-01.tsx",
         "packages/ui/src/primitives/users/account-settings.tsx",
         "packages/ui/src/primitives/users/connect-account.tsx",
         "packages/ui/src/primitives/users/danger-zone.tsx",
@@ -648,9 +683,11 @@
         "packages/ui/src/primitives/users/social-url.tsx",
         "packages/ui/src/primitives/users/verify-email.tsx"
       ],
-      "children": [],
-      "directFileCount": 17,
-      "childCount": 0
+      "children": [
+        "primitives/users/account-settings-01"
+      ],
+      "directFileCount": 18,
+      "childCount": 1
     },
     "primitives": {
       "id": "primitives",
@@ -703,21 +740,105 @@
       "directFileCount": 1,
       "childCount": 0
     },
-    "components/metrics-layouts/help-desk": {
-      "id": "components/metrics-layouts/help-desk",
-      "title": "Help Desk",
-      "sourcePath": "packages/ui/src/components/metrics-layouts/help-desk",
+    "components/metrics-layouts/metrics-help-desk": {
+      "id": "components/metrics-layouts/metrics-help-desk",
+      "title": "Metrics Help Desk",
+      "sourcePath": "packages/ui/src/components/metrics-layouts/metrics-help-desk",
       "parentId": "components/metrics-layouts",
       "kind": "group",
       "depth": 2,
       "directFiles": [
-        "packages/ui/src/components/metrics-layouts/help-desk/documentation_page.tsx",
-        "packages/ui/src/components/metrics-layouts/help-desk/helpdesk_layout.tsx",
-        "packages/ui/src/components/metrics-layouts/help-desk/helpdesk_page.tsx"
+        "packages/ui/src/components/metrics-layouts/metrics-help-desk/documentation_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-help-desk/helpdesk_layout.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-help-desk/helpdesk_page.tsx"
       ],
       "children": [],
       "directFileCount": 3,
       "childCount": 0
+    },
+    "components/metrics-layouts/metrics-settings": {
+      "id": "components/metrics-layouts/metrics-settings",
+      "title": "Metrics Settings",
+      "sourcePath": "packages/ui/src/components/metrics-layouts/metrics-settings",
+      "parentId": "components/metrics-layouts",
+      "kind": "group",
+      "depth": 2,
+      "directFiles": [
+        "packages/ui/src/components/metrics-layouts/metrics-settings/account_form.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/account_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/account-settings_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/content-section_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/display_form.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/display_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/forgot-password_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/login_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/notifications_form.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/notifications_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/profile_form.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/profile_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/register_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/settings_layout.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/settings_sidebar-nav.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-settings/users-invite_dialog.tsx"
+      ],
+      "children": [],
+      "directFileCount": 16,
+      "childCount": 0
+    },
+    "components/metrics-layouts/metrics-tasks/data": {
+      "id": "components/metrics-layouts/metrics-tasks/data",
+      "title": "Data",
+      "sourcePath": "packages/ui/src/components/metrics-layouts/metrics-tasks/data",
+      "parentId": "components/metrics-layouts/metrics-tasks",
+      "kind": "group",
+      "depth": 3,
+      "directFiles": [
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/data/data.ts",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/data/data.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/data/schema.ts",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/data/tasks.ts"
+      ],
+      "children": [],
+      "directFileCount": 4,
+      "childCount": 0
+    },
+    "components/metrics-layouts/metrics-tasks": {
+      "id": "components/metrics-layouts/metrics-tasks",
+      "title": "Metrics Tasks",
+      "sourcePath": "packages/ui/src/components/metrics-layouts/metrics-tasks",
+      "parentId": "components/metrics-layouts",
+      "kind": "group",
+      "depth": 2,
+      "directFiles": [
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/actions.ts",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/calendar-view_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/data-actions_table-row.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/data-bulk-actions_table.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/group-views.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/growth-plan_header.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/growth-plan_sidebar.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/growth-plan_states.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/growth-plan-view_switcher.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/kanban_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/meeting-recap_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/owner-rollup_page.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks_dialogs.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks_layout.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks_provider.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks_table.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks-columns.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks-import_dialog.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks-multi-delete_dialog.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks-mutate_drawer.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks-primary-buttons.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/workstream-mutate_drawer.tsx",
+        "packages/ui/src/components/metrics-layouts/metrics-tasks/workstreams_section.tsx"
+      ],
+      "children": [
+        "components/metrics-layouts/metrics-tasks/data"
+      ],
+      "directFileCount": 23,
+      "childCount": 1
     },
     "components/metrics-layouts/settings": {
       "id": "components/metrics-layouts/settings",
@@ -727,81 +848,11 @@
       "kind": "group",
       "depth": 2,
       "directFiles": [
-        "packages/ui/src/components/metrics-layouts/settings/account_form.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/account_page.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/account-settings_page.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/content-section_page.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/display_form.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/display_page.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/forgot-password_page.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/login_page.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/notifications_form.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/notifications_page.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/profile_form.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/profile_page.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/register_page.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/settings_layout.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/settings_sidebar-nav.tsx",
-        "packages/ui/src/components/metrics-layouts/settings/users-invite_dialog.tsx"
+        "packages/ui/src/components/metrics-layouts/settings/account-settings_page.tsx"
       ],
       "children": [],
-      "directFileCount": 16,
+      "directFileCount": 1,
       "childCount": 0
-    },
-    "components/metrics-layouts/tasks/data": {
-      "id": "components/metrics-layouts/tasks/data",
-      "title": "Data",
-      "sourcePath": "packages/ui/src/components/metrics-layouts/tasks/data",
-      "parentId": "components/metrics-layouts/tasks",
-      "kind": "group",
-      "depth": 3,
-      "directFiles": [
-        "packages/ui/src/components/metrics-layouts/tasks/data/data.ts",
-        "packages/ui/src/components/metrics-layouts/tasks/data/data.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/data/schema.ts",
-        "packages/ui/src/components/metrics-layouts/tasks/data/tasks.ts"
-      ],
-      "children": [],
-      "directFileCount": 4,
-      "childCount": 0
-    },
-    "components/metrics-layouts/tasks": {
-      "id": "components/metrics-layouts/tasks",
-      "title": "Tasks",
-      "sourcePath": "packages/ui/src/components/metrics-layouts/tasks",
-      "parentId": "components/metrics-layouts",
-      "kind": "group",
-      "depth": 2,
-      "directFiles": [
-        "packages/ui/src/components/metrics-layouts/tasks/actions.ts",
-        "packages/ui/src/components/metrics-layouts/tasks/calendar-view_page.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/data-actions_table-row.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/data-bulk-actions_table.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/group-views.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/growth-plan_header.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/growth-plan_sidebar.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/growth-plan_states.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/growth-plan-view_switcher.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/kanban_page.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/meeting-recap_page.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/owner-rollup_page.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/tasks_dialogs.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/tasks_layout.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/tasks_provider.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/tasks_table.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/tasks-columns.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/tasks-import_dialog.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/tasks-multi-delete_dialog.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/tasks-mutate_drawer.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/tasks-primary-buttons.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/workstream-mutate_drawer.tsx",
-        "packages/ui/src/components/metrics-layouts/tasks/workstreams_section.tsx"
-      ],
-      "children": [
-        "components/metrics-layouts/tasks/data"
-      ],
-      "directFileCount": 23,
-      "childCount": 1
     },
     "components/metrics-layouts": {
       "id": "components/metrics-layouts",
@@ -812,12 +863,13 @@
       "depth": 1,
       "directFiles": [],
       "children": [
-        "components/metrics-layouts/help-desk",
-        "components/metrics-layouts/settings",
-        "components/metrics-layouts/tasks"
+        "components/metrics-layouts/metrics-help-desk",
+        "components/metrics-layouts/metrics-settings",
+        "components/metrics-layouts/metrics-tasks",
+        "components/metrics-layouts/settings"
       ],
       "directFileCount": 0,
-      "childCount": 3
+      "childCount": 4
     },
     "components": {
       "id": "components",

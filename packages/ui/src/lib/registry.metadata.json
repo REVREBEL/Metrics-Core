@@ -5,7 +5,7 @@
     "props": [
       {
         "name": "variant",
-        "type": "\"default\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"active\" | \"active\" | \"active\" | \"active\" | \"active\" | \"outline\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"active\" | \"active\" | \"active\" | \"active\" | \"active\" | \"secondary\" | \"destructive\" | \"ghost\" | \"hover\" | \"hover\" | \"link\" | \"hover\"",
+        "type": "\"default\" | \"hover\" | \"hover\" | \"active\" | \"active\" | \"monocolor\" | \"hover\" | \"hover\" | \"active\" | \"active\" | \"outline\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"hover\" | \"active\" | \"active\" | \"active\" | \"active\" | \"active\" | \"secondary\" | \"destructive\" | \"ghost\" | \"hover\" | \"hover\" | \"link\" | \"hover\"",
         "required": false,
         "description": "Generated from cva variant variants."
       },
@@ -23,22 +23,22 @@
       }
     ]
   },
-  "components/metrics-layouts/help-desk/documentation_page": {
+  "components/metrics-layouts/metrics-help-desk/documentation_page": {
     "displayName": "documentation_page",
     "description": "",
     "props": []
   },
-  "components/metrics-layouts/help-desk/helpdesk_layout": {
+  "components/metrics-layouts/metrics-help-desk/helpdesk_layout": {
     "displayName": "helpdesk_layout",
     "description": "",
     "props": []
   },
-  "components/metrics-layouts/help-desk/helpdesk_page": {
+  "components/metrics-layouts/metrics-help-desk/helpdesk_page": {
     "displayName": "helpdesk_page",
     "description": "",
     "props": []
   },
-  "components/metrics-layouts/settings/account-settings_page": {
+  "components/metrics-layouts/metrics-settings/account-settings_page": {
     "displayName": "account-settings_page",
     "description": "",
     "props": [
@@ -50,7 +50,7 @@
       }
     ]
   },
-  "components/metrics-layouts/settings/account_form": {
+  "components/metrics-layouts/metrics-settings/account_form": {
     "displayName": "account_form",
     "description": "",
     "props": [
@@ -62,12 +62,12 @@
       }
     ]
   },
-  "components/metrics-layouts/settings/account_page": {
+  "components/metrics-layouts/metrics-settings/account_page": {
     "displayName": "account_page",
     "description": "",
     "props": []
   },
-  "components/metrics-layouts/settings/content-section_page": {
+  "components/metrics-layouts/metrics-settings/content-section_page": {
     "displayName": "content-section_page",
     "description": "",
     "props": [
@@ -94,7 +94,7 @@
       }
     ]
   },
-  "components/metrics-layouts/settings/display_form": {
+  "components/metrics-layouts/metrics-settings/display_form": {
     "displayName": "display_form",
     "description": "",
     "props": [
@@ -106,22 +106,22 @@
       }
     ]
   },
-  "components/metrics-layouts/settings/display_page": {
+  "components/metrics-layouts/metrics-settings/display_page": {
     "displayName": "display_page",
     "description": "",
     "props": []
   },
-  "components/metrics-layouts/settings/forgot-password_page": {
+  "components/metrics-layouts/metrics-settings/forgot-password_page": {
     "displayName": "forgot-password_page",
     "description": "",
     "props": []
   },
-  "components/metrics-layouts/settings/login_page": {
+  "components/metrics-layouts/metrics-settings/login_page": {
     "displayName": "login_page",
     "description": "",
     "props": []
   },
-  "components/metrics-layouts/settings/notifications_form": {
+  "components/metrics-layouts/metrics-settings/notifications_form": {
     "displayName": "notifications_form",
     "description": "",
     "props": [
@@ -133,12 +133,12 @@
       }
     ]
   },
-  "components/metrics-layouts/settings/notifications_page": {
+  "components/metrics-layouts/metrics-settings/notifications_page": {
     "displayName": "notifications_page",
     "description": "",
     "props": []
   },
-  "components/metrics-layouts/settings/profile_form": {
+  "components/metrics-layouts/metrics-settings/profile_form": {
     "displayName": "profile_form",
     "description": "",
     "props": [
@@ -150,17 +150,17 @@
       }
     ]
   },
-  "components/metrics-layouts/settings/profile_page": {
+  "components/metrics-layouts/metrics-settings/profile_page": {
     "displayName": "profile_page",
     "description": "",
     "props": []
   },
-  "components/metrics-layouts/settings/register_page": {
+  "components/metrics-layouts/metrics-settings/register_page": {
     "displayName": "register_page",
     "description": "",
     "props": []
   },
-  "components/metrics-layouts/settings/settings_layout": {
+  "components/metrics-layouts/metrics-settings/settings_layout": {
     "displayName": "settings_layout",
     "description": "",
     "props": [
@@ -172,7 +172,7 @@
       }
     ]
   },
-  "components/metrics-layouts/settings/settings_sidebar-nav": {
+  "components/metrics-layouts/metrics-settings/settings_sidebar-nav": {
     "displayName": "settings_sidebar-nav",
     "description": "",
     "props": [
@@ -204,7 +204,7 @@
       }
     ]
   },
-  "components/metrics-layouts/settings/users-invite_dialog": {
+  "components/metrics-layouts/metrics-settings/users-invite_dialog": {
     "displayName": "users-invite_dialog",
     "description": "",
     "props": [
@@ -226,7 +226,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/calendar-view_page": {
+  "components/metrics-layouts/metrics-tasks/calendar-view_page": {
     "displayName": "calendar-view_page",
     "description": "",
     "props": [
@@ -248,7 +248,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/data-actions_table-row": {
+  "components/metrics-layouts/metrics-tasks/data-actions_table-row": {
     "displayName": "data-actions_table-row",
     "description": "",
     "props": [
@@ -265,7 +265,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/data-bulk-actions_table": {
+  "components/metrics-layouts/metrics-tasks/data-bulk-actions_table": {
     "displayName": "data-bulk-actions_table",
     "description": "",
     "props": [
@@ -282,7 +282,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/group-views": {
+  "components/metrics-layouts/metrics-tasks/group-views": {
     "displayName": "group-views",
     "description": "",
     "props": [
@@ -304,7 +304,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/growth-plan-view_switcher": {
+  "components/metrics-layouts/metrics-tasks/growth-plan-view_switcher": {
     "displayName": "growth-plan-view_switcher",
     "description": "",
     "props": [
@@ -325,7 +325,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/growth-plan_header": {
+  "components/metrics-layouts/metrics-tasks/growth-plan_header": {
     "displayName": "growth-plan_header",
     "description": "",
     "props": [
@@ -392,7 +392,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/growth-plan_sidebar": {
+  "components/metrics-layouts/metrics-tasks/growth-plan_sidebar": {
     "displayName": "growth-plan_sidebar",
     "description": "",
     "props": [
@@ -429,7 +429,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/growth-plan_states": {
+  "components/metrics-layouts/metrics-tasks/growth-plan_states": {
     "displayName": "growth-plan_states",
     "description": "",
     "props": [
@@ -471,7 +471,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/kanban_page": {
+  "components/metrics-layouts/metrics-tasks/kanban_page": {
     "displayName": "kanban_page",
     "description": "",
     "props": [
@@ -508,7 +508,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/meeting-recap_page": {
+  "components/metrics-layouts/metrics-tasks/meeting-recap_page": {
     "displayName": "meeting-recap_page",
     "description": "",
     "props": [
@@ -535,7 +535,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/owner-rollup_page": {
+  "components/metrics-layouts/metrics-tasks/owner-rollup_page": {
     "displayName": "owner-rollup_page",
     "description": "",
     "props": [
@@ -552,7 +552,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/tasks-columns": {
+  "components/metrics-layouts/metrics-tasks/tasks-columns": {
     "displayName": "tasks-columns",
     "description": "",
     "props": [
@@ -564,7 +564,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/tasks-import_dialog": {
+  "components/metrics-layouts/metrics-tasks/tasks-import_dialog": {
     "displayName": "tasks-import_dialog",
     "description": "",
     "props": [
@@ -586,7 +586,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/tasks-multi-delete_dialog": {
+  "components/metrics-layouts/metrics-tasks/tasks-multi-delete_dialog": {
     "displayName": "tasks-multi-delete_dialog",
     "description": "",
     "props": [
@@ -613,7 +613,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/tasks-mutate_drawer": {
+  "components/metrics-layouts/metrics-tasks/tasks-mutate_drawer": {
     "displayName": "tasks-mutate_drawer",
     "description": "",
     "props": [
@@ -640,7 +640,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/tasks-primary-buttons": {
+  "components/metrics-layouts/metrics-tasks/tasks-primary-buttons": {
     "displayName": "tasks-primary-buttons",
     "description": "",
     "props": [
@@ -652,7 +652,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/tasks_dialogs": {
+  "components/metrics-layouts/metrics-tasks/tasks_dialogs": {
     "displayName": "tasks_dialogs",
     "description": "",
     "props": [
@@ -664,7 +664,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/tasks_layout": {
+  "components/metrics-layouts/metrics-tasks/tasks_layout": {
     "displayName": "tasks_layout",
     "description": "",
     "props": [
@@ -676,7 +676,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/tasks_provider": {
+  "components/metrics-layouts/metrics-tasks/tasks_provider": {
     "displayName": "tasks_provider",
     "description": "",
     "props": [
@@ -688,7 +688,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/tasks_table": {
+  "components/metrics-layouts/metrics-tasks/tasks_table": {
     "displayName": "tasks_table",
     "description": "",
     "props": [
@@ -705,7 +705,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/workstream-mutate_drawer": {
+  "components/metrics-layouts/metrics-tasks/workstream-mutate_drawer": {
     "displayName": "workstream-mutate_drawer",
     "description": "",
     "props": [
@@ -732,7 +732,7 @@
       }
     ]
   },
-  "components/metrics-layouts/tasks/workstreams_section": {
+  "components/metrics-layouts/metrics-tasks/workstreams_section": {
     "displayName": "workstreams_section",
     "description": "",
     "props": [
@@ -745,6 +745,18 @@
         "name": "className",
         "type": "string",
         "required": false
+      }
+    ]
+  },
+  "components/metrics-layouts/settings/account-settings_page": {
+    "displayName": "account-settings_page",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
       }
     ]
   },
@@ -969,7 +981,7 @@
       },
       {
         "name": "variant",
-        "type": "\"default\" | \"destructive\" | \"outline\" | \"secondary\" | \"ghost\" | \"hover\" | \"link\"",
+        "type": "\"default\" | \"destructive\" | \"outline\" | \"secondary\" | \"ghost\" | \"hover\" | \"link\" | \"unstyled\"",
         "required": false,
         "description": "Generated from cva variant variants."
       },
@@ -5781,6 +5793,90 @@
         "type": "React.ReactNode",
         "required": false,
         "description": "Child content rendered inside the component."
+      }
+    ]
+  },
+  "primitives/users/account-settings-01/account-settings-01": {
+    "displayName": "account-settings-01",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/account-settings-01/content/connect-account": {
+    "displayName": "connect-account",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/account-settings-01/content/danger-zone": {
+    "displayName": "danger-zone",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/account-settings-01/content/email-password": {
+    "displayName": "email-password",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/account-settings-01/content/personal-info": {
+    "displayName": "personal-info",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/account-settings-01/content/social-url": {
+    "displayName": "social-url",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/account-settings-01": {
+    "displayName": "account-settings-01",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
       }
     ]
   },
