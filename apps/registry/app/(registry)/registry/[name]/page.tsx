@@ -2,7 +2,7 @@ import { IconSquareRoundedArrowLeftFilled } from "@tabler/icons-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { ComponentCard } from "@repo/ui/ui-registry";
+import { ComponentCard } from "@ui-registry";
 import { getRegistryItem, getRegistryItems } from "@lib/registry";
 import { getPrompt } from "@lib/utils";
 
@@ -46,6 +46,8 @@ export default async function RegistryItemPage({
         prompt={getPrompt()}
         hasDemo={false}
       />
+
+      <RegistryMetadataPanel metadata={component.metadata} />
     </div>
   );
 }

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-invalid",
+  "title": "Textarea Invalid",
+  "description": "Auto-generated registry entry for textarea-invalid.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/textarea/textarea-invalid.tsx",
+      "content": "import { Field, FieldDescription, FieldLabel } from \"@auto-form/fields/field\";\nimport { Textarea } from \"./textarea\";\n\nexport function TextareaInvalid() {\n  return (\n    <Field data-invalid>\n      <FieldLabel htmlFor=\"textarea-invalid\">Message</FieldLabel>\n      <Textarea\n        id=\"textarea-invalid\"\n        placeholder=\"Type your message here.\"\n        aria-invalid\n      />\n      <FieldDescription>Please enter a valid message.</FieldDescription>\n    </Field>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/textarea/textarea-invalid.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

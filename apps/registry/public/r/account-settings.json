@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "account-settings",
+  "title": "Account Settings",
+  "description": "Auto-generated registry entry for account-settings.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/users/account-settings.tsx",
+      "content": "import { Separator } from '@ui-core'\n\nimport PersonalInfo from '@/components/shadcn-studio/blocks/account-settings-01/content/personal-info'\nimport EmailPass from '@/components/shadcn-studio/blocks/account-settings-01/content/email-password'\nimport ConnectAccount from '@/components/shadcn-studio/blocks/account-settings-01/content/connect-account'\nimport SocialUrl from '@/components/shadcn-studio/blocks/account-settings-01/content/social-url'\nimport DangerZone from '@/components/shadcn-studio/blocks/account-settings-01/content/danger-zone'\n\nconst UserGeneral = () => {\n  return (\n    <section className='py-3'>\n      <div className='mx-auto max-w-7xl'>\n        <PersonalInfo />\n        <Separator className='my-10' />\n        <EmailPass />\n        <Separator className='my-10' />\n        <ConnectAccount />\n        <Separator className='my-10' />\n        <SocialUrl />\n        <Separator className='my-10' />\n        <DangerZone />\n      </div>\n    </section>\n  )\n}\n\nexport default UserGeneral\n",
+      "type": "registry:ui",
+      "target": "src/primitive/users/account-settings.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

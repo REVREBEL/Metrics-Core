@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-link",
+  "title": "Button Link",
+  "description": "Auto-generated registry entry for button-link.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-link.tsx",
+      "content": "import { Button } from \"./button\";\n\nexport default function ButtonLink() {\n  return <Button variant=\"link\">Link</Button>;\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-link.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

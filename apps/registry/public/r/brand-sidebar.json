@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "brand-sidebar",
+  "title": "Brand Sidebar",
+  "description": "A styled, simple, reusable sidebar",
+  "registryDependencies": [
+    "@metrics/metrics",
+    "@metrics/badge",
+    "@metrics/button",
+    "@metrics/sidebar",
+    "@metrics/sonner"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/brand-sidebar.tsx",
+      "content": "\"use client\";\n\nimport {\n\tAlertTriangle,\n\tBarChart2,\n\tClock,\n\tDatabase,\n\tHome,\n\tLayoutGrid,\n\tMessageSquareText,\n\tMoreHorizontal,\n\tPlus,\n\tTable,\n} from \"lucide-react\";\nimport Link from \"next/link\";\nimport { usePathname } from \"next/navigation\";\nimport type * as React from \"react\";\n\nimport { Button } from \"@buttons/button\";\nimport { cn } from \"@/lib/utils\";\nimport {\n\tSidebar,\n\tSidebarContent,\n\tSidebarGroup,\n\tSidebarGroupContent,\n\tSidebarHeader,\n\tSidebarMenu,\n\tSidebarMenuBadge,\n\tSidebarMenuButton,\n\tSidebarMenuItem,\n\tSidebarSeparator,\n\tuseSidebar,\n} from \"./sidebar\";\n\ninterface NavItem {\n\ttitle: string;\n\thref: string;\n\ticon: React.ReactNode;\n\tbadge?: {\n\t\ttext: string;\n\t};\n}\n\ninterface SidebarProps {\n\tcollapsed?: boolean;\n\tonToggle?: () => void;\n\tclassName?: string;\n}\n\nexport function BrandSidebar({\n\tcollapsed = false,\n\tonToggle,\n\tclassName,\n}: SidebarProps) {\n\tconst pathname = usePathname();\n\tconst { state } = useSidebar();\n\tconst isCollapsed = state === \"collapsed\";\n\n\tconst mainNavItems: NavItem[] = [\n\t\t{\n\t\t\ttitle: \"Home\",\n\t\t\thref: \"#\",\n\t\t\ticon: <Home className=\"size-4\" />,\n\t\t},\n\t\t{\n\t\t\ttitle: \"Projects\",\n\t\t\thref: \"#projects\",\n\t\t\ticon: <LayoutGrid className=\"size-4\" />,\n\t\t},\n\t\t{\n\t\t\ttitle: \"Databases\",\n\t\t\thref: \"#databases\",\n\t\t\ticon: <Database className=\"size-4\" />,\n\t\t},\n\t\t{\n\t\t\ttitle: \"Tables\",\n\t\t\thref: \"#tables\",\n\t\t\ticon: <Table className=\"size-4\" />,\n\t\t\tbadge: {\n\t\t\t\ttext: \"Beta\",\n\t\t\t},\n\t\t},\n\t\t{\n\t\t\ttitle: \"AI\",\n\t\t\thref: \"#ai\",\n\t\t\ticon: <MessageSquareText className=\"size-4\" />,\n\t\t\tbadge: {\n\t\t\t\ttext: \"Alpha\",\n\t\t\t},\n\t\t},\n\t];\n\n\tconst toolsNavItems: NavItem[] = [\n\t\t{\n\t\t\ttitle: \"Alerts\",\n\t\t\thref: \"#alerts\",\n\t\t\ticon: <AlertTriangle className=\"size-4\" />,\n\t\t},\n\t\t{\n\t\t\ttitle: \"Analytics\",\n\t\t\thref: \"#analytics\",\n\t\t\ticon: <BarChart2 className=\"size-4\" />,\n\t\t},\n\t\t{\n\t\t\ttitle: \"History\",\n\t\t\thref: \"#history\",\n\t\t\ticon: <Clock className=\"size-4\" />,\n\t\t},\n\t\t{\n\t\t\ttitle: \"More\",\n\t\t\thref: \"#more\",\n\t\t\ticon: <MoreHorizontal className=\"size-4\" />,\n\t\t},\n\t];\n\n\treturn (\n\t\t<Sidebar variant=\"sidebar\" collapsible=\"icon\" className=\"mt-16\">\n\t\t\t<SidebarHeader>\n\t\t\t\t<div className={cn(isCollapsed ? \"py-2\" : \"p-2\")}>\n\t\t\t\t\t<Button className={cn(isCollapsed ? \"h-8 w-8 p-0\" : \"w-full\")}>\n\t\t\t\t\t\t<Plus className={cn(\"size-4\", !isCollapsed && \"mr-1\")} />\n\t\t\t\t\t\t{!isCollapsed && <span>Create</span>}\n\t\t\t\t\t</Button>\n\t\t\t\t</div>\n\t\t\t</SidebarHeader>\n\n\t\t\t<SidebarContent>\n\t\t\t\t{/* Main Nav Items */}\n\t\t\t\t<SidebarGroup>\n\t\t\t\t\t<SidebarGroupContent>\n\t\t\t\t\t\t<SidebarMenu>\n\t\t\t\t\t\t\t{mainNavItems.map((item) => (\n\t\t\t\t\t\t\t\t<SidebarMenuItem key={item.href}>\n\t\t\t\t\t\t\t\t\t<SidebarMenuButton\n\t\t\t\t\t\t\t\t\t\tasChild\n\t\t\t\t\t\t\t\t\t\tisActive={\n\t\t\t\t\t\t\t\t\t\t\tpathname === item.href ||\n\t\t\t\t\t\t\t\t\t\t\t(pathname === \"\" && item.href === \"/\")\n\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\ttooltip={item.title}\n\t\t\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t\t\t<Link href={item.href}>\n\t\t\t\t\t\t\t\t\t\t\t{item.icon}\n\t\t\t\t\t\t\t\t\t\t\t<span>{item.title}</span>\n\t\t\t\t\t\t\t\t\t\t</Link>\n\t\t\t\t\t\t\t\t\t</SidebarMenuButton>\n\t\t\t\t\t\t\t\t\t{item.badge && (\n\t\t\t\t\t\t\t\t\t\t<SidebarMenuBadge>{item.badge.text}</SidebarMenuBadge>\n\t\t\t\t\t\t\t\t\t)}\n\t\t\t\t\t\t\t\t</SidebarMenuItem>\n\t\t\t\t\t\t\t))}\n\t\t\t\t\t\t</SidebarMenu>\n\t\t\t\t\t</SidebarGroupContent>\n\t\t\t\t</SidebarGroup>\n\n\t\t\t\t<SidebarSeparator />\n\n\t\t\t\t{/* Tools Nav Items */}\n\t\t\t\t<SidebarGroup>\n\t\t\t\t\t<SidebarGroupContent>\n\t\t\t\t\t\t<SidebarMenu>\n\t\t\t\t\t\t\t{toolsNavItems.map((item) => (\n\t\t\t\t\t\t\t\t<SidebarMenuItem key={item.href}>\n\t\t\t\t\t\t\t\t\t<SidebarMenuButton\n\t\t\t\t\t\t\t\t\t\tasChild\n\t\t\t\t\t\t\t\t\t\tisActive={pathname === item.href}\n\t\t\t\t\t\t\t\t\t\ttooltip={item.title}\n\t\t\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t\t\t<Link href={item.href}>\n\t\t\t\t\t\t\t\t\t\t\t{item.icon}\n\t\t\t\t\t\t\t\t\t\t\t<span>{item.title}</span>\n\t\t\t\t\t\t\t\t\t\t</Link>\n\t\t\t\t\t\t\t\t\t</SidebarMenuButton>\n\t\t\t\t\t\t\t\t\t{item.badge && (\n\t\t\t\t\t\t\t\t\t\t<SidebarMenuBadge>{item.badge.text}</SidebarMenuBadge>\n\t\t\t\t\t\t\t\t\t)}\n\t\t\t\t\t\t\t\t</SidebarMenuItem>\n\t\t\t\t\t\t\t))}\n\t\t\t\t\t\t</SidebarMenu>\n\t\t\t\t\t</SidebarGroupContent>\n\t\t\t\t</SidebarGroup>\n\t\t\t</SidebarContent>\n\t\t</Sidebar>\n\t);\n}\n",
+      "type": "registry:component",
+      "target": "src/components/brand-sidebar.tsx"
+    },
+    {
+      "path": "apps/registry/app/demo/[name]/blocks/shell-layout.tsx",
+      "content": "import React, { type ReactNode } from \"react\";\n\nimport { BrandHeader } from \"@/components/brand-header\";\nimport { BrandSidebar } from \"@/components/brand-sidebar\";\nimport { SidebarProvider } from \"@ui\";\nimport { Toaster } from \"@ui\";\n\nexport default function ShellLayout({\n  children,\n}: Readonly<{\n  children: ReactNode;\n}>) {\n  return (\n    <SidebarProvider>\n      <BrandHeader />\n      <BrandSidebar />\n      <main className=\"flex w-full justify-center\">\n        <div className=\"container\">{children}</div>\n      </main>\n      <Toaster />\n    </SidebarProvider>\n  );\n}\n",
+      "type": "registry:file",
+      "target": "src/app/layout.tsx"
+    },
+    {
+      "path": "apps/registry/app/demo/[name]/blocks/blank-page.tsx",
+      "content": "export default function BlankPage() {\n  return (\n    <div className=\"flex flex-col items-center justify-center gap-4 rounded-md py-96\">\n      <div className=\"text-muted-foreground\">\n        Start prompting to use your component!\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:page",
+      "target": "src/app/page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

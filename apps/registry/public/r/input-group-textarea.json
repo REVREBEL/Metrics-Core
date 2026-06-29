@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-group-textarea",
+  "title": "Input Group Textarea",
+  "description": "Auto-generated registry entry for input-group-textarea.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-group-textarea.tsx",
+      "content": "import {\n  IconBrandJavascript,\n  IconCopy,\n  IconCornerDownLeft,\n  IconRefresh,\n} from \"@tabler/icons-react\";\nimport {\n  InputGroup,\n  InputGroupAddon,\n  InputGroupButton,\n  InputGroupText,\n  InputGroupTextarea,\n} from \"./input-group\";\n\nexport default function InputGroupTextareaExample() {\n  return (\n    <div className=\"grid w-full max-w-md gap-4\">\n      <InputGroup>\n        <InputGroupTextarea\n          id=\"textarea-code-32\"\n          placeholder=\"console.log('Hello, world!');\"\n          className=\"min-h-[200px]\"\n        />\n        <InputGroupAddon align=\"block-end\" className=\"border-t\">\n          <InputGroupText>Line 1, Column 1</InputGroupText>\n          <InputGroupButton size=\"xs\" className=\"ml-auto\" variant=\"default\">\n            Run <IconCornerDownLeft strokeWidth={1.5} size={20} />\n          </InputGroupButton>\n        </InputGroupAddon>\n        <InputGroupAddon align=\"block-start\" className=\"border-b\">\n          <InputGroupText className=\"font-mono font-medium\">\n            <IconBrandJavascript strokeWidth={1.5} size={20} />\n            script.js\n          </InputGroupText>\n          <InputGroupButton className=\"ml-auto\" size=\"icon-xs\">\n            <IconRefresh strokeWidth={1.5} size={20} />\n          </InputGroupButton>\n          <InputGroupButton variant=\"ghost\" size=\"icon-xs\">\n            <IconCopy strokeWidth={1.5} size={20} />\n          </InputGroupButton>\n        </InputGroupAddon>\n      </InputGroup>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-group-textarea.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea-field",
+  "title": "Textarea Field",
+  "description": "Auto-generated registry entry for textarea-field.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/textarea/textarea-field.tsx",
+      "content": "import { Field, FieldDescription, FieldLabel } from \"@auto-form/fields/field\";\nimport { Textarea } from \"./textarea\";\n\nexport function TextareaField() {\n  return (\n    <Field>\n      <FieldLabel htmlFor=\"textarea-message\">Message</FieldLabel>\n      <FieldDescription>Enter your message below.</FieldDescription>\n      <Textarea id=\"textarea-message\" placeholder=\"Type your message here.\" />\n    </Field>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/textarea/textarea-field.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

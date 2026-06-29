@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "add-to-cursor",
+  "title": "Add To Cursor",
+  "description": "Auto-generated registry entry for add-to-cursor.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/registry/add-to-cursor.tsx",
+      "content": "import Link from \"next/link\";\n\nimport { Button } from \"@/primitives/buttons/button\";\n\nexport function AddToCursor({\n  mcp,\n}: {\n  mcp: { command: string; env: { [key: string]: string } };\n}) {\n  function generateCursorDeeplink() {\n    const name = \"shadcn\";\n    const config = btoa(JSON.stringify(mcp));\n\n    return `cursor://anysphere.cursor-deeplink/mcp/install?name=${name}&config=${config}`;\n  }\n\n  return (\n    <Button\n      size=\"sm\"\n      className=\"bg-black text-white hover:bg-black hover:shadow-sm dark:bg-white dark:text-black dark:hover:bg-white\"\n      asChild\n    >\n      <Link href={generateCursorDeeplink()}>\n        <img\n          src=\"https://cursor.com/deeplink/mcp-install-light.svg\"\n          alt=\"Add shadcn/ui Registry MCP server to Cursor\"\n          height=\"80\"\n          className=\"hidden dark:block\"\n        />\n        <img\n          src=\"https://cursor.com/deeplink/mcp-install-dark.svg\"\n          alt=\"Add shadcn/ui Registry MCP server to Cursor\"\n          height=\"80\"\n          className=\"block dark:hidden\"\n        />\n      </Link>\n    </Button>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/registry/add-to-cursor.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

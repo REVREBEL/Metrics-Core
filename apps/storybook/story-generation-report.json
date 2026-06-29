@@ -1,0 +1,3027 @@
+{
+  "generatedAt": "2026-06-25T21:16:38.825Z",
+  "mode": "check",
+  "totals": {
+    "components": 603,
+    "created": 0,
+    "skipped": 603,
+    "missing": 0
+  },
+  "items": [
+    {
+      "component": "ButtonDefault",
+      "story": "packages/ui/src/primitives/buttons/button-default.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonDestructive",
+      "story": "packages/ui/src/primitives/buttons/button-destructive.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGhost",
+      "story": "packages/ui/src/primitives/buttons/button-ghost.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupDropdown",
+      "story": "packages/ui/src/primitives/buttons/button-group-dropdown.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupInputGroup",
+      "story": "packages/ui/src/primitives/buttons/button-group-input-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupInput",
+      "story": "packages/ui/src/primitives/buttons/button-group-input.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupNested",
+      "story": "packages/ui/src/primitives/buttons/button-group-nested.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupOrientation",
+      "story": "packages/ui/src/primitives/buttons/button-group-orientation.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupPopover",
+      "story": "packages/ui/src/primitives/buttons/button-group-popover.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupSelect",
+      "story": "packages/ui/src/primitives/buttons/button-group-select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupSeparatorDemo",
+      "story": "packages/ui/src/primitives/buttons/button-group-separator.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupSize",
+      "story": "packages/ui/src/primitives/buttons/button-group-size.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupSplit",
+      "story": "packages/ui/src/primitives/buttons/button-group-split.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroup",
+      "story": "packages/ui/src/primitives/buttons/button-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupSeparator",
+      "story": "packages/ui/src/primitives/buttons/button-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonGroupText",
+      "story": "packages/ui/src/primitives/buttons/button-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonIcon",
+      "story": "packages/ui/src/primitives/buttons/button-icon.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonLink",
+      "story": "packages/ui/src/primitives/buttons/button-link.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonOutline",
+      "story": "packages/ui/src/primitives/buttons/button-outline.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonRender",
+      "story": "packages/ui/src/primitives/buttons/button-render.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonRounded",
+      "story": "packages/ui/src/primitives/buttons/button-rounded.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonSecondary",
+      "story": "packages/ui/src/primitives/buttons/button-secondary.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonSize",
+      "story": "packages/ui/src/primitives/buttons/button-size.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonLoading",
+      "story": "packages/ui/src/primitives/buttons/button-spinner.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ButtonWithIcon",
+      "story": "packages/ui/src/primitives/buttons/button-with-icon.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Button",
+      "story": "packages/ui/src/primitives/buttons/button.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DiscoverButton",
+      "story": "packages/ui/src/primitives/buttons/discover-button.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SaveButton",
+      "story": "packages/ui/src/primitives/buttons/status-button.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ToolbarButton",
+      "story": "packages/ui/src/primitives/buttons/toolbar-button.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AreaChartDemo",
+      "story": "packages/ui/src/primitives/charts/chart-demos.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "BarChartDemo",
+      "story": "packages/ui/src/primitives/charts/chart-demos.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "LineChartDemo",
+      "story": "packages/ui/src/primitives/charts/chart-demos.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PieChartDemo",
+      "story": "packages/ui/src/primitives/charts/chart-demos.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ChartContainer",
+      "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ChartTooltipContent",
+      "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ChartLegendContent",
+      "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ChartStyle",
+      "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "LineChart",
+      "story": "packages/ui/src/primitives/charts/line-chart.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridColumnFilter",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-column-filter.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridColumnVisibility",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-column-visibility.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridPagination",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-pagination.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableDndRowHandle",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table-dnd-rows.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableDndRows",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table-dnd-rows.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableDnd",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table-dnd.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTable",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableBase",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableBody",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableBodyRow",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableBodyRowCell",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableBodyRowExpandded",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableBodyRowSkeleton",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableBodyRowSkeletonCell",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableEmpty",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableHead",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableHeadRow",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableHeadRowCell",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableHeadRowCellResize",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableLoader",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableRowSelect",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableRowSelectAll",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridTableRowSpacer",
+      "story": "packages/ui/src/primitives/data-grid/data-grid-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridProvider",
+      "story": "packages/ui/src/primitives/data-grid/data-grid.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGrid",
+      "story": "packages/ui/src/primitives/data-grid/data-grid.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridContainer",
+      "story": "packages/ui/src/primitives/data-grid/data-grid.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuAvatar",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu-avatar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuBasic",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu-basic.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuCheckboxesIcons",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu-checkboxes-icons.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuCheckboxes",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu-checkboxes.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuDestructive",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu-destructive.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuIcons",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu-icons.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuRadioGroupDemo",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu-radio-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuRadioIcons",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu-radio-icons.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuShortcuts",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu-shortcuts.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuSubmenu",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu-submenu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenu",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuPortal",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuTrigger",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuContent",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuGroup",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuLabel",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuItem",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuCheckboxItem",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuRadioGroup",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuRadioItem",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuSeparator",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuShortcut",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuSub",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuSubTrigger",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuSubContent",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SelectDropdown",
+      "story": "packages/ui/src/primitives/dropdowns/select-dropdown.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TwentyTwelveOne",
+      "story": "packages/ui/src/primitives/dropdowns/smooth-dropdown.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AutoFormArray",
+      "story": "packages/ui/src/primitives/forms/fields/array.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AutoFormCheckbox",
+      "story": "packages/ui/src/primitives/forms/fields/checkbox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AutoFormDate",
+      "story": "packages/ui/src/primitives/forms/fields/date.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AutoFormEnum",
+      "story": "packages/ui/src/primitives/forms/fields/enum.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FieldGroupExample",
+      "story": "packages/ui/src/primitives/forms/fields/field-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Field",
+      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FieldLabel",
+      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FieldDescription",
+      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FieldError",
+      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FieldGroup",
+      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FieldLegend",
+      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FieldSeparator",
+      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FieldSet",
+      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FieldContent",
+      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FieldTitle",
+      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormItem",
+      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormLabel",
+      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormControl",
+      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormDescription",
+      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormMessage",
+      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormField",
+      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AutoFormInput",
+      "story": "packages/ui/src/primitives/forms/fields/input.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AutoFormNumber",
+      "story": "packages/ui/src/primitives/forms/fields/number.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AutoFormObject",
+      "story": "packages/ui/src/primitives/forms/fields/object.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AutoFormRadioGroup",
+      "story": "packages/ui/src/primitives/forms/fields/radio-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AutoFormSwitch",
+      "story": "packages/ui/src/primitives/forms/fields/switch.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AutoFormTextarea",
+      "story": "packages/ui/src/primitives/forms/fields/textarea.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormItem",
+      "story": "packages/ui/src/primitives/forms/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormLabel",
+      "story": "packages/ui/src/primitives/forms/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormControl",
+      "story": "packages/ui/src/primitives/forms/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormDescription",
+      "story": "packages/ui/src/primitives/forms/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormMessage",
+      "story": "packages/ui/src/primitives/forms/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormField",
+      "story": "packages/ui/src/primitives/forms/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ImageEditBlock",
+      "story": "packages/ui/src/primitives/image-blocks/image-edit-block.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ImageEditDialog",
+      "story": "packages/ui/src/primitives/image-blocks/image-edit-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Particle",
+      "story": "packages/ui/src/primitives/inputs/combobox-option.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Particle",
+      "story": "packages/ui/src/primitives/inputs/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputBadge",
+      "story": "packages/ui/src/primitives/inputs/input-badge.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputBasic",
+      "story": "packages/ui/src/primitives/inputs/input-basic.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputButtonGroup",
+      "story": "packages/ui/src/primitives/inputs/input-button-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputDisabled",
+      "story": "packages/ui/src/primitives/inputs/input-disabled.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputField",
+      "story": "packages/ui/src/primitives/inputs/input-field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputFieldgroup",
+      "story": "packages/ui/src/primitives/inputs/input-fieldgroup.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputFile",
+      "story": "packages/ui/src/primitives/inputs/input-file.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputForm",
+      "story": "packages/ui/src/primitives/inputs/input-form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGrid",
+      "story": "packages/ui/src/primitives/inputs/input-grid.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupBasic",
+      "story": "packages/ui/src/primitives/inputs/input-group-basic.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupBlockEnd",
+      "story": "packages/ui/src/primitives/inputs/input-group-block-end.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupBlockStart",
+      "story": "packages/ui/src/primitives/inputs/input-group-block-start.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupButtonGroup",
+      "story": "packages/ui/src/primitives/inputs/input-group-button-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupButtonExample",
+      "story": "packages/ui/src/primitives/inputs/input-group-button.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupCustom",
+      "story": "packages/ui/src/primitives/inputs/input-group-custom.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupDropdown",
+      "story": "packages/ui/src/primitives/inputs/input-group-dropdown.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupIcon",
+      "story": "packages/ui/src/primitives/inputs/input-group-icon.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupInCard",
+      "story": "packages/ui/src/primitives/inputs/input-group-in-card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupInlineEnd",
+      "story": "packages/ui/src/primitives/inputs/input-group-inline-end.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupInlineStart",
+      "story": "packages/ui/src/primitives/inputs/input-group-inline-start.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupKbd",
+      "story": "packages/ui/src/primitives/inputs/input-group-kbd.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupLabel",
+      "story": "packages/ui/src/primitives/inputs/input-group-label.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupSpinner",
+      "story": "packages/ui/src/primitives/inputs/input-group-spinner.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupTextExample",
+      "story": "packages/ui/src/primitives/inputs/input-group-text.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupTextareaExamples",
+      "story": "packages/ui/src/primitives/inputs/input-group-textarea-examples.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupTextareaExample",
+      "story": "packages/ui/src/primitives/inputs/input-group-textarea.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupTooltip",
+      "story": "packages/ui/src/primitives/inputs/input-group-tooltip.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupWithAddons",
+      "story": "packages/ui/src/primitives/inputs/input-group-with-addons.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupWithButtons",
+      "story": "packages/ui/src/primitives/inputs/input-group-with-buttons.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupWithKbd",
+      "story": "packages/ui/src/primitives/inputs/input-group-with-kbd.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupWithTooltip",
+      "story": "packages/ui/src/primitives/inputs/input-group-with-tooltip.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroup",
+      "story": "packages/ui/src/primitives/inputs/input-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupAddon",
+      "story": "packages/ui/src/primitives/inputs/input-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupButton",
+      "story": "packages/ui/src/primitives/inputs/input-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupInput",
+      "story": "packages/ui/src/primitives/inputs/input-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupText",
+      "story": "packages/ui/src/primitives/inputs/input-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputGroupTextarea",
+      "story": "packages/ui/src/primitives/inputs/input-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputInline",
+      "story": "packages/ui/src/primitives/inputs/input-inline.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputInputGroup",
+      "story": "packages/ui/src/primitives/inputs/input-input-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputInvalid",
+      "story": "packages/ui/src/primitives/inputs/input-invalid.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTPAlphanumeric",
+      "story": "packages/ui/src/primitives/inputs/input-otp-alphanumeric.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTPControlled",
+      "story": "packages/ui/src/primitives/inputs/input-otp-controlled.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTPDisabled",
+      "story": "packages/ui/src/primitives/inputs/input-otp-disabled.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTPForm",
+      "story": "packages/ui/src/primitives/inputs/input-otp-form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTPFourDigits",
+      "story": "packages/ui/src/primitives/inputs/input-otp-four-digits.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTPInvalid",
+      "story": "packages/ui/src/primitives/inputs/input-otp-invalid.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTPPattern",
+      "story": "packages/ui/src/primitives/inputs/input-otp-pattern.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTPWithSeparator",
+      "story": "packages/ui/src/primitives/inputs/input-otp-separator.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTP",
+      "story": "packages/ui/src/primitives/inputs/input-otp.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTPGroup",
+      "story": "packages/ui/src/primitives/inputs/input-otp.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTPSeparator",
+      "story": "packages/ui/src/primitives/inputs/input-otp.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "InputOTPSlot",
+      "story": "packages/ui/src/primitives/inputs/input-otp.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Input",
+      "story": "packages/ui/src/primitives/inputs/input.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "BrandHeader",
+      "story": "packages/ui/src/primitives/layouts/brand-header.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "BrandSidebar",
+      "story": "packages/ui/src/primitives/layouts/brand-sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComingSoon",
+      "story": "packages/ui/src/primitives/layouts/coming-soon.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Hero",
+      "story": "packages/ui/src/primitives/layouts/hero.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MeasuredContainer",
+      "story": "packages/ui/src/primitives/layouts/measured-container.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenu",
+      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuList",
+      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuItem",
+      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuContent",
+      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuTrigger",
+      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuLink",
+      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuIndicator",
+      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuViewport",
+      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationProgress",
+      "story": "packages/ui/src/primitives/layouts/navigation-progress.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ResizableHandleDemo",
+      "story": "packages/ui/src/primitives/layouts/resizable-handle.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ResizableVertical",
+      "story": "packages/ui/src/primitives/layouts/resizable-vertical.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Sidebar",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarContent",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarFooter",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarGroup",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarGroupAction",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarGroupContent",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarGroupLabel",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarHeader",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarInput",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarInset",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarMenu",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarMenuAction",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarMenuBadge",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarMenuButton",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarMenuItem",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarMenuSkeleton",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarMenuSub",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarMenuSubButton",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarMenuSubItem",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarProvider",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarRail",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarSeparator",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarTrigger",
+      "story": "packages/ui/src/primitives/layouts/sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SubNav",
+      "story": "packages/ui/src/primitives/layouts/sub-nav.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SwapLayoutLoader",
+      "story": "packages/ui/src/primitives/layouts/swap-layout-loader.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SwapLayout",
+      "story": "packages/ui/src/primitives/layouts/swap-layout.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Container",
+      "story": "packages/ui/src/primitives/layouts/swap-layout.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Slot",
+      "story": "packages/ui/src/primitives/layouts/swap-layout.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Item",
+      "story": "packages/ui/src/primitives/layouts/swap-layout.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Handle",
+      "story": "packages/ui/src/primitives/layouts/swap-layout.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "LinkBubbleMenu",
+      "story": "packages/ui/src/primitives/links/link-bubble-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "LinkEditBlock",
+      "story": "packages/ui/src/primitives/links/link-edit-block.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "LinkEditPopover",
+      "story": "packages/ui/src/primitives/links/link-edit-popover.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "LinkPopoverBlock",
+      "story": "packages/ui/src/primitives/links/link-popover-block.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Particle",
+      "story": "packages/ui/src/primitives/menus/menu-option.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Particle",
+      "story": "packages/ui/src/primitives/menus/menu-other.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuTrigger",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuPopup",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuGroup",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuItem",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuCheckboxItem",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuRadioGroup",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuRadioItem",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuGroupLabel",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuSeparator",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuShortcut",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuSub",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuSubTrigger",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenuSubPopup",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarCheckbox",
+      "story": "packages/ui/src/primitives/menus/menubar-checkbox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarIcons",
+      "story": "packages/ui/src/primitives/menus/menubar-icons.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarRadio",
+      "story": "packages/ui/src/primitives/menus/menubar-radio.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarSubmenu",
+      "story": "packages/ui/src/primitives/menus/menubar-submenu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Menubar",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarPortal",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarMenu",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarTrigger",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarContent",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarGroup",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarSeparator",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarLabel",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarItem",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarShortcut",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarCheckboxItem",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarRadioGroup",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarRadioItem",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarSub",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarSubTrigger",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarSubContent",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenu",
+      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuList",
+      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuItem",
+      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuContent",
+      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuTrigger",
+      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuLink",
+      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuIndicator",
+      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuViewport",
+      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverAlignments",
+      "story": "packages/ui/src/primitives/popovers/popover-alignments.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverBasic",
+      "story": "packages/ui/src/primitives/popovers/popover-basic.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverForm",
+      "story": "packages/ui/src/primitives/popovers/popover-form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverTrigger",
+      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverPopup",
+      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverHeader",
+      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverTitle",
+      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverDescription",
+      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverClose",
+      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AddToCursor",
+      "story": "packages/ui/src/primitives/registry/add-to-cursor.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComponentCard",
+      "story": "packages/ui/src/primitives/registry/component-card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MCPTabs",
+      "story": "packages/ui/src/primitives/registry/mcp-tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "OpenInV0Button",
+      "story": "packages/ui/src/primitives/registry/open-in-v0.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "RegistryLogo",
+      "story": "packages/ui/src/primitives/registry/registry-logo.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "RegistrySidebar",
+      "story": "packages/ui/src/primitives/registry/registry-sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ModeToggle",
+      "story": "packages/ui/src/primitives/registry/theme-toggle.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SectionFive",
+      "story": "packages/ui/src/primitives/sections/five.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SectionFour",
+      "story": "packages/ui/src/primitives/sections/four.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SectionOne",
+      "story": "packages/ui/src/primitives/sections/one.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ShortcutKey",
+      "story": "packages/ui/src/primitives/sections/shortcut-key.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SectionThree",
+      "story": "packages/ui/src/primitives/sections/three.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ToolbarSection",
+      "story": "packages/ui/src/primitives/sections/toolbar-section.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SectionTwo",
+      "story": "packages/ui/src/primitives/sections/two.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SkeletonAvatar",
+      "story": "packages/ui/src/primitives/skeleton/skeleton-avatar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SkeletonCard",
+      "story": "packages/ui/src/primitives/skeleton/skeleton-card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SkeletonDemo",
+      "story": "packages/ui/src/primitives/skeleton/skeleton-demo.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SkeletonForm",
+      "story": "packages/ui/src/primitives/skeleton/skeleton-form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SkeletonTable",
+      "story": "packages/ui/src/primitives/skeleton/skeleton-table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SkeletonText",
+      "story": "packages/ui/src/primitives/skeleton/skeleton-text.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Skeleton",
+      "story": "packages/ui/src/primitives/skeleton/skeleton.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TableActions",
+      "story": "packages/ui/src/primitives/tables/table-actions.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TableFooterExample",
+      "story": "packages/ui/src/primitives/tables/table-footer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Table",
+      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TableHeader",
+      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TableBody",
+      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TableFooter",
+      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TableHead",
+      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TableRow",
+      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TableCell",
+      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TableCaption",
+      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DiscreteTabs",
+      "story": "packages/ui/src/primitives/tabs/discrete-tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TabsDisabled",
+      "story": "packages/ui/src/primitives/tabs/tabs-disabled.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TabsIcons",
+      "story": "packages/ui/src/primitives/tabs/tabs-icons.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TabsLine",
+      "story": "packages/ui/src/primitives/tabs/tabs-line.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TabsVertical",
+      "story": "packages/ui/src/primitives/tabs/tabs-vertical.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Tabs",
+      "story": "packages/ui/src/primitives/tabs/tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TabsList",
+      "story": "packages/ui/src/primitives/tabs/tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TabsTrigger",
+      "story": "packages/ui/src/primitives/tabs/tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TabsContent",
+      "story": "packages/ui/src/primitives/tabs/tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "LongText",
+      "story": "packages/ui/src/primitives/textarea/long-text.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TextareaButton",
+      "story": "packages/ui/src/primitives/textarea/textarea-button.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TextareaDisabled",
+      "story": "packages/ui/src/primitives/textarea/textarea-disabled.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TextareaField",
+      "story": "packages/ui/src/primitives/textarea/textarea-field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TextareaInvalid",
+      "story": "packages/ui/src/primitives/textarea/textarea-invalid.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Textarea",
+      "story": "packages/ui/src/primitives/textarea/textarea.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyBlockquote",
+      "story": "packages/ui/src/primitives/typography/TypographyBlockquoteProps.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyH1",
+      "story": "packages/ui/src/primitives/typography/TypographyH1.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyH2",
+      "story": "packages/ui/src/primitives/typography/TypographyH2.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyH3",
+      "story": "packages/ui/src/primitives/typography/TypographyH3.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyH4",
+      "story": "packages/ui/src/primitives/typography/TypographyH4.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyH5",
+      "story": "packages/ui/src/primitives/typography/TypographyH5.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyLarge",
+      "story": "packages/ui/src/primitives/typography/TypographyLarge.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyLead",
+      "story": "packages/ui/src/primitives/typography/TypographyLead.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyList",
+      "story": "packages/ui/src/primitives/typography/TypographyList.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyMuted",
+      "story": "packages/ui/src/primitives/typography/TypographyMuted.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyP",
+      "story": "packages/ui/src/primitives/typography/TypographyP.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographySmall",
+      "story": "packages/ui/src/primitives/typography/TypographySmall.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyTable",
+      "story": "packages/ui/src/primitives/typography/TypographyTable.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TypographyInlineCode",
+      "story": "packages/ui/src/primitives/typography/TyypographyLineCode.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Accordion",
+      "story": "packages/ui/src/primitives/ui-core/accordion.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AccordionItem",
+      "story": "packages/ui/src/primitives/ui-core/accordion.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AccordionTrigger",
+      "story": "packages/ui/src/primitives/ui-core/accordion.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AccordionContent",
+      "story": "packages/ui/src/primitives/ui-core/accordion.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialog",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogPortal",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogOverlay",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogTrigger",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogContent",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogHeader",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogFooter",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogTitle",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogDescription",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogAction",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogCancel",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Alert",
+      "story": "packages/ui/src/primitives/ui-core/alert.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertTitle",
+      "story": "packages/ui/src/primitives/ui-core/alert.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDescription",
+      "story": "packages/ui/src/primitives/ui-core/alert.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AspectRatio",
+      "story": "packages/ui/src/primitives/ui-core/aspect-ratio.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Avatar",
+      "story": "packages/ui/src/primitives/ui-core/avatar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AvatarImage",
+      "story": "packages/ui/src/primitives/ui-core/avatar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AvatarFallback",
+      "story": "packages/ui/src/primitives/ui-core/avatar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Badge",
+      "story": "packages/ui/src/primitives/ui-core/badge.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Breadcrumb",
+      "story": "packages/ui/src/primitives/ui-core/breadcrumb.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "BreadcrumbList",
+      "story": "packages/ui/src/primitives/ui-core/breadcrumb.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "BreadcrumbItem",
+      "story": "packages/ui/src/primitives/ui-core/breadcrumb.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "BreadcrumbPage",
+      "story": "packages/ui/src/primitives/ui-core/breadcrumb.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "BreadcrumbSeparator",
+      "story": "packages/ui/src/primitives/ui-core/breadcrumb.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "BreadcrumbEllipsis",
+      "story": "packages/ui/src/primitives/ui-core/breadcrumb.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Calendar",
+      "story": "packages/ui/src/primitives/ui-core/calendar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Card",
+      "story": "packages/ui/src/primitives/ui-core/card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CardAction",
+      "story": "packages/ui/src/primitives/ui-core/card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CardContent",
+      "story": "packages/ui/src/primitives/ui-core/card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CardDescription",
+      "story": "packages/ui/src/primitives/ui-core/card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CardFooter",
+      "story": "packages/ui/src/primitives/ui-core/card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CardHeader",
+      "story": "packages/ui/src/primitives/ui-core/card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CardTitle",
+      "story": "packages/ui/src/primitives/ui-core/card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Carousel",
+      "story": "packages/ui/src/primitives/ui-core/carousel.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CarouselContent",
+      "story": "packages/ui/src/primitives/ui-core/carousel.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CarouselItem",
+      "story": "packages/ui/src/primitives/ui-core/carousel.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CarouselPrevious",
+      "story": "packages/ui/src/primitives/ui-core/carousel.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CarouselNext",
+      "story": "packages/ui/src/primitives/ui-core/carousel.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Checkbox",
+      "story": "packages/ui/src/primitives/ui-core/checkbox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Collapsible",
+      "story": "packages/ui/src/primitives/ui-core/collapsible.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CollapsibleTrigger",
+      "story": "packages/ui/src/primitives/ui-core/collapsible.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CollapsibleContent",
+      "story": "packages/ui/src/primitives/ui-core/collapsible.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Combobox",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxChipsInput",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxInput",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxTrigger",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxPopup",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxItem",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxSeparator",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxGroup",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxGroupLabel",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxEmpty",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxValue",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxList",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxClear",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxStatus",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxRow",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxCollection",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxChips",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxChip",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CommandMenu",
+      "story": "packages/ui/src/primitives/ui-core/command-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Command",
+      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CommandDialog",
+      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CommandInput",
+      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CommandList",
+      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CommandEmpty",
+      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CommandGroup",
+      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CommandItem",
+      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CommandShortcut",
+      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CommandSeparator",
+      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ConfigDrawer",
+      "story": "packages/ui/src/primitives/ui-core/config-drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenu",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuTrigger",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuContent",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuItem",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuCheckboxItem",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuRadioItem",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuLabel",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuSeparator",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuShortcut",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuGroup",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuPortal",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuSub",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuSubContent",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuSubTrigger",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuRadioGroup",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CopyCode",
+      "story": "packages/ui/src/primitives/ui-core/copy-code.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DatePicker",
+      "story": "packages/ui/src/primitives/ui-core/date-picker.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TwentyThreeFour",
+      "story": "packages/ui/src/primitives/ui-core/day-picker.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Dialog",
+      "story": "packages/ui/src/primitives/ui-core/dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DialogClose",
+      "story": "packages/ui/src/primitives/ui-core/dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DialogContent",
+      "story": "packages/ui/src/primitives/ui-core/dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DialogDescription",
+      "story": "packages/ui/src/primitives/ui-core/dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DialogFooter",
+      "story": "packages/ui/src/primitives/ui-core/dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DialogHeader",
+      "story": "packages/ui/src/primitives/ui-core/dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DialogOverlay",
+      "story": "packages/ui/src/primitives/ui-core/dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DialogPortal",
+      "story": "packages/ui/src/primitives/ui-core/dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DialogTitle",
+      "story": "packages/ui/src/primitives/ui-core/dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DialogTrigger",
+      "story": "packages/ui/src/primitives/ui-core/dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DirectionProvider",
+      "story": "packages/ui/src/primitives/ui-core/direction.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Drawer",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DrawerPortal",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DrawerOverlay",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DrawerTrigger",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DrawerClose",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DrawerContent",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DrawerHeader",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DrawerFooter",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DrawerTitle",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DrawerDescription",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "EditSwitch",
+      "story": "packages/ui/src/primitives/ui-core/edit-switch.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Empty",
+      "story": "packages/ui/src/primitives/ui-core/empty.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "EmptyHeader",
+      "story": "packages/ui/src/primitives/ui-core/empty.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "EmptyTitle",
+      "story": "packages/ui/src/primitives/ui-core/empty.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "EmptyDescription",
+      "story": "packages/ui/src/primitives/ui-core/empty.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "EmptyContent",
+      "story": "packages/ui/src/primitives/ui-core/empty.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "EmptyMedia",
+      "story": "packages/ui/src/primitives/ui-core/empty.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FiltersContent",
+      "story": "packages/ui/src/primitives/ui-core/filters.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Filters",
+      "story": "packages/ui/src/primitives/ui-core/filters.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Group",
+      "story": "packages/ui/src/primitives/ui-core/group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "GroupSeparator",
+      "story": "packages/ui/src/primitives/ui-core/group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "HoverCardSides",
+      "story": "packages/ui/src/primitives/ui-core/hover-card-sides.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "HoverCard",
+      "story": "packages/ui/src/primitives/ui-core/hover-card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "HoverCardTrigger",
+      "story": "packages/ui/src/primitives/ui-core/hover-card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "HoverCardContent",
+      "story": "packages/ui/src/primitives/ui-core/hover-card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Item",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemMedia",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemContent",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemActions",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemGroup",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemSeparator",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemTitle",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemDescription",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemHeader",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemFooter",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Kbd",
+      "story": "packages/ui/src/primitives/ui-core/kbd.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "KbdGroup",
+      "story": "packages/ui/src/primitives/ui-core/kbd.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Label",
+      "story": "packages/ui/src/primitives/ui-core/label.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Logo",
+      "story": "packages/ui/src/primitives/ui-core/logo.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NativeSelect",
+      "story": "packages/ui/src/primitives/ui-core/native-select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NativeSelectOptGroup",
+      "story": "packages/ui/src/primitives/ui-core/native-select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NativeSelectOption",
+      "story": "packages/ui/src/primitives/ui-core/native-select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenu",
+      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuList",
+      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuItem",
+      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuContent",
+      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuTrigger",
+      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuLink",
+      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuIndicator",
+      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuViewport",
+      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NumberField",
+      "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NumberFieldScrubArea",
+      "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NumberFieldDecrement",
+      "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NumberFieldIncrement",
+      "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NumberFieldGroup",
+      "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NumberFieldInput",
+      "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Pagination",
+      "story": "packages/ui/src/primitives/ui-core/pagination.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PaginationContent",
+      "story": "packages/ui/src/primitives/ui-core/pagination.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PaginationEllipsis",
+      "story": "packages/ui/src/primitives/ui-core/pagination.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PaginationItem",
+      "story": "packages/ui/src/primitives/ui-core/pagination.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PaginationLink",
+      "story": "packages/ui/src/primitives/ui-core/pagination.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PaginationNext",
+      "story": "packages/ui/src/primitives/ui-core/pagination.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PaginationPrevious",
+      "story": "packages/ui/src/primitives/ui-core/pagination.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PreviewCardTrigger",
+      "story": "packages/ui/src/primitives/ui-core/preview-card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PreviewCardPopup",
+      "story": "packages/ui/src/primitives/ui-core/preview-card.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ProductGrid",
+      "story": "packages/ui/src/primitives/ui-core/product-grid.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Progress",
+      "story": "packages/ui/src/primitives/ui-core/progress.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Promo",
+      "story": "packages/ui/src/primitives/ui-core/promo.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "RadioGroup",
+      "story": "packages/ui/src/primitives/ui-core/radio-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "RadioGroupItem",
+      "story": "packages/ui/src/primitives/ui-core/radio-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Rating",
+      "story": "packages/ui/src/primitives/ui-core/rating.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ResizablePanelGroup",
+      "story": "packages/ui/src/primitives/ui-core/resizable.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ResizableHandle",
+      "story": "packages/ui/src/primitives/ui-core/resizable.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ScrollArea",
+      "story": "packages/ui/src/primitives/ui-core/scroll-area.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ScrollBar",
+      "story": "packages/ui/src/primitives/ui-core/scroll-area.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Select",
+      "story": "packages/ui/src/primitives/ui-core/select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SelectContent",
+      "story": "packages/ui/src/primitives/ui-core/select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SelectGroup",
+      "story": "packages/ui/src/primitives/ui-core/select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SelectItem",
+      "story": "packages/ui/src/primitives/ui-core/select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SelectLabel",
+      "story": "packages/ui/src/primitives/ui-core/select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SelectScrollDownButton",
+      "story": "packages/ui/src/primitives/ui-core/select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SelectScrollUpButton",
+      "story": "packages/ui/src/primitives/ui-core/select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SelectSeparator",
+      "story": "packages/ui/src/primitives/ui-core/select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SelectTrigger",
+      "story": "packages/ui/src/primitives/ui-core/select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SelectValue",
+      "story": "packages/ui/src/primitives/ui-core/select.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Separator",
+      "story": "packages/ui/src/primitives/ui-core/separator.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Sheet",
+      "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SheetTrigger",
+      "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SheetClose",
+      "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SheetContent",
+      "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SheetHeader",
+      "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SheetFooter",
+      "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SheetTitle",
+      "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SheetDescription",
+      "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Slider",
+      "story": "packages/ui/src/primitives/ui-core/slider.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SliderValue",
+      "story": "packages/ui/src/primitives/ui-core/slider.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Toaster",
+      "story": "packages/ui/src/primitives/ui-core/sonner.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SortableTableHead",
+      "story": "packages/ui/src/primitives/ui-core/sortable-table-head.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Spinner",
+      "story": "packages/ui/src/primitives/ui-core/spinner.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Switch",
+      "story": "packages/ui/src/primitives/ui-core/switch.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Tabs",
+      "story": "packages/ui/src/primitives/ui-core/tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TabsList",
+      "story": "packages/ui/src/primitives/ui-core/tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TabsTrigger",
+      "story": "packages/ui/src/primitives/ui-core/tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TabsContent",
+      "story": "packages/ui/src/primitives/ui-core/tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Textarea",
+      "story": "packages/ui/src/primitives/ui-core/textarea.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ToastProvider",
+      "story": "packages/ui/src/primitives/ui-core/toast.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AnchoredToastProvider",
+      "story": "packages/ui/src/primitives/ui-core/toast.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ToggleGroup",
+      "story": "packages/ui/src/primitives/ui-core/toggle-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ToggleGroupItem",
+      "story": "packages/ui/src/primitives/ui-core/toggle-group.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Toggle",
+      "story": "packages/ui/src/primitives/ui-core/toggle.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TooltipPopup",
+      "story": "packages/ui/src/primitives/ui-core/tooltip.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TooltipTrigger",
+      "story": "packages/ui/src/primitives/ui-core/tooltip.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Login",
+      "story": "packages/ui/src/primitives/users/login.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PasswordInput",
+      "story": "packages/ui/src/primitives/users/password-input.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ProfileDropdown",
+      "story": "packages/ui/src/primitives/users/profile-dropdown.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SignOutDialog",
+      "story": "packages/ui/src/primitives/users/sign-out-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MetricsButton",
+      "story": "packages/ui/src/components/metrics-core/metrics-button.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "HelpDeskDocumentationPage",
+      "story": "packages/ui/src/components/metrics-layouts/help-desk/documentation_page.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "HelpDeskPage",
+      "story": "packages/ui/src/components/metrics-layouts/help-desk/helpdesk_layout.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContactRevrebelPage",
+      "story": "packages/ui/src/components/metrics-layouts/help-desk/helpdesk_page.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AccountForm",
+      "story": "packages/ui/src/components/metrics-layouts/settings/account_form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SettingsAccountPage",
+      "story": "packages/ui/src/components/metrics-layouts/settings/account_page.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContentSection",
+      "story": "packages/ui/src/components/metrics-layouts/settings/content-section_page.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DisplayForm",
+      "story": "packages/ui/src/components/metrics-layouts/settings/display_form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SettingsDisplayPage",
+      "story": "packages/ui/src/components/metrics-layouts/settings/display_page.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NotificationsForm",
+      "story": "packages/ui/src/components/metrics-layouts/settings/notifications_form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SettingsNotificationsPage",
+      "story": "packages/ui/src/components/metrics-layouts/settings/notifications_page.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ProfileForm",
+      "story": "packages/ui/src/components/metrics-layouts/settings/profile_form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SettingsProfilePage",
+      "story": "packages/ui/src/components/metrics-layouts/settings/profile_page.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SettingsPage",
+      "story": "packages/ui/src/components/metrics-layouts/settings/settings_layout.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "SidebarNav",
+      "story": "packages/ui/src/components/metrics-layouts/settings/settings_sidebar-nav.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "UsersInviteDialog",
+      "story": "packages/ui/src/components/metrics-layouts/settings/users-invite_dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CalendarView",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/calendar-view_page.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataTableRowActions",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/data-actions_table-row.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataTableBulkActions",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/data-bulk-actions_table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ByPersonView",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/group-views.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ByDepartmentView",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/group-views.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "GrowthPlanViewSwitcher",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan-view_switcher.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "GrowthPlanHeader",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan_header.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "GrowthPlanSidebar",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan_sidebar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "EmptyState",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan_states.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "LoadingState",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan_states.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ErrorState",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan_states.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "KanbanView",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/kanban_page.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MeetingRecapView",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/meeting-recap_page.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "OwnerRollupView",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/owner-rollup_page.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TasksImportDialog",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks-import_dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TasksMultiDeleteDialog",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks-multi-delete_dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TasksMutateDrawer",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks-mutate_drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TasksPrimaryButtons",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks-primary-buttons.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TasksDialogs",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks_dialogs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "GrowthPlanPage",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks_layout.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TasksProvider",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks_provider.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TasksTable",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks_table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "WorkstreamMutateDrawer",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/workstream-mutate_drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "WorkstreamsSection",
+      "story": "packages/ui/src/components/metrics-layouts/tasks/workstreams_section.stories.tsx",
+      "status": "skipped-existing"
+    }
+  ]
+}

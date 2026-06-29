@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography-p",
+  "title": "Typography P",
+  "description": "Auto-generated registry entry for typography-p.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TypographyP.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographyPProps\n  extends HTMLAttributes<HTMLParagraphElement> {}\n\nexport function TypographyP({\n  children,\n  className,\n  ...props\n}: TypographyPProps) {\n  return (\n    <p\n      className={cn(\"leading-7 [&:not(:first-child)]:mt-6\", className)}\n      {...props}\n    >\n      {children}\n    </p>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TypographyP.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

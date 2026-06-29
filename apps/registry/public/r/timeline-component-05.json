@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "timeline-component-05",
+  "title": "Timeline Component 05",
+  "description": "Auto-generated registry entry for timeline-component-05.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/timelines/timeline-component-05.tsx",
+      "content": "import type { ReactNode } from 'react'\n\nimport { Badge } from '../ui-core/badge'\n\nexport interface Release {\n  version: string\n  date: string\n  content: ReactNode\n}\n\ninterface ChangelogContentProps {\n  releases: Release[]\n}\n\nconst ChangelogContent = ({ releases }: ChangelogContentProps) => {\n  return (\n    <>\n      <div className='mb-8 space-y-4 text-center md:mb-10 lg:mb-18'>\n        <h2 className='text-2xl font-semibold tracking-tight md:text-3xl lg:text-4xl'>Changelog Origin Update</h2>\n        <p className='text-muted-foreground text-xl'>\n          Discover what’s been added, changed, fixed, improved, and updated in this release.\n        </p>\n      </div>\n      {releases.map((release, index) => (\n        <div key={release.version} id={String(index + 1)} className='relative flex scroll-mt-18 justify-end gap-2'>\n          <div className='sticky top-19 flex w-36 flex-col items-end gap-2 self-start pb-4 max-md:hidden'>\n            <Badge className='flex size-6 w-auto justify-end rounded-sm text-sm font-medium'>{release.version}</Badge>\n            <div className='text-muted-foreground text-right text-sm font-medium'>{release.date}</div>\n          </div>\n          <div className='flex flex-col items-center'>\n            <div className='sticky top-19 flex size-6 items-center justify-center max-sm:top-5'>\n              <span className='bg-primary/20 flex size-4.5 shrink-0 items-center justify-center rounded-full'>\n                <span className='bg-primary size-3 rounded-full' />\n              </span>\n            </div>\n            <span className='-mt-2.5 w-px flex-1 border' />\n          </div>\n          <div className='flex flex-1 flex-col gap-4 pb-11 pl-3 md:pl-6 lg:pl-9'>\n            <div className='flex flex-col gap-2 md:hidden'>\n              <Badge className='flex rounded-sm font-medium'>{release.version}</Badge>\n              <div className='font-medium'>{release.date}</div>\n            </div>\n            {release.content}\n          </div>\n        </div>\n      ))}\n    </>\n  )\n}\n\nexport default ChangelogContent\n",
+      "type": "registry:ui",
+      "target": "src/primitive/timelines/timeline-component-05.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

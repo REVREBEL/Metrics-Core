@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hover-card-sides",
+  "title": "Hover Card Sides",
+  "description": "Auto-generated registry entry for hover-card-sides.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/hover-card-sides.tsx",
+      "content": "import { Button } from \"@buttons/button\";\nimport { HoverCard, HoverCardContent, HoverCardTrigger } from \"./hover-card\";\n\nconst HOVER_CARD_SIDES = [\"left\", \"top\", \"bottom\", \"right\"] as const;\n\nexport function HoverCardSides() {\n\treturn (\n\t\t<div className=\"flex flex-wrap justify-center gap-2\">\n\t\t\t{HOVER_CARD_SIDES.map((side) => (\n\t\t\t\t<HoverCard key={side} openDelay={100} closeDelay={100}>\n\t\t\t\t\t<HoverCardTrigger asChild>\n\t\t\t\t\t\t<Button variant=\"outline\" className=\"capitalize\">\n\t\t\t\t\t\t\t{side}\n\t\t\t\t\t\t</Button>\n\t\t\t\t\t</HoverCardTrigger>\n\t\t\t\t\t<HoverCardContent side={side}>\n\t\t\t\t\t\t<div className=\"flex flex-col gap-1\">\n\t\t\t\t\t\t\t<h4 className=\"font-medium\">Hover Card</h4>\n\t\t\t\t\t\t\t<p>This hover card appears on the {side} side of the trigger.</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</HoverCardContent>\n\t\t\t\t</HoverCard>\n\t\t\t))}\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/hover-card-sides.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

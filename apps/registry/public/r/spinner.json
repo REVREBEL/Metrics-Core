@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spinner",
+  "title": "Spinner",
+  "description": "Auto-generated registry entry for spinner.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/ui-core/spinner.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\nimport { IconFidgetSpinnerFilled } from '@tabler/icons-react';\n\nfunction Spinner({\n\tclassName,\n\t...props\n}: React.ComponentProps<typeof IconFidgetSpinnerFilled>) {\n\treturn (\n\t\t<IconFidgetSpinnerFilled\n\t\t\taria-label=\"Loading\"\n\t\t\tclassName={cn(\"animate-spin\", className)}\n\t\t\trole=\"status\"\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\nexport { Spinner };\n",
+      "type": "registry:ui",
+      "target": "src/primitive/ui-core/spinner.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

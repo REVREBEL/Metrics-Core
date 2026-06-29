@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "social-proof-01",
+  "title": "Social Proof 01",
+  "description": "Auto-generated registry entry for social-proof-01.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/social-proof-01.tsx",
+      "content": "import { IconSquareRoundedCheckFilled } from '@tabler/icons-react';\n\ntype Feature = {\n  title: string\n  description: string\n}\n\nconst SocialProof = ({ features }: { features: Feature[] }) => {\n  return (\n    <section className='py-8 sm:py-16 lg:py-24'>\n      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>\n        <div className='flex items-center gap-20 max-lg:flex-col'>\n          <div>\n            <div className='space-y-4'>\n              <p className='text-primary text-sm font-medium uppercase'>Social Proof</p>\n              <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Create Impactful White Label Reports</h2>\n              <p className='text-muted-foreground text-lg'>\n                Craft customizable reports that showcase your campaign&apos;s success, align with your brand, and\n                simplify sharing insights with stakeholders while enabling data export and ROI analysis.\n              </p>\n            </div>\n\n            <ul className='mt-11 space-y-6 text-lg font-medium'>\n              {features.map((feature, index) => (\n                <li key={index} className='flex gap-2'>\n                  <IconSquareRoundedCheckFilled className='mt-0.75 size-5' />\n                  <span>{feature.title}</span>\n                </li>\n              ))}\n            </ul>\n          </div>\n\n          <div className='shrink-0'>\n            <img\n              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/social-proof/image-1.png'\n              alt='Social Widget'\n              className='w-142 object-contain dark:hidden'\n            />\n            <img\n              src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/social-proof/image-1-dark.png'\n              alt='Social Widget'\n              className='hidden w-142 object-contain dark:inline-block'\n            />\n          </div>\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport default SocialProof\n",
+      "type": "registry:ui",
+      "target": "src/primitive/layouts/social-proof-01.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

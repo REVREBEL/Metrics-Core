@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "link-popover-block",
+  "title": "Link Popover Block",
+  "description": "Auto-generated registry entry for link-popover-block.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/links/link-popover-block.tsx",
+      "content": "import { ToolbarButton } from \"@buttons/toolbar-button\";\nimport {\n  CopyIcon,\n  ExternalLinkIcon,\n  LinkBreak2Icon,\n} from \"@radix-ui/react-icons\";\nimport { Separator } from \"@ui-core\";\nimport * as React from \"react\";\n\ninterface LinkPopoverBlockProps {\n  url: string;\n  onClear: () => void;\n  onEdit: (e: React.MouseEvent<HTMLButtonElement>) => void;\n}\n\nexport const LinkPopoverBlock: React.FC<LinkPopoverBlockProps> = ({\n  url,\n  onClear,\n  onEdit,\n}) => {\n  const [copyTitle, setCopyTitle] = React.useState<string>(\"Copy\");\n\n  const handleCopy = React.useCallback(\n    (e: React.MouseEvent<HTMLButtonElement>) => {\n      e.preventDefault();\n      navigator.clipboard\n        .writeText(url)\n        .then(() => {\n          setCopyTitle(\"Copied!\");\n          setTimeout(() => setCopyTitle(\"Copy\"), 1000);\n        })\n        .catch(console.error);\n    },\n    [url],\n  );\n\n  const handleOpenLink = React.useCallback(() => {\n    window.open(url, \"_blank\", \"noopener,noreferrer\");\n  }, [url]);\n\n  return (\n    <div className=\"bg-background flex overflow-hidden rounded p-2 shadow-lg\">\n      <div className=\"inline-flex items-center gap-1\">\n        <ToolbarButton tooltip=\"Edit link\" onClick={onEdit}>\n          Edit link\n        </ToolbarButton>\n        <Separator orientation=\"vertical\" />\n        <ToolbarButton\n          tooltip=\"Open link in a new tab\"\n          onClick={handleOpenLink}\n        >\n          <ExternalLinkIcon />\n        </ToolbarButton>\n        <Separator orientation=\"vertical\" />\n        <ToolbarButton tooltip=\"Clear link\" onClick={onClear}>\n          <LinkBreak2Icon />\n        </ToolbarButton>\n        <Separator orientation=\"vertical\" />\n        <ToolbarButton\n          tooltip={copyTitle}\n          onClick={handleCopy}\n        >\n          <CopyIcon />\n        </ToolbarButton>\n      </div>\n    </div>\n  );\n};\n",
+      "type": "registry:ui",
+      "target": "src/primitive/links/link-popover-block.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

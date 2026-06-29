@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "TypographyH5",
+  "title": "TypographyH5",
+  "description": "Auto-generated registry entry for TypographyH5.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TypographyH5.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographyH5Props extends HTMLAttributes<HTMLHeadingElement> {}\n\nexport function TypographyH5({\n  children,\n  className,\n  ...props\n}: TypographyH5Props) {\n  return (\n    <h5\n      className={cn(\n        \"scroll-m-20 text-xl font-semibold tracking-tight uppercase\",\n        className,\n      )}\n      {...props}\n    >\n      {children}\n    </h5>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TypographyH5.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

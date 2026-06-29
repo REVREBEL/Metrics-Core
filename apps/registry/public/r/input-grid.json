@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-grid",
+  "title": "Input Grid",
+  "description": "Auto-generated registry entry for input-grid.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-grid.tsx",
+      "content": "import { Field, FieldGroup, FieldLabel } from \"@auto-form/fields/field\";\nimport { Input } from \"./input\";\n\nexport function InputGrid() {\n  return (\n    <FieldGroup className=\"grid max-w-sm grid-cols-2\">\n      <Field>\n        <FieldLabel htmlFor=\"first-name\">First Name</FieldLabel>\n        <Input id=\"first-name\" placeholder=\"Jordan\" />\n      </Field>\n      <Field>\n        <FieldLabel htmlFor=\"last-name\">Last Name</FieldLabel>\n        <Input id=\"last-name\" placeholder=\"Lee\" />\n      </Field>\n    </FieldGroup>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-grid.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

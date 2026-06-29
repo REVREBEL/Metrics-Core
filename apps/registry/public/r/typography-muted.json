@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography-muted",
+  "title": "Typography Muted",
+  "description": "Auto-generated registry entry for typography-muted.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/typography/TypographyMuted.tsx",
+      "content": "import type { HTMLAttributes } from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TypographyMutedProps\n  extends HTMLAttributes<HTMLParagraphElement> {}\n\nexport function TypographyMuted({\n  children,\n  className,\n  ...props\n}: TypographyMutedProps) {\n  return (\n    <p className={cn(\"text-sm text-muted-foreground\", className)} {...props}>\n      {children}\n    </p>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/typography/TypographyMuted.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

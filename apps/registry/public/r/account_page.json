@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "account_page",
+  "title": "Account Page",
+  "description": "Auto-generated registry entry for account_page.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/settings/account_page.tsx",
+      "content": "import { ContentSection } from \"../components/content-section\";\nimport { AccountForm } from \"./account-form\";\n\nexport default function SettingsAccountPage() {\n  return (\n    <ContentSection\n      title=\"Account\"\n      desc=\"Update your account settings. Set your preferred language and timezone.\"\n    >\n      <AccountForm />\n    </ContentSection>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/settings/account_page.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

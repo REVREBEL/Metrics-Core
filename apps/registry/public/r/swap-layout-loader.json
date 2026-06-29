@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "swap-layout-loader",
+  "title": "Swap Layout Loader",
+  "description": "Auto-generated registry entry for swap-layout-loader.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/layouts/swap-layout-loader.tsx",
+      "content": "import { Skeleton } from \"@skeleton/skeleton\";\nimport { Card, CardContent, CardHeader } from \"@ui-core/card\";\n\nexport function SwapLayoutLoader() {\n  return (\n    <div className=\"w-full grid grid-cols-2 grid-rows-5 gap-8\">\n      <Card className=\"col-span-2 row-span-1 h-full w-full flex flex-col\">\n        <CardHeader>\n          <Skeleton className=\"h-6 w-1/4\" />\n        </CardHeader>\n        <CardContent className=\"flex-grow\">\n          <Skeleton className=\"h-full w-full\" />\n        </CardContent>\n      </Card>\n      <Card className=\"col-span-1 row-span-2 h-full w-full flex flex-col\">\n        <CardHeader>\n          <Skeleton className=\"h-6 w-1/3\" />\n        </CardHeader>\n        <CardContent className=\"flex-grow\">\n          <Skeleton className=\"h-full w-full\" />\n        </CardContent>\n      </Card>\n      <Card className=\"col-span-1 row-span-2 h-full w-full flex flex-col\">\n        <CardHeader>\n          <Skeleton className=\"h-6 w-1/3\" />\n          <Skeleton className=\"h-4 w-2/3 mt-2\" />\n        </CardHeader>\n        <CardContent className=\"flex-grow\">\n          <Skeleton className=\"h-full w-full\" />\n        </CardContent>\n      </Card>\n      <Card className=\"col-span-2 row-span-2 h-full w-full flex flex-col\">\n        <CardHeader>\n          <Skeleton className=\"h-6 w-1/4\" />\n          <Skeleton className=\"h-4 w-1/2 mt-2\" />\n        </CardHeader>\n        <CardContent className=\"flex-grow\">\n          <Skeleton className=\"h-full w-full\" />\n        </CardContent>\n      </Card>\n    </div>\n  );\n}",
+      "type": "registry:ui",
+      "target": "src/primitive/layouts/swap-layout-loader.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

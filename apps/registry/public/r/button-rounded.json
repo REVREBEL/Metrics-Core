@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-rounded",
+  "title": "Button Rounded",
+  "description": "Auto-generated registry entry for button-rounded.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-rounded.tsx",
+      "content": "import { IconSquareRoundedChevronUpFilled } from \"@tabler/icons-react\";\nimport { Button } from \"./button\";\n\nexport default function ButtonRounded() {\n  return (\n    <div className=\"flex gap-2\">\n      <Button className=\"rounded-full\">Get Started</Button>\n      <Button variant=\"outline\" size=\"icon\" className=\"rounded-full\">\n        <IconSquareRoundedChevronUpFilled />\n      </Button>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-rounded.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

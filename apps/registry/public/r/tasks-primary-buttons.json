@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tasks-primary-buttons",
+  "title": "Tasks Primary Buttons",
+  "description": "Auto-generated registry entry for tasks-primary-buttons.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/metrics-layouts/tasks/tasks-primary-buttons.tsx",
+      "content": "\"use client\";\n\nimport { Button } from \"@/components/ui/button\";\nimport { useTasks } from \"./tasks-provider\";\n\nexport function TasksPrimaryButtons() {\n  const { setOpen } = useTasks();\n  return (\n    <div className=\"flex gap-2\">\n      <Button\n        variant=\"outline\"\n        className=\"space-x-1\"\n        onClick={() => setOpen(\"import\")}\n      >\n        <span>Import</span> <Download size={18} />\n      </Button>\n      <Button className=\"space-x-1\" onClick={() => setOpen(\"create\")}>\n        <span>Create</span> <Plus size={18} />\n      </Button>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/metrics/layouts/tasks/tasks-primary-buttons.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

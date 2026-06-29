@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-otp-disabled",
+  "title": "Input Otp Disabled",
+  "description": "Auto-generated registry entry for input-otp-disabled.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/inputs/input-otp-disabled.tsx",
+      "content": "import {\n  InputOTP,\n  InputOTPGroup,\n  InputOTPSeparator,\n  InputOTPSlot,\n} from \"./input-otp\";\n\nexport function InputOTPDisabled() {\n  return (\n    <InputOTP id=\"disabled\" maxLength={6} disabled value=\"123456\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/inputs/input-otp-disabled.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

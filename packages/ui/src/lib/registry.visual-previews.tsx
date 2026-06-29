@@ -26,8 +26,10 @@ import {
   TypographyH3,
   TypographyP,
   TypographySmall,
+  TypographyTable,
 } from "@typography";
-import { Badge } from "@/primitives/ui-core/badge";
+
+import { Badge } from "@ui-core/badge";
 import {
   Card,
   CardContent,
@@ -37,7 +39,7 @@ import {
 } from "@ui-core/card";
 import { Label } from "@ui-core/label";
 import { Separator } from "@ui-core/separator";
-import { Switch } from "@/primitives/ui-core/switch";
+import { Switch } from "@ui-core/switch";
 
 export type PreviewProps = {
   description?: string;

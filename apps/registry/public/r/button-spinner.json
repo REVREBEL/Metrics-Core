@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-spinner",
+  "title": "Button Spinner",
+  "description": "Auto-generated registry entry for button-spinner.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-spinner.tsx",
+      "content": "import { Spinner } from \"@ui-core\";\nimport { Button } from \"./button\";\n\nexport default function ButtonLoading() {\n  return (\n    <div className=\"flex gap-2\">\n      <Button variant=\"outline\" disabled>\n        <Spinner data-icon=\"inline-start\" />\n        Generating\n      </Button>\n      <Button variant=\"secondary\" disabled>\n        Downloading\n        <Spinner data-icon=\"inline-start\" />\n      </Button>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-spinner.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

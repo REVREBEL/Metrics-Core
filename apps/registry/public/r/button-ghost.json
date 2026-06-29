@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-ghost",
+  "title": "Button Ghost",
+  "description": "Auto-generated registry entry for button-ghost.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/buttons/button-ghost.tsx",
+      "content": "import { Button } from \"./button\";\n\nexport default function ButtonGhost() {\n  return <Button variant=\"ghost\">Ghost</Button>;\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/buttons/button-ghost.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

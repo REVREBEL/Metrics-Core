@@ -1,12 +1,14 @@
 # Agent Instructions
 
+
+
 Before changing Next.js code:
 1. Use the next-devtools MCP server when available.
 2. Check the running dev server for current errors and route context.
 3. Use version-matched Next.js documentation/context rather than relying on memory.
 4. Prefer project conventions already present in this repo.
 5. Explain which MCP context was used before making broad architectural changes.
-
+6. Review ./docs
 
 
 Repo Rule: Path Aliases and Next.js Configuration
@@ -676,7 +678,7 @@ next.config.mjs should not duplicate them.
 
 ### Icon Usage Rules
 
-Before adding a new Tabler icon, check docs/icon-inventory.md first.
+Before adding a new Tabler icon, check ./apps/docs/src/content/design-system/icon-inventory.md first.
 
 If an existing icon already represents the intended action or concept, reuse it.
 
@@ -684,3 +686,21 @@ Only introduce a new icon when:
 1. no existing icon matches the intended meaning,
 2. the new icon improves clarity,
 3. and docs/icon-inventory.md is updated in the same change.
+
+If adding a new icon to a component not on the list, also make sure to add it to the main icon reference file as well here:
+./apps/docs/src/content/design-system/icon-inventory.md
+
+
+---
+# Themes
+
+  @styles/globals.css
+  Main Storybook and application stylesheet entry point
+  
+  @styles/theme-reference.css
+  Tailwind @theme mappings and Metrics design tokens
+  Already loaded through globals.css
+  
+  @styles/tailwind-reference.css
+  Lightweight reference stylesheet
+  Not required in Storybook preview when globals.css is loaded

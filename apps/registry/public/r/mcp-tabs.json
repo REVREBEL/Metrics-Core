@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mcp-tabs",
+  "title": "Mcp Tabs",
+  "description": "Auto-generated registry entry for mcp-tabs.",
+  "files": [
+    {
+      "path": "packages/ui/src/primitives/registry/mcp-tabs.tsx",
+      "content": "\"use client\";\n\nimport { Check, ClipboardIcon } from \"lucide-react\";\nimport { useEffect, useState } from \"react\";\n\nimport { AddToCursor } from \"./add-to-cursor\";\nimport { Button } from \"@/primitives/buttons/button\";\nimport {\n  Tabs,\n  TabsContent,\n  TabsList,\n  TabsTrigger,\n} from \"@/primitives/tabs/tabs\";\n\nexport async function copyToClipboard(value: string) {\n  await navigator.clipboard.writeText(value);\n}\n\nexport function MCPTabs({ rootUrl }: { rootUrl: string }) {\n  const [tab, setTab] = useState(\"cursor\");\n  const [hasCopied, setHasCopied] = useState(false);\n\n  const mcp = {\n    command: \"npx -y shadcn@canary registry:mcp\",\n    env: {\n      REGISTRY_URL: `https://${rootUrl}/r/registry.json`,\n    },\n  };\n\n  const mcpServer = JSON.stringify(\n    {\n      mcpServers: {\n        shadcn: mcp,\n      },\n    },\n    null,\n    2,\n  );\n\n  useEffect(() => {\n    if (hasCopied) {\n      setTimeout(() => {\n        setHasCopied(false);\n      }, 2000);\n    }\n  }, [hasCopied]);\n\n  return (\n    <Tabs value={tab} onValueChange={setTab}>\n      <div className=\"flex items-center justify-between\">\n        <TabsList>\n          <TabsTrigger value=\"cursor\">Cursor</TabsTrigger>\n          <TabsTrigger value=\"windsurf\">Windsurf</TabsTrigger>\n        </TabsList>\n      </div>\n\n      <TabsContent value=\"cursor\">\n        <p className=\"text-muted-foreground text-sm\">\n          Click Add to Cursor or copy and paste the code into{\" \"}\n          <code className=\"inline text-sm tabular-nums\">.cursor/mcp.json</code>\n        </p>\n      </TabsContent>\n\n      <TabsContent value=\"windsurf\">\n        <p className=\"text-muted-foreground text-sm\">\n          Copy and paste the code into{\" \"}\n          <code className=\"inline text-sm tabular-nums\">\n            .codeium/windsurf/mcp_config.json\n          </code>\n        </p>\n      </TabsContent>\n\n      <div className=\"relative\">\n        <div className=\"absolute top-3 right-3 flex gap-2\">\n          {tab === \"cursor\" && <AddToCursor mcp={mcp} />}\n\n          <Button\n            size=\"sm\"\n            variant=\"outline\"\n            onClick={() => {\n              copyToClipboard(mcpServer);\n              setHasCopied(true);\n            }}\n            className=\"shadow-none\"\n          >\n            {hasCopied ? <Check /> : <ClipboardIcon />}\n            Copy\n          </Button>\n        </div>\n\n        <pre className=\"mt-16 overflow-x-auto rounded-lg border bg-muted p-1 sm:mt-0\">\n          <code className=\"relative rounded bg-transparent p-1 font-mono text-muted-foreground text-sm\">\n            {mcpServer}\n          </code>\n        </pre>\n      </div>\n    </Tabs>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "src/primitive/registry/mcp-tabs.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}
