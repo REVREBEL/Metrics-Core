@@ -187,7 +187,7 @@ Create wrapper components in `components/` (not `components/ui/`):
 
 ```typescript
 // components/custom-button.tsx
-import { Button } from "@/components/ui/button"
+import { Button } from "@buttons/button"
 import { Loader2 } from "lucide-react"
 
 export function LoadingButton({ 
@@ -237,9 +237,9 @@ When customizing, maintain accessibility:
 
 ### Form Building
 ```typescript
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Button } from "@buttons/button"
+import { Input } from "@forms/fields/input"
+import { Label } from "@ui-core/label"
 
 // Use with react-hook-form for validation
 import { useForm } from "react-hook-form"

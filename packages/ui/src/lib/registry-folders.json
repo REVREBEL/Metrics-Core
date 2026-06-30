@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-29T10:15:33.980Z",
+  "generatedAt": "2026-06-30T09:00:20.080Z",
   "roots": [
     "primitives",
     "components",
@@ -403,16 +403,18 @@
       "kind": "group",
       "depth": 1,
       "directFiles": [
+        "packages/ui/src/primitives/sections/content-section.tsx",
         "packages/ui/src/primitives/sections/five.tsx",
         "packages/ui/src/primitives/sections/four.tsx",
         "packages/ui/src/primitives/sections/one.tsx",
         "packages/ui/src/primitives/sections/shortcut-key.tsx",
         "packages/ui/src/primitives/sections/three.tsx",
         "packages/ui/src/primitives/sections/toolbar-section.tsx",
+        "packages/ui/src/primitives/sections/tsconfig.json",
         "packages/ui/src/primitives/sections/two.tsx"
       ],
       "children": [],
-      "directFileCount": 7,
+      "directFileCount": 9,
       "childCount": 0
     },
     "primitives/skeleton": {
@@ -656,6 +658,79 @@
       "directFileCount": 1,
       "childCount": 1
     },
+    "primitives/users/empty-state-01": {
+      "id": "primitives/users/empty-state-01",
+      "title": "Empty State 01",
+      "sourcePath": "packages/ui/src/primitives/users/empty-state-01",
+      "parentId": "primitives/users",
+      "kind": "group",
+      "depth": 2,
+      "directFiles": [
+        "packages/ui/src/primitives/users/empty-state-01/empty-state-01.tsx"
+      ],
+      "children": [],
+      "directFileCount": 1,
+      "childCount": 0
+    },
+    "primitives/users/forgot-password-01": {
+      "id": "primitives/users/forgot-password-01",
+      "title": "Forgot Password 01",
+      "sourcePath": "packages/ui/src/primitives/users/forgot-password-01",
+      "parentId": "primitives/users",
+      "kind": "group",
+      "depth": 2,
+      "directFiles": [
+        "packages/ui/src/primitives/users/forgot-password-01/forgot-password-01.tsx",
+        "packages/ui/src/primitives/users/forgot-password-01/forgot-password-form.tsx"
+      ],
+      "children": [],
+      "directFileCount": 2,
+      "childCount": 0
+    },
+    "primitives/users/login-page-01": {
+      "id": "primitives/users/login-page-01",
+      "title": "Login Page 01",
+      "sourcePath": "packages/ui/src/primitives/users/login-page-01",
+      "parentId": "primitives/users",
+      "kind": "group",
+      "depth": 2,
+      "directFiles": [
+        "packages/ui/src/primitives/users/login-page-01/login-form.tsx",
+        "packages/ui/src/primitives/users/login-page-01/login-page-01.tsx"
+      ],
+      "children": [],
+      "directFileCount": 2,
+      "childCount": 0
+    },
+    "primitives/users/register-01": {
+      "id": "primitives/users/register-01",
+      "title": "Register 01",
+      "sourcePath": "packages/ui/src/primitives/users/register-01",
+      "parentId": "primitives/users",
+      "kind": "group",
+      "depth": 2,
+      "directFiles": [
+        "packages/ui/src/primitives/users/register-01/register-01.tsx",
+        "packages/ui/src/primitives/users/register-01/register-form.tsx"
+      ],
+      "children": [],
+      "directFileCount": 2,
+      "childCount": 0
+    },
+    "primitives/users/verify-email-01": {
+      "id": "primitives/users/verify-email-01",
+      "title": "Verify Email 01",
+      "sourcePath": "packages/ui/src/primitives/users/verify-email-01",
+      "parentId": "primitives/users",
+      "kind": "group",
+      "depth": 2,
+      "directFiles": [
+        "packages/ui/src/primitives/users/verify-email-01/verify-email-01.tsx"
+      ],
+      "children": [],
+      "directFileCount": 1,
+      "childCount": 0
+    },
     "primitives/users": {
       "id": "primitives/users",
       "title": "Users",
@@ -684,10 +759,15 @@
         "packages/ui/src/primitives/users/verify-email.tsx"
       ],
       "children": [
-        "primitives/users/account-settings-01"
+        "primitives/users/account-settings-01",
+        "primitives/users/empty-state-01",
+        "primitives/users/forgot-password-01",
+        "primitives/users/login-page-01",
+        "primitives/users/register-01",
+        "primitives/users/verify-email-01"
       ],
       "directFileCount": 18,
-      "childCount": 1
+      "childCount": 6
     },
     "primitives": {
       "id": "primitives",
@@ -840,20 +920,6 @@
       "directFileCount": 23,
       "childCount": 1
     },
-    "components/metrics-layouts/settings": {
-      "id": "components/metrics-layouts/settings",
-      "title": "Settings",
-      "sourcePath": "packages/ui/src/components/metrics-layouts/settings",
-      "parentId": "components/metrics-layouts",
-      "kind": "group",
-      "depth": 2,
-      "directFiles": [
-        "packages/ui/src/components/metrics-layouts/settings/account-settings_page.tsx"
-      ],
-      "children": [],
-      "directFileCount": 1,
-      "childCount": 0
-    },
     "components/metrics-layouts": {
       "id": "components/metrics-layouts",
       "title": "Metrics Layouts",
@@ -865,11 +931,10 @@
       "children": [
         "components/metrics-layouts/metrics-help-desk",
         "components/metrics-layouts/metrics-settings",
-        "components/metrics-layouts/metrics-tasks",
-        "components/metrics-layouts/settings"
+        "components/metrics-layouts/metrics-tasks"
       ],
       "directFileCount": 0,
-      "childCount": 4
+      "childCount": 3
     },
     "components": {
       "id": "components",
@@ -1831,286 +1896,6 @@
       "children": [],
       "directFileCount": 16,
       "childCount": 0
-    },
-    "icons/Fonts/barlow": {
-      "id": "icons/Fonts/barlow",
-      "title": "Barlow",
-      "sourcePath": "packages/ui/src/icons/Fonts/barlow",
-      "parentId": "icons/Fonts",
-      "kind": "list",
-      "depth": 2,
-      "directFiles": [
-        "packages/ui/src/icons/Fonts/barlow/barlow_ofl.txt",
-        "packages/ui/src/icons/Fonts/barlow/barlow-black.ttf",
-        "packages/ui/src/icons/Fonts/barlow/barlow-black.woff",
-        "packages/ui/src/icons/Fonts/barlow/barlow-black.woff2",
-        "packages/ui/src/icons/Fonts/barlow/barlow-bold.eot",
-        "packages/ui/src/icons/Fonts/barlow/barlow-bold.ttf",
-        "packages/ui/src/icons/Fonts/barlow/barlow-bold.woff",
-        "packages/ui/src/icons/Fonts/barlow/barlow-bold.woff2",
-        "packages/ui/src/icons/Fonts/barlow/BarlowBlack.svg",
-        "packages/ui/src/icons/Fonts/barlow/BarlowBlack.tsx",
-        "packages/ui/src/icons/Fonts/barlow/BarlowBold.svg",
-        "packages/ui/src/icons/Fonts/barlow/BarlowBold.tsx"
-      ],
-      "children": [],
-      "directFileCount": 12,
-      "childCount": 0
-    },
-    "icons/Fonts/fira-code": {
-      "id": "icons/Fonts/fira-code",
-      "title": "Fira Code",
-      "sourcePath": "packages/ui/src/icons/Fonts/fira-code",
-      "parentId": "icons/Fonts",
-      "kind": "list",
-      "depth": 2,
-      "directFiles": [
-        "packages/ui/src/icons/Fonts/fira-code/fira-code_ofl.txt",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-light.eot",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-light.ttf",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-light.woff",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-light.woff2",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-medium.eot",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-medium.ttf",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-medium.woff",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-medium.woff2",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-regular.eot",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-regular.ttf",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-regular.woff",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-regular.woff2",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-variable.ttf",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-variable.woff",
-        "packages/ui/src/icons/Fonts/fira-code/fira-code-variable.woff2",
-        "packages/ui/src/icons/Fonts/fira-code/FiraCodeLight.svg",
-        "packages/ui/src/icons/Fonts/fira-code/FiraCodeLight.tsx",
-        "packages/ui/src/icons/Fonts/fira-code/FiraCodeMedium.svg",
-        "packages/ui/src/icons/Fonts/fira-code/FiraCodeMedium.tsx",
-        "packages/ui/src/icons/Fonts/fira-code/FiraCodeRegular.svg",
-        "packages/ui/src/icons/Fonts/fira-code/FiraCodeRegular.tsx"
-      ],
-      "children": [],
-      "directFileCount": 22,
-      "childCount": 0
-    },
-    "icons/Fonts/funnel-sans": {
-      "id": "icons/Fonts/funnel-sans",
-      "title": "Funnel Sans",
-      "sourcePath": "packages/ui/src/icons/Fonts/funnel-sans",
-      "parentId": "icons/Fonts",
-      "kind": "list",
-      "depth": 2,
-      "directFiles": [
-        "packages/ui/src/icons/Fonts/funnel-sans/funnel-sans-variable.ttf",
-        "packages/ui/src/icons/Fonts/funnel-sans/funnel-sans-variable.woff",
-        "packages/ui/src/icons/Fonts/funnel-sans/funnel-sans-variable.woff2"
-      ],
-      "children": [],
-      "directFileCount": 3,
-      "childCount": 0
-    },
-    "icons/Fonts/general-sans": {
-      "id": "icons/Fonts/general-sans",
-      "title": "General Sans",
-      "sourcePath": "packages/ui/src/icons/Fonts/general-sans",
-      "parentId": "icons/Fonts",
-      "kind": "list",
-      "depth": 2,
-      "directFiles": [
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-bold.eot",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-bold.ttf",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-bold.woff",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-bold.woff2",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-light.eot",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-light.ttf",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-light.woff",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-light.woff2",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-medium.eot",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-medium.ttf",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-medium.woff",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-medium.woff2",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-regular.eot",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-regular.ttf",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-regular.woff",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-regular.woff2",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-semibold.eot",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-semibold.ttf",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-semibold.woff",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-semibold.woff2",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-variable.eot",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-variable.ttf",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-variable.woff",
-        "packages/ui/src/icons/Fonts/general-sans/general-sans-variable.woff2",
-        "packages/ui/src/icons/Fonts/general-sans/GeneralSansMedium.svg",
-        "packages/ui/src/icons/Fonts/general-sans/GeneralSansMedium.tsx",
-        "packages/ui/src/icons/Fonts/general-sans/GeneralSansRegular.svg",
-        "packages/ui/src/icons/Fonts/general-sans/GeneralSansRegular.tsx",
-        "packages/ui/src/icons/Fonts/general-sans/GeneralSansVariable.svg",
-        "packages/ui/src/icons/Fonts/general-sans/GeneralSansVariable.tsx"
-      ],
-      "children": [],
-      "directFileCount": 30,
-      "childCount": 0
-    },
-    "icons/Fonts/khand": {
-      "id": "icons/Fonts/khand",
-      "title": "Khand",
-      "sourcePath": "packages/ui/src/icons/Fonts/khand",
-      "parentId": "icons/Fonts",
-      "kind": "list",
-      "depth": 2,
-      "directFiles": [
-        "packages/ui/src/icons/Fonts/khand/khand-bold.eot",
-        "packages/ui/src/icons/Fonts/khand/khand-bold.otf",
-        "packages/ui/src/icons/Fonts/khand/khand-bold.ttf",
-        "packages/ui/src/icons/Fonts/khand/khand-bold.woff",
-        "packages/ui/src/icons/Fonts/khand/khand-bold.woff2",
-        "packages/ui/src/icons/Fonts/khand/khand-medium.eot",
-        "packages/ui/src/icons/Fonts/khand/khand-medium.otf",
-        "packages/ui/src/icons/Fonts/khand/khand-medium.ttf",
-        "packages/ui/src/icons/Fonts/khand/khand-medium.woff",
-        "packages/ui/src/icons/Fonts/khand/khand-medium.woff2",
-        "packages/ui/src/icons/Fonts/khand/khand-semibold.eot",
-        "packages/ui/src/icons/Fonts/khand/khand-semibold.otf",
-        "packages/ui/src/icons/Fonts/khand/khand-semibold.ttf",
-        "packages/ui/src/icons/Fonts/khand/khand-semibold.woff",
-        "packages/ui/src/icons/Fonts/khand/khand-semibold.woff2",
-        "packages/ui/src/icons/Fonts/khand/khand-variable.eot",
-        "packages/ui/src/icons/Fonts/khand/khand-variable.ttf",
-        "packages/ui/src/icons/Fonts/khand/khand-variable.woff",
-        "packages/ui/src/icons/Fonts/khand/khand-variable.woff2",
-        "packages/ui/src/icons/Fonts/khand/KhandBold.svg",
-        "packages/ui/src/icons/Fonts/khand/KhandBold.tsx",
-        "packages/ui/src/icons/Fonts/khand/KhandMedium.svg",
-        "packages/ui/src/icons/Fonts/khand/KhandMedium.tsx",
-        "packages/ui/src/icons/Fonts/khand/KhandSemibold.svg",
-        "packages/ui/src/icons/Fonts/khand/KhandSemibold.tsx"
-      ],
-      "children": [],
-      "directFileCount": 25,
-      "childCount": 0
-    },
-    "icons/Fonts/logic-monoscript": {
-      "id": "icons/Fonts/logic-monoscript",
-      "title": "Logic Monoscript",
-      "sourcePath": "packages/ui/src/icons/Fonts/logic-monoscript",
-      "parentId": "icons/Fonts",
-      "kind": "list",
-      "depth": 2,
-      "directFiles": [
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-black.otf",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-black.ttf",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-black.woff",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-black.woff2",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-bold.otf",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-bold.ttf",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-bold.woff",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-bold.woff2",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-light.otf",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-light.ttf",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-light.woff",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-light.woff2",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-medium.otf",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-medium.ttf",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-medium.woff",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-medium.woff2",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-regular.otf",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-regular.ttf",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-regular.woff",
-        "packages/ui/src/icons/Fonts/logic-monoscript/logic-monoscript-regular.woff2"
-      ],
-      "children": [],
-      "directFileCount": 20,
-      "childCount": 0
-    },
-    "icons/Fonts/noto-emoji": {
-      "id": "icons/Fonts/noto-emoji",
-      "title": "Noto Emoji",
-      "sourcePath": "packages/ui/src/icons/Fonts/noto-emoji",
-      "parentId": "icons/Fonts",
-      "kind": "list",
-      "depth": 2,
-      "directFiles": [
-        "packages/ui/src/icons/Fonts/noto-emoji/noto-emoji-bold.eot",
-        "packages/ui/src/icons/Fonts/noto-emoji/noto-emoji-bold.ttf",
-        "packages/ui/src/icons/Fonts/noto-emoji/noto-emoji-bold.woff",
-        "packages/ui/src/icons/Fonts/noto-emoji/noto-emoji-bold.woff2",
-        "packages/ui/src/icons/Fonts/noto-emoji/noto-emoji-ofl.txt",
-        "packages/ui/src/icons/Fonts/noto-emoji/noto-emoji-variable.ttf",
-        "packages/ui/src/icons/Fonts/noto-emoji/noto-emoji-variable.woff",
-        "packages/ui/src/icons/Fonts/noto-emoji/noto-emoji-variable.woff2",
-        "packages/ui/src/icons/Fonts/noto-emoji/NotoEmojiBold.svg",
-        "packages/ui/src/icons/Fonts/noto-emoji/NotoEmojiBold.tsx"
-      ],
-      "children": [],
-      "directFileCount": 10,
-      "childCount": 0
-    },
-    "icons/Fonts/pacifico": {
-      "id": "icons/Fonts/pacifico",
-      "title": "Pacifico",
-      "sourcePath": "packages/ui/src/icons/Fonts/pacifico",
-      "parentId": "icons/Fonts",
-      "kind": "list",
-      "depth": 2,
-      "directFiles": [
-        "packages/ui/src/icons/Fonts/pacifico/pacifico-regular.eot",
-        "packages/ui/src/icons/Fonts/pacifico/pacifico-regular.ttf",
-        "packages/ui/src/icons/Fonts/pacifico/pacifico-regular.woff",
-        "packages/ui/src/icons/Fonts/pacifico/pacifico-regular.woff2",
-        "packages/ui/src/icons/Fonts/pacifico/PacificoRegular.svg",
-        "packages/ui/src/icons/Fonts/pacifico/PacificoRegular.tsx"
-      ],
-      "children": [],
-      "directFileCount": 6,
-      "childCount": 0
-    },
-    "icons/Fonts/supreme": {
-      "id": "icons/Fonts/supreme",
-      "title": "Supreme",
-      "sourcePath": "packages/ui/src/icons/Fonts/supreme",
-      "parentId": "icons/Fonts",
-      "kind": "list",
-      "depth": 2,
-      "directFiles": [
-        "packages/ui/src/icons/Fonts/supreme/supreme-bold.ttf",
-        "packages/ui/src/icons/Fonts/supreme/supreme-extra-bold.ttf",
-        "packages/ui/src/icons/Fonts/supreme/supreme-extra-light.ttf",
-        "packages/ui/src/icons/Fonts/supreme/supreme-light.ttf",
-        "packages/ui/src/icons/Fonts/supreme/supreme-medium.ttf",
-        "packages/ui/src/icons/Fonts/supreme/supreme-regular.ttf",
-        "packages/ui/src/icons/Fonts/supreme/supreme-thin.ttf",
-        "packages/ui/src/icons/Fonts/supreme/supreme-variable.eot",
-        "packages/ui/src/icons/Fonts/supreme/supreme-variable.ttf",
-        "packages/ui/src/icons/Fonts/supreme/supreme-variable.woff",
-        "packages/ui/src/icons/Fonts/supreme/supreme-variable.woff2"
-      ],
-      "children": [],
-      "directFileCount": 11,
-      "childCount": 0
-    },
-    "icons/Fonts": {
-      "id": "icons/Fonts",
-      "title": "Fonts",
-      "sourcePath": "packages/ui/src/icons/Fonts",
-      "parentId": "icons",
-      "kind": "list",
-      "depth": 1,
-      "directFiles": [
-        "packages/ui/src/icons/Fonts/rebel-fonts.css"
-      ],
-      "children": [
-        "icons/Fonts/barlow",
-        "icons/Fonts/fira-code",
-        "icons/Fonts/funnel-sans",
-        "icons/Fonts/general-sans",
-        "icons/Fonts/khand",
-        "icons/Fonts/logic-monoscript",
-        "icons/Fonts/noto-emoji",
-        "icons/Fonts/pacifico",
-        "icons/Fonts/supreme"
-      ],
-      "directFileCount": 1,
-      "childCount": 9
     },
     "icons/RebelIconsReact/DirectionalReact": {
       "id": "icons/RebelIconsReact/DirectionalReact",
@@ -5812,6 +5597,7 @@
         "packages/ui/src/icons/RegistryEditor.tsx",
         "packages/ui/src/icons/Restricted.tsx",
         "packages/ui/src/icons/Results.tsx",
+        "packages/ui/src/icons/revrebel.png",
         "packages/ui/src/icons/Rewind.tsx",
         "packages/ui/src/icons/RewindTen.tsx",
         "packages/ui/src/icons/Rss.tsx",
@@ -5901,7 +5687,6 @@
         "icons/custom",
         "icons/DirectionalReact",
         "icons/DirectionalSvg",
-        "icons/Fonts",
         "icons/RebelIconsReact",
         "icons/RebelIconsSvg",
         "icons/ShadowIconsReact",
@@ -5909,8 +5694,8 @@
         "icons/SocialIconsReact",
         "icons/SocialIconsSvg"
       ],
-      "directFileCount": 299,
-      "childCount": 15
+      "directFileCount": 300,
+      "childCount": 14
     },
     "lib/bigquery": {
       "id": "lib/bigquery",

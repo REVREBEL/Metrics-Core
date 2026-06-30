@@ -3,7 +3,7 @@
 
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@buttons/button"
 import {
     Card,
     CardContent,
@@ -11,9 +11,9 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@ui-core/card"
+import { Input } from "@forms/fields/input"
+import { Label } from "@ui-core/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
 

@@ -1,4 +1,4 @@
-import { FormControl, FormItem, FormMessage } from "@auto-form/form";
+import { FormControl, FormItem, FormMessage } from "@forms/form";
 import {
   Select,
   SelectContent,

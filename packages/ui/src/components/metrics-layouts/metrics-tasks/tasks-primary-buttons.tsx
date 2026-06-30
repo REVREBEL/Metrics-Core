@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@buttons/button";
 import { useTasks } from "./tasks-provider";
 
 export function TasksPrimaryButtons() {

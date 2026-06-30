@@ -570,7 +570,7 @@
     },
     {
       "component": "AutoFormInput",
-      "story": "packages/ui/src/primitives/forms/fields/input.stories.tsx",
+      "story": "packages/ui/src/primitivesforms/fields/input.stories.tsx",
       "status": "skipped-existing"
     },
     {

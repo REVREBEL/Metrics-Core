@@ -81,7 +81,7 @@ It ensures your UI adapts correctly to layout direction without manual refactori
 import Button from '@mui/material/Button'
 
 // shadcn/ui
-import { Button } from '@/components/ui/button'
+import { Button } from '@buttons/button'
 ```
 
 **2. Form Components**
@@ -180,9 +180,9 @@ export function LoginForm() {
 
 **After (shadcn/ui)**:
 ```tsx
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
+import { Input } from '@forms/fields/input'
+import { Label } from '@ui-core/label'
+import { Button } from '@buttons/button'
 
 export function LoginForm() {
   return (

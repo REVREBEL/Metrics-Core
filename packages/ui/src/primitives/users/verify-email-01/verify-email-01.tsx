@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@buttons/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui-core/card'
 
-import Logo from '@/components/shadcn-studio/logo'
-import AuthBackgroundShape from '@/assets/svg/auth-background-shape'
+import Logo from '@icons/revrebel.png'
+import AuthBackgroundShape from '@icons/AuthBackgroundShape'
 
 const VerifyEmail = () => {
   return (
@@ -13,7 +13,7 @@ const VerifyEmail = () => {
 
       <Card className='z-1 w-full border-none shadow-md sm:max-w-md'>
         <CardHeader className='gap-6'>
-          <Logo className='gap-3' />
+           <img src={Logo.src} alt='RevRebel Logo' className='h-10 w-auto' />
 
           <div>
             <CardTitle className='mb-1.5 text-2xl'>Verify your email</CardTitle>

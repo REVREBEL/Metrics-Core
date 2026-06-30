@@ -8,7 +8,7 @@ import type { Table } from "@tanstack/react-table";
 import { useState } from "react";
 import { toast } from "sonner";
 import { DataTableBulkActions as BulkActionsToolbar } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
+import { Button } from "@buttons/button";
 import {
   DropdownMenu,
   DropdownMenuContent,

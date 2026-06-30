@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger
 } from "@ui-core/accordion";
-import { FormField } from "@auto-form/form";
+import { FormField } from "@forms/form";
 import { type useForm, useFormContext } from "react-hook-form";
 import * as React from "react";
 import * as z from "zod";

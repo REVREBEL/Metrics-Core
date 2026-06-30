@@ -1,4 +1,4 @@
-import ForgotPassword from "@/components/shadcn-studio/blocks/forgot-password-01/forgot-password-01";
+import ForgotPassword from "@users/forgot-password-01/forgot-password-01";
 
 const ForgotPasswordPage = () => {
   return <ForgotPassword />;

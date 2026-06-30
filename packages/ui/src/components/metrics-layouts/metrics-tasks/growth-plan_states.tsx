@@ -12,7 +12,7 @@ import {
   IconPresentation,
   IconUser,
 } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@buttons/button";
 import type { GrowthPlanView } from "./growth-plan-view-switcher";
 
 type EmptyStateProps = {

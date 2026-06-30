@@ -1,5 +1,5 @@
 import * as React from "react"
-import { FormControl, FormItem, FormMessage } from "@auto-form/form";
+import { FormControl, FormItem, FormMessage } from "@forms/form";
 import { Input as BaseInput } from "@inputs/input"; 
 import AutoFormLabel from "../common/label";
 import AutoFormTooltip from "../common/tooltip";

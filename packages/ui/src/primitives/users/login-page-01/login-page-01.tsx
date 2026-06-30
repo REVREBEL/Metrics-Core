@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
+import { Button } from '@buttons/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui-core/card'
+import { Separator } from '@ui-core/separator'
 
-import Logo from '@/components/shadcn-studio/logo'
-import AuthBackgroundShape from '@/assets/svg/auth-background-shape'
-import LoginForm from '@/components/shadcn-studio/blocks/login-page-01/login-form'
+import Logo from '@icons/revrebel.png'
+import AuthBackgroundShape from '@icons/AuthBackgroundShape'
+import LoginForm from '@users/login-form'
 
 const Login = () => {
   return (
@@ -15,7 +15,7 @@ const Login = () => {
 
       <Card className='z-1 w-full border-none shadow-md sm:max-w-lg'>
         <CardHeader className='gap-6'>
-          <Logo className='gap-3' />
+           <img src={Logo.src} alt='RevRebel Logo' className='h-10 w-auto' />
 
           <div>
             <CardTitle className='mb-1.5 text-2xl'>Sign in to Shadcn Studio</CardTitle>

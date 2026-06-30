@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Header } from "@/components/layout/header";
 import { Main } from "@/components/layout/main";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { Button } from "@/components/ui/button";
+import { Button } from "@buttons/button";
 import {
   Dialog,
   DialogContent,
@@ -14,15 +14,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "@forms/fields/input";
+import { Label } from "@ui-core/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@ui-core/select";
 import { Textarea } from "@/components/ui/textarea";
 import { CalendarView } from "./components/calendar-view";
 import { ByDepartmentView, ByPersonView } from "./components/group-views";

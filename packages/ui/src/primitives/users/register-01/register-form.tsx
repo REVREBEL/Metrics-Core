@@ -2,12 +2,12 @@
 
 import { useState } from 'react'
 
-import { IconEyeIcon, IconEyeOffIcon } from "@tabler/icons-react"
+import { IconEyeFilled, IconLockSquareRoundedFilled } from "@tabler/icons-react"
 
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from '@buttons/button'
+import { Checkbox } from '@ui-core/checkbox'
+import { Input } from '@forms/fields/input'
+import { Label } from '@ui-core/label'
 
 const RegisterForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)

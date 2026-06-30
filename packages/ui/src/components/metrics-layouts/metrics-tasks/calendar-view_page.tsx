@@ -9,8 +9,8 @@ import {
   IconClock,
 } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@buttons/button";
+import { Card, CardContent } from "@ui-core/card";
 import { cn } from "@/lib/utils";
 import type { Task } from "../data/schema";
 

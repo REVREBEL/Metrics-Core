@@ -1,4 +1,4 @@
-import { FormControl, FormItem, FormLabel, FormMessage } from "@auto-form/form";
+import { FormControl, FormItem, FormLabel, FormMessage } from "@forms/form";
 import { RadioGroup, RadioGroupItem } from "@ui-core/radio-group";
 import type * as z from "zod";
 import AutoFormLabel from "../common/label";

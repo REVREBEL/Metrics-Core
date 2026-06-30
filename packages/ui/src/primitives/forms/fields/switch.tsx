@@ -1,4 +1,4 @@
-import { FormControl, FormItem } from "@auto-form/form";
+import { FormControl, FormItem } from "@forms/form";
 import { Switch } from "@ui-core/switch";
 import AutoFormLabel from "../common/label";
 import AutoFormTooltip from "../common/tooltip";

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 
-import { CheckIcon, MailIcon, XIcon, EyeIcon, EyeOffIcon } from 'lucide-react'
+import { CheckIcon, IconMailFilled, XIcon, EyeIcon, EyeOffIcon } from 'lucide-react'
 
 import { Button } from '@ui-core'
 import { Input } from '@ui-core'
@@ -74,7 +74,7 @@ const EmailPass = () => {
             <div className='relative'>
               <Input id='email' type='email' placeholder='Email address' className='peer pr-9' required />
               <div className='text-muted-foreground pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center pr-3 peer-disabled:opacity-50'>
-                <MailIcon className='size-4' />
+                <IconMailFilled className='size-4' />
                 <span className='sr-only'>Email</span>
               </div>
             </div>

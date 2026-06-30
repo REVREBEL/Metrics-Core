@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import { IconXIcon, IconPlusIcon } from "@tabler/icons-react"
+import { IconSquareRoundedXFilled, IconSquareRoundedPlusFilled } from "@tabler/icons-react"
 
 import {
   Dialog,
@@ -12,10 +12,10 @@ import {
   DialogDescription,
   DialogFooter,
   DialogTrigger
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+} from '@ui-core/dialog'
+import { Button } from '@buttons/button'
+import { Input } from '@forms/fields/input'
+import { Label } from '@ui-core/label'
 
 interface ConnectedAccount {
   id: string
@@ -103,7 +103,7 @@ const ConnectedAccount = () => {
                 aria-label={`Remove ${account.name}`}
                 onClick={() => handleRemoveAccount(account.id)}
               >
-                <XIcon className='size-3' aria-hidden='true' />
+                <IconSquareRoundedXFilled className='size-3' aria-hidden='true' />
               </Button>
             </div>
           ))}
@@ -112,7 +112,7 @@ const ConnectedAccount = () => {
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button variant='outline' className='h-10.5' onClick={() => setIsDialogOpen(true)}>
-                <PlusIcon className='size-4' />
+                <IconSquareRoundedPlusFilled className='size-4' />
                 Add App
               </Button>
             </DialogTrigger>
