@@ -1,0 +1,344 @@
+---
+title: Lookup Tables
+nav_order: 5
+has_toc: true
+permalink: /lookup-tables/
+---
+
+# Lookup Tables
+
+Lookup tables define the controlled taxonomies used by mapping tables, production dimensions, reporting views, filters, and application picklists.
+
+This inventory reflects the latest Dataform DDL in `packages/dataform` and its mirror in `REVREBEL/Metrics-Dataform`.
+
+# Lookup inventory
+
+| Lookup table | Status | Primary consumer |
+|---|---|---|
+| `lkp_report_type` | Implemented | Source report metadata |
+| `lkp_metric_type` | Implemented | Metric dictionary and classification |
+| `lkp_source_system_type` | Implemented | `lkp_source_application` |
+| `lkp_source_application` | Implemented | All source-value mapping tables |
+| `lkp_segment_group` | Implemented | `lkp_segment`, `dim_segment`, `vw_segment` |
+| `lkp_segment` | Implemented | `map_segment`, `map_rate`, `dim_segment`, reporting |
+| `lkp_finance_segment` | Implemented | `map_segment`, `dim_segment`, finance reporting |
+| `lkp_consortia_category` | Implemented | `lkp_consortia`, `vw_rate` |
+| `lkp_consortia_focus` | Implemented | `lkp_consortia`, `vw_rate` |
+| `lkp_consortia` | Implemented | `lkp_agency`, `lkp_rate`, `map_rate` |
+| `lkp_agency` | Implemented | Agency/IATA reference |
+| `lkp_industry` | Implemented | `lkp_company` by standardized industry value |
+| `lkp_company` | Implemented | `lkp_rate`, `map_rate`, account reporting |
+| `lkp_source` | Implemented | `lkp_subsource`, `map_source`, `map_rate`, `lkp_rate` |
+| `lkp_subsource` | Implemented with migration column | `map_source`, `map_rate`, `lkp_rate` |
+| `lkp_channel_group` | Implemented | `lkp_channel`, `vw_source`, `vw_rate` |
+| `lkp_channel` | Implemented | `map_source`, `map_rate`, `lkp_rate` |
+| `lkp_ratetype` | Implemented | `lkp_rate`, `map_rate` |
+| `lkp_rate` | Implemented | Standard rate catalog |
+| `lkp_event_category` | Implemented and seeded | Event calendar and demand context |
+| `lkp_event_impact` | Implemented and seeded | Event calendar and demand context |
+
+# Core metadata lookups
+
+## `metrics_core.lkp_report_type`
+
+| Column | Type | Description |
+|---|---|---|
+| `report_type` | `STRING` | Allowed report type |
+| `description` | `STRING` | Report-type definition |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+## `metrics_core.lkp_metric_type`
+
+| Column | Type | Description |
+|---|---|---|
+| `metric_type` | `STRING` | Allowed metric type |
+| `description` | `STRING` | Metric-type definition |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+# Source application lookups
+
+## `metrics_core.lkp_source_system_type`
+
+Broad application categories such as PMS, CRS, RMS, RateShop, Marketing, Finance, Sales, Web, and Manual.
+
+| Column | Type | Description |
+|---|---|---|
+| `code` | `STRING` | Standard broad system-type code |
+| `name` | `STRING` | Display name |
+| `description` | `STRING` | Definition or usage notes |
+| `sort` | `INT64` | Display order |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+## `metrics_core.lkp_source_application`
+
+Granular applications such as OPERA, IDeaS, SynXis, Lighthouse, or manual uploads.
+
+| Column | Type | Description | Dependency |
+|---|---|---|---|
+| `code` | `STRING` | Standard application code | Primary lookup key |
+| `name` | `STRING` | Display name | — |
+| `short_name` | `STRING` | Short display name | — |
+| `description` | `STRING` | Definition or usage notes | — |
+| `sort` | `INT64` | Display order | — |
+| `source_system_type_code` | `STRING` | Broad application category | `lkp_source_system_type.code` |
+| `vendor` | `STRING` | Vendor or provider | — |
+| `is_active` | `BOOL` | Active flag | — |
+| `insert_date` | `DATE` | Insert date | — |
+| `updated_date` | `DATE` | Last update date | — |
+
+`vw_source_application` joins the granular application to its broad source-system type.
+
+# Segment lookups
+
+## `metrics_core.lkp_segment_group`
+
+| Column | Type | Description |
+|---|---|---|
+| `code` | `STRING` | Segment-group code |
+| `name` | `STRING` | Display name |
+| `description` | `STRING` | Definition or usage notes |
+| `sort` | `INT64` | Reporting order |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+## `metrics_core.lkp_segment`
+
+| Column | Type | Description | Dependency |
+|---|---|---|---|
+| `code` | `STRING` | Standard commercial segment code | Primary lookup key |
+| `name` | `STRING` | Segment name | — |
+| `description` | `STRING` | Definition or usage notes | — |
+| `sort` | `INT64` | Reporting order | — |
+| `segment_group_code` | `STRING` | Parent segment group | `lkp_segment_group.code` |
+| `is_active` | `BOOL` | Active flag | — |
+| `insert_date` | `DATE` | Insert date | — |
+| `updated_date` | `DATE` | Last update date | — |
+
+## `metrics_core.lkp_finance_segment`
+
+| Column | Type | Description |
+|---|---|---|
+| `code` | `STRING` | Standard finance-segment code |
+| `name` | `STRING` | Display name |
+| `description` | `STRING` | Definition or usage notes |
+| `sort` | `INT64` | Finance-reporting order |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+# Consortia and account lookups
+
+## `metrics_core.lkp_consortia_category`
+
+| Column | Type | Description |
+|---|---|---|
+| `code` | `STRING` | Consortia-category code |
+| `name` | `STRING` | Display name |
+| `description` | `STRING` | Definition or usage notes |
+| `sort` | `INT64` | Reporting order |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+## `metrics_core.lkp_consortia_focus`
+
+| Column | Type | Description |
+|---|---|---|
+| `code` | `STRING` | Consortia-focus code |
+| `name` | `STRING` | Display name |
+| `description` | `STRING` | Definition or usage notes |
+| `sort` | `INT64` | Reporting order |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+## `metrics_core.lkp_consortia`
+
+| Column | Type | Description | Dependency |
+|---|---|---|---|
+| `code` | `STRING` | Standard consortia code | Primary lookup key |
+| `name` | `STRING` | Full name | — |
+| `short_name` | `STRING` | Short display name | — |
+| `description` | `STRING` | Definition or usage notes | — |
+| `sort` | `INT64` | Reporting order | — |
+| `consortia_focus_code` | `STRING` | Focus classification | `lkp_consortia_focus.code` |
+| `consortia_category_code` | `STRING` | Category classification | `lkp_consortia_category.code` |
+| `is_active` | `BOOL` | Active flag | — |
+| `insert_date` | `DATE` | Insert date | — |
+| `updated_date` | `DATE` | Last update date | — |
+
+## `metrics_core.lkp_agency`
+
+| Column | Type | Description | Dependency |
+|---|---|---|---|
+| `iata` | `STRING` | IATA number or agency identifier | Primary business key |
+| `name` | `STRING` | Agency name | — |
+| `corp_profile` | `STRING` | Corporate or agency profile reference | — |
+| `corporate_code` | `STRING` | Associated corporate code | — |
+| `consortia_code` | `STRING` | Standard consortia | `lkp_consortia.code` |
+| `consortia_short_name` | `STRING` | Compatibility/display value | Denormalized from consortia |
+| `rate_type` | `STRING` | Negotiated-rate classification | Soft relationship; not `ratetype_code` |
+| `is_active` | `BOOL` | Active flag | — |
+| `insert_date` | `DATE` | Insert date | — |
+| `updated_date` | `DATE` | Last update date | — |
+
+## `metrics_core.lkp_industry`
+
+| Column | Type | Description |
+|---|---|---|
+| `category` | `STRING` | High-level industry category |
+| `industry` | `STRING` | Industry name |
+| `sort` | `INT64` | Reporting order |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+## `metrics_core.lkp_company`
+
+| Column | Type | Description | Dependency |
+|---|---|---|---|
+| `code` | `STRING` | Standard company/account code | Primary lookup key |
+| `name` | `STRING` | Company or account name | — |
+| `description` | `STRING` | Usage notes | — |
+| `category` | `STRING` | Company category | — |
+| `industry` | `STRING` | Standardized industry value | Soft join to `lkp_industry.industry` |
+| `sort` | `INT64` | Reporting order | — |
+| `is_active` | `BOOL` | Active flag | — |
+| `insert_date` | `DATE` | Insert date | — |
+| `updated_date` | `DATE` | Last update date | — |
+
+# Source and channel lookups
+
+## `metrics_core.lkp_source`
+
+| Column | Type | Description |
+|---|---|---|
+| `code` | `STRING` | Standard source code |
+| `name` | `STRING` | Display name |
+| `description` | `STRING` | Definition or usage notes |
+| `sort` | `INT64` | Reporting order |
+| `source` | `STRING` | Optional broader source family or legacy label |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+## `metrics_core.lkp_subsource`
+
+The base DDL creates the first seven columns. The migration `06_migrate_subsource_parent_source.sqlx` adds `source_code`.
+
+| Column | Type | Description | Dependency |
+|---|---|---|---|
+| `code` | `STRING` | Standard subsource code | Primary lookup key |
+| `name` | `STRING` | Display name | — |
+| `description` | `STRING` | Definition or usage notes | — |
+| `sort` | `INT64` | Reporting order | — |
+| `is_active` | `BOOL` | Active flag | — |
+| `insert_date` | `DATE` | Insert date | — |
+| `updated_date` | `DATE` | Last update date | — |
+| `source_code` | `STRING` | Parent standard source | `lkp_source.code` |
+
+## `metrics_core.lkp_channel_group`
+
+| Column | Type | Description |
+|---|---|---|
+| `code` | `STRING` | Channel-group code |
+| `name` | `STRING` | Display name |
+| `description` | `STRING` | Definition or usage notes |
+| `sort` | `INT64` | Reporting order |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+## `metrics_core.lkp_channel`
+
+| Column | Type | Description | Dependency |
+|---|---|---|---|
+| `code` | `STRING` | Standard channel code | Primary lookup key |
+| `name` | `STRING` | Display name | — |
+| `description` | `STRING` | Definition or usage notes | — |
+| `sort` | `INT64` | Reporting order | — |
+| `channel_group_code` | `STRING` | Parent channel group | `lkp_channel_group.code` |
+| `is_active` | `BOOL` | Active flag | — |
+| `insert_date` | `DATE` | Insert date | — |
+| `updated_date` | `DATE` | Last update date | — |
+
+# Rate lookups
+
+## `metrics_core.lkp_ratetype`
+
+| Column | Type | Description |
+|---|---|---|
+| `code` | `STRING` | Standard rate-type code |
+| `name` | `STRING` | Display name |
+| `description` | `STRING` | Definition or usage notes |
+| `sort` | `INT64` | Reporting order |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+## `metrics_core.lkp_rate`
+
+| Column | Type | Description | Dependency |
+|---|---|---|---|
+| `code` | `STRING` | Standard rate code | Primary lookup key |
+| `name` | `STRING` | Display name | — |
+| `description` | `STRING` | Usage notes | — |
+| `ratetype_code` | `STRING` | Standard rate type | `lkp_ratetype.code` |
+| `company_code` | `STRING` | Standard company/account | `lkp_company.code` |
+| `segment_code` | `STRING` | Standard commercial segment | `lkp_segment.code` |
+| `channel_code` | `STRING` | Standard channel | `lkp_channel.code` |
+| `source_code` | `STRING` | Standard source | `lkp_source.code` |
+| `subsource_code` | `STRING` | Standard subsource | `lkp_subsource.code` |
+| `consortia_code` | `STRING` | Standard consortia | `lkp_consortia.code` |
+| `sort` | `INT64` | Reporting order | — |
+| `is_active` | `BOOL` | Active flag | — |
+| `insert_date` | `DATE` | Insert date | — |
+| `updated_date` | `DATE` | Last update date | — |
+
+# Event lookups
+
+## `metrics_core.lkp_event_category`
+
+| Column | Type | Description |
+|---|---|---|
+| `event_category` | `STRING` | Controlled event category |
+| `insert_timestamp` | `STRING` | Seed/insert timestamp retained as a string for compatibility |
+
+Current seeded values include Convention, Holiday, Observance, Concert, Sporting, Festival, Government, Marathon, Property Closure, Renovation, Special Event, Natural Event, and Other.
+
+## `metrics_core.lkp_event_impact`
+
+| Column | Type | Description |
+|---|---|---|
+| `event_impact` | `STRING` | Controlled expected impact classification |
+| `insert_timestamp` | `STRING` | Seed/insert timestamp retained as a string |
+| `event_impact_bg_color` | `STRING` | Optional UI/BI background color |
+| `event_impact_font_color` | `STRING` | Optional UI/BI font color |
+
+Current seeded values include Citywide Sellout, Citywide Limited, High Impact, Medium Impact, Minimal Impact, Location Based Impact, Location Based Limited, No Impact, and Note.
+
+# Known normalization gaps
+
+- `lkp_company.industry` uses a text relationship to `lkp_industry.industry` rather than an industry code.
+- `lkp_agency.rate_type` is a text field and does not use `ratetype_code`.
+- Event lookups use `insert_timestamp STRING`, while most lookup tables use `insert_date DATE` and `updated_date DATE`.
+- No current Dataform DDL exists for `lkp_roomtype`, despite an app-registry dependency on that name.
+- BigQuery does not enforce these relationships as physical foreign keys; they are semantic contracts validated by Dataform, ingestion, and application logic.
+
+# Dataform sources
+
+```text
+packages/dataform/definitions/00_create_core_tables.sqlx
+packages/dataform/definitions/01_create_source_application_tables.sqlx
+packages/dataform/definitions/05_create_segment_tables.sqlx
+packages/dataform/definitions/05_create_global_settings_event_lookups.sqlx
+packages/dataform/definitions/06_create_source_channel_rate_tables.sqlx
+packages/dataform/definitions/06_migrate_subsource_parent_source.sqlx
+```
