@@ -1,35 +1,69 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { IconChartLine } from "@tabler/icons-react";
-import StatisticsCard from "./statistics-with-status";
+import { IconActivity } from "@tabler/icons-react";
+import React from "react";
+import StatisticsCardWithStatus from "./statistics-with-status";
 
-const meta: Meta<typeof StatisticsCard> = {
-  title: "Primitives/Charts/StatisticsWithStatus",
-  component: StatisticsCard,
+const meta = {
+  title: "Primitives/Charts/Statistics Card With Status",
+  component: StatisticsCardWithStatus,
   tags: ["autodocs"],
   parameters: {
-    layout: "centered",
+    layout: "padded",
   },
   argTypes: {
     status: {
       control: "select",
       options: ["within", "observe", "exceed", "unknown"],
     },
-    icon: {
-      control: { type: "none" },
-    },
   },
-};
+} satisfies Meta<typeof StatisticsCardWithStatus>;
 
 export default meta;
 
-type Story = StoryObj<typeof StatisticsCard>;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    title: "Project Progress",
+    value: "85%",
+    status: "within",
+    range: "75% - 100%",
+    icon: <IconActivity />,
+  },
+};
 
 export const OnTrack: Story = {
   args: {
-    title: "Total Revenue",
-    value: "$45,231.89",
+    title: "Server Uptime",
+    value: "99.9%",
     status: "within",
-    range: "12% increase",
-    icon: <IconChartLine />,
+    range: ">= 99.5%",
+  },
+};
+
+export const Stable: Story = {
+  args: {
+    title: "Memory Usage",
+    value: "4.2 GB",
+    status: "observe",
+    range: "4GB - 6GB",
+  },
+};
+
+export const AtRisk: Story = {
+  args: {
+    title: "Error Rate",
+    value: "2.4%",
+    status: "exceed",
+    range: "< 1.0%",
+  },
+};
+
+export const UnderReview: Story = {
+  args: {
+    title: "New Registrations",
+    value: "142",
+    status: "unknown",
+    range: "Evaluating",
   },
 };

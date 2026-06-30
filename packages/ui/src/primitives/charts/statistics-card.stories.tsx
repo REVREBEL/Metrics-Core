@@ -1,39 +1,35 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IconChartBar } from "@tabler/icons-react";
+import React from "react";
 import StatisticsCard from "./statistics-card";
 
-const meta: Meta<typeof StatisticsCard> = {
-  title: "Primitives/Charts/StatisticsCard",
+const meta = {
+  title: "Primitives/Charts/Statistics Card",
   component: StatisticsCard,
   tags: ["autodocs"],
   parameters: {
-    layout: "centered",
+    layout: "padded",
   },
-  argTypes: {
-    icon: {
-      control: { type: "none" },
-    },
-  },
-};
+} satisfies Meta<typeof StatisticsCard>;
 
 export default meta;
 
-type Story = StoryObj<typeof StatisticsCard>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    icon: <IconChartBar className="size-5" />,
     title: "Total Revenue",
     value: "$45,231.89",
     changePercentage: "+20.1%",
+    icon: <IconChartBar size={16} />,
   },
 };
 
 export const NegativeChange: Story = {
   args: {
-    icon: <IconChartBar className="size-5" />,
     title: "Active Users",
     value: "2,350",
     changePercentage: "-4.5%",
+    icon: <IconChartBar size={16} />,
   },
 };
