@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import ButtonDestructive from "./button-destructive";
+import ButtonDestructive from "@buttons/button-destructive";
 
 const meta = {
   title: "Primitives/Buttons/Button Destructive",
