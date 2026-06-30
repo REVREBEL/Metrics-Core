@@ -2,11 +2,11 @@
 
 import { useMemo, useState } from 'react'
 
-import { IconCheckIcon, IconMailIcon, IconXIcon, IconEyeIcon, IconEyeOffIcon } from "@tabler/icons-react"
+import { IconSquareRoundedCheckFilled, IconMailFilled, IconSquareRoundedXFilled, IconEyeFilled, IconLockSquareRoundedFilled } from "@tabler/icons-react"
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from '@buttons/button'
+import { Input } from '@forms/fields/input'
+import { Label } from '@ui-core/label'
 
 import { cn } from '@/lib/utils'
 
@@ -74,7 +74,7 @@ const EmailPass = () => {
             <div className='relative'>
               <Input id='email' type='email' placeholder='Email address' className='peer pr-9' required />
               <div className='text-muted-foreground pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center pr-3 peer-disabled:opacity-50'>
-                <MailIcon className='size-4' />
+                <IconMailFilled className='size-4' />
                 <span className='sr-only'>Email</span>
               </div>
             </div>
@@ -97,7 +97,7 @@ const EmailPass = () => {
                 onClick={() => setIsVisible(prevState => !prevState)}
                 className='text-muted-foreground focus-visible:ring-ring/50 absolute inset-y-0 right-0 rounded-l-none hover:bg-transparent'
               >
-                {isVisible ? <EyeOffIcon /> : <EyeIcon />}
+                {isVisible ? <IconLockSquareRoundedFilled /> : <IconEyeFilled />}
                 <span className='sr-only'>{isVisible ? 'Hide password' : 'Show password'}</span>
               </Button>
             </div>
@@ -122,7 +122,7 @@ const EmailPass = () => {
                 onClick={toggleVisibility}
                 className='text-muted-foreground focus-visible:ring-ring/50 absolute inset-y-0 right-0 rounded-l-none hover:bg-transparent'
               >
-                {isVisible ? <EyeOffIcon /> : <EyeIcon />}
+                {isVisible ? <IconLockSquareRoundedFilled /> : <IconEyeFilled />}
                 <span className='sr-only'>{isVisible ? 'Hide password' : 'Show password'}</span>
               </Button>
             </div>
@@ -145,12 +145,12 @@ const EmailPass = () => {
               {strength.map((req, index) => (
                 <li key={index} className='flex items-center gap-2'>
                   {req.met ? (
-                    <CheckIcon className='size-4 text-green-600 dark:text-green-400' />
+                    <IconSquareRoundedCheckFilled className='size-4 text-color-dark-green dark:light-text-green' />
                   ) : (
-                    <XIcon className='text-muted-foreground size-4' />
+                    <IconSquareRoundedXFilled className='text-muted-foreground size-4' />
                   )}
                   <span
-                    className={cn('text-xs', req.met ? 'text-green-600 dark:text-green-400' : 'text-muted-foreground')}
+                    className={cn('text-xs', req.met ? 'text-color-dark-green dark:light-text-green' : 'text-muted-foreground')}
                   >
                     {req.text}
                     <span className='sr-only'>{req.met ? ' - Requirement met' : ' - Requirement not met'}</span>

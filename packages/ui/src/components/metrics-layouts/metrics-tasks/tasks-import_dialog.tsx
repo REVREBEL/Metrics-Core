@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { Button } from "@buttons/button";
 import {
   Dialog,
   DialogClose,
@@ -21,7 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Input } from "@forms/fields/input";
 import { showSubmittedData } from "@/lib/show-submitted-data";
 
 const formSchema = z.object({

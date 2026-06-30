@@ -11,8 +11,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Button } from '@buttons/button'
+import { Input } from '@forms/fields/input'
 import { Textarea } from '@/components/ui/textarea'
 import {
   Form, FormField, FormItem, FormLabel, FormControl, FormMessage,
@@ -89,8 +89,8 @@ import {
   flexRender, type ColumnDef, type SortingState,
 } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Button } from '@buttons/button'
+import { Input } from '@forms/fields/input'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
 interface DataTableProps<T> {
@@ -164,10 +164,10 @@ Components: Dialog + Form + Button (create/edit in a modal)
 ```tsx
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
+import { Button } from '@buttons/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Input } from '@forms/fields/input'
+import { Label } from '@ui-core/label'
 
 interface Item { id: string; name: string; email: string }
 
@@ -227,7 +227,7 @@ Components: NavigationMenu (desktop) + Sheet (mobile) + ModeToggle
 ```tsx
 import { useState } from 'react'
 import { Menu } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@buttons/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { ModeToggle } from '@/components/mode-toggle'
 
@@ -282,13 +282,13 @@ Components: Tabs + Form + Switch + Select + Toast
 
 ```tsx
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from '@buttons/button'
+import { Input } from '@forms/fields/input'
+import { Label } from '@ui-core/label'
 import { Switch } from '@/components/ui/switch'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@ui-core/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Separator } from '@/components/ui/separator'
+import { Separator } from '@ui-core/separator'
 
 export function SettingsPage() {
   return (

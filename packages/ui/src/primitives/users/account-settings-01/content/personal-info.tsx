@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { IconUploadCloudIcon, IconTrashIcon, IconImageIcon } from "@tabler/icons-react"
+import { IconFileUploadFilled, IconTrashFilled, IconPolaroid } from "@tabler/icons-react"
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from '@buttons/button'
+import { Input } from '@forms/fields/input'
+import { Label } from '@ui-core/label'
 import {
   Select,
   SelectContent,
@@ -14,7 +14,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/select'
+} from '@ui-core/select'
 
 const countries = [
   { value: 'india', label: 'India', flag: 'https://cdn.shadcnstudio.com/ss-assets/flags/india.png' },

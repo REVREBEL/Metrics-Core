@@ -8,7 +8,7 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Button } from "@buttons/button";
 import {
   Dialog,
   DialogContent,
@@ -17,8 +17,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "@forms/fields/input";
+import { Label } from "@ui-core/label";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import type { Initiative } from "../data/schema";

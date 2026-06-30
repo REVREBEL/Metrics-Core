@@ -5,8 +5,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { ConfirmDialog } from "@/components/confirm-dialog";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "@forms/fields/input";
+import { Label } from "@ui-core/label";
 import { sleep } from "@/lib/utils";
 
 type TaskMultiDeleteDialogProps<TData> = {

@@ -1,4 +1,4 @@
-import { Separator } from '@/components/ui/separator'
+import { Separator } from '@ui-core/separator'
 
 import PersonalInfo from '@user/account-settings-01/content/personal-info'
 import EmailPass from '@user//account-settings-01/content/email-password'

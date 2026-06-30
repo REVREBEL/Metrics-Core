@@ -367,7 +367,7 @@ Legacy components map closely to destination UI primitives, but icon usage requi
 
 ### Primitives Mapping
 The legacy widgets use a custom primitive import path `@/components/primitives/*`. These must be mapped directly to `REBEL-APP`'s custom shadcn-style UI primitives:
-*   `@/components/primitives/card` $\rightarrow$ `@/components/ui/card` or `@repo/ui` primitives.
+*   `@/components/primitives/card` $\rightarrow$ `@ui-core/card` or `@repo/ui` primitives.
 *   `@/components/primitives/dialog` $\rightarrow$ `@/components/ui/dialog`.
 *   `@/components/primitives/tabs` $\rightarrow$ `@/components/ui/tabs`.
 

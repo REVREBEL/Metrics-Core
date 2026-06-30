@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "packages/ui/src/components/metrics-layouts/settings/login_page.tsx",
-      "content": "import Login from \"@/components/shadcn-studio/blocks/login-page-01/login-page-01\";\n\nconst LoginPage = () => {\n  return <Login />;\n};\n\nexport default LoginPage;\n",
+      "content": "import Login from \"@users/login-page-01/login-page-01\";\n\nconst LoginPage = () => {\n  return <Login />;\n};\n\nexport default LoginPage;\n",
       "type": "registry:component",
       "target": "src/metrics/layouts/settings/login_page.tsx"
     }

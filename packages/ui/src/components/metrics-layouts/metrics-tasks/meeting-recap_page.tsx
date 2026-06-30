@@ -10,7 +10,7 @@ import {
 } from "@tabler/icons-react";
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui-core/card";
 import { initiativeStatuses, taskStatuses } from "../data/data";
 import type { Initiative, Task } from "../data/schema";
 

@@ -140,7 +140,7 @@ export default function RootLayout({ children }) {
 
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
+import { Button } from "@buttons/button"
 
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme()
@@ -239,7 +239,7 @@ Don't modify `components/ui/` directly. Instead, create wrapper components:
 
 ```tsx
 // components/loading-button.tsx
-import { Button, ButtonProps } from "@/components/ui/button"
+import { Button, ButtonProps } from "@buttons/button"
 import { Loader2 } from "lucide-react"
 
 interface LoadingButtonProps extends ButtonProps {

@@ -748,18 +748,6 @@
       }
     ]
   },
-  "components/metrics-layouts/settings/account-settings_page": {
-    "displayName": "account-settings_page",
-    "description": "",
-    "props": [
-      {
-        "name": "className",
-        "type": "string",
-        "required": false,
-        "description": "Additional CSS classes merged into the component."
-      }
-    ]
-  },
   "primitives/buttons/button-default": {
     "displayName": "button-default",
     "description": "",
@@ -2066,6 +2054,12 @@
         "type": "string",
         "required": false,
         "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"input\">",
+        "required": false,
+        "description": "Accepts standard input element attributes."
       }
     ]
   },
@@ -3508,6 +3502,33 @@
     "displayName": "theme-toggle",
     "description": "",
     "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/sections/content-section": {
+    "displayName": "content-section",
+    "description": "",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "desc",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "children",
+        "type": "React.JSX.Element",
+        "required": true
+      },
       {
         "name": "className",
         "type": "string",
@@ -5928,6 +5949,42 @@
       }
     ]
   },
+  "primitives/users/empty-state-01/empty-state-01": {
+    "displayName": "empty-state-01",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/forgot-password-01/forgot-password-01": {
+    "displayName": "forgot-password-01",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/forgot-password-01/forgot-password-form": {
+    "displayName": "forgot-password-form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
   "primitives/users/forgot-password-form": {
     "displayName": "forgot-password-form",
     "description": "",
@@ -5954,6 +6011,30 @@
   },
   "primitives/users/login-form": {
     "displayName": "login-form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/login-page-01/login-form": {
+    "displayName": "login-form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/login-page-01/login-page-01": {
+    "displayName": "login-page-01",
     "description": "",
     "props": [
       {
@@ -6029,6 +6110,30 @@
       }
     ]
   },
+  "primitives/users/register-01/register-01": {
+    "displayName": "register-01",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/register-01/register-form": {
+    "displayName": "register-form",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
   "primitives/users/register-form": {
     "displayName": "register-form",
     "description": "",
@@ -6077,6 +6182,18 @@
   },
   "primitives/users/social-url": {
     "displayName": "social-url",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
+  "primitives/users/verify-email-01/verify-email-01": {
+    "displayName": "verify-email-01",
     "description": "",
     "props": [
       {

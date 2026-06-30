@@ -1,7 +1,7 @@
-import { IconTrash2Icon } from "@tabler/icons-react"
+import { IconTrash } from "@tabler/icons-react"
 
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@ui-core/card'
+import { Button } from '@buttons/button'
 import {
   Dialog,
   DialogTrigger,
@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose
-} from '@/components/ui/dialog'
+} from '@ui-core/dialog'
 
 const DangerZone = () => {
   return (
@@ -43,7 +43,7 @@ const DangerZone = () => {
                     variant='outline'
                     className='hover:bg-destructive/10! text-destructive! border-destructive! focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 max-lg:w-full'
                   >
-                    <Trash2Icon />
+                    <IconTrash />
                     Delete
                   </Button>
                 </DialogTrigger>

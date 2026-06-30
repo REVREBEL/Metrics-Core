@@ -201,7 +201,7 @@ export default defineConfig({
 ❌ **WRONG:**
 ```typescript
 // tsconfig.json has no paths
-import { Button } from '../../components/ui/button'
+import { Button } from '../..buttons/button'
 ```
 
 ✅ **CORRECT:**
@@ -218,7 +218,7 @@ import { Button } from '../../components/ui/button'
 ```
 
 ```typescript
-import { Button } from '@/components/ui/button'
+import { Button } from '@buttons/button'
 ```
 
 ---

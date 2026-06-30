@@ -354,7 +354,7 @@ Components will be added to `src/components/ui/` by default.
 
 2. **Test a simple component**:
    ```tsx
-   import { Button } from "@/components/ui/button"
+   import { Button } from "@buttons/button"
    
    export default function App() {
      return <Button>Click me</Button>
@@ -372,7 +372,7 @@ Components will be added to `src/components/ui/` by default.
 
 ## Troubleshooting
 
-### "Cannot find module '@/components/ui/button'"
+### "Cannot find module '@buttons/button'"
 
 **Solution**: Check path alias configuration in `tsconfig.json` and framework config.
 

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { type JSX, useState } from "react";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@buttons/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Select,
@@ -11,7 +11,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@ui-core/select";
 import { cn } from "@/lib/utils";
 
 type SidebarNavProps = React.HTMLAttributes<HTMLElement> & {

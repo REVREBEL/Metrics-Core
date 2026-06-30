@@ -1,8 +1,8 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from '@buttons/button'
+import { Input } from '@forms/fields/input'
+import { Label } from '@ui-core/label'
 
 const ForgotPasswordForm = () => {
   return (

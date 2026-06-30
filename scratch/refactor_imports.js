@@ -120,9 +120,9 @@ if (exportMap['@auto-form']) {
   exportMap['@auto-form']['FieldLabel'] = '@auto-form/fields/field';
   exportMap['@auto-form']['FieldDescription'] = '@auto-form/fields/field';
   exportMap['@auto-form']['FieldGroup'] = '@auto-form/fields/field';
-  exportMap['@auto-form']['AutoForm'] = '@auto-form/form';
-  exportMap['@auto-form']['AutoFormSubmit'] = '@auto-form/form';
-  exportMap['@auto-form']['useAutoForm'] = '@auto-form/form';
+  exportMap['@auto-form']['AutoForm'] = '@forms/form';
+  exportMap['@auto-form']['AutoFormSubmit'] = '@forms/form';
+  exportMap['@auto-form']['useAutoForm'] = '@forms/form';
   exportMap['@auto-form']['FieldSet'] = '@auto-form/fields/field';
   exportMap['@auto-form']['FieldLegend'] = '@auto-form/fields/field';
 }

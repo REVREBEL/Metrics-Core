@@ -2,10 +2,10 @@
 
 import { useState } from 'react'
 
-import { IconPlusIcon } from "@tabler/icons-react"
+import { IconSquareRoundedPlusFilled } from "@tabler/icons-react"
 
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { Input } from '@forms/fields/input'
+import { Button } from '@buttons/button'
 
 const SocialUrl = () => {
   const [urls, setUrls] = useState<string[]>(['', '', ''])
@@ -37,7 +37,7 @@ const SocialUrl = () => {
         </div>
         <div className='flex items-center justify-between gap-4'>
           <Button type='button' variant='outline' onClick={addUrl}>
-            <PlusIcon className='size-4' />
+            <IconSquareRoundedPlusFilled className='size-4' />
             Add URL
           </Button>
           <Button type='submit'>Save Changes</Button>

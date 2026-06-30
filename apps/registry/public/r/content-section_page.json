@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "packages/ui/src/components/metrics-layouts/settings/content-section_page.tsx",
-      "content": "import { Separator } from \"@/components/ui/separator\";\n\ntype ContentSectionProps = {\n  title: string;\n  desc: string;\n  children: React.JSX.Element;\n};\n\nexport function ContentSection({ title, desc, children }: ContentSectionProps) {\n  return (\n    <div className=\"flex flex-1 flex-col\">\n      <div className=\"flex-none\">\n        <h3 className=\"text-lg font-medium\">{title}</h3>\n        <p className=\"text-sm text-muted-foreground\">{desc}</p>\n      </div>\n      <Separator className=\"my-4 flex-none\" />\n      <div className=\"faded-bottom h-full w-full overflow-y-auto scroll-smooth pe-4 pb-12\">\n        <div className=\"-mx-1 px-1.5 lg:max-w-xl\">{children}</div>\n      </div>\n    </div>\n  );\n}\n",
+      "content": "import { Separator } from \"@ui-core/separator\";\n\ntype ContentSectionProps = {\n  title: string;\n  desc: string;\n  children: React.JSX.Element;\n};\n\nexport function ContentSection({ title, desc, children }: ContentSectionProps) {\n  return (\n    <div className=\"flex flex-1 flex-col\">\n      <div className=\"flex-none\">\n        <h3 className=\"text-lg font-medium\">{title}</h3>\n        <p className=\"text-sm text-muted-foreground\">{desc}</p>\n      </div>\n      <Separator className=\"my-4 flex-none\" />\n      <div className=\"faded-bottom h-full w-full overflow-y-auto scroll-smooth pe-4 pb-12\">\n        <div className=\"-mx-1 px-1.5 lg:max-w-xl\">{children}</div>\n      </div>\n    </div>\n  );\n}\n",
       "type": "registry:component",
       "target": "src/metrics/layouts/settings/content-section_page.tsx"
     }

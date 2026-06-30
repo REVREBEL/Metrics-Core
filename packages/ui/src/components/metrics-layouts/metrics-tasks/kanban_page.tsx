@@ -13,7 +13,7 @@ import {
 import { useMemo } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button } from "@buttons/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
