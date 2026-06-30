@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import AutoFormRadioGroup from "./radio-group";
+import AutoFormLabel from "./label";
 import { Form } from "../form";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 const meta = {
-  title: "Primitives/Forms/Fields/Auto Form Radio Group",
-  component: AutoFormRadioGroup,
+  title: "Primitives/Forms/Common/Auto Form Label",
+  component: AutoFormLabel,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
@@ -22,7 +21,7 @@ const meta = {
       );
     },
   ],
-} satisfies Meta<typeof AutoFormRadioGroup>;
+} satisfies Meta<typeof AutoFormLabel>;
 
 export default meta;
 
@@ -30,15 +29,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    label: "Gender",
-    id: "gender",
-    fieldConfigItem: {},
-    zodItem: z.enum(["Male", "Female"]),
-    field: {
-      value: "",
-      onChange: () => {},
-      onBlur: () => {},
-      name: "gender",
-    } as any,
+    label: "Username",
+    isRequired: false,
+  },
+};
+
+export const Required: Story = {
+  args: {
+    label: "Email",
+    isRequired: true,
   },
 };
