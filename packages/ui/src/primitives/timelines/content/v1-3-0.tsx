@@ -1,15 +1,26 @@
 import { Badge } from '../../ui-core/badge'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../ui-core/accordion'
 
-const V1_3_0_Content = () => {
+interface V1_3_0_ContentProps {
+  title?: string
+  description?: string
+  image?: string
+}
+
+const DEFAULT_SYNC_IMAGE = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" fill="none"><rect width="600" height="300" rx="12" fill="%230F172A"/><rect x="50" y="50" width="180" height="200" rx="8" fill="%231E293B" stroke="%23334155" stroke-width="2"/><rect x="370" y="50" width="180" height="200" rx="8" fill="%231E293B" stroke="%23334155" stroke-width="2"/><path d="M260 150 L340 150 M320 130 L340 150 L320 170" stroke="%2338BDF8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><rect x="70" y="80" width="100" height="12" rx="4" fill="%2364748B"/><rect x="70" y="105" width="140" height="12" rx="4" fill="%2338BDF8"/><rect x="70" y="130" width="120" height="12" rx="4" fill="%2364748B"/><rect x="390" y="80" width="100" height="12" rx="4" fill="%2364748B"/><rect x="390" y="105" width="140" height="12" rx="4" fill="%2338BDF8"/><rect x="390" y="130" width="120" height="12" rx="4" fill="%2364748B"/></svg>'
+
+const V1_3_0_Content = ({
+  title = "Component Sync Unified Library Management (Beta)",
+  description = "We're launching Component Sync, a new way to manage, version, and update all your shadcn components across projects with a single click.",
+  image = DEFAULT_SYNC_IMAGE
+}: V1_3_0_ContentProps) => {
   return (
     <div>
       <div className='space-y-4'>
         <div className='space-y-3'>
-          <h3 className='text-xl font-semibold'>Component Sync Unified Library Management (Beta)</h3>
+          <h3 className='text-xl font-semibold'>{title}</h3>
           <p className='text-muted-foreground text-sm'>
-            We&apos;re launching Component Sync, a new way to manage, version, and update all your shadcn components
-            across projects with a single click.
+            {description}
           </p>
         </div>
         <div className='space-y-3'>
@@ -21,9 +32,9 @@ const V1_3_0_Content = () => {
           </ul>
         </div>
         <img
-          src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/timeline/image-04.png'
-          alt='Component Sync Demo'
-          className='rounded-[10px]'
+          src={image}
+          alt={title}
+          className='rounded-[10px] w-full h-auto'
         />
         <Accordion type='multiple' className='-mt-4 mb-0 w-full' defaultValue={['item-1']}>
           <AccordionItem value='item-1'>
@@ -86,3 +97,4 @@ const V1_3_0_Content = () => {
 }
 
 export default V1_3_0_Content
+export type { V1_3_0_ContentProps }

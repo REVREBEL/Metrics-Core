@@ -2,22 +2,41 @@ import { Badge } from '../../ui-core/badge'
 import { CopyCode } from '../../ui-core/copy-code'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../ui-core/accordion'
 
-const V1_2_0_Content = () => {
-  const codeExample = `// Example of updated API usage
+interface V1_2_0_ContentProps {
+  title?: string
+  description?: string
+  viteLogo?: string
+  reactLogo?: string
+  astroLogo?: string
+  astroDarkLogo?: string
+  code?: string
+}
+
+const DEFAULT_VITE_LOGO = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 1L8 15L4 1H12Z" fill="%23BD34FE"/><path d="M12 1L8 9L6.5 6L4 1H12Z" fill="%23FFD600"/></svg>'
+const DEFAULT_REACT_LOGO = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="8" rx="7" ry="2.5" stroke="%23149ECA" stroke-width="1.2" transform="rotate(30, 8, 8)"/><ellipse cx="8" cy="8" rx="7" ry="2.5" stroke="%23149ECA" stroke-width="1.2" transform="rotate(90, 8, 8)"/><ellipse cx="8" cy="8" rx="7" ry="2.5" stroke="%23149ECA" stroke-width="1.2" transform="rotate(150, 8, 8)"/><circle cx="8" cy="8" r="1.5" fill="%23149ECA"/></svg>'
+const DEFAULT_ASTRO_LOGO = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L12 9H4L8 1Z" fill="%23FF5D01"/><circle cx="8" cy="11" r="2" fill="%23FF5D01"/></svg>'
+
+const V1_2_0_Content = ({
+  title = "Studio Dashboard Live Preview & Deployment",
+  description = "The new Studio Dashboard brings together everything you need to preview, test, and deploy your component library right from your browser.",
+  viteLogo = DEFAULT_VITE_LOGO,
+  reactLogo = DEFAULT_REACT_LOGO,
+  astroLogo = DEFAULT_ASTRO_LOGO,
+  astroDarkLogo = DEFAULT_ASTRO_LOGO,
+  code = `// Example of updated API usage
 const agent = new AIAgent({
   model: "Shadcn/studio",
   reasoning: "enhanced",
   multiModal: true,
 });`
-
+}: V1_2_0_ContentProps) => {
   return (
     <div>
       <div className='space-y-4'>
         <div className='space-y-3'>
-          <h3 className='text-xl font-semibold'>Studio Dashboard Live Preview & Deployment</h3>
+          <h3 className='text-xl font-semibold'>{title}</h3>
           <p className='text-muted-foreground text-sm'>
-            The new Studio Dashboard brings together everything you need to preview, test, and deploy your component
-            library right from your browser.
+            {description}
           </p>
         </div>
         <ul className='text-muted-foreground ml-2 list-inside list-disc space-y-3 text-sm'>
@@ -28,30 +47,30 @@ const agent = new AIAgent({
         <div className='flex flex-wrap items-center gap-4'>
           {/* vite */}
           <div className='flex items-center gap-1.5 rounded-[6px] bg-amber-600/10 px-3 py-1 dark:bg-amber-400/10'>
-            <img src='https://cdn.shadcnstudio.com/ss-assets/brand-logo/vite-logo.png' alt='Vite' className='h-4.5' />
+            <img src={viteLogo} alt='Vite' className='h-4.5' />
             <span className='text-xs font-medium'>Vite</span>
           </div>
           {/* React */}
           <div className='flex items-center gap-1.5 rounded-[6px] bg-sky-600/10 px-3 py-1 dark:bg-sky-400/10'>
-            <img src='https://cdn.shadcnstudio.com/ss-assets/brand-logo/react-logo.png' alt='React' className='h-4.5' />
+            <img src={reactLogo} alt='React' className='h-4.5' />
             <span className='text-xs font-medium'>React</span>
           </div>
           {/* Angular */}
           <div className='bg-destructive/10 flex items-center gap-1.5 rounded-[6px] px-3 py-1'>
             <img
-              src='https://cdn.shadcnstudio.com/ss-assets/brand-logo/astro-icon.png'
+              src={astroLogo}
               alt='Astro'
               className='h-4.5 dark:hidden'
             />
             <img
-              src='https://cdn.shadcnstudio.com/ss-assets/brand-logo/astro-icon-dark.png'
+              src={astroDarkLogo}
               alt='Astro'
               className='hidden h-4.5 dark:block'
             />
             <span className='text-xs font-medium'>Astro</span>
           </div>
         </div>
-        <CopyCode code={codeExample} />
+        <CopyCode code={code} />
         <p className='text-muted-foreground text-sm'>
           The Studio Dashboard is a powerful tool within shadcnstudio that streamlines the process of designing,
           previewing, and deploying your component library. It allows you to instantly preview components in different
@@ -109,3 +128,4 @@ const agent = new AIAgent({
 }
 
 export default V1_2_0_Content
+export type { V1_2_0_ContentProps }

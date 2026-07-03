@@ -1,0 +1,10 @@
+{
+  "contextProviders": [
+    {
+      "name": "agentMemory",
+      "required": true,
+      "priority": 1,
+      "description": "agentMemory - Persistent project memory"
+    }
+  ]
+}

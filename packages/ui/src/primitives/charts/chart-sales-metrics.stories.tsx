@@ -15,5 +15,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    companyName: "Acme Corporation",
+    companyEmail: "analytics@acme.com",
+    salesPlanPercentage: 75,
+    revenueGoal: "542.80",
+    planCompleted: "82%",
+  },
 };
