@@ -176,25 +176,40 @@ export function TasksProvider({ children }: { children: React.ReactNode }) {
     [],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: including all context members for stability and future-proofing
+  const value = React.useMemo(
+    () => ({
+      open,
+      setOpen,
+      currentRow,
+      setCurrentRow,
+      hotelId,
+      externalAssignees,
+      isLoadingAssignees,
+      addExternalAssignee,
+      updateExternalAssignee,
+      deleteExternalAssignee,
+      workstreams,
+      addWorkstream,
+    }),
+    [
+      open,
+      setOpen,
+      currentRow,
+      setCurrentRow,
+      hotelId,
+      externalAssignees,
+      isLoadingAssignees,
+      addExternalAssignee,
+      updateExternalAssignee,
+      deleteExternalAssignee,
+      workstreams,
+      addWorkstream,
+    ],
+  );
+
   return (
-    <TasksContext.Provider
-      value={{
-        open,
-        setOpen,
-        currentRow,
-        setCurrentRow,
-        hotelId,
-        externalAssignees,
-        isLoadingAssignees,
-        addExternalAssignee,
-        updateExternalAssignee,
-        deleteExternalAssignee,
-        workstreams,
-        addWorkstream,
-      }}
-    >
-      {children}
-    </TasksContext.Provider>
+    <TasksContext.Provider value={value}>{children}</TasksContext.Provider>
   );
 }
 
