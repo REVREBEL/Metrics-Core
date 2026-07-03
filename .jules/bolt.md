@@ -1,9 +1,3 @@
-# Bolt's Journal - Critical Learnings Only
-
-## 2025-01-24 - Initializing Bolt's Journal
-**Learning:** Starting fresh in this repository.
-**Action:** Always measure first, optimize second.
-
-## 2025-01-24 - Context Memoization & Correctness
-**Learning:** When memoizing a Context value, always include all members of the context in the dependency array, even if they appear static (e.g., `hotelId = null`) or are considered stable by linters (e.g., `useState` setters). Linters like Biome may flag them as unnecessary, but omitting them can lead to stale closure bugs if the implementation changes or the "static" value becomes dynamic later.
-**Action:** Use `biome-ignore` if necessary to maintain a complete dependency array for context memoization.
+## 2025-05-15 - [Intl Formatter Memoization]
+**Learning:** Instantiating `Intl.NumberFormat` and `Intl.DateTimeFormat` can be significantly more expensive (up to 100x) than the formatting operation itself. In high-frequency render paths like table cells or chart tooltips, this can cause measurable lag.
+**Action:** Always extract `Intl` formatter instances to a shared utility file or memoize them at the module level rather than creating them inside components or loops.
