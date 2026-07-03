@@ -3,15 +3,16 @@ import { AreaChartDemo, BarChartDemo, LineChartDemo, PieChartDemo } from "./char
 
 const meta = {
   title: "Primitives/Charts/Chart Demos",
+  component: AreaChartDemo,
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
   },
-} satisfies Meta;
+} satisfies Meta<typeof AreaChartDemo>;
 
 export default meta;
 
-export const Area: StoryObj<typeof AreaChartDemo> = {
+export const Area: StoryObj<typeof meta> = {
   render: (args) => <AreaChartDemo {...args} />,
 };
 

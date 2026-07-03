@@ -1,21 +1,32 @@
 import { Badge } from '../../ui-core/badge'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../ui-core/accordion'
 
-const V1_1_0_Content = () => {
+interface V1_1_0_ContentProps {
+  title?: string
+  description?: string
+  image?: string
+}
+
+const DEFAULT_IMAGE = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" fill="none"><rect width="600" height="300" rx="12" fill="%231E1B4B"/><circle cx="150" cy="150" r="80" fill="%234F46E5" fill-opacity="0.3"/><circle cx="450" cy="150" r="100" fill="%23EC4899" fill-opacity="0.2"/><path d="M50 150 C 200 50, 400 250, 550 150" stroke="%23818CF8" stroke-width="4" stroke-linecap="round"/><rect x="50" y="220" width="60" height="30" rx="6" fill="%234F46E5"/><rect x="120" y="220" width="60" height="30" rx="6" fill="%23818CF8"/><rect x="190" y="220" width="60" height="30" rx="6" fill="%23EC4899"/><rect x="260" y="220" width="60" height="30" rx="6" fill="%23F43F5E"/></svg>'
+
+const V1_1_0_Content = ({
+  title = "Design Tokens 2.0 Global Theme Rebuild",
+  description = "We've completely redesigned the theme system for Design Tokens 2.0. Tokens are now hierarchical, semantic, and fully type-safe — built for scaling design systems.",
+  image = DEFAULT_IMAGE
+}: V1_1_0_ContentProps) => {
   return (
     <div>
       <div className='space-y-4'>
         <div className='space-y-3'>
-          <h3 className='text-xl font-semibold'>Design Tokens 2.0 Global Theme Rebuild</h3>
+          <h3 className='text-xl font-semibold'>{title}</h3>
           <p className='text-muted-foreground text-sm'>
-            We&apos;ve completely redesigned the theme system for Design Tokens 2.0. Tokens are now hierarchical,
-            semantic, and fully type-safe — built for scaling design systems.
+            {description}
           </p>
         </div>
         <img
-          src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/timeline/image-03.png'
-          alt='Component Sync Demo'
-          className='rounded-[10px] border'
+          src={image}
+          alt={title}
+          className='rounded-[10px] border w-full h-auto'
         />
         <p className='text-muted-foreground text-sm'>
           Design Tokens 2.0 introduces a complete overhaul of how themes are managed within shadcnstudio. With this
@@ -80,3 +91,4 @@ const V1_1_0_Content = () => {
 }
 
 export default V1_1_0_Content
+export type { V1_1_0_ContentProps }

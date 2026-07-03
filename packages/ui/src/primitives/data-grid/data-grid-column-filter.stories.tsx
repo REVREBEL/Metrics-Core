@@ -30,10 +30,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    title: "Status",
     column: {
-      id: "test",
-      getFilterValue: () => "",
+      id: "status",
+      getFilterValue: () => ["active"],
       setFilterValue: () => {},
+      getFacetedUniqueValues: () => new Map([["active", 12], ["inactive", 4], ["pending", 3]]),
     } as any,
+    options: [
+      { label: "Active", value: "active" },
+      { label: "Inactive", value: "inactive" },
+      { label: "Pending", value: "pending" },
+    ],
   },
 };
+

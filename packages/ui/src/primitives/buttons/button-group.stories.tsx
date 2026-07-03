@@ -12,11 +12,6 @@ const meta = {
   },
   args: {
     orientation: "horizontal",
-    children: [
-      <Button key="1" variant="outline">Left</Button>,
-      <Button key="2" variant="outline">Middle</Button>,
-      <Button key="3" variant="outline">Right</Button>,
-    ],
   },
   argTypes: {
     orientation: {
@@ -24,6 +19,13 @@ const meta = {
       options: ["horizontal", "vertical"],
     },
   },
+  render: (args) => (
+    <ButtonGroup {...args}>
+      <Button variant="outline">Left</Button>
+      <Button variant="outline">Middle</Button>
+      <Button variant="outline">Right</Button>
+    </ButtonGroup>
+  ),
 } satisfies Meta<typeof ButtonGroup>;
 
 export default meta;
