@@ -1,3 +1,3 @@
-## 2025-05-15 - [Intl Formatter Memoization]
-**Learning:** Instantiating `Intl.NumberFormat` and `Intl.DateTimeFormat` can be significantly more expensive (up to 100x) than the formatting operation itself. In high-frequency render paths like table cells or chart tooltips, this can cause measurable lag.
-**Action:** Always extract `Intl` formatter instances to a shared utility file or memoize them at the module level rather than creating them inside components or loops.
+## 2025-05-15 - Debouncing Search in Data Tables
+**Learning:** In components like `TasksTable` that perform complex filtering and sorting on local data, updating the filtered result on every keystroke in a search input leads to excessive re-renders and potential lag, especially with larger datasets.
+**Action:** Always debounce search inputs that trigger heavy computations or large list re-renders. 300ms is a safe default to balance responsiveness and performance.
