@@ -1,7 +1,5 @@
 # Agent Instructions
 
-
-
 Before changing Next.js code:
 1. Use the next-devtools MCP server when available.
 2. Check the running dev server for current errors and route context.
