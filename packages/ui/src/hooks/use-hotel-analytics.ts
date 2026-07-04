@@ -34,6 +34,13 @@ export interface HotelSummaryStats {
 
 // Singleton for DuckDB WASM instance
 let dbPromise: Promise<duckdb.AsyncDuckDB> | null = null;
+// Singleton for a persistent connection to avoid connection overhead per query
+let connPromise: Promise<duckdb.AsyncDuckDBConnection> | null = null;
+// Set of registered files to avoid redundant I/O and worker communication
+const registeredFiles = new Set<string>();
+
+const PARQUET_URL = "/data/dashboard_current.parquet";
+const INTERNAL_PATH = "dashboard_current.parquet";
 
 async function getDuckDB() {
   if (dbPromise) return dbPromise;
@@ -69,6 +76,17 @@ async function getDuckDB() {
   })();
 
   return dbPromise;
+}
+
+async function getDuckDBConnection() {
+  if (connPromise) return connPromise;
+
+  connPromise = (async () => {
+    const db = await getDuckDB();
+    return db.connect();
+  })();
+
+  return connPromise;
 }
 
 export function useHotelAnalytics() {
@@ -109,25 +127,27 @@ export function useHotelAnalytics() {
     ): Promise<HotelSummaryStats | null> => {
       if (!isReady) throw new Error("DuckDB is not ready yet.");
 
-      let conn: duckdb.AsyncDuckDBConnection | null = null;
       try {
         const db = await getDuckDB();
-        conn = await db.connect();
+        const conn = await getDuckDBConnection();
 
-        const parquetUrl = "/data/dashboard_current.parquet";
-        const internalPath = "dashboard_current.parquet";
-
-        // Register the file URL so DuckDB can fetch it
-        await db.registerFileURL(
-          internalPath,
-          new URL(parquetUrl, window.location.origin).toString(),
-          duckdb.DuckDBDataProtocol.HTTP,
-          false,
-        );
+        // Register the file URL only if it hasn't been registered before
+        if (!registeredFiles.has(INTERNAL_PATH)) {
+          await db.registerFileURL(
+            INTERNAL_PATH,
+            new URL(PARQUET_URL, window.location.origin).toString(),
+            duckdb.DuckDBDataProtocol.HTTP,
+            false,
+          );
+          registeredFiles.add(INTERNAL_PATH);
+        }
 
         // Basic escaping of hotelName to mitigate simple string injection
         const escapedHotelName = hotelName.replace(/'/g, "''");
 
+        // PERFORMANCE: Moved property_name filter into the subquery.
+        // This enables DuckDB predicate pushdown, allowing it to skip massive amounts of data
+        // in the Parquet file before performing expensive regex extraction and casting on every row.
         const query = `
           SELECT
             property_name,
@@ -162,10 +182,10 @@ export function useHotelAnalytics() {
               *,
               -- Robustly extract the date from both direct DATE and STRUCT types by using regex on the string representation
               CAST(regexp_extract(stay_date::VARCHAR, '([0-9]{4}-[0-9]{2}-[0-9]{2})') AS DATE) as normalized_stay_date
-            FROM read_parquet('${internalPath}')
+            FROM read_parquet('${INTERNAL_PATH}')
+            WHERE property_name = '${escapedHotelName}'
           )
-          WHERE property_name = '${escapedHotelName}'
-            AND date_part('year', normalized_stay_date) = ${Number(year)}
+          WHERE date_part('year', normalized_stay_date) = ${Number(year)}
             AND date_part('month', normalized_stay_date) = ${Number(month)}
           GROUP BY property_name;
         `;
@@ -176,11 +196,11 @@ export function useHotelAnalytics() {
 
         const row = result.get(0);
         return row ? (row.toJSON() as HotelSummaryStats) : null;
-      } finally {
-        if (conn) {
-          await conn.close();
-        }
+      } catch (err) {
+        console.error("DuckDB query failed:", err);
+        throw err;
       }
+      // Note: We no longer close the connection here as it is managed by a singleton
     },
     [isReady],
   );

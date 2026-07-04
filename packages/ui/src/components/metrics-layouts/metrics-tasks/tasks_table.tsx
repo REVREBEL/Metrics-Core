@@ -1,11 +1,19 @@
 "use client";
 
+import { Button } from "@buttons/button";
+import { Input } from "@forms/fields/input";
+import { useDebounce } from "@hooks/use-debounce";
 import { IconDotsVertical, IconDownload, IconTrash } from "@tabler/icons-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@ui-core/select";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@buttons/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
@@ -14,14 +22,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@forms/fields/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@ui-core/select";
 import { SortableTableHead } from "@/components/ui/sortable-table-head";
 import {
   Table,
@@ -48,6 +48,11 @@ const allFilterValue = "all";
 export function TasksTable({ data }: TasksTableProps) {
   const { setOpen, setCurrentRow } = useTasks();
   const [search, setSearch] = useState("");
+
+  // ⚡ Bolt: Debounce search to prevent expensive re-filtering/re-sorting on every keystroke.
+  // This improves perceived performance and reduces unnecessary re-renders of the table.
+  const debouncedSearch = useDebounce(search, 300);
+
   const [statusFilter, setStatusFilter] = useState(allFilterValue);
   const [priorityFilter, setPriorityFilter] = useState(allFilterValue);
   const [sortKey, setSortKey] = useState<SortKey>("id");
@@ -57,7 +62,7 @@ export function TasksTable({ data }: TasksTableProps) {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   const filteredTasks = useMemo(() => {
-    const normalizedSearch = search.trim().toLowerCase();
+    const normalizedSearch = debouncedSearch.trim().toLowerCase();
 
     return data
       .filter((task) => {
@@ -91,7 +96,14 @@ export function TasksTable({ data }: TasksTableProps) {
           ? left.localeCompare(right)
           : right.localeCompare(left);
       });
-  }, [data, priorityFilter, search, sortDirection, sortKey, statusFilter]);
+  }, [
+    data,
+    priorityFilter,
+    debouncedSearch,
+    sortDirection,
+    sortKey,
+    statusFilter,
+  ]);
 
   const pageCount = Math.max(1, Math.ceil(filteredTasks.length / pageSize));
   const currentPageIndex = Math.min(pageIndex, pageCount - 1);
