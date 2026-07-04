@@ -1,3 +1,5 @@
+import { WorkspaceProvider } from "@repo/ui/context";
+import { WorkspaceShell } from "@repo/ui/workspace-shell";
 import type { Metadata } from "next";
 import { Providers } from "./providers";
 import "@repo/ui/globals.css";
@@ -15,7 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen font-sans antialiased">
-        <Providers>{children}</Providers>
+        <Providers>
+          <WorkspaceProvider>
+            <WorkspaceShell>{children}</WorkspaceShell>
+          </WorkspaceProvider>
+        </Providers>
       </body>
     </html>
   );
