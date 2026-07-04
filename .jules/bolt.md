@@ -1,3 +1,3 @@
-## 2025-05-15 - Debouncing Search in Data Tables
-**Learning:** In components like `TasksTable` that perform complex filtering and sorting on local data, updating the filtered result on every keystroke in a search input leads to excessive re-renders and potential lag, especially with larger datasets.
-**Action:** Always debounce search inputs that trigger heavy computations or large list re-renders. 300ms is a safe default to balance responsiveness and performance.
+## 2025-05-14 - [DuckDB WASM Optimization]
+**Learning:** Establishing a persistent connection and caching file registrations significantly reduces overhead in DuckDB WASM. More importantly, moving filters into the innermost subquery on Parquet sources enables predicate pushdown, avoiding expensive operations like `regexp_extract` on unnecessary rows.
+**Action:** Always favor predicate pushdown by filtering early in SQL queries, especially when dealing with Parquet files and complex transformations.
