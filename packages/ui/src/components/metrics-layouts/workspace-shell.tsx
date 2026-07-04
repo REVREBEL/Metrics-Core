@@ -27,15 +27,16 @@ import {
   FileText,
   HelpCircle,
   Layers,
-  LayoutDashboard,
+  Megaphone,
   PanelRight,
   Search,
-  Settings,
   Sparkles,
   TrendingUp,
   Users,
   X,
 } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type * as React from "react";
 import { useState } from "react";
 import { useWorkspace } from "@/context/workspace-provider";
@@ -88,6 +89,7 @@ interface WorkspaceShellProps {
 
 export function WorkspaceShell({ children }: WorkspaceShellProps) {
   const scope = useWorkspace();
+  const pathname = usePathname();
 
   // Active Selectors State, pre-populated with scope context fixture defaults
   const [activeWorkspace, setActiveWorkspace] = useState(scope.workspace.id);
@@ -95,7 +97,6 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
   const [activeEngagement, setActiveEngagement] = useState(scope.engagement.id);
 
   // Layout Sidebar/Panel states
-  const [activeTab, setActiveTab] = useState("dashboard");
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
 
   // Retrieve selected object details for high fidelity display
@@ -109,28 +110,62 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
 
   const sidebarNavItems = [
     {
-      id: "dashboard",
-      name: "Dashboard",
-      icon: <LayoutDashboard className="size-4" />,
-    },
-    {
-      id: "campaigns",
-      name: "Campaigns",
+      id: "metrics",
+      name: "Metrics",
+      path: "/metrics",
       icon: <TrendingUp className="size-4" />,
     },
     {
-      id: "databases",
-      name: "Databases",
+      id: "commercial-plan",
+      name: "Commercial Plan",
+      path: "/commercial-plan",
+      icon: <Briefcase className="size-4" />,
+    },
+    {
+      id: "growth-plan",
+      name: "Growth Plan",
+      path: "/growth-plan",
+      icon: <Compass className="size-4" />,
+    },
+    {
+      id: "broadcast",
+      name: "Broadcast",
+      path: "/broadcast",
+      icon: <Megaphone className="size-4" />,
+    },
+    {
+      id: "metrics-library",
+      name: "Metrics Library",
+      path: "/metrics-library",
       icon: <Database className="size-4" />,
     },
     {
-      id: "properties",
-      name: "Properties",
-      icon: <Building2 className="size-4" />,
+      id: "playbook",
+      name: "Playbook",
+      path: "/playbook",
+      icon: <FileText className="size-4" />,
     },
-    { id: "team", name: "Team & Access", icon: <Users className="size-4" /> },
-    { id: "settings", name: "Settings", icon: <Settings className="size-4" /> },
+    {
+      id: "threads",
+      name: "Threads",
+      path: "/threads",
+      icon: <Users className="size-4" />,
+    },
+    {
+      id: "help-desk",
+      name: "Help Desk",
+      path: "/help-desk",
+      icon: <HelpCircle className="size-4" />,
+    },
   ];
+
+  // Determine active item dynamically based on active route path
+  const currentItem =
+    sidebarNavItems.find(
+      (item) =>
+        pathname === item.path ||
+        (item.path === "/metrics" && pathname === "/"),
+    ) || sidebarNavItems[0];
 
   return (
     <div className="flex h-screen w-screen flex-col overflow-hidden bg-background text-foreground selection:bg-primary/20">
@@ -352,22 +387,26 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
 
               {/* Sidebar Navigation Menu */}
               <div className="flex-1 overflow-y-auto p-2 space-y-1">
-                {sidebarNavItems.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setActiveTab(item.id)}
-                    className={cn(
-                      "flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-xs font-medium transition-all duration-200 outline-none hover:bg-muted/40",
-                      activeTab === item.id
-                        ? "bg-primary/10 text-primary border-l-2 border-primary pl-2 shadow-xs font-semibold"
-                        : "text-muted-foreground hover:text-foreground",
-                    )}
-                  >
-                    {item.icon}
-                    <span>{item.name}</span>
-                  </button>
-                ))}
+                {sidebarNavItems.map((item) => {
+                  const isActive =
+                    pathname === item.path ||
+                    (item.path === "/metrics" && pathname === "/");
+                  return (
+                    <Link
+                      key={item.id}
+                      href={item.path}
+                      className={cn(
+                        "flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-xs font-medium transition-all duration-200 outline-none hover:bg-muted/40",
+                        isActive
+                          ? "bg-primary/10 text-primary border-l-2 border-primary pl-2 shadow-xs font-semibold"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      {item.icon}
+                      <span>{item.name}</span>
+                    </Link>
+                  );
+                })}
               </div>
 
               {/* Sidebar Footnote / Info */}
@@ -398,7 +437,7 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
                   <span>{currentWorkspace.name}</span>
                   <ChevronRight className="size-3" />
                   <span className="font-medium text-foreground capitalize">
-                    {activeTab}
+                    {currentItem.name}
                   </span>
                 </div>
                 <div className="flex items-center space-x-1 text-[10px] font-semibold tracking-wider text-muted-foreground bg-muted/20 px-2 py-0.5 rounded-full">
