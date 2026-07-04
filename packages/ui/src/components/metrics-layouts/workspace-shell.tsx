@@ -38,7 +38,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type * as React from "react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useWorkspace } from "@/context/workspace-provider";
 import { cn } from "@/lib/utils";
 
@@ -83,6 +83,66 @@ const ENGAGEMENT_OPTIONS = [
   },
 ];
 
+const SIDEBAR_NAV_ITEMS = [
+  {
+    id: "metrics",
+    name: "Metrics",
+    path: "/metrics",
+    icon: <TrendingUp className="size-4" />,
+  },
+  {
+    id: "commercial-plan",
+    name: "Commercial Plan",
+    path: "/commercial-plan",
+    icon: <Briefcase className="size-4" />,
+  },
+  {
+    id: "growth-plan",
+    name: "Growth Plan",
+    path: "/growth-plan",
+    icon: <Compass className="size-4" />,
+  },
+  {
+    id: "broadcast",
+    name: "Broadcast",
+    path: "/broadcast",
+    icon: <Megaphone className="size-4" />,
+  },
+  {
+    id: "metrics-library",
+    name: "Metrics Library",
+    path: "/metrics-library",
+    icon: <Database className="size-4" />,
+  },
+  {
+    id: "playbook",
+    name: "Playbook",
+    path: "/playbook",
+    icon: <FileText className="size-4" />,
+  },
+  {
+    id: "threads",
+    name: "Threads",
+    path: "/threads",
+    icon: <Users className="size-4" />,
+  },
+  {
+    id: "help-desk",
+    name: "Help Desk",
+    path: "/help-desk",
+    icon: <HelpCircle className="size-4" />,
+  },
+];
+
+const GLOBAL_NAV_TABS = ["Overview", "Workspaces", "Integrations", "Analytics"];
+
+const AUDIT_CHECKLIST = [
+  { label: "Workspace provider linked", ok: true },
+  { label: "Routing boundary secure", ok: true },
+  { label: "Selector fixture parsed", ok: true },
+  { label: "Inspector collapsible", ok: true },
+];
+
 interface WorkspaceShellProps {
   children: React.ReactNode;
 }
@@ -100,72 +160,37 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
 
   // Retrieve selected object details for high fidelity display
-  const currentWorkspace =
-    WORKSPACE_OPTIONS.find((w) => w.id === activeWorkspace) || scope.workspace;
-  const currentHotel =
-    HOTEL_OPTIONS.find((h) => h.id === activeHotel) || scope.hotel;
-  const currentEngagement =
-    ENGAGEMENT_OPTIONS.find((e) => e.id === activeEngagement) ||
-    scope.engagement;
+  // Memoized to avoid redundant .find() calls on every render
+  const currentWorkspace = useMemo(
+    () =>
+      WORKSPACE_OPTIONS.find((w) => w.id === activeWorkspace) ||
+      scope.workspace,
+    [activeWorkspace, scope.workspace],
+  );
 
-  const sidebarNavItems = [
-    {
-      id: "metrics",
-      name: "Metrics",
-      path: "/metrics",
-      icon: <TrendingUp className="size-4" />,
-    },
-    {
-      id: "commercial-plan",
-      name: "Commercial Plan",
-      path: "/commercial-plan",
-      icon: <Briefcase className="size-4" />,
-    },
-    {
-      id: "growth-plan",
-      name: "Growth Plan",
-      path: "/growth-plan",
-      icon: <Compass className="size-4" />,
-    },
-    {
-      id: "broadcast",
-      name: "Broadcast",
-      path: "/broadcast",
-      icon: <Megaphone className="size-4" />,
-    },
-    {
-      id: "metrics-library",
-      name: "Metrics Library",
-      path: "/metrics-library",
-      icon: <Database className="size-4" />,
-    },
-    {
-      id: "playbook",
-      name: "Playbook",
-      path: "/playbook",
-      icon: <FileText className="size-4" />,
-    },
-    {
-      id: "threads",
-      name: "Threads",
-      path: "/threads",
-      icon: <Users className="size-4" />,
-    },
-    {
-      id: "help-desk",
-      name: "Help Desk",
-      path: "/help-desk",
-      icon: <HelpCircle className="size-4" />,
-    },
-  ];
+  const currentHotel = useMemo(
+    () => HOTEL_OPTIONS.find((h) => h.id === activeHotel) || scope.hotel,
+    [activeHotel, scope.hotel],
+  );
+
+  const currentEngagement = useMemo(
+    () =>
+      ENGAGEMENT_OPTIONS.find((e) => e.id === activeEngagement) ||
+      scope.engagement,
+    [activeEngagement, scope.engagement],
+  );
 
   // Determine active item dynamically based on active route path
-  const currentItem =
-    sidebarNavItems.find(
-      (item) =>
-        pathname === item.path ||
-        (item.path === "/metrics" && pathname === "/"),
-    ) || sidebarNavItems[0];
+  // Memoized to avoid redundant .find() calls on every render
+  const currentItem = useMemo(
+    () =>
+      SIDEBAR_NAV_ITEMS.find(
+        (item) =>
+          pathname === item.path ||
+          (item.path === "/metrics" && pathname === "/"),
+      ) || SIDEBAR_NAV_ITEMS[0],
+    [pathname],
+  );
 
   return (
     <div className="flex h-screen w-screen flex-col overflow-hidden bg-background text-foreground selection:bg-primary/20">
@@ -183,22 +208,20 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
 
         {/* Global Navigation Tabs */}
         <nav className="hidden h-full space-x-1 md:flex">
-          {["Overview", "Workspaces", "Integrations", "Analytics"].map(
-            (tab) => (
-              <button
-                key={tab}
-                type="button"
-                className={cn(
-                  "relative flex h-full items-center px-4 text-sm font-medium transition-colors hover:text-foreground",
-                  tab === "Workspaces"
-                    ? "text-foreground after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary"
-                    : "text-muted-foreground",
-                )}
-              >
-                {tab}
-              </button>
-            ),
-          )}
+          {GLOBAL_NAV_TABS.map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              className={cn(
+                "relative flex h-full items-center px-4 text-sm font-medium transition-colors hover:text-foreground",
+                tab === "Workspaces"
+                  ? "text-foreground after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary"
+                  : "text-muted-foreground",
+              )}
+            >
+              {tab}
+            </button>
+          ))}
         </nav>
 
         {/* Search, Actions & Profile */}
@@ -387,7 +410,7 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
 
               {/* Sidebar Navigation Menu */}
               <div className="flex-1 overflow-y-auto p-2 space-y-1">
-                {sidebarNavItems.map((item) => {
+                {SIDEBAR_NAV_ITEMS.map((item) => {
                   const isActive =
                     pathname === item.path ||
                     (item.path === "/metrics" && pathname === "/");
@@ -586,12 +609,7 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
                         Audit Checklist
                       </div>
                       <div className="space-y-2">
-                        {[
-                          { label: "Workspace provider linked", ok: true },
-                          { label: "Routing boundary secure", ok: true },
-                          { label: "Selector fixture parsed", ok: true },
-                          { label: "Inspector collapsible", ok: true },
-                        ].map((chk) => (
+                        {AUDIT_CHECKLIST.map((chk) => (
                           <div
                             key={chk.label}
                             className="flex items-center gap-2 text-xs text-muted-foreground leading-none"
