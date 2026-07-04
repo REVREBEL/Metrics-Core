@@ -1,9 +1,22 @@
-export * from "./barlow"
-export * from "./fira-code"
-export * from "./funnel-sans"
-export * from "./general-sans"
-export * from "./khand"
-export * from "./logic-monoscript"
-export * from "./noto-emoji"
-export * from "./pacifico"
-export * from "./supreme"
+export type Font =
+  | "Khand"
+  | "Funnel Sans"
+  | "Fira Code"
+  | "General Sans"
+  | "Supreme"
+  | "Noto Emoji"
+  | "Pacifico"
+  | "Barlow"
+  | "Logic Monoscript";
+
+export const fonts: Font[] = [
+  "General Sans",
+  "Khand",
+  "Funnel Sans",
+  "Fira Code",
+  "Supreme",
+  "Noto Emoji",
+  "Pacifico",
+  "Barlow",
+  "Logic Monoscript",
+];

@@ -71,13 +71,17 @@
 
       // OTHER
       "@common/*": ["./packages/ui/src/common/*"],
+      "@context": ["./packages/ui/src/context/index.ts"],
       "@context/*": ["./packages/ui/src/context/*"],
       "@db/*": ["./packages/ui/src/db/*"],
+      "@fonts": ["./packages/ui/src/fonts/index.ts"],
       "@fonts/*": ["./packages/ui/src/fonts/*"],
+      "@hooks": ["./packages/ui/src/hooks/index.ts"],
       "@hooks/*": ["./packages/ui/src/hooks/*"],
       "@icons/*": ["./packages/ui/src/icons/*"],
       "@lib/*": ["./packages/ui/src/lib/*"],
       "@styles/*": ["./packages/ui/src/styles/*"],
+      "@types": ["./packages/ui/src/types/index.ts"],
       "@types/*": ["./packages/ui/src/types/*"],
       "@utils/*": ["./packages/ui/src/utils/*"]
     },
