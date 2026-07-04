@@ -11,7 +11,8 @@
     "./globals.css": "./src/styles/globals.css",
     "./fonts.css": "./src/fonts/fonts.css",
     "./metrics-layouts": "./src/components/metrics-layouts/index.ts",
-    "./primitive-registry": "./src/ui-registry/index.ts"
+    "./primitive-registry": "./src/ui-registry/index.ts",
+    "./context": "./src/context/index.ts"
   },
   "scripts": {
     "dev": "next dev --turbopack -p 3204",
