@@ -29,6 +29,9 @@ const nextConfig = {
     ];
   },
   async redirects() {
+    const shouldRedirect = process.env.REDIRECT_TO_METRICS !== "false";
+    if (!shouldRedirect) return [];
+
     return [
       {
         source: "/",

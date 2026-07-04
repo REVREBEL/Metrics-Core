@@ -1,15 +1,4 @@
-export type Font =
-  | "Khand"
-  | "Funnel Sans"
-  | "Fira Code"
-  | "General Sans"
-  | "Supreme"
-  | "Noto Emoji"
-  | "Pacifico"
-  | "Barlow"
-  | "Logic Monoscript";
-
-export const fonts: Font[] = [
+export const fonts = [
   "General Sans",
   "Khand",
   "Funnel Sans",
@@ -19,4 +8,6 @@ export const fonts: Font[] = [
   "Pacifico",
   "Barlow",
   "Logic Monoscript",
-];
+] as const;
+
+export type Font = (typeof fonts)[number];
