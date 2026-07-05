@@ -1,0 +1,128 @@
+---
+title: Source Systems and Ingestion
+nav_order: 3
+has_toc: true
+---
+
+# Source Systems and Ingestion
+
+This page defines the current source-system terminology and the boundary between ingestion, staging, Dataform, and reporting.
+
+## Status
+
+The source-application lookup model and pace staging tables are **IMPLEMENTED**. A generalized raw-file ingestion framework, centralized file-load registry, and production ingestion scheduler are **PLANNED** unless separately confirmed by application or infrastructure code.
+
+## Terminology
+
+| Term | Meaning | Current implementation |
+|---|---|---|
+| Source-system type | Broad functional class such as PMS, CRS, RMS, Finance, Web, RateShop, Sales, Marketing, or Manual | `metrics_core.lkp_source_system_type` |
+| Source application | Specific product or provider such as OPERA, SynXis, IDeaS, Lighthouse, or a named manual source | `metrics_core.lkp_source_application` |
+| Source report | Named export, report, feed, or workbook used to produce a load | Column on staging tables and `metrics_core.dim_source_report` |
+| Source file | Original filename or storage path retained for traceability | Column on staging tables and `metrics_core.dim_source_report` |
+| Source application code | Canonical granular lineage key stored by current mapping and staging tables | `source_application_code` |
+
+Use `source_application_code` when identifying the originating application. Do not use a generic `source_system` field to represent both the broad category and the specific application.
+
+## Current source hierarchy
+
+```text
+source-system type
+  → source application
+    → source report
+      → source file
+        → loaded staging rows
+```
+
+`metrics_core.vw_source_application` joins granular applications to broad source-system types. The relationship is currently implemented as a left join and is not enforced by a warehouse foreign key.
+
+## Current ingestion boundary
+
+The current Dataform repository creates warehouse structures. It does not implement file watching, spreadsheet parsing, API extraction, malformed-file handling, archival, or notification workflows.
+
+```text
+External ingestion process
+  → stg.stg_pace_*
+  → metrics_pace.snap_pace_*
+  → metrics_pace.vw_pace_*
+```
+
+Dataform currently owns:
+
+- dataset and table creation;
+- staging schemas;
+- snapshot compatibility tables;
+- reporting views and calculations;
+- declared execution dependencies where configured.
+
+An ingestion process must own:
+
+- acquiring source files or API data;
+- parsing and type conversion before or during loading;
+- setting source lineage fields;
+- setting `load_ts`;
+- retry and failure handling;
+- file archival and operational notifications.
+
+The exact ingestion service, orchestration platform, and scheduling model remain **UNRESOLVED**.
+
+## Implemented pace staging lineage
+
+All four implemented pace staging tables carry:
+
+| Column | Semantics |
+|---|---|
+| `source_application_code` | Granular application key expected to match `metrics_core.lkp_source_application.code` |
+| `source_report` | Human-readable report or export name |
+| `source_file` | Original filename or storage path |
+| `load_ts` | Timestamp the row was loaded to staging |
+| `insert_date` | Warehouse insert date |
+| `updated_date` | Warehouse update date |
+
+The implemented tables are:
+
+- `stg.stg_pace_property`;
+- `stg.stg_pace_segment`;
+- `stg.stg_pace_roomclass`;
+- `stg.stg_pace_roomtype`.
+
+## Source-report metadata
+
+`metrics_core.dim_source_report` is **IMPLEMENTED** as a metadata table with fields for source application, report name, file, property, grain, report type, extract date, and insert date.
+
+Current Dataform DDL does not populate this table automatically and does not link staging rows to it through a durable `source_report_id`. Until that relationship is implemented, source-report lineage is descriptive rather than enforced.
+
+## Raw and control layers
+
+The older Source File Ingestion Model describes `raw_*` tables and a `ctl_file_load` registry. Current Dataform does not create those objects. They remain **PLANNED** concepts and must not be described as deployed infrastructure.
+
+A future operational load registry should capture at least:
+
+- a durable load identifier;
+- source application, report, and file;
+- extract and load timestamps;
+- destination table;
+- row counts;
+- status and error details;
+- retry and archival state.
+
+## Required ingestion contract
+
+Before data is accepted into staging, the ingestion process should validate:
+
+- required source identifiers are present;
+- dates and numeric fields are parseable;
+- `source_application_code` is recognized or explicitly quarantined;
+- `property_code` is recognized or explicitly quarantined;
+- source grain matches the target staging table;
+- duplicate load behavior is defined;
+- the original file or extract can be traced from loaded rows.
+
+These controls are recommendations. They are not current Dataform assertions.
+
+## Related documentation
+
+- [Lineage and Freshness](/docs/architecture/data/lineage-and-freshness)
+- [Validation and Dataform Assertions](/docs/architecture/data/validation-and-assertions)
+- [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)
+- [BigQuery and Dataform](/docs/architecture/data/bigquery-and-dataform)
