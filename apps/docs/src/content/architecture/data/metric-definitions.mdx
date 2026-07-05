@@ -24,6 +24,8 @@ UNRESOLVED
 
 A formula appearing in a UI fixture, mock page, historical document, or isolated query does not by itself make the metric an implemented governed definition.
 
+Implementation status is separate from a metric definition's governance lifecycle. Implementation status describes technical readiness and rollout. The metric model's `status` field describes review and publication state.
+
 ## Source-of-truth boundary
 
 | Responsibility | Current owner |
@@ -73,7 +75,7 @@ A governed metric definition should contain at least the following fields.
 | `default_precision` | Default decimal precision for display |
 | `supported_comparisons` | Prior period, prior year, budget, forecast, target, comp set, or other approved comparisons |
 | `supported_consumers` | Cards, reports, campaigns, strategies, alerts, AI, or exports |
-| `status` | Draft, review, published, compatibility, deprecated, or retired lifecycle state |
+| `status` | Lifecycle state using `DRAFT`, `IN REVIEW`, `APPROVED`, `PUBLISHED`, `DEPRECATED`, or `RETIRED` |
 | `version` | Immutable published definition version |
 | `effective_from` | First date the version applies |
 | `effective_to` | Optional final date the version applies |
@@ -81,6 +83,8 @@ A governed metric definition should contain at least the following fields.
 | `approved_by` | Required approval record when governance workflow is implemented |
 
 The exact physical storage schema remains **PLANNED**. The fields above define the semantic contract that implementation must support.
+
+The `status` field is reserved for the governance lifecycle. Project-wide implementation status remains a separate concern and continues to use `IMPLEMENTED`, `PLANNED`, `COMPATIBILITY`, `DEPRECATED`, and `UNRESOLVED` in implementation catalogs and architecture documentation. Compatibility should not be persisted as a metric lifecycle value; it belongs in implementation status and, where needed, separate compatibility metadata.
 
 ## Base and calculated metrics
 
@@ -377,6 +381,8 @@ DRAFT
 → DEPRECATED
 → RETIRED
 ```
+
+The metric definition `status` field persists this lifecycle state. It does not store project-wide implementation status. Technical readiness should remain in implementation catalogs, while compatibility details should use separate implementation or compatibility metadata. The exact names and physical schema of those additional fields remain **PLANNED**.
 
 Recommended behavior:
 
