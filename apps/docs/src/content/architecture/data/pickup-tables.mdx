@@ -25,7 +25,20 @@ fact_pickup_source
 fact_pickup_roomtype
 ```
 
+No pickup data has been loaded. The prerequisite conformed dimensions, mappings, pace sources, actual facts, and governed metric definitions must be established before pickup rows can be calculated and published reliably.
+
 No implemented pickup columns, partitioning, clustering, assertions, or window-code lookup were found. Earlier architecture material describes intended pickup objects, not current physical tables.
+
+## Status interpretation
+
+This page uses the canonical lifecycle vocabulary:
+
+- **IMPLEMENTED** means current Dataform creates or manages the object under the preferred contract.
+- **COMPATIBILITY** means the object is physically implemented but retained under an older or non-preferred naming, schema, or migration contract.
+- **PLANNED** means the design is approved but current Dataform does not create the object.
+- **UNRESOLVED** means a design or implementation decision is still required.
+
+The current pace snapshot tables are **COMPATIBILITY** because they exist physically but retain the legacy `snap_` naming and current implementation constraints documented in the fact-table catalog.
 
 ## Approved long/narrow decision
 
@@ -128,13 +141,13 @@ The final dataset name remains subject to implementation approval. The `metrics_
 | `stay_date` | `DATE` | Hotel service date |
 | `window_days` | `INT64` | Difference in days between observation and comparison dates |
 | `metric_code` | `STRING` | Governed metric identity |
-| `metric_value` | `NUMERIC` | Pickup amount for the metric |
+| `metric_value` | Numeric type **TBD**; `NUMERIC` is the provisional example | Pickup amount for the metric |
 | `source_application_code` | `STRING` | Source application when applicable |
 | `source_report_id` | `STRING` | Source-report or calculation-run lineage when available |
 | `insert_date` | `DATE` | Warehouse insert date |
 | `updated_date` | `DATE` | Warehouse update date when rows are mutable |
 
-The actual DDL may require `BIGNUMERIC`, `FLOAT64`, or multiple typed value columns if governed metrics cannot safely share one numeric type. That decision remains **UNRESOLVED** until implementation.
+The final DDL may require `NUMERIC`, `BIGNUMERIC`, `FLOAT64`, or multiple typed value columns depending on the governed metric set. The physical value type remains **UNRESOLVED** until implementation.
 
 ## Grain-specific columns
 
@@ -305,7 +318,7 @@ No current Dataform assertion implements these pickup checks.
 | Object | Status | Evidence |
 |---|---|---|
 | Pace staging tables | **IMPLEMENTED** | `10_create_stg_pace_tables.sqlx` |
-| Pace snapshot tables | **COMPATIBILITY** | `20_create_snap_pace_tables.sqlx` |
+| Pace snapshot tables | **COMPATIBILITY** | Physically implemented by `20_create_snap_pace_tables.sqlx`, but retained under the legacy `snap_` contract and current implementation constraints |
 | Pace calculation views | **IMPLEMENTED** | `30_create_vw_pace_views.sqlx` |
 | `fact_pickup_property` | **PLANNED** | Approved architecture concept; no current DDL |
 | `fact_pickup_segment` | **PLANNED** | Approved architecture concept; no current DDL |
