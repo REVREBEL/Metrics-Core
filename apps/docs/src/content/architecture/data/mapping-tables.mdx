@@ -21,9 +21,9 @@ The current maintained Dataform implementation source is `REVREBEL/Metrics-Dataf
 
 `map_roomtype` is implemented physically, but its embedded taxonomy and `_map` field pattern are compatibility design rather than the preferred pattern for new mappings.
 
-# Implemented schemas
+## Implemented schemas
 
-## `metrics_core.map_segment`
+### `metrics_core.map_segment`
 
 | Column | Type | Meaning | Dependency |
 |---|---|---|---|
@@ -45,7 +45,7 @@ Current downstream path:
 map_segment → dim_segment → vw_segment
 ```
 
-## `metrics_core.map_roomtype`
+### `metrics_core.map_roomtype`
 
 | Column | Type | Meaning |
 |---|---|---|
@@ -74,7 +74,7 @@ map_segment → dim_segment → vw_segment
 
 No current `lkp_roomtype` exists. Room type, class, bed, feature, and pool values are embedded in this table and surfaced through `dim_roomtype`. Normalization remains unresolved.
 
-## `metrics_core.map_source`
+### `metrics_core.map_source`
 
 | Column | Type | Meaning | Dependency |
 |---|---|---|---|
@@ -99,7 +99,7 @@ map_source → vw_source
 
 Channel classification is currently implemented through `map_source.channel_code`; no separate `map_channel` table exists.
 
-## `metrics_core.map_rate`
+### `metrics_core.map_rate`
 
 | Column | Type | Meaning | Dependency |
 |---|---|---|---|
@@ -125,7 +125,7 @@ Current downstream path:
 map_rate → vw_rate
 ```
 
-# Source lineage terminology
+## Source lineage terminology
 
 All implemented source-value mappings use:
 
@@ -137,7 +137,7 @@ source_application_code → lkp_source_application.code
 
 Generic registry fields such as `source_system`, `source_value`, `standard_code`, or a universal `source_code` field are not the physical schema. Each mapping table has its own columns and targets.
 
-# Registry-only and architecture-only objects
+## Registry-only and architecture-only objects
 
 | Object | Status | Current truth | Required decision or action |
 |---|---|---|---|
@@ -149,7 +149,7 @@ Generic registry fields such as `source_system`, `source_value`, `standard_code`
 
 These objects must not appear as live editable warehouse tables until Dataform creates them and their ownership is approved.
 
-# Known integrity risks
+## Known integrity risks
 
 - BigQuery does not enforce mapping foreign keys.
 - Property references are semantic; current mapping DDL does not declare a physical foreign key to `dim_property`.
@@ -160,7 +160,7 @@ These objects must not appear as live editable warehouse tables until Dataform c
 
 Validation requirements are documented in [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies).
 
-# Dataform references
+## Dataform references
 
 ```text
 REVREBEL/Metrics-Dataform/definitions/00_create_core_tables.sqlx
@@ -170,7 +170,7 @@ REVREBEL/Metrics-Dataform/definitions/06_create_source_channel_rate_tables.sqlx
 REVREBEL/Metrics-Dataform/definitions/06_migrate_source_rate_mapping_schema.sqlx
 ```
 
-# Related documentation
+## Related documentation
 
 - [Lookup Tables](/docs/architecture/data/lookup-tables)
 - [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)
