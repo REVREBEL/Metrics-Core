@@ -2,7 +2,6 @@
 title: BigQuery and Dataform
 nav_order: 12
 has_toc: true
-permalink: /bigquery-and-dataform/
 ---
 
 # BigQuery and Dataform
@@ -63,7 +62,7 @@ UNRESOLVED
 
 Server-side application code may query BigQuery through controlled data clients and query contracts.
 
-The current repository includes `packages/ui/src/lib/bigquery/biq-query_client.ts`, which creates an `@google-cloud/bigquery` client and reads service-account JSON from `GOOGLE_APPLICATION_CREDENTIALS_JSON` when supplied. This is current implementation evidence, but the file is located in the wrong architectural package.
+The current repository includes `packages/ui/src/lib/bigquery/biq-query_client.ts`, which creates the BigQuery client. This is current implementation evidence, but the file is located in the wrong architectural package.
 
 The intended ownership boundary is:
 
@@ -112,6 +111,6 @@ These mismatches are implementation gaps, not reasons to redefine the ownership 
 
 ## Related documentation
 
-- [Data Platform Architecture and Ownership](/data-platform-architecture/)
-- [Data Architecture](/data-architecture/)
-- [DuckDB Serving Layer](/duckdb-serving-layer/)
+- [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
+- [Data Architecture](/docs/architecture/data)
+- [DuckDB Serving Layer](/docs/architecture/data/duckdb-serving-layer)
