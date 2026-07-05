@@ -27,5 +27,12 @@ This interim register prevents unresolved data-model questions from being presen
 | Pickup numeric value type | **UNRESOLVED** | Long/narrow `metric_value` is approved conceptually; physical numeric type is not implemented |
 | Non-day pickup comparisons | **UNRESOLVED** | Fixed rolling windows use planned `window_days INT64`; prior-year and cycle comparisons need a separate type decision |
 | Room-class pickup family | **UNRESOLVED** | Current pace contains room-class snapshots, but the approved pickup family currently names property, segment, source, and room type |
+| Metric-definition persistence model | **UNRESOLVED** | `packages/metrics` is the approved package boundary, but no active package or application-database schema currently stores governed definitions |
+| Executable formula representation | **UNRESOLVED** | Current formulas are implemented in Dataform SQL and compatibility DuckDB SQL; no published formula contract exists |
+| Metric publication and approval roles | **UNRESOLVED** | Linear assigns core metric management to REVREBEL users, but workflow states, approver roles, and permissions are not implemented |
+| Metric version and effective-date behavior | **UNRESOLVED** | No current versioned metric registry governs historical consumers |
+| Comparison and variance taxonomy | **UNRESOLVED** | Compatibility code calculates differences and attainment, but metric names do not yet distinguish amount, rate, percentage, percentage points, and index consistently |
+| ALOS denominator and reservation treatment | **UNRESOLVED** | No governed reservation-count or stay-count denominator exists in current Dataform outputs |
+| Metric mart storage shape | **UNRESOLVED** | Decision required on metric-code rows, named columns, or a governed combination in serving marts |
 
 Confirmed decisions should be removed from this register and moved into the canonical subject documentation when Linear approves them or implementation establishes them.
