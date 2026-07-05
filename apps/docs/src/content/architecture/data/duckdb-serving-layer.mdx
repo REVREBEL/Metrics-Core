@@ -79,6 +79,7 @@ The runtime may ultimately be browser-side, server-side, or hybrid. That deploym
 Browser-side DuckDB is appropriate only when:
 
 - the dataset is approved for client delivery;
+- no secrets, credentials, or restricted source paths are exposed to the client;
 - file size and memory use are acceptable;
 - query behavior is constrained;
 - results are validated before presentation;
@@ -91,6 +92,7 @@ Server-side DuckDB may be appropriate for:
 - controlled access to larger analytical extracts;
 - authenticated multi-source queries;
 - centralized caching;
+- protecting credentials, source paths, and restricted datasets;
 - keeping runtime and formula implementation out of presentation packages.
 
 ## Scheduled responsibilities
