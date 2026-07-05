@@ -14,6 +14,7 @@ It defines where each data topic belongs, which existing page remains authoritat
 ## Start here
 
 - [Data Platform Architecture and Ownership](/data-platform-architecture/)
+- [Naming and Modeling Conventions](/naming-and-modeling-conventions/)
 - [BigQuery and Dataform](/bigquery-and-dataform/)
 - [DuckDB Serving Layer](/duckdb-serving-layer/)
 
@@ -44,7 +45,7 @@ The destination paths below are the approved homes for the data documentation wo
 | Topic | Canonical destination | Current disposition | Follow-up |
 |---|---|---|---|
 | Data architecture overview and ownership | `architecture/data/platform-architecture-and-ownership.mdx` | **Current canonical documentation** | REV-63 |
-| Naming and modeling conventions | `architecture/data/naming-and-modeling-conventions.mdx` | **Planned**; existing standards remain source material | REV-64 |
+| Naming and modeling conventions | `architecture/data/naming-and-modeling-conventions.mdx` | **Current canonical documentation** | REV-64 |
 | Source systems and ingestion | `architecture/data/source-systems-and-ingestion.mdx` | **Planned**; retain `architecture/source-file-ingestion-model.mdx` until consolidated | REV-70 |
 | Lookup tables | `architecture/data/lookup-tables.mdx` | **Planned destination**; retain `architecture/lookup-tables.mdx` as the current implementation reference | REV-65 |
 | Mapping tables | `architecture/data/mapping-tables.mdx` | **Planned destination**; retain `architecture/mapping-tables.mdx` as the current implementation reference | REV-65 |
@@ -65,13 +66,13 @@ The destination paths below are the approved homes for the data documentation wo
 
 No existing subject page is moved or deleted in REV-62. The following disposition prevents duplicate canonical ownership while later issues revise the content.
 
-### Retain as current source material
+### Retain as source material
 
+- `architecture/column-naming-standards.mdx` — superseded by the canonical naming and modeling conventions for policy decisions
+- `architecture/prefix_standards.mdx` — superseded by the canonical naming and modeling conventions for prefix decisions
 - `architecture/mapping-tables.mdx`
 - `architecture/lookup-tables.mdx`
 - `architecture/table-dependencies.mdx`
-- `architecture/column-naming-standards.mdx`
-- `architecture/prefix_standards.mdx`
 - `architecture/source-file-ingestion-model.mdx`
 - `core/segment-model.mdx`
 - `core/source-channel-rate-model.mdx`
