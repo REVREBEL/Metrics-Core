@@ -176,6 +176,10 @@ Expected source of truth for application workflow state, subject to current impl
 - draft mapping changes;
 - application preferences.
 
+No canonical production application-database package, schema, or migration directory was confirmed during REV-71. Treat application persistence as planned until repository implementation establishes it.
+
+Approved plans and mappings require a controlled publication service before they become warehouse records. Browser components must not write directly to BigQuery.
+
 ### DuckDB
 
 Analytical serving layer for fast application queries. It must not own canonical definitions that belong in BigQuery/Dataform or the Metric Library.
@@ -242,16 +246,37 @@ source_application_code
 
 Before recommending registry changes, compare the registry directly to current Dataform and determine whether the registry has since been corrected.
 
-## Documentation files created during this work
+## Canonical data architecture documentation
 
-Relevant architecture documentation includes:
+Maintained architecture documentation now lives under:
 
 ```text
-apps/docs/src/content/architecture/mapping-tables.mdx
-apps/docs/src/content/architecture/lookup-tables.mdx
-apps/docs/src/content/architecture/table-dependencies.mdx
-apps/docs/src/content/development/app-architecture/workspace-application-structure.mdx
+apps/docs/src/content/architecture/data
 ```
+
+Key pages include:
+
+```text
+platform-architecture-and-ownership.mdx
+naming-and-modeling-conventions.mdx
+source-systems-and-ingestion.mdx
+lookup-tables.mdx
+mapping-tables.mdx
+dimensions.mdx
+fact-tables.mdx
+pickup-tables.mdx
+reporting-views-and-marts.mdx
+metric-definitions.mdx
+table-dependencies.mdx
+lineage-and-freshness.mdx
+validation-and-assertions.mdx
+bigquery-and-dataform.mdx
+duckdb-serving-layer.mdx
+application-data-ownership.mdx
+decision-register.mdx
+```
+
+The earlier legacy-location pages under `apps/docs/src/content/architecture` for mapping tables, lookup tables, and table dependencies were removed. Do not recreate or link to those deleted routes.
 
 These documents were created from then-current repository and Dataform definitions. They should be updated when the schema changes and should not be treated as independent proof of the schema.
 
@@ -259,68 +284,8 @@ These documents were created from then-current repository and Dataform definitio
 
 Before stating that something is missing, invalid, planned, or implemented:
 
-1. Check the relevant Linear initiative/document for product intent.
-2. Check current repository code for implementation state.
-3. Check Dataform for actual warehouse state.
-4. Check docs for whether the distinction is already documented.
-5. State any conflict explicitly instead of choosing one source silently.
-
-Use wording such as:
-
-```text
-Linear defines...
-Dataform currently implements...
-The application registry currently assumes...
-The docs currently describe...
-A decision is still required on...
-```
-
-Do not phrase an earlier assistant-created assumption as an independently validated project decision.
-
-## Known historical traps
-
-- Older Linear engineering context references `REVREBEL/Metrics`; the current main repository is `REVREBEL/Metrics-Core`.
-- Older instructions may reference npm; the current monorepo uses pnpm.
-- UI registries may include planned tables that Dataform does not yet create.
-- Documentation may describe an intended architecture rather than deployed behavior.
-- Fixture data must not be presented as production data.
-- A completed Linear issue does not by itself prove the repository still matches its acceptance criteria; inspect the current code.
-- Do not infer that a branch exists remotely merely because an issue instructed an agent to use it.
-
-## Working protocol for future updates
-
-When completing documentation, Dataform, or table-architecture work:
-
-1. Add or update the canonical implementation first when applicable.
-2. Update relevant docs in the same workstream.
-3. Add a dated entry to the change log below.
-4. Include source files reviewed.
-5. Record unresolved decisions separately.
-6. Avoid duplicating complete schemas in this notebook; link to canonical docs and retain only high-value context.
-
-## Open questions register
-
-Maintain unresolved questions here until they are decided in Linear or implemented:
-
-- Should channel mapping remain part of `map_source`, or should `map_channel` become a separate table?
-- Does agency data need a source mapping layer in addition to `lkp_agency`?
-- What is the canonical definition and taxonomy for `market`?
-- Should room type, room class, bed type, and room pool be normalized into separate lookups?
-- What is the final schema and responsibility of `map_source_metric`?
-- Which mappings are globally managed versus property-specific?
-- Which mapping edits are stored as app-database drafts before publication to BigQuery?
-
-Re-check these questions before assuming they remain unresolved.
-
-## Change log
-
-### 2026-07-04
-
-- Created this internal project-memory document.
-- Reviewed the Metrics initiative project structure.
-- Reconfirmed that future conclusions must combine Linear product intent, current repository implementation, current Dataform DDL, and documentation.
-- Marked older Metrics Engineering Context repository and package-manager references as historical and potentially stale.
-
-## Maintenance rule
-
-Update this file only with durable context that will prevent repeated mistakes. Do not use it as a transcript, task board, or replacement for Linear.
+1. check current Linear intent;
+2. check current repository code;
+3. check current Dataform DDL;
+4. compare maintained docs;
+5. state any differences explicitly.
