@@ -1,0 +1,128 @@
+---
+title: Data Architecture
+nav_order: 2
+has_toc: true
+permalink: /data-architecture/
+---
+
+# Data Architecture
+
+This section is the canonical entry point for Metrics data-platform documentation.
+
+It defines where each data topic belongs, which existing page remains authoritative during the documentation rebuild, and which follow-up issue will complete the subject documentation.
+
+## Source ownership
+
+Use the following authority order when these sources differ:
+
+1. Linear defines product intent, approved terminology, and initiative or project boundaries.
+2. Repository code defines the current application implementation.
+3. Dataform defines the current warehouse schema, dependencies, mappings, lookups, and assertions.
+4. Documentation explains the system but must be reconciled against the sources above.
+5. Registries and fixtures are application scaffolding unless current implementation confirms otherwise.
+
+Documentation must distinguish:
+
+```text
+IMPLEMENTED
+PLANNED
+COMPATIBILITY
+DEPRECATED
+UNRESOLVED
+```
+
+## Canonical topic map
+
+The destination paths below are the approved homes for the data documentation workstream. A path marked **planned** is reserved for its named follow-up issue and must not be treated as complete architecture until that issue is merged.
+
+| Topic | Canonical destination | Current disposition | Follow-up |
+|---|---|---|---|
+| Data architecture overview and ownership | `architecture/data/index.mdx` | **Current canonical index** | REV-63 expands platform ownership |
+| Naming and modeling conventions | `architecture/data/naming-and-modeling-conventions.mdx` | **Planned**; existing standards remain source material | REV-64 |
+| Source systems and ingestion | `architecture/data/source-systems-and-ingestion.mdx` | **Planned**; retain `architecture/source-file-ingestion-model.mdx` until consolidated | REV-70 |
+| Lookup tables | `architecture/data/lookup-tables.mdx` | **Planned destination**; retain `architecture/lookup-tables.mdx` as the current implementation reference | REV-65 |
+| Mapping tables | `architecture/data/mapping-tables.mdx` | **Planned destination**; retain `architecture/mapping-tables.mdx` as the current implementation reference | REV-65 |
+| Dimensions | `architecture/data/dimensions.mdx` | **Planned** | REV-66 |
+| Fact tables | `architecture/data/fact-tables.mdx` | **Planned** | REV-66 |
+| Pickup model and tables | `architecture/data/pickup-tables.mdx` | **Planned** | REV-67 |
+| Reporting views, report tables, and marts | `architecture/data/reporting-views-and-marts.mdx` | **Planned** | REV-68 |
+| Metric definitions and semantic governance | `architecture/data/metric-definitions.mdx` | **Planned** | REV-69 |
+| Table dependencies | `architecture/data/table-dependencies.mdx` | **Planned destination**; retain `architecture/table-dependencies.mdx` until consolidated | REV-65 and REV-70 |
+| Lineage and freshness | `architecture/data/lineage-and-freshness.mdx` | **Planned** | REV-70 |
+| Validation and Dataform assertions | `architecture/data/validation-and-assertions.mdx` | **Planned** | REV-70 |
+| BigQuery and Dataform responsibilities | `architecture/data/bigquery-and-dataform.mdx` | **Planned** | REV-63 |
+| DuckDB serving responsibilities | `architecture/data/duckdb-serving-layer.mdx` | **Planned** | REV-63 |
+| Application database ownership and write-back | `architecture/data/application-data-ownership.mdx` | **Planned** | REV-71 |
+| Unresolved architecture decisions | `architecture/data/decision-register.mdx` | **Planned** | REV-72 |
+
+## Existing-page disposition
+
+No existing subject page is moved or deleted in REV-62. The following disposition prevents duplicate canonical ownership while later issues revise the content.
+
+### Retain as current source material
+
+- `architecture/mapping-tables.mdx`
+- `architecture/lookup-tables.mdx`
+- `architecture/table-dependencies.mdx`
+- `architecture/column-naming-standards.mdx`
+- `architecture/prefix_standards.mdx`
+- `architecture/source-file-ingestion-model.mdx`
+- `core/segment-model.mdx`
+- `core/source-channel-rate-model.mdx`
+- `core/roomtype-model.mdx`
+- domain documentation under `rms`, `demand`, and `google-analytics`
+
+These pages remain usable references until the corresponding canonical destination is completed. They must not be treated as independent confirmation when they repeat prior architecture work.
+
+### Rewrite or split
+
+- `architecture/table-architecture.mdx`
+
+This page currently mixes confirmed design decisions with physical-object claims. It will become a concise conceptual overview or be split across the dimension, fact, pickup, and reporting catalogs. Until then, table names shown there require Dataform verification before being described as implemented.
+
+### Keep as historical documentation
+
+- `development/app-migration/01-legacy-application-audit.md`
+- historical route, iframe, registry-adapter, or browser DuckDB migration material
+
+Historical pages should receive explicit banners when they are next edited. They are evidence of prior implementation, not the current architecture authority.
+
+## Navigation order
+
+The data section follows the system from ownership and standards through warehouse layers and delivery:
+
+1. Overview and ownership
+2. Naming and modeling conventions
+3. Source systems and ingestion
+4. Lookup tables
+5. Mapping tables
+6. Dimensions
+7. Fact tables
+8. Pickup tables
+9. Reporting views and marts
+10. Metric definitions
+11. Dependencies, lineage, and validation
+12. BigQuery and Dataform
+13. DuckDB serving layer
+14. Application data ownership
+15. Decision register
+
+## Domain documentation boundary
+
+Domain pages explain source-specific or business-specific behavior. They do not own shared warehouse definitions.
+
+Examples:
+
+- RMS pages may explain IDeaS pace behavior, but the shared pace fact grain belongs in the fact-table documentation.
+- GA4 pages may explain session and acquisition semantics, but the shared report and mart conventions belong in the reporting documentation.
+- Segment, source, channel, rate, and room-type pages may explain business taxonomy, while physical schemas belong in the lookup, mapping, and dimension catalogs.
+
+## Internal audit
+
+The inventory and gap analysis supporting this structure is maintained at:
+
+```text
+apps/docs/src/content/internal/audits/data-documentation-baseline.md
+```
+
+That audit is an internal work artifact. This page is the navigable canonical index for the maintained documentation set.
