@@ -1,0 +1,331 @@
+---
+title: Pickup Tables
+nav_order: 8
+has_toc: true
+---
+
+# Pickup Tables
+
+Pickup measures booking-position movement between two observation dates for the same stay date and business grain.
+
+The approved storage model is long and narrow. Current Dataform does not yet create canonical pickup tables, so the table family below is **PLANNED** unless a later implementation issue adds the DDL.
+
+## Current implementation status
+
+The maintained Dataform source is `REVREBEL/Metrics-Dataform`.
+
+Current Dataform implements pace staging tables, pace snapshot tables, pace reporting views, and source-report metadata that permits `report_type = pickup`.
+
+Current Dataform does **not** create:
+
+```text
+fact_pickup_property
+fact_pickup_segment
+fact_pickup_source
+fact_pickup_roomtype
+```
+
+No implemented pickup columns, partitioning, clustering, assertions, or window-code lookup were found. Earlier architecture material describes intended pickup objects, not current physical tables.
+
+## Approved long/narrow decision
+
+Pickup is stored as one metric observation per row rather than one column per metric and comparison window.
+
+Preferred shape:
+
+```text
+property_code
+observation_date
+comparison_date
+stay_date
+window_days
+metric_code
+metric_value
+```
+
+Grain-specific dimensions are added by table family.
+
+Long/narrow storage is approved because pickup windows and metrics expand independently. A wide design would require columns such as:
+
+```text
+rms_pu_001
+rms_pu_007
+rms_pu_014
+rev_pu_001
+rev_pu_007
+rev_pu_014
+```
+
+and would continue growing whenever a new window, metric, or comparison type was introduced.
+
+The long model provides stable schemas as windows expand, governed metric identity through `metric_code`, consistent validation, flexible filtering and pivoting, and explicit comparison semantics.
+
+## Date and window semantics
+
+### Observation date
+
+`observation_date` is the later snapshot date whose booking position is being evaluated.
+
+### Comparison date
+
+`comparison_date` is the earlier snapshot date used as the pickup baseline.
+
+For a rolling window:
+
+```text
+comparison_date = observation_date - window_days
+```
+
+The stored comparison date is authoritative for the calculated row. `window_days` describes the intended interval and supports grouping.
+
+### Stay date
+
+`stay_date` is the hotel service date whose booking position changed. Pickup always compares pace positions for the same stay date.
+
+### Window value
+
+The approved physical representation is:
+
+```text
+window_days INT64
+```
+
+Examples:
+
+```text
+1
+7
+14
+30
+60
+90
+```
+
+Display labels such as `001`, `007`, `014`, `030`, `060`, or `090` are derived presentation values. They should not replace the integer interval in the warehouse.
+
+A zero-day window is invalid because pickup requires two distinct observation dates.
+
+Calendar comparisons that are not a fixed number of days, such as same-time-last-year, require an explicit comparison-type decision rather than overloading `window_days`.
+
+## Planned table family
+
+| Table | Status | Explicit grain |
+|---|---|---|
+| `metrics_pickup.fact_pickup_property` | **PLANNED** | One row per property, observation date, comparison date, stay date, window, and metric |
+| `metrics_pickup.fact_pickup_segment` | **PLANNED** | One row per property, segment, observation date, comparison date, stay date, window, and metric |
+| `metrics_pickup.fact_pickup_source` | **PLANNED** | One row per property, source classification, observation date, comparison date, stay date, window, and metric |
+| `metrics_pickup.fact_pickup_roomtype` | **PLANNED** | One row per property, room type, observation date, comparison date, stay date, window, and metric |
+
+The final dataset name remains subject to implementation approval. The `metrics_pickup` examples communicate responsibility and do not prove that the dataset exists.
+
+## Shared planned columns
+
+| Column | Type | Meaning |
+|---|---|---|
+| `property_code` | `STRING` | Governed property code |
+| `observation_date` | `DATE` | Later pace snapshot date |
+| `comparison_date` | `DATE` | Earlier pace snapshot date |
+| `stay_date` | `DATE` | Hotel service date |
+| `window_days` | `INT64` | Difference in days between observation and comparison dates |
+| `metric_code` | `STRING` | Governed metric identity |
+| `metric_value` | `NUMERIC` | Pickup amount for the metric |
+| `source_application_code` | `STRING` | Source application when applicable |
+| `source_report_id` | `STRING` | Source-report or calculation-run lineage when available |
+| `insert_date` | `DATE` | Warehouse insert date |
+| `updated_date` | `DATE` | Warehouse update date when rows are mutable |
+
+The actual DDL may require `BIGNUMERIC`, `FLOAT64`, or multiple typed value columns if governed metrics cannot safely share one numeric type. That decision remains **UNRESOLVED** until implementation.
+
+## Grain-specific columns
+
+### Property pickup
+
+No additional business dimension is required beyond `property_code`.
+
+### Segment pickup
+
+Planned additional column:
+
+```text
+segment_code STRING
+```
+
+`segment_code` represents the governed commercial segment. Finance-segment reporting should be resolved through the approved segment relationship rather than replacing the commercial grain.
+
+### Source pickup
+
+The exact dimensional shape is **UNRESOLVED**.
+
+Candidate governed fields include:
+
+```text
+source_code
+subsource_code
+channel_code
+```
+
+The implementation must decide whether source pickup stores all three codes or uses one durable source-dimension key. It must not use a generic `source_value` field that hides the taxonomy.
+
+### Room-type pickup
+
+Planned additional column:
+
+```text
+roomtype_code STRING
+```
+
+`roomtype_code` is property-scoped in the current dimension model. Room-class pickup may remain a separate planned family if reporting requirements justify it; it should not be silently mixed into room-type rows.
+
+## Metric calculation
+
+For additive base measures:
+
+```text
+metric_value = observation_value - comparison_value
+```
+
+Examples include rooms on the books and revenue on the books.
+
+Pickup rows should normally store base-measure movement such as:
+
+```text
+rms_otb
+rev_otb
+```
+
+Derived ratios such as ADR, Occupancy, and RevPAR should be recalculated from compatible base measures in a reporting view or semantic layer. Subtracting two ratios is a variance, not an additive pickup measure.
+
+## Additive and non-additive behavior
+
+| Metric behavior | Storage guidance | Aggregation guidance |
+|---|---|---|
+| Additive count or amount | Store calculated pickup in `metric_value` | May sum across compatible dates and dimensions when grain is preserved |
+| Semi-additive inventory | Store only when the business definition permits comparison | Do not sum across snapshots without an approved rule |
+| Ratio or percentage | Prefer derived reporting calculation | Do not sum |
+| Text or status | Not a pickup metric | Store in a different observation or annotation model |
+
+`dim_metric.is_additive` may support governance, but implementation must verify that the metric definition and pickup behavior are compatible.
+
+## Null handling
+
+Pickup must distinguish zero movement from missing comparability.
+
+- `0` means both observations exist and the metric did not change.
+- `NULL` means pickup could not be calculated reliably.
+- Missing comparison rows must not be converted to zero.
+- A null observation value or comparison value should normally produce null pickup unless the governed metric explicitly defines null as zero.
+- Missing dimension mappings should fail validation or remain quarantined rather than collapse into an unlabeled total.
+
+## Duplicate prevention
+
+Each table requires a uniqueness assertion across its complete grain.
+
+Property example:
+
+```text
+property_code
++ observation_date
++ comparison_date
++ stay_date
++ window_days
++ metric_code
+```
+
+Segment, source, and room-type grains add their corresponding dimension keys.
+
+Validation should also confirm:
+
+```text
+observation_date > comparison_date
+DATE_DIFF(observation_date, comparison_date, DAY) = window_days
+window_days > 0
+metric_code is valid
+metric_value type is compatible with the metric
+```
+
+If multiple source applications contribute to the same business grain, the uniqueness rule must either include `source_application_code` or apply a controlled consolidation step before publication.
+
+## Relationship to pace
+
+Pickup is derived from two comparable pace observations:
+
+```text
+pace at observation_date
+- pace at comparison_date
+= pickup
+```
+
+Both source rows must share property, stay date, business dimension keys, metric definition, and compatible source and mapping treatment.
+
+Pickup should not be computed by subtracting unrelated reports merely because their dates differ by the desired window.
+
+## Relationship to actuals
+
+Actuals represent realized production for a stay date. Pickup represents booking-position movement between snapshots.
+
+A pickup row may eventually converge toward the final actual result as the stay date passes, but it does not replace the actual fact.
+
+Actual-versus-pace variance is a separate comparison and must not be mislabeled as pickup unless the product definition explicitly establishes that comparison type.
+
+## Comparison types beyond rolling days
+
+The current approved physical convention covers fixed rolling-day windows with `window_days INT64`.
+
+The following remain **UNRESOLVED**:
+
+- same-time-last-year comparisons;
+- day-of-week-aligned prior-year comparisons;
+- month-start or forecast-cycle comparisons;
+- source-provided pickup periods that do not expose both dates;
+- labels such as `LY`, `STLY`, `BGT`, or `FCT` in pickup storage.
+
+A future implementation may require a governed `comparison_type_code` in addition to dates and window days. It must not replace the explicit dates.
+
+## Partitioning and clustering target
+
+No current pickup DDL exists, so no physical layout is implemented.
+
+Recommended starting point:
+
+```text
+PARTITION BY observation_date
+CLUSTER BY property_code, stay_date, metric_code
+```
+
+Grain-specific tables may add `segment_code`, source keys, or `roomtype_code` to clustering based on query patterns. This remains **PLANNED** until implemented and benchmarked.
+
+## Assertions target
+
+Required assertions should cover complete-grain uniqueness, non-null required keys, valid date order and window calculation, valid metric and dimension codes, duplicate source contribution, and reconciliation to the two pace observations used in the calculation.
+
+No current Dataform assertion implements these pickup checks.
+
+## Current and planned object register
+
+| Object | Status | Evidence |
+|---|---|---|
+| Pace staging tables | **IMPLEMENTED** | `10_create_stg_pace_tables.sqlx` |
+| Pace snapshot tables | **COMPATIBILITY** | `20_create_snap_pace_tables.sqlx` |
+| Pace calculation views | **IMPLEMENTED** | `30_create_vw_pace_views.sqlx` |
+| `fact_pickup_property` | **PLANNED** | Approved architecture concept; no current DDL |
+| `fact_pickup_segment` | **PLANNED** | Approved architecture concept; no current DDL |
+| `fact_pickup_source` | **PLANNED** | Approved architecture concept; no current DDL |
+| `fact_pickup_roomtype` | **PLANNED** | Approved architecture concept; no current DDL |
+| Pickup window lookup | **UNRESOLVED** | Integer window convention approved; no lookup implemented |
+| Pickup comparison-type lookup | **UNRESOLVED** | Needed only if non-day comparisons are approved |
+
+## Dataform references reviewed
+
+```text
+REVREBEL/Metrics-Dataform/definitions/00_create_core_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/10_create_stg_pace_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/20_create_snap_pace_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/30_create_vw_pace_views.sqlx
+```
+
+## Related documentation
+
+- [Fact Tables](/docs/architecture/data/fact-tables)
+- [Dimensions](/docs/architecture/data/dimensions)
+- [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)
+- [Data Architecture Decision Register](/docs/architecture/data/decision-register)
