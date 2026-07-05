@@ -1,0 +1,481 @@
+---
+title: Metric Definitions and Semantic Governance
+nav_order: 10
+has_toc: true
+---
+
+# Metric Definitions and Semantic Governance
+
+The Metrics Library is the governed semantic layer for hotel performance metrics. It defines what a metric means, which source fields it uses, how it aggregates, which dimensions it supports, how it handles nulls and zero denominators, and how downstream products may present it.
+
+Linear defines the Metrics Library as a catalog of base and calculated metrics. Repository code currently contains only application scaffolding and compatibility calculations. Dataform currently implements a limited pace-oriented calculation layer. A complete executable metric-definition package is still planned.
+
+## Status vocabulary
+
+This page uses the project-wide implementation statuses:
+
+```text
+IMPLEMENTED
+PLANNED
+COMPATIBILITY
+DEPRECATED
+UNRESOLVED
+```
+
+A formula appearing in a UI fixture, mock page, historical document, or isolated query does not by itself make the metric an implemented governed definition.
+
+Implementation status is separate from a metric definition's governance lifecycle. Implementation status describes technical readiness and rollout. The metric model's `status` field describes review and publication state.
+
+## Source-of-truth boundary
+
+| Responsibility | Current owner |
+|---|---|
+| Product intent, approved metric terminology, and governance scope | Linear |
+| Physical source fields, warehouse calculations, and available grains | BigQuery and Dataform |
+| Published metric metadata, formula contracts, allowed dimensions, aggregation, formatting, and lifecycle | Planned `packages/metrics` semantic package plus application persistence where required |
+| Fast analytical execution | DuckDB serving layer using published definitions or precomputed outputs |
+| Card layout, labels, color, chart type, and presentation | Application and UI components |
+
+The current repository does not contain an active `packages/metrics` package. References to that package describe the approved package boundary, not current implementation.
+
+## Core rule
+
+Business formulas must not be recreated independently in cards, pages, hooks, chart components, or report templates.
+
+A presentation component may:
+
+- select a published metric;
+- apply an approved display format;
+- choose a visualization;
+- compare approved periods or scenarios;
+- render an already-defined variance.
+
+A presentation component must not silently redefine ADR, Occupancy, RevPAR, ALOS, ROI, conversion rate, or another governed metric.
+
+## Metric model
+
+A governed metric definition should contain at least the following fields.
+
+| Field | Purpose |
+|---|---|
+| `metric_code` | Stable machine identifier |
+| `metric_name` | User-facing canonical name |
+| `description` | Business definition and intended interpretation |
+| `metric_kind` | Base, calculated, variance, index, rate, ratio, count, amount, or duration |
+| `category_code` | Revenue, inventory, demand, marketing, finance, operations, or another approved category |
+| `formula_expression` | Governed calculation contract or reference to executable logic |
+| `numerator_metric_code` | Optional governed numerator dependency |
+| `denominator_metric_code` | Optional governed denominator dependency |
+| `source_fields` | Required physical warehouse fields or source metrics |
+| `allowed_dimensions` | Dimensions over which the metric may be grouped or filtered |
+| `aggregation_rule` | Sum, weighted ratio, average, minimum, maximum, count distinct, last value, or another approved rule |
+| `zero_denominator_rule` | Required divide-by-zero behavior |
+| `null_rule` | Required missing-value behavior |
+| `display_format` | Currency, integer, decimal, percentage, duration, index, or another approved format |
+| `default_precision` | Default decimal precision for display |
+| `supported_comparisons` | Prior period, prior year, budget, forecast, target, comp set, or other approved comparisons |
+| `supported_consumers` | Cards, reports, campaigns, strategies, alerts, AI, or exports |
+| `status` | Lifecycle state using `DRAFT`, `IN REVIEW`, `APPROVED`, `PUBLISHED`, `DEPRECATED`, or `RETIRED` |
+| `version` | Immutable published definition version |
+| `effective_from` | First date the version applies |
+| `effective_to` | Optional final date the version applies |
+| `owner` | Accountable business owner |
+| `approved_by` | Required approval record when governance workflow is implemented |
+
+The exact physical storage schema remains **PLANNED**. The fields above define the semantic contract that implementation must support.
+
+The `status` field is reserved for the governance lifecycle. Project-wide implementation status remains a separate concern and continues to use `IMPLEMENTED`, `PLANNED`, `COMPATIBILITY`, `DEPRECATED`, and `UNRESOLVED` in implementation catalogs and architecture documentation. Compatibility should not be persisted as a metric lifecycle value; it belongs in implementation status and, where needed, separate compatibility metadata.
+
+## Base and calculated metrics
+
+### Base metrics
+
+A base metric is directly additive or directly selected from governed warehouse fields without depending on another calculated metric.
+
+Current pace examples include:
+
+| Metric concept | Current warehouse field | Status | Notes |
+|---|---|---|---|
+| Rooms on the books | `rms_otb` | **IMPLEMENTED** | Additive within compatible grains and observation dates |
+| Rooms revenue on the books | `rev_otb` | **IMPLEMENTED** | Additive amount within compatible grains and observation dates |
+| Available rooms | `available_rms` | **IMPLEMENTED** | Inventory measure; summation is valid only across non-overlapping stay dates and compatible inventory grains |
+
+These are currently physical Dataform fields, not yet published Metrics Library records.
+
+### Calculated metrics
+
+A calculated metric depends on one or more base metrics or governed calculated metrics. Calculated metrics must declare their aggregation behavior rather than relying on averages of row-level ratios.
+
+The current Dataform pace views implement calculated ADR, Occupancy, and RevPAR fields. The browser DuckDB compatibility hook also calculates current-year, prior-year, budget, and variance forms of these metrics.
+
+## Current metric catalog
+
+### ADR
+
+**Canonical name:** Average Daily Rate  
+**Status:** **IMPLEMENTED** as pace-view calculation; **PLANNED** as a governed Metrics Library record
+
+```text
+ADR = Rooms Revenue / Rooms Sold
+```
+
+Current pace implementation:
+
+```text
+adr_otb_calc = SAFE_DIVIDE(rev_otb, NULLIF(rms_otb, 0))
+```
+
+Aggregation rule:
+
+```text
+SUM(Rooms Revenue) / NULLIF(SUM(Rooms Sold), 0)
+```
+
+Do not average property-day ADR values to produce a month, portfolio, segment, or channel ADR. Recalculate the weighted ratio from the additive numerator and denominator.
+
+Default display guidance:
+
+- currency;
+- two decimal places unless a product-specific approved format states otherwise;
+- no forced zero when the denominator is zero.
+
+Current allowed pace dimensions are limited by the implemented view grains:
+
+- property;
+- stay date;
+- observation date where present in the source snapshot;
+- segment for `vw_pace_segment`;
+- room class for `vw_pace_roomclass`;
+- room type for `vw_pace_roomtype`.
+
+### Occupancy
+
+**Canonical name:** Occupancy  
+**Status:** **IMPLEMENTED** for property, room-class, and room-type pace views; **PLANNED** as a governed Metrics Library record
+
+```text
+Occupancy = Rooms Sold / Available Rooms
+```
+
+Current pace implementation:
+
+```text
+occ_otb_calc = SAFE_DIVIDE(rms_otb, NULLIF(available_rms, 0))
+```
+
+Aggregation rule:
+
+```text
+SUM(Rooms Sold) / NULLIF(SUM(Available Rooms), 0)
+```
+
+Default display guidance:
+
+- percentage;
+- source value is a ratio from `0` to `1` unless a downstream contract explicitly stores percentage points;
+- one decimal percentage point is the default presentation target, subject to product approval.
+
+Dataform does not currently calculate segment Occupancy in `vw_pace_segment`. Segment-level occupancy therefore must not be presented as an implemented metric merely because `available_rms` appears in the compatibility snapshot schema.
+
+### RevPAR
+
+**Canonical name:** Revenue per Available Room  
+**Status:** **IMPLEMENTED** for property, room-class, and room-type pace views; **PLANNED** as a governed Metrics Library record
+
+```text
+RevPAR = Rooms Revenue / Available Rooms
+```
+
+Equivalent identity when inputs use the same grain and scope:
+
+```text
+RevPAR = ADR × Occupancy
+```
+
+Current pace implementation:
+
+```text
+revpar_otb_calc = SAFE_DIVIDE(rev_otb, NULLIF(available_rms, 0))
+```
+
+Aggregation rule:
+
+```text
+SUM(Rooms Revenue) / NULLIF(SUM(Available Rooms), 0)
+```
+
+The direct revenue-to-availability formula is the preferred aggregate calculation. Multiplying already-rounded ADR and Occupancy display values may produce avoidable rounding differences.
+
+Default display guidance:
+
+- currency;
+- two decimal places unless an approved product format states otherwise.
+
+### ALOS
+
+**Canonical name:** Average Length of Stay  
+**Status:** **PLANNED**
+
+```text
+ALOS = Room Nights / Reservations or Stays
+```
+
+No current Dataform object reviewed for this documentation work provides a governed reservation-count or stay-count denominator. ALOS therefore has no implemented Metrics Library definition yet.
+
+Before implementation, a decision is required on:
+
+- reservation versus completed-stay denominator;
+- treatment of canceled, no-show, day-use, and split reservations;
+- arrival-date, departure-date, booking-date, or stay-date analysis;
+- multi-room reservations;
+- in-house and partially completed stays;
+- allowed dimensions and source-system precedence.
+
+### Pace variances and attainment
+
+The current browser DuckDB compatibility hook calculates:
+
+- Occupancy variance;
+- ADR variance;
+- RevPAR variance;
+- room variance;
+- revenue variance;
+- revenue to budget;
+- budget attainment percentage.
+
+These calculations are **COMPATIBILITY** logic, not governed Metrics Library definitions. They currently live inside `packages/ui/src/hooks/use-hotel-analytics.ts`, which conflicts with the approved package boundary.
+
+Before publication, each comparison metric must define whether it represents:
+
+- absolute difference;
+- percentage change;
+- percentage-point change;
+- index;
+- remaining amount;
+- attainment ratio.
+
+For example, Occupancy variance must distinguish ratio difference from percentage-point display. A value of `0.05` represents five percentage points when both operands are ratios.
+
+## Null and divide-by-zero behavior
+
+### Zero denominators
+
+Ratio metrics must use safe division. The current Dataform implementation uses `SAFE_DIVIDE` with `NULLIF(denominator, 0)`.
+
+Canonical default:
+
+```text
+zero denominator → NULL
+```
+
+A UI may display an em dash, blank state, or approved unavailable label. It must not convert an undefined ratio to zero unless the metric definition explicitly authorizes that behavior.
+
+### Null additive inputs
+
+Null handling must be declared per metric and source contract.
+
+Default guidance:
+
+- do not automatically replace unknown source values with zero;
+- use zero only when the source contract proves that null means no activity;
+- preserve null when null means missing, unavailable, not loaded, or not applicable;
+- publish data-quality state separately from metric value where practical.
+
+### Rounding
+
+Calculations should retain warehouse precision. Rounding belongs at the presentation or export boundary unless a business rule explicitly requires stored rounding.
+
+Ratios should be calculated from unrounded additive components.
+
+## Aggregation governance
+
+Every metric must declare one aggregation behavior.
+
+| Rule | Example | Required behavior |
+|---|---|---|
+| Additive sum | Rooms revenue, rooms sold | Sum only across compatible, non-duplicated grains |
+| Weighted ratio | ADR, Occupancy, RevPAR | Sum components first, then divide |
+| Count distinct | Reservations, guests, users | Declare the durable identity being counted |
+| Snapshot or last value | Current inventory state | Declare observation-time selection rule |
+| Average of observations | Rate-shop average | Declare weighting, sampling, and null treatment |
+| Minimum or maximum | Lowest public rate | Declare eligible records and tie behavior |
+| Semi-additive | Available rooms, balance-like measures | Declare dimensions across which summation is valid |
+| Non-additive | Indexes, percentages, ranks | Recalculate from governed components or use an approved rollup |
+
+Metric consumers must not guess aggregation from display format.
+
+## Dimensions and grain
+
+A metric definition must list allowed dimensions and the lowest supported grain.
+
+Dimensions may be allowed only when:
+
+- the required key exists in the governed source output;
+- mappings are published and valid for the requested period;
+- aggregation does not duplicate the numerator or denominator;
+- the metric remains meaningful at that grain.
+
+Current pace dimensions are defined by the implemented property, segment, room-class, and room-type snapshot/view families. Source, channel, rate, company, agency, campaign, and other dimensions must not be advertised as supported until the warehouse output and metric contract both support them.
+
+Time dimensions also require explicit semantics:
+
+- stay date;
+- observation date;
+- booking date;
+- arrival date;
+- departure date;
+- event date;
+- reporting period.
+
+The same metric code should not silently switch time semantics across consumers.
+
+## Formatting ownership
+
+The metric definition owns the semantic display contract:
+
+- unit;
+- default format;
+- default precision;
+- whether a ratio is displayed as a percentage;
+- whether a variance is amount, rate, percentage, or percentage points;
+- negative-value treatment when business rules require it.
+
+The UI owns visual treatment:
+
+- font;
+- color;
+- card layout;
+- chart type;
+- responsive behavior;
+- labels and annotations consistent with the published definition.
+
+A card may override presentation precision only within limits allowed by the metric definition. It may not change the unit or meaning.
+
+## Downstream relationships
+
+Metrics are reusable definitions. They may be referenced by:
+
+- dashboard cards;
+- reports and report sections;
+- Commercial Plan goals, budgets, and forecasts;
+- Growth Plan initiatives and success measures;
+- Broadcast campaigns, targets, and outcomes;
+- alerts and trigger conditions;
+- Playbook strategies and recommended actions;
+- AI pattern detection and recommendations;
+- exports and external BI tools.
+
+The relationship should use the stable `metric_code` and published version or effective-date rules, not copied formula text.
+
+A campaign or strategy may select metrics and targets. It does not own the formula.
+
+## Publication lifecycle
+
+The final workflow implementation is **UNRESOLVED**, but the semantic model requires these lifecycle concepts:
+
+```text
+DRAFT
+→ IN REVIEW
+→ APPROVED
+→ PUBLISHED
+→ DEPRECATED
+→ RETIRED
+```
+
+The metric definition `status` field persists this lifecycle state. It does not store project-wide implementation status. Technical readiness should remain in implementation catalogs, while compatibility details should use separate implementation or compatibility metadata. The exact names and physical schema of those additional fields remain **PLANNED**.
+
+Recommended behavior:
+
+- drafts may change without affecting production consumers;
+- published versions are immutable;
+- formula changes create a new version rather than rewriting history;
+- effective dates determine which version applies to historical or current reporting;
+- deprecation warns consumers but preserves compatibility;
+- retirement prevents new use while retaining historical references;
+- breaking changes require impact analysis for cards, reports, campaigns, strategies, alerts, exports, and marts.
+
+The exact approver roles, publication mechanism, and application-database schema remain **UNRESOLVED**.
+
+## Ownership and access
+
+Linear currently defines REVREBEL users as managers of metric definitions and data governance. Client users should not directly edit core metric definitions unless a future permission explicitly grants that capability.
+
+Governance requires at least:
+
+- a business owner accountable for meaning;
+- a data owner accountable for source fields and quality;
+- a technical owner accountable for executable implementation;
+- an approval record for publication;
+- consumer-impact visibility before deprecation or breaking change.
+
+The final role names and permission matrix remain **UNRESOLVED**.
+
+## Current implementation inventory
+
+| Location | Current role | Status |
+|---|---|---|
+| `REVREBEL/Metrics-Dataform/definitions/30_create_vw_pace_views.sqlx` | Calculates pace ADR, Occupancy, and RevPAR | **IMPLEMENTED** |
+| `REVREBEL/Metrics-Dataform/definitions/20_create_snap_pace_tables.sqlx` | Provides `rms_otb`, `rev_otb`, and `available_rms` compatibility fields | **COMPATIBILITY** |
+| `packages/ui/src/hooks/use-hotel-analytics.ts` | Calculates dashboard ratios, variances, and budget attainment in browser DuckDB | **COMPATIBILITY** |
+| `apps/app/app/(workspace)/metrics-library/page.tsx` | Static Metrics Library UI scaffold with ADR, RevPAR, and Occupancy examples | **COMPATIBILITY** |
+| `packages/metrics` | Approved semantic package boundary | **PLANNED**; package is not currently present |
+| Application persistence for definitions, versions, approvals, and relationships | Planned workflow state | **PLANNED** |
+
+The static Metrics Library page must not be treated as a live registry. Its formulas are hard-coded examples and its Add Metric control is not evidence of a functioning publication workflow.
+
+## Required implementation sequence
+
+1. Finalize the metric-definition persistence and package contracts.
+2. Publish stable base metric codes tied to current warehouse fields.
+3. Implement executable calculated definitions with tests.
+4. Reconcile Dataform calculations with the published definitions.
+5. Move compatibility calculations out of `packages/ui` into the data or metric layer.
+6. Build versioning, review, approval, publication, deprecation, and impact analysis.
+7. Connect cards, reports, campaigns, strategies, alerts, and AI consumers by stable metric reference.
+8. Add reconciliation tests proving equivalent calculations agree across BigQuery, DuckDB, exports, and UI consumers.
+
+## Validation requirements
+
+Published metrics should be tested for:
+
+- required source-field availability;
+- allowed-grain compatibility;
+- numerator and denominator reconciliation;
+- divide-by-zero behavior;
+- null behavior;
+- aggregation across dates, properties, and supported dimensions;
+- precision and format contracts;
+- version and effective-date selection;
+- equivalence between warehouse and serving-layer calculations;
+- dependency impact before breaking changes.
+
+For ADR, Occupancy, and RevPAR, tests should verify that aggregate results are recalculated from summed components rather than averaged from row-level ratios.
+
+## Unresolved decisions
+
+The following decisions remain open:
+
+- physical storage schema for metric definitions and versions;
+- ownership split between `packages/metrics` code and app-database records;
+- executable formula representation and validation strategy;
+- final metric-category taxonomy;
+- approval roles and publication permissions;
+- compatibility policy for formula changes;
+- effective-date behavior for historical dashboards and reports;
+- canonical comparison and variance metric taxonomy;
+- source-system precedence when equivalent fields disagree;
+- ALOS denominator and reservation/stay rules;
+- allowed client customization, aliases, and presentation overrides;
+- whether precomputed marts store metric codes, named columns, or both.
+
+These decisions must be resolved before the Metrics Library becomes the production semantic authority.
+
+## Related documentation
+
+- [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
+- [Dimensions](/docs/architecture/data/dimensions)
+- [Fact Tables](/docs/architecture/data/fact-tables)
+- [Pickup Tables](/docs/architecture/data/pickup-tables)
+- [Reporting Views, Report Tables, and Marts](/docs/architecture/data/reporting-views-and-marts)
+- [DuckDB Serving Layer](/docs/architecture/data/duckdb-serving-layer)
+- [Data Architecture Decision Register](/docs/architecture/data/decision-register)
