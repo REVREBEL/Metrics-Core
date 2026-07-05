@@ -183,20 +183,36 @@ Therefore:
 - references such as `p_ga4_*`, `rpt_ga4_*`, `metrics_ga4`, and `metrics_ga4_events` must not be described as live warehouse objects from the current repository evidence;
 - freshness claims about daily transfer jobs require implementation and operational verification.
 
+## Field-name boundary
+
+GA4 source and report documentation currently uses GA4-style `camelCase` field names. Planned Metrics warehouse and report contracts use lowercase `snake_case`.
+
+Examples:
+
+```text
+GA4 source/report field: sessionSource
+Planned Metrics warehouse field: session_source
+
+GA4 source/report field: firstUserSource
+Planned Metrics warehouse field: first_user_source
+```
+
+The source names below therefore remain `camelCase`. The planned reporting contract later in this page uses `snake_case`.
+
 ## Scope semantics
 
 ### Session-scoped acquisition
 
 Session-scoped fields describe how a particular session was acquired.
 
-Typical source dimensions include:
+Current GA4 source documentation uses:
 
 ```text
-session_source
-session_medium
-session_source_medium
-session_campaign_name
-session_default_channel_group
+sessionSource
+sessionMedium
+sessionSourceMedium
+sessionCampaignName
+sessionDefaultChannelGroup
 ```
 
 These fields answer questions such as:
@@ -209,7 +225,7 @@ These fields answer questions such as:
 
 First-user fields describe the original acquisition source associated with a user.
 
-Current documentation examples include:
+Current GA4 source documentation uses:
 
 ```text
 firstUserSource
@@ -243,7 +259,7 @@ These names come from current documentation, not Dataform DDL.
 
 ## Planned acquisition contract
 
-The documented `rpt_ga4_acquisition_daily` design uses:
+The documented `rpt_ga4_acquisition_daily` design uses warehouse-style `snake_case` fields:
 
 ```text
 property_code
