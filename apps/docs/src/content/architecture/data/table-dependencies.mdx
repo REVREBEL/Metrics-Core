@@ -1,0 +1,195 @@
+---
+title: Mapping and Lookup Dependencies
+nav_order: 11
+has_toc: true
+---
+
+# Mapping and Lookup Dependencies
+
+This page documents the current semantic and execution dependencies for implemented lookup and mapping objects.
+
+BigQuery does not enforce these relationships as physical foreign keys. Dataform, ingestion services, application validation, and data-quality checks must preserve them.
+
+## High-level graph
+
+```text
+lkp_source_system_type
+  └── lkp_source_application
+        ├── map_segment
+        ├── map_roomtype
+        ├── map_source
+        └── map_rate
+
+lkp_segment_group
+  └── lkp_segment
+        ├── map_segment
+        ├── dim_segment
+        ├── map_rate
+        └── lkp_rate
+
+lkp_finance_segment
+  ├── map_segment
+  └── dim_segment
+
+lkp_source
+  ├── lkp_subsource
+  ├── map_source
+  ├── map_rate
+  └── lkp_rate
+
+lkp_channel_group
+  └── lkp_channel
+        ├── map_source
+        ├── map_rate
+        └── lkp_rate
+
+lkp_consortia_focus ─┐
+lkp_consortia_category ─┴── lkp_consortia
+                              ├── lkp_agency
+                              ├── map_rate
+                              └── lkp_rate
+
+lkp_industry
+  └── lkp_company
+        ├── map_rate
+        └── lkp_rate
+
+lkp_ratetype
+  ├── map_rate
+  └── lkp_rate
+```
+
+# Mapping dependencies
+
+| Mapping | Column | Target | Relationship purpose |
+|---|---|---|---|
+| `map_segment` | `source_application_code` | `lkp_source_application.code` | Source lineage |
+| `map_segment` | `segment_code` | `lkp_segment.code` | Commercial segment |
+| `map_segment` | `finance_segment_code` | `lkp_finance_segment.code` | Finance segment |
+| `map_segment` | `property_code` | Property reference | Property-scoped interpretation |
+| `map_roomtype` | `source_application_code` | `lkp_source_application.code` | Source lineage |
+| `map_roomtype` | `property_code` | Property reference | Property-scoped room taxonomy |
+| `map_source` | `source_application_code` | `lkp_source_application.code` | Source lineage |
+| `map_source` | `source_code` | `lkp_source.code` | Standard source |
+| `map_source` | `subsource_code` | `lkp_subsource.code` | Standard subsource |
+| `map_source` | `channel_code` | `lkp_channel.code` | Standard channel |
+| `map_source` | `property_code` | Property reference | Property-scoped interpretation |
+| `map_rate` | `source_application_code` | `lkp_source_application.code` | Source lineage |
+| `map_rate` | `ratetype_code` | `lkp_ratetype.code` | Rate classification |
+| `map_rate` | `company_code` | `lkp_company.code` | Company/account |
+| `map_rate` | `segment_code` | `lkp_segment.code` | Commercial segment |
+| `map_rate` | `channel_code` | `lkp_channel.code` | Channel |
+| `map_rate` | `source_code` | `lkp_source.code` | Source |
+| `map_rate` | `subsource_code` | `lkp_subsource.code` | Subsource |
+| `map_rate` | `consortia_code` | `lkp_consortia.code` | Consortia |
+| `map_rate` | `property_code` | Property reference | Property-scoped interpretation |
+
+## Indirect relationships
+
+```text
+map_segment.segment_code
+  → lkp_segment.segment_group_code
+  → lkp_segment_group.code
+
+map_source.subsource_code
+  → lkp_subsource.source_code
+  → lkp_source.code
+
+map_source.channel_code
+  → lkp_channel.channel_group_code
+  → lkp_channel_group.code
+
+map_rate.company_code
+  → lkp_company.industry
+  → lkp_industry.industry
+
+map_rate.consortia_code
+  → lkp_consortia.consortia_focus_code
+  → lkp_consortia_focus.code
+
+map_rate.consortia_code
+  → lkp_consortia.consortia_category_code
+  → lkp_consortia_category.code
+```
+
+`map_roomtype` has no current lookup dependencies for room type, class, bed, feature, or pool. Those standard values are embedded in the compatibility mapping schema.
+
+# Lookup dependencies
+
+| Child table | Child column | Parent | Notes |
+|---|---|---|---|
+| `lkp_source_application` | `source_system_type_code` | `lkp_source_system_type.code` | Broad system classification |
+| `lkp_segment` | `segment_group_code` | `lkp_segment_group.code` | Commercial hierarchy |
+| `lkp_subsource` | `source_code` | `lkp_source.code` | Added by migration |
+| `lkp_channel` | `channel_group_code` | `lkp_channel_group.code` | Channel hierarchy |
+| `lkp_consortia` | `consortia_focus_code` | `lkp_consortia_focus.code` | Consortia classification |
+| `lkp_consortia` | `consortia_category_code` | `lkp_consortia_category.code` | Consortia classification |
+| `lkp_agency` | `consortia_code` | `lkp_consortia.code` | Agency/consortia relationship |
+| `lkp_company` | `industry` | `lkp_industry.industry` | Soft text join |
+| `lkp_rate` | `ratetype_code` | `lkp_ratetype.code` | Rate classification |
+| `lkp_rate` | `company_code` | `lkp_company.code` | Company/account |
+| `lkp_rate` | `segment_code` | `lkp_segment.code` | Commercial segment |
+| `lkp_rate` | `channel_code` | `lkp_channel.code` | Channel |
+| `lkp_rate` | `source_code` | `lkp_source.code` | Source |
+| `lkp_rate` | `subsource_code` | `lkp_subsource.code` | Subsource |
+| `lkp_rate` | `consortia_code` | `lkp_consortia.code` | Consortia |
+
+# Enrichment views
+
+| View | Base object | Lookups joined |
+|---|---|---|
+| `vw_source_application` | `lkp_source_application` | `lkp_source_system_type` |
+| `vw_segment` | `dim_segment` | `lkp_segment`, `lkp_segment_group`, `lkp_finance_segment` |
+| `vw_source` | `map_source` | `lkp_source`, `lkp_subsource`, `lkp_channel`, `lkp_channel_group` |
+| `vw_rate` | `map_rate` | `lkp_ratetype`, `lkp_company`, `lkp_segment`, `lkp_channel`, `lkp_channel_group`, `lkp_source`, `lkp_subsource`, `lkp_consortia`, `lkp_consortia_focus`, `lkp_consortia_category` |
+
+# Dataform execution dependencies
+
+```text
+05_create_segment_tables
+  → 05_migrate_segment_mapping_schema
+
+06_create_source_channel_rate_tables
+  → 06_migrate_source_rate_mapping_schema
+  → 06_migrate_subsource_parent_source
+```
+
+The migrations add columns to pre-existing tables because `CREATE TABLE IF NOT EXISTS` does not update an existing schema.
+
+# Application registry differences
+
+| Registry or architecture concept | Dataform status | Documentation status |
+|---|---|---|
+| `map_hotel` | Not created | **PLANNED** |
+| `map_channel` | Not created; channel currently maps through `map_source.channel_code` | **UNRESOLVED** |
+| `map_market` | Not created | **UNRESOLVED** |
+| `map_agency` | Not created; `lkp_agency` exists | **UNRESOLVED** |
+| `map_source_metric` | Not created | **UNRESOLVED** |
+| `lkp_roomtype` | Not created | **UNRESOLVED** |
+| Generic `source_system` field | Not a mapping-table column | Replace with `source_application_code` metadata |
+| Generic `source_value` or `standard_code` fields | Do not match physical schemas | Use per-table field metadata |
+
+Open decisions are tracked in the planned [Data Architecture Decision Register](/docs/architecture/data/decision-register). Until that page is published, REV-72 is the controlling work item.
+
+# Required validation
+
+At minimum, assertions or scheduled checks should detect:
+
+- mapping rows with unknown `source_application_code`;
+- mapping target codes missing from their lookups;
+- invalid `segment_group_code`, `source_code`, or `channel_group_code` parents;
+- invalid consortia focus/category relationships;
+- `map_source.code_reference` outside `source_code` or `subsource_code`;
+- active mappings with null required source values;
+- contradictory or incomplete `map_rate` classifications;
+- orphaned dimensions after mapping changes;
+- text drift in `lkp_company.industry`;
+- duplicate property/application/source-code mappings.
+
+Current DDL descriptions express semantic relationships, but this documentation does not claim that every check above is already implemented as a Dataform assertion. REV-70 owns the implemented-versus-recommended assertion inventory.
+
+# Related documentation
+
+- [Lookup Tables](/docs/architecture/data/lookup-tables)
+- [Mapping Tables](/docs/architecture/data/mapping-tables)
+- [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)
