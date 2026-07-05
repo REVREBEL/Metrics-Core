@@ -17,7 +17,7 @@ This interim register prevents unresolved data-model questions from being presen
 | `map_source_metric` responsibility | **UNRESOLVED** | No current Dataform DDL |
 | Property/source identifier mapping | **PLANNED** | `map_hotel` is a registry concept; no current Dataform DDL |
 | Global versus property-specific mappings | **UNRESOLVED** | Current implemented mappings are property-scoped |
-| Draft mapping publication workflow | **UNRESOLVED** | Application-database and publication boundary still requires approval |
+| Draft mapping publication workflow | **UNRESOLVED** | Application-database ownership is defined, but approval roles, transport, merge behavior, and publication audit are not implemented |
 | Canonical `dim_segment` physical schema | **UNRESOLVED** | `00_create_core_tables.sqlx` and `05_create_segment_tables.sqlx` define different shapes with `CREATE TABLE IF NOT EXISTS` |
 | Pace table prefix migration | **UNRESOLVED** | Current measurable pace tables use `snap_`; naming standards prefer grain-specific `fact_` for new work |
 | Canonical actual fact families | **PLANNED** | No current Dataform tables with the `fact_` prefix and no implemented actual fact family |
@@ -42,5 +42,12 @@ This interim register prevents unresolved data-model questions from being presen
 | Pace source coexistence in unique grain | **UNRESOLVED** | Candidate pace keys may require source application, report, or load identity when multiple sources coexist |
 | Assertion severity and publication gate | **UNRESOLVED** | Current Dataform definitions contain no native assertions or consolidated blocking workflow |
 | Mapping coverage thresholds | **UNRESOLVED** | No approved warning or failure threshold for unmapped source values |
+| Application persistence technology and package boundary | **UNRESOLVED** | No canonical production app-database package, schema, or migration directory is currently confirmed |
+| Manual planning publication shape | **UNRESOLVED** | Budget and forecast drafts belong in the application database, but the published warehouse fact shape is not approved |
+| Planning version and replacement rules | **UNRESOLVED** | Published plans must be immutable or versioned; supersession behavior is not yet defined |
+| Application-to-warehouse publication transport | **UNRESOLVED** | No controlled staging, merge service, or generated-file contract is implemented |
+| Publication state vocabulary | **UNRESOLVED** | Approval and warehouse publication must remain separate; final state names and persistence schema are not approved |
+| Application-to-warehouse identifier strategy | **UNRESOLVED** | No durable link currently connects an application draft/version to a warehouse publication batch |
+| Application audit retention | **UNRESOLVED** | Retention and export policy for drafts, notes, approvals, comments, and audit events is not defined |
 
 Confirmed decisions should be removed from this register and moved into the canonical subject documentation when Linear approves them or implementation establishes them.

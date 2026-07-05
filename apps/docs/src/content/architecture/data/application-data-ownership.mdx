@@ -1,0 +1,295 @@
+---
+title: Application Data Ownership and Write-Back
+nav_order: 14
+has_toc: true
+---
+
+# Application Data Ownership and Write-Back
+
+This page defines which records belong in the application persistence layer, which belong in BigQuery and Dataform, and how draft application state may become published analytical data.
+
+Linear defines the intended ownership boundary. Repository code defines the current implementation. Dataform defines the current warehouse objects. These sources do not currently show a complete production application-database implementation.
+
+## Current implementation summary
+
+| Capability | Status | Current state |
+|---|---|---|
+| Workspace and feature UI | **IMPLEMENTED** | Next.js workspace routes and typed fixture-backed context exist |
+| Production application persistence schema | **PLANNED** | No canonical application database package or schema is currently confirmed in the repository |
+| Authentication and permission persistence | **PLANNED** | Current workspace documentation describes simulated or fixture-backed state |
+| Budget and forecast draft persistence | **PLANNED** | No confirmed production draft schema or service |
+| Direct browser-to-BigQuery writes | **DEPRECATED** as an architecture pattern | Must not be introduced; no browser component should own warehouse publication |
+| Controlled application-to-warehouse publication | **PLANNED** | Service, validation, approval, and audit contracts are not yet implemented |
+| Draft mapping publication | **UNRESOLVED** | Ownership intent is clear, but schema, approvers, and publication mechanics are not approved |
+| Manual planning publication | **UNRESOLVED** | Final warehouse destination and versioning model for approved budgets and forecasts require a decision |
+
+The application currently uses fixtures, local React state, and simulated mutative actions for several workflows. These are UI scaffolding, not durable persistence contracts.
+
+## Core ownership rule
+
+```text
+User-created workflow state
+  → application database
+
+Source-system and published analytical history
+  → BigQuery and Dataform
+```
+
+A record belongs in the application database when its lifecycle is driven primarily by users working in Metrics: drafting, editing, assigning, discussing, reviewing, approving, publishing, or configuring.
+
+A record belongs in BigQuery when it is a durable analytical observation, governed dimension, mapping, fact, snapshot, published plan, reporting output, or warehouse audit record managed through an approved data pipeline.
+
+## Ownership matrix
+
+| Data class | Intended owner | Current status | Publication behavior |
+|---|---|---|---|
+| Users and identities | Application database or approved identity provider | **PLANNED** | Not published as warehouse facts by default |
+| Roles and permissions | Application database | **PLANNED** | May be exported for audit reporting through a governed pipeline |
+| Organizations and main entities | Application database | **PLANNED** | Selected stable identifiers may be synchronized to warehouse dimensions |
+| Workspaces | Application database | **PLANNED** | Workspace configuration is not a warehouse fact |
+| Engagements | Application database | **PLANNED** | Approved engagement attributes may support reporting after publication |
+| User preferences | Application database | **PLANNED** | No warehouse publication unless explicitly required for product analytics |
+| Notes, comments, and threads | Application database | **PLANNED** | Analytical aggregates may be published; message bodies remain application records |
+| Tasks and initiatives | Application database | **PLANNED** | Status history may feed analytical reporting through controlled exports |
+| Campaign definitions | Application database | **PLANNED** | Published campaign metadata may become analytical dimensions |
+| Campaign performance | BigQuery | **PLANNED** | Source observations and governed performance facts belong in the warehouse |
+| Budget and forecast drafts | Application database | **PLANNED** | Remain private workflow state until approved and published |
+| Approved budget and forecast versions | **UNRESOLVED** publication model | **UNRESOLVED** | Must become immutable or versioned analytical records through a controlled service |
+| Draft mapping edits | Application database | **PLANNED** | Must not change canonical warehouse mappings before approval |
+| Published mappings | BigQuery/Dataform-managed warehouse layer | **IMPLEMENTED** for current mapping tables | Publication requires validation, collision checks, lineage, and audit history |
+| Source-system observations | BigQuery | **IMPLEMENTED** for current pace staging structures | Loaded through ingestion, not application component writes |
+| Pace, actual, and pickup facts | BigQuery | Mixed: pace compatibility implemented; actual and pickup planned | Produced through warehouse pipelines |
+| Metric definitions and versions | Planned semantic package plus application persistence | **UNRESOLVED** | Published definitions must be versioned and consumed by analytical layers |
+| Dashboard layout and card configuration | Application database | **PLANNED** | References governed metric codes; does not own formulas |
+| Published reports and marts | BigQuery/Dataform | **PLANNED** except current views | Read by application services and BI consumers |
+
+## Draft, approved, and published states
+
+Draft and published data must remain distinct.
+
+```text
+DRAFT
+  → IN REVIEW
+    → APPROVED
+      → PUBLISHED
+```
+
+A draft may be incomplete, contain temporary values, and change repeatedly. It belongs in the application database and should retain user, workspace, version, and edit history.
+
+Approval records the business decision that a specific version is accepted. Approval does not by itself prove that the warehouse publication succeeded.
+
+Publication creates or updates the governed analytical representation. It must record the approved source version, publication time, publisher, validation result, and warehouse target.
+
+A later edit must create a new draft or version. It must not silently mutate an already-published historical plan.
+
+## Planning data
+
+### Draft planning state
+
+Budget and forecast entry workflows should store at least:
+
+- workspace and property scope;
+- planning type, such as budget or forecast;
+- planning period and grain;
+- input method, such as rooms plus ADR or rooms plus revenue;
+- user-entered values;
+- calculated preview values;
+- draft version;
+- author and last editor;
+- review and approval state;
+- created and updated timestamps.
+
+Calculated preview values may be stored for usability, but published metric values must be recalculated or validated against governed definitions before publication.
+
+### Published planning state
+
+A published budget or forecast should be treated as an analytical scenario, not as mutable UI state. It should have:
+
+- a durable plan and version identifier;
+- property and organizational scope;
+- scenario type;
+- effective period;
+- publication timestamp;
+- approved-by and published-by records;
+- metric and dimension references;
+- source draft version;
+- replacement or supersession relationship;
+- reconciliation status.
+
+### Unresolved publication decision
+
+A decision is still required on whether approved planning data is published as:
+
+- grain-specific warehouse fact tables;
+- a long/narrow manual-plan fact using metric codes;
+- report-ready tables generated from application records;
+- or a governed combination of these patterns.
+
+The older `fact_manual_plan` concept is documentation-only. Current Dataform does not implement it.
+
+## Mapping write-back
+
+Draft mapping edits belong in the application database because they require review, conflict detection, approval, and audit history.
+
+A mapping draft should include:
+
+- mapping-table domain;
+- property and source-application scope;
+- source code and descriptive values;
+- proposed canonical targets;
+- reason and supporting note;
+- author and timestamps;
+- validation and collision results;
+- reviewer and approval state;
+- published warehouse version or batch identifier after publication.
+
+The application must not update canonical BigQuery mapping tables directly from a browser request.
+
+Recommended flow:
+
+```text
+Browser form
+  → authenticated application service
+  → application database draft
+  → validation and review
+  → approval
+  → controlled publication job
+  → BigQuery mapping table or approved staging input
+  → Dataform assertions and dependent rebuilds
+  → publication result written back to the application database
+```
+
+The exact publication mechanism remains **UNRESOLVED**. Options include a controlled warehouse merge service, a versioned source file generated by the application, or an approved staging table consumed by Dataform.
+
+## Browser and server boundary
+
+### Browser responsibilities
+
+The browser may:
+
+- edit local form state;
+- submit authenticated application commands;
+- display validation results;
+- preview approved calculations;
+- show draft, approval, and publication status.
+
+The browser must not:
+
+- hold warehouse service-account credentials;
+- execute unrestricted BigQuery writes;
+- publish mappings, plans, or metric definitions directly;
+- bypass approvals;
+- treat successful UI state changes as proof of warehouse publication.
+
+### Application service responsibilities
+
+The server or application service should own:
+
+- authentication and authorization;
+- application-database transactions;
+- optimistic concurrency and version checks;
+- validation orchestration;
+- approval commands;
+- publication job creation;
+- idempotency and retry behavior;
+- audit event creation;
+- status reconciliation with warehouse jobs.
+
+### Warehouse responsibilities
+
+BigQuery and Dataform should own:
+
+- published analytical storage;
+- transformation and standardization;
+- uniqueness, referential, mapping, and freshness assertions;
+- lineage and publication metadata;
+- report, mart, and analytical output generation.
+
+## Audit history
+
+Application workflow audit and warehouse processing audit are related but separate.
+
+Application audit should record:
+
+- actor;
+- workspace and record;
+- command or state transition;
+- previous and new version;
+- approval decision;
+- timestamp;
+- optional reason or note.
+
+Warehouse audit should record:
+
+- publication or load identifier;
+- source application record and version;
+- target object;
+- inserted, updated, rejected, and unmapped counts;
+- assertion outcomes;
+- run timestamps;
+- status and errors.
+
+The application should link to the warehouse publication identifier rather than duplicate the full warehouse execution log.
+
+## Failure and reconciliation behavior
+
+Approval and publication are separate states. A record may be approved but not yet published, or publication may fail after approval.
+
+Recommended publication states:
+
+```text
+NOT_REQUESTED
+QUEUED
+RUNNING
+SUCCEEDED
+FAILED
+SUPERSEDED
+```
+
+The exact state names and persistence schema remain **UNRESOLVED**.
+
+Publication commands must be idempotent. Retrying the same approved version must not create duplicate analytical records.
+
+## Current repository assumptions
+
+The application currently assumes fixture-backed workspace context and simulated local mutations in documented routes. No canonical application database package, migration directory, or production persistence schema was confirmed during this review.
+
+The repository currently contains BigQuery and DuckDB utilities under `packages/ui`, but that placement is compatibility implementation and does not authorize direct client-side warehouse writes.
+
+Dataform currently implements warehouse lookup, mapping, dimension, staging, snapshot, and view objects. It does not implement application workflow tables or the planned manual planning publication model.
+
+## Required implementation sequence
+
+1. Approve the application persistence technology and package boundary.
+2. Define tenancy, identity, role, and permission schemas.
+3. Implement durable drafts, versions, approvals, and application audit events.
+4. Define the canonical manual planning publication shape.
+5. Define the mapping publication contract and conflict rules.
+6. Implement authenticated server commands and idempotent publication jobs.
+7. Add warehouse staging or merge contracts and Dataform assertions.
+8. Persist publication results and reconcile failures back to application records.
+9. Connect UI workflows to the services without exposing warehouse credentials.
+10. Add end-to-end tests for concurrency, approval, publication, retry, and historical immutability.
+
+## Unresolved decisions
+
+- application database technology and repository package boundary;
+- tenancy and row-level authorization model;
+- approved planning fact shape and dataset;
+- budget and forecast replacement/version rules;
+- mapping publication transport and merge ownership;
+- approval roles and separation-of-duties rules;
+- publication state vocabulary;
+- application-to-warehouse identifier strategy;
+- retention policy for drafts, comments, and audit events;
+- which application events should be exported for analytical reporting;
+- whether metric definitions are code-owned, database-owned, or hybrid after publication.
+
+## Related documentation
+
+- [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
+- [Fact Tables](/docs/architecture/data/fact-tables)
+- [Mapping Tables](/docs/architecture/data/mapping-tables)
+- [Metric Definitions and Semantic Governance](/docs/architecture/data/metric-definitions)
+- [Lineage and Freshness](/docs/architecture/data/lineage-and-freshness)
+- [Validation and Dataform Assertions](/docs/architecture/data/validation-and-assertions)
