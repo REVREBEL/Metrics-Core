@@ -2,7 +2,6 @@
 title: DuckDB Serving Layer
 nav_order: 13
 has_toc: true
-permalink: /duckdb-serving-layer/
 ---
 
 # DuckDB Serving Layer
@@ -80,7 +79,7 @@ The runtime may ultimately be browser-side, server-side, or hybrid. That deploym
 Browser-side DuckDB is appropriate only when:
 
 - the dataset is approved for client delivery;
-- no secrets are exposed;
+- no secrets, credentials, or restricted source paths are exposed to the client;
 - file size and memory use are acceptable;
 - query behavior is constrained;
 - results are validated before presentation;
@@ -93,7 +92,7 @@ Server-side DuckDB may be appropriate for:
 - controlled access to larger analytical extracts;
 - authenticated multi-source queries;
 - centralized caching;
-- protecting source paths and credentials;
+- protecting credentials, source paths, and restricted datasets;
 - keeping runtime and formula implementation out of presentation packages.
 
 ## Scheduled responsibilities
@@ -137,6 +136,6 @@ Moving the current browser hook is implementation work, not part of this documen
 
 ## Related documentation
 
-- [Data Platform Architecture and Ownership](/data-platform-architecture/)
-- [BigQuery and Dataform](/bigquery-and-dataform/)
-- [Data Architecture](/data-architecture/)
+- [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
+- [BigQuery and Dataform](/docs/architecture/data/bigquery-and-dataform)
+- [Data Architecture](/docs/architecture/data)
