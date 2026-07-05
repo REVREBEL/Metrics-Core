@@ -34,5 +34,13 @@ This interim register prevents unresolved data-model questions from being presen
 | Comparison and variance taxonomy | **UNRESOLVED** | Compatibility code calculates differences and attainment, but metric names do not yet distinguish amount, rate, percentage, percentage points, and index consistently |
 | ALOS denominator and reservation treatment | **UNRESOLVED** | No governed reservation-count or stay-count denominator exists in current Dataform outputs |
 | Metric mart storage shape | **UNRESOLVED** | Decision required on metric-code rows, named columns, or a governed combination in serving marts |
+| Ingestion orchestration and scheduling | **UNRESOLVED** | Dataform creates warehouse structures but no canonical file watcher, API extraction service, or scheduler is implemented |
+| Durable source-report and file-load identity | **PLANNED** | Staging stores descriptive report and file fields; no implemented load key connects rows to a control registry |
+| Source-report metadata population | **UNRESOLVED** | `dim_source_report` exists but current Dataform does not populate it or join staging rows through `source_report_id` |
+| Freshness service levels | **UNRESOLVED** | No approved cadence, grace period, warning threshold, or blocking threshold matrix |
+| Operational refresh-history model | **PLANNED** | No current table records run status, row counts, source observation range, assertion outcomes, or retries |
+| Pace source coexistence in unique grain | **UNRESOLVED** | Candidate pace keys may require source application, report, or load identity when multiple sources coexist |
+| Assertion severity and publication gate | **UNRESOLVED** | Current Dataform definitions contain no native assertions or consolidated blocking workflow |
+| Mapping coverage thresholds | **UNRESOLVED** | No approved warning or failure threshold for unmapped source values |
 
 Confirmed decisions should be removed from this register and moved into the canonical subject documentation when Linear approves them or implementation establishes them.
