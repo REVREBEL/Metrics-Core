@@ -22,5 +22,10 @@ This interim register prevents unresolved data-model questions from being presen
 | Pace table prefix migration | **UNRESOLVED** | Current measurable pace tables use `snap_`; naming standards prefer grain-specific `fact_` for new work |
 | Canonical actual fact families | **PLANNED** | No current Dataform tables with the `fact_` prefix and no implemented actual fact family |
 | Snapshot-table partitioning and clustering | **UNRESOLVED** | Staging tables declare layouts; `snap_pace_*` creation statements do not |
+| Pickup dataset name | **UNRESOLVED** | `metrics_pickup` is a documentation target only; no dataset exists in current Dataform |
+| Pickup source grain | **UNRESOLVED** | Final use of `source_code`, `subsource_code`, `channel_code`, or a durable source key is not approved |
+| Pickup numeric value type | **UNRESOLVED** | Long/narrow `metric_value` is approved conceptually; physical numeric type is not implemented |
+| Non-day pickup comparisons | **UNRESOLVED** | Fixed rolling windows use planned `window_days INT64`; prior-year and cycle comparisons need a separate type decision |
+| Room-class pickup family | **UNRESOLVED** | Current pace contains room-class snapshots, but the approved pickup family currently names property, segment, source, and room type |
 
 Confirmed decisions should be removed from this register and moved into the canonical subject documentation when Linear approves them or implementation establishes them.
