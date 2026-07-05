@@ -64,6 +64,8 @@ Server-side application code may query BigQuery through controlled data clients 
 
 The current repository includes `packages/ui/src/lib/bigquery/biq-query_client.ts`, which creates the BigQuery client. This is current implementation evidence, but the file is located in the wrong architectural package.
 
+BigQuery credentials must be provisioned through centrally managed configuration or environment injection. Application code must treat those credentials as an injected dependency rather than constructing or embedding them ad hoc. Secure storage, rotation, and baseline configuration belong to the data-platform and infrastructure owners; consuming services are responsible for using the provided client only through approved query contracts.
+
 The intended ownership boundary is:
 
 ```text
