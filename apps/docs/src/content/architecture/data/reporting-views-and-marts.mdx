@@ -1,0 +1,334 @@
+---
+title: Reporting Views, Report Tables, and Marts
+nav_order: 9
+has_toc: true
+---
+
+# Reporting Views, Report Tables, and Marts
+
+This page is the canonical catalog for reporting-oriented warehouse objects and GA4 analytical outputs.
+
+Implementation claims are verified against the current maintained Dataform source in `REVREBEL/Metrics-Dataform`. Documentation under `apps/docs/src/content/google-analytics` describes intended and source-specific behavior, but it does not prove that a warehouse object exists.
+
+## Object responsibilities
+
+### `vw_` views
+
+Use a `vw_` object when the consumer needs a current, read-oriented projection over governed warehouse tables.
+
+A reporting view may:
+
+- enrich codes with names and hierarchy fields;
+- expose a stable consumer contract over mappings and lookups;
+- calculate derived measures from governed base values;
+- hide repetitive joins;
+- preserve the grain of its base object.
+
+A view does not own durable history, refresh state, or an independent reporting grain.
+
+### `rpt_` report tables
+
+Use an `rpt_` table for a stable, materialized output designed for a defined report or recurring analytical use case.
+
+A report table should have:
+
+- an explicit reporting grain;
+- a documented refresh process;
+- lineage to source facts or processed source tables;
+- controlled metric definitions;
+- a known downstream consumer or reporting contract.
+
+No current `rpt_` object is created by the reviewed Dataform definitions.
+
+### `mart_` analytical marts
+
+Use a `mart_` object for a curated, reusable analytical dataset that combines multiple governed models for repeated consumption.
+
+A mart should be broader than one report while remaining narrower and more stable than unrestricted source data.
+
+No current `mart_` object is created by the reviewed Dataform definitions.
+
+## Implemented reporting views
+
+| Object | Status | Grain | Dependencies | Intended consumer |
+|---|---|---|---|---|
+| `metrics_core.vw_source_application` | **IMPLEMENTED** | One row per source application | `lkp_source_application`, `lkp_source_system_type` | Source lineage, administration, UI picklists, reporting joins |
+| `metrics_core.vw_segment` | **IMPLEMENTED** | Same grain as the current `dim_segment` row | `dim_segment`, `lkp_segment`, `lkp_segment_group`, `lkp_finance_segment` | Segment reporting and enriched joins |
+| `metrics_core.vw_source` | **IMPLEMENTED** | One row per property, source application, and mapped source value | `map_source`, source/subsource/channel lookups | Source and channel reporting |
+| `metrics_core.vw_rate` | **IMPLEMENTED** | One row per property, source application, and mapped rate code | `map_rate` plus rate, company, segment, channel, source, subsource, and consortia lookups | Rate-plan and commercial reporting |
+| `metrics_pace.vw_pace_property` | **IMPLEMENTED** | Same grain as `snap_pace_property` | `snap_pace_property` | Property-level pace analysis |
+| `metrics_pace.vw_pace_segment` | **IMPLEMENTED** | Same grain as `snap_pace_segment` | `snap_pace_segment` | Segment-level pace analysis |
+| `metrics_pace.vw_pace_roomclass` | **IMPLEMENTED** | Same grain as `snap_pace_roomclass` | `snap_pace_roomclass` | Room-class pace analysis |
+| `metrics_pace.vw_pace_roomtype` | **IMPLEMENTED** | Same grain as `snap_pace_roomtype` | `snap_pace_roomtype` | Room-type pace analysis |
+
+## View details
+
+### `metrics_core.vw_source_application`
+
+Enriches each application with its broad source-system classification.
+
+Key outputs include:
+
+```text
+source_application_code
+source_application
+source_application_short_name
+vendor
+source_system_type_code
+source_system_type
+is_active
+```
+
+The view does not change the lookup grain.
+
+### `metrics_core.vw_segment`
+
+Enriches `dim_segment` with commercial segment, segment-group, and finance-segment names, descriptions, and sort fields.
+
+The current `dim_segment` physical shape remains unresolved because two Dataform definitions can create different schemas. The view is implemented, but its deployed behavior depends on the deployed dimension schema.
+
+### `metrics_core.vw_source`
+
+Enriches `map_source` with:
+
+```text
+source
+subsource
+channel
+channel_group
+```
+
+It preserves source-application and property mapping context. It is not a standalone source dimension.
+
+### `metrics_core.vw_rate`
+
+Enriches `map_rate` with rate type, company, segment, channel, source, subsource, consortia, focus, and category descriptions.
+
+It is a consumer-facing mapping view, not a materialized rate mart.
+
+### Pace views
+
+The four pace views expose all columns from their corresponding compatibility snapshot table and add derived metrics.
+
+| View | Derived fields |
+|---|---|
+| `vw_pace_property` | `adr_otb_calc`, `occ_otb_calc`, `revpar_otb_calc` |
+| `vw_pace_segment` | `adr_otb_calc` |
+| `vw_pace_roomclass` | `adr_otb_calc`, `occ_otb_calc`, `revpar_otb_calc` |
+| `vw_pace_roomtype` | `adr_otb_calc`, `occ_otb_calc`, `revpar_otb_calc` |
+
+The calculations use `SAFE_DIVIDE` and `NULLIF(..., 0)` so zero denominators return null instead of raising an error.
+
+Segment pace does not calculate occupancy or RevPAR because segment-level availability is not established as a reliable additive denominator.
+
+## Freshness and lineage
+
+Current views are logical projections. Their freshness is inherited from their base tables.
+
+```text
+lookup or mapping refresh
+→ metrics_core view reflects the new rows immediately
+
+pace snapshot refresh
+→ metrics_pace view reflects the new snapshot rows immediately
+```
+
+The reviewed view DDL does not publish a separate freshness timestamp or refresh-status record.
+
+Known lineage:
+
+```text
+lkp_source_application + lkp_source_system_type
+→ vw_source_application
+
+dim_segment + segment lookups
+→ vw_segment
+
+map_source + source/channel lookups
+→ vw_source
+
+map_rate + commercial lookups
+→ vw_rate
+
+snap_pace_*
+→ vw_pace_*
+```
+
+REV-70 owns the canonical lineage, freshness, and assertion inventory.
+
+## Compatibility and deprecation status
+
+| Object or pattern | Status | Treatment |
+|---|---|---|
+| `snap_pace_*` base tables | **COMPATIBILITY** | Physically implemented under the older `snap_` contract; pace views remain valid consumers until migration is approved |
+| `vw_pace_*` views | **IMPLEMENTED** | Current reporting contract over the compatibility snapshot tables |
+| Planned `fact_pace_*` names in older architecture docs | **PLANNED** | Do not present as current objects |
+| `dim_source` in older architecture docs | **UNRESOLVED** | Current implementation uses lookups, mappings, and `vw_source` instead |
+| `rpt_*` examples in GA4 docs | **PLANNED** | No current Dataform DDL |
+| `mart_*` daily examples in older architecture docs | **PLANNED** | No current Dataform DDL |
+
+No reviewed reporting view is currently marked **DEPRECATED**.
+
+# GA4 analytical outputs
+
+## Current implementation status
+
+Current Dataform does not create GA4 source, staging, processed, reporting, or mart objects.
+
+The GA4 pages under `apps/docs/src/content/google-analytics` describe source schemas, target layers, and recommended outputs. Those pages are maintained source and design documentation, not independent confirmation of implementation.
+
+Therefore:
+
+- GA4 analytical outputs are **PLANNED** unless current Dataform later creates them;
+- references such as `p_ga4_*`, `rpt_ga4_*`, `metrics_ga4`, and `metrics_ga4_events` must not be described as live warehouse objects from the current repository evidence;
+- freshness claims about daily transfer jobs require implementation and operational verification.
+
+## Scope semantics
+
+### Session-scoped acquisition
+
+Session-scoped fields describe how a particular session was acquired.
+
+Typical source dimensions include:
+
+```text
+session_source
+session_medium
+session_source_medium
+session_campaign_name
+session_default_channel_group
+```
+
+These fields answer questions such as:
+
+- Which channel initiated this session?
+- Which campaign drove sessions and engaged sessions during the reporting period?
+- Which session source received revenue or key-event credit under the session-scoped report?
+
+### First-user-scoped acquisition
+
+First-user fields describe the original acquisition source associated with a user.
+
+Current documentation examples include:
+
+```text
+firstUserSource
+firstUserMedium
+firstUserSourceMedium
+firstUserCampaignName
+firstUserDefaultChannelGroup
+```
+
+These fields answer questions such as:
+
+- Which channel originally acquired the user?
+- How much subsequent engagement or revenue is associated with users first acquired by that channel?
+
+Session and first-user dimensions are not interchangeable. A returning user may have one first-user source and many different session sources.
+
+## Planned GA4 report outputs
+
+The existing GA4 reporting design recommends:
+
+| Object | Status | Planned grain and purpose |
+|---|---|---|
+| `rpt_ga4_acquisition_daily` | **PLANNED** | Property, event date, scope type, and acquisition dimensions; compares session and first-user performance |
+| `rpt_ga4_content_daily` | **PLANNED** | Property, event date, and content/landing-page dimensions |
+| `rpt_ga4_commerce_daily` | **PLANNED** | Property, event date, and product, room, package, or promotion dimensions |
+| `rpt_ga4_audience_daily` | **PLANNED** | Property, event date, and GA4 audience |
+| `rpt_ga4_demographic_daily` | **PLANNED** | Property, event date, and demographic/geographic dimensions |
+| `rpt_ga4_technology_daily` | **PLANNED** | Property, event date, device, browser, operating system, and platform dimensions |
+
+These names come from current documentation, not Dataform DDL.
+
+## Planned acquisition contract
+
+The documented `rpt_ga4_acquisition_daily` design uses:
+
+```text
+property_code
+event_date
+scope_type
+source
+medium
+source_medium
+campaign_name
+default_channel_group
+sessions
+engaged_sessions
+engagement_rate
+active_users
+new_users
+key_events
+total_revenue
+```
+
+`scope_type` must distinguish:
+
+```text
+session
+first_user
+```
+
+Metrics that do not exist at a particular scope should remain null or be excluded by a documented transformation rule. They must not be silently copied from the other scope.
+
+## Content and commerce boundaries
+
+Content outputs should preserve the distinction between:
+
+- landing-page or entry-page performance;
+- page and screen engagement;
+- placement and interaction events;
+- source event data and report-transformed data.
+
+Commerce outputs should preserve the distinction between:
+
+- item or merchandise interaction;
+- promotion interaction;
+- purchase and revenue reporting;
+- hotel-specific room, package, and booking-engine attributes.
+
+A generic commerce mart should not collapse these grains without a documented aggregation contract.
+
+## GA4 freshness and reconciliation
+
+Because no current Dataform implementation exists, the following remain **UNRESOLVED** or **PLANNED**:
+
+- source dataset and transfer configuration;
+- intraday versus daily-finalized data treatment;
+- property identity mapping;
+- source and campaign normalization;
+- key-event governance;
+- currency and revenue treatment;
+- late-arriving event handling;
+- reconciliation between raw event export and transformed report tables;
+- freshness and load-status publication.
+
+GA4 reporting should not be declared BI-ready until these controls are implemented and verified.
+
+## When to use each object
+
+| Need | Preferred object |
+|---|---|
+| Current enrichment over governed tables | `vw_` |
+| Stable materialized output for one recurring report | `rpt_` |
+| Reusable cross-model analytical dataset | `mart_` |
+| Raw or processed GA4 source fidelity | Source/staging or processed GA4 layer, not a report mart |
+| Dashboard-ready GA4 acquisition summary | Planned `rpt_ga4_acquisition_daily` after implementation |
+| Cross-domain hotel commercial analysis | Planned mart after facts and semantic definitions are implemented |
+
+## Dataform references reviewed
+
+```text
+REVREBEL/Metrics-Dataform/definitions/01_create_source_application_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/05_create_segment_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/06_create_source_channel_rate_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/30_create_vw_pace_views.sqlx
+```
+
+## Related documentation
+
+- [Fact Tables](/docs/architecture/data/fact-tables)
+- [Pickup Tables](/docs/architecture/data/pickup-tables)
+- [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)
+- [Google Analytics](/docs/google-analytics)
