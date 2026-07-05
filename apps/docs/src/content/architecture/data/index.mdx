@@ -14,6 +14,9 @@ It defines where each data topic belongs, which existing page remains authoritat
 
 - [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
 - [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)
+- [Lookup Tables](/docs/architecture/data/lookup-tables)
+- [Mapping Tables](/docs/architecture/data/mapping-tables)
+- [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)
 - [BigQuery and Dataform](/docs/architecture/data/bigquery-and-dataform)
 - [DuckDB Serving Layer](/docs/architecture/data/duckdb-serving-layer)
 
@@ -39,21 +42,19 @@ UNRESOLVED
 
 ## Canonical topic map
 
-The destination paths below are the approved homes for the data documentation workstream. A path marked **planned** is reserved for its named follow-up issue and must not be treated as complete architecture until that issue is merged.
-
 | Topic | Canonical destination | Current disposition | Follow-up |
 |---|---|---|---|
 | Data architecture overview and ownership | `architecture/data/platform-architecture-and-ownership.mdx` | **Current canonical documentation** | REV-63 |
 | Naming and modeling conventions | `architecture/data/naming-and-modeling-conventions.mdx` | **Current canonical documentation** | REV-64 |
 | Source systems and ingestion | `architecture/data/source-systems-and-ingestion.mdx` | **Planned**; retain `architecture/source-file-ingestion-model.mdx` until consolidated | REV-70 |
-| Lookup tables | `architecture/data/lookup-tables.mdx` | **Planned destination**; retain `architecture/lookup-tables.mdx` as the current implementation reference | REV-65 |
-| Mapping tables | `architecture/data/mapping-tables.mdx` | **Planned destination**; retain `architecture/mapping-tables.mdx` as the current implementation reference | REV-65 |
+| Lookup tables | `architecture/data/lookup-tables.mdx` | **Current canonical documentation** | REV-65 |
+| Mapping tables | `architecture/data/mapping-tables.mdx` | **Current canonical documentation** | REV-65 |
 | Dimensions | `architecture/data/dimensions.mdx` | **Planned** | REV-66 |
 | Fact tables | `architecture/data/fact-tables.mdx` | **Planned** | REV-66 |
 | Pickup model and tables | `architecture/data/pickup-tables.mdx` | **Planned** | REV-67 |
 | Reporting views, report tables, and marts | `architecture/data/reporting-views-and-marts.mdx` | **Planned** | REV-68 |
 | Metric definitions and semantic governance | `architecture/data/metric-definitions.mdx` | **Planned** | REV-69 |
-| Table dependencies | `architecture/data/table-dependencies.mdx` | **Planned destination**; retain `architecture/table-dependencies.mdx` until consolidated | REV-65 and REV-70 |
+| Table dependencies | `architecture/data/table-dependencies.mdx` | **Current canonical documentation** | REV-65; assertion details continue in REV-70 |
 | Lineage and freshness | `architecture/data/lineage-and-freshness.mdx` | **Planned** | REV-70 |
 | Validation and Dataform assertions | `architecture/data/validation-and-assertions.mdx` | **Planned** | REV-70 |
 | BigQuery and Dataform responsibilities | `architecture/data/bigquery-and-dataform.mdx` | **Current canonical documentation** | REV-63 |
@@ -63,17 +64,15 @@ The destination paths below are the approved homes for the data documentation wo
 
 ## Existing-page disposition
 
-No existing subject page is moved or deleted in REV-62. The following disposition prevents duplicate canonical ownership while later issues revise the content.
-
 ### Retain for historical and implementation reference
 
 The following documents remain useful for historical or implementation context. They are not authoritative when a canonical page listed above supersedes their policy or terminology.
 
-- `architecture/column-naming-standards.mdx` — historical reference for legacy column naming policy; superseded by the canonical naming and modeling conventions
-- `architecture/prefix_standards.mdx` — historical reference for legacy prefix policy; superseded by the canonical naming and modeling conventions
-- `architecture/mapping-tables.mdx`
-- `architecture/lookup-tables.mdx`
-- `architecture/table-dependencies.mdx`
+- `architecture/column-naming-standards.mdx`
+- `architecture/prefix_standards.mdx`
+- `architecture/mapping-tables.mdx` — legacy pointer to the canonical mapping catalog
+- `architecture/lookup-tables.mdx` — legacy pointer to the canonical lookup catalog
+- `architecture/table-dependencies.mdx` — legacy pointer to the canonical dependency catalog
 - `architecture/source-file-ingestion-model.mdx`
 - `core/segment-model.mdx`
 - `core/source-channel-rate-model.mdx`
@@ -97,8 +96,6 @@ Historical pages should receive explicit banners when they are next edited. They
 
 ## Navigation order
 
-The data section follows the system from ownership and standards through warehouse layers and delivery:
-
 1. Overview and ownership
 2. Naming and modeling conventions
 3. Source systems and ingestion
@@ -117,13 +114,7 @@ The data section follows the system from ownership and standards through warehou
 
 ## Domain documentation boundary
 
-Domain pages explain source-specific or business-specific behavior. They do not own shared warehouse definitions.
-
-Examples:
-
-- RMS pages may explain IDeaS pace behavior, but the shared pace fact grain belongs in the fact-table documentation.
-- GA4 pages may explain session and acquisition semantics, but the shared report and mart conventions belong in the reporting documentation.
-- Segment, source, channel, rate, and room-type pages may explain business taxonomy, while physical schemas belong in the lookup, mapping, and dimension catalogs.
+Domain pages explain source-specific and business-specific behavior. Shared physical schemas belong in the lookup, mapping, dimension, fact, pickup, and reporting catalogs.
 
 ## Internal audit
 

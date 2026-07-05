@@ -1,0 +1,22 @@
+---
+title: Data Architecture Decision Register
+nav_order: 15
+has_toc: true
+---
+
+# Data Architecture Decision Register
+
+This interim register prevents unresolved mapping and lookup questions from being presented as implemented architecture. REV-72 owns the full decision-register workstream.
+
+| Decision | Current status | Current implementation |
+|---|---|---|
+| Separate `map_channel` table | **UNRESOLVED** | Channel mapping currently uses `map_source.channel_code` |
+| Agency source-value mapping | **UNRESOLVED** | `lkp_agency` exists; `map_agency` does not |
+| Canonical market taxonomy | **UNRESOLVED** | `map_market` does not exist |
+| Room taxonomy normalization | **UNRESOLVED** | Room attributes remain embedded in `map_roomtype`; no `lkp_roomtype` exists |
+| `map_source_metric` responsibility | **UNRESOLVED** | No current Dataform DDL |
+| Property/source identifier mapping | **PLANNED** | `map_hotel` is a registry concept; no current Dataform DDL |
+| Global versus property-specific mappings | **UNRESOLVED** | Current implemented mappings are property-scoped |
+| Draft mapping publication workflow | **UNRESOLVED** | Application-database and publication boundary still requires approval |
+
+Confirmed decisions should be removed from this register and moved into the canonical subject documentation when Linear approves them or implementation establishes them.
