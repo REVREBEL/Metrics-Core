@@ -16,6 +16,8 @@ It defines where each data topic belongs, which existing page remains authoritat
 - [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)
 - [Lookup Tables](/docs/architecture/data/lookup-tables)
 - [Mapping Tables](/docs/architecture/data/mapping-tables)
+- [Dimensions](/docs/architecture/data/dimensions)
+- [Fact Tables](/docs/architecture/data/fact-tables)
 - [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)
 - [BigQuery and Dataform](/docs/architecture/data/bigquery-and-dataform)
 - [DuckDB Serving Layer](/docs/architecture/data/duckdb-serving-layer)
@@ -49,8 +51,8 @@ UNRESOLVED
 | Source systems and ingestion | `architecture/data/source-systems-and-ingestion.mdx` | **Planned**; retain `architecture/source-file-ingestion-model.mdx` until consolidated | REV-70 |
 | Lookup tables | `architecture/data/lookup-tables.mdx` | **Current canonical documentation** | REV-65 |
 | Mapping tables | `architecture/data/mapping-tables.mdx` | **Current canonical documentation** | REV-65 |
-| Dimensions | `architecture/data/dimensions.mdx` | **Planned** | REV-66 |
-| Fact tables | `architecture/data/fact-tables.mdx` | **Planned** | REV-66 |
+| Dimensions | `architecture/data/dimensions.mdx` | **Current canonical documentation** | REV-66 |
+| Fact tables | `architecture/data/fact-tables.mdx` | **Current canonical documentation** | REV-66 |
 | Pickup model and tables | `architecture/data/pickup-tables.mdx` | **Planned** | REV-67 |
 | Reporting views, report tables, and marts | `architecture/data/reporting-views-and-marts.mdx` | **Planned** | REV-68 |
 | Metric definitions and semantic governance | `architecture/data/metric-definitions.mdx` | **Planned** | REV-69 |
@@ -60,7 +62,7 @@ UNRESOLVED
 | BigQuery and Dataform responsibilities | `architecture/data/bigquery-and-dataform.mdx` | **Current canonical documentation** | REV-63 |
 | DuckDB serving responsibilities | `architecture/data/duckdb-serving-layer.mdx` | **Current canonical documentation** | REV-63 |
 | Application database ownership and write-back | `architecture/data/application-data-ownership.mdx` | **Planned** | REV-71 |
-| Unresolved architecture decisions | `architecture/data/decision-register.mdx` | **Planned** | REV-72 |
+| Unresolved architecture decisions | `architecture/data/decision-register.mdx` | **Interim register; full reconciliation planned** | REV-72 |
 
 ## Existing-page disposition
 
@@ -85,7 +87,7 @@ These pages must not be treated as independent confirmation when they repeat pri
 
 - `architecture/table-architecture.mdx`
 
-This page currently mixes confirmed design decisions with physical-object claims. It will become a concise conceptual overview or be split across the dimension, fact, pickup, and reporting catalogs. Until then, table names shown there require Dataform verification before being described as implemented.
+This page currently mixes confirmed design decisions with physical-object claims. The canonical dimension and fact catalogs now own those physical definitions. The older page should be retained only as conceptual or historical source material until it is rewritten.
 
 ### Keep as historical documentation
 

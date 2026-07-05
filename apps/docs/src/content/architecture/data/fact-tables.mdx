@@ -1,0 +1,269 @@
+---
+title: Fact Tables
+nav_order: 7
+has_toc: true
+---
+
+# Fact Tables
+
+This page documents the current measurable warehouse tables and the approved grain rules for future fact families.
+
+The current maintained implementation source is `REVREBEL/Metrics-Dataform`.
+
+## Current implementation summary
+
+Current Dataform does not create tables with the `fact_` prefix.
+
+It does create four pace snapshot tables under `metrics_pace`:
+
+| Table | Status | One row per |
+|---|---|---|
+| `metrics_pace.snap_pace_property` | **COMPATIBILITY** | Property, snapshot date, and stay date |
+| `metrics_pace.snap_pace_segment` | **COMPATIBILITY** | Property, snapshot date, stay date, and segment |
+| `metrics_pace.snap_pace_roomclass` | **COMPATIBILITY** | Property, snapshot date, stay date, and room class |
+| `metrics_pace.snap_pace_roomtype` | **COMPATIBILITY** | Property, snapshot date, stay date, and room type |
+
+These are measurable snapshot tables and therefore behave as fact tables, but their `snap_` prefix is a compatibility convention. New measurable models should use grain-specific `fact_` names unless a separate architecture decision approves otherwise.
+
+## Actual versus pace
+
+### Actual
+
+An actual fact records a finalized or currently recognized business result for the hotel service date.
+
+Typical grain elements include:
+
+```text
+property_code
+stay_date
+business dimension keys
+```
+
+Current Dataform does not create a canonical actual fact family. Proposed property, segment, source, room-type, rate, finance, or demand actual tables are therefore **PLANNED** or **UNRESOLVED**, not implemented.
+
+### Pace
+
+A pace fact records what was known on a snapshot date for a future or historical stay date.
+
+Its grain must include both:
+
+```text
+snap_date
+stay_date
+```
+
+Removing either date changes the meaning of the row. A pace row is not an actual row with an extra flag.
+
+## Implemented pace snapshot schemas
+
+All four snapshot tables are created from their corresponding staging table with an empty `CREATE TABLE AS SELECT`, then ensured to contain:
+
+```text
+available_rms INT64
+rms_otb INT64
+rev_otb NUMERIC
+```
+
+The inherited staging columns supply the grain, dimensional context, source lineage, and audit metadata.
+
+### `metrics_pace.snap_pace_property`
+
+**Explicit grain:** one row per `property_code`, `snap_date`, and `stay_date`, per source record version loaded into the table.
+
+Expected inherited columns:
+
+```text
+property_code
+property_name
+snap_date
+stay_date
+available_rms
+rms_otb
+rev_otb
+source_application_code
+source_report
+source_file
+load_ts
+insert_date
+updated_date
+```
+
+Measures:
+
+- `available_rms`: available room nights for the stay date;
+- `rms_otb`: room nights on the books as of the snapshot date;
+- `rev_otb`: room revenue on the books as of the snapshot date.
+
+`vw_pace_property` adds calculated ADR, occupancy, and RevPAR using safe division.
+
+### `metrics_pace.snap_pace_segment`
+
+**Explicit grain:** one row per `property_code`, `snap_date`, `stay_date`, and source/standard segment value, per source record version loaded into the table.
+
+Additional inherited columns include:
+
+```text
+segment
+segment_code
+segment_map
+segment_code_map
+```
+
+The presence of both standardized and source mapping fields is compatibility behavior. New facts should prefer stable standardized keys plus explicit lineage rather than duplicate descriptive source columns.
+
+`vw_pace_segment` adds calculated ADR. It does not calculate occupancy or RevPAR because segment-level availability may not be consistently additive or assigned.
+
+### `metrics_pace.snap_pace_roomclass`
+
+**Explicit grain:** one row per `property_code`, `snap_date`, `stay_date`, and room class, per source record version loaded into the table.
+
+Additional inherited columns include:
+
+```text
+roomclass
+roomclass_code
+roomclass_map
+roomclass_code_map
+```
+
+`vw_pace_roomclass` adds calculated ADR, occupancy, and RevPAR.
+
+### `metrics_pace.snap_pace_roomtype`
+
+**Explicit grain:** one row per `property_code`, `snap_date`, `stay_date`, and room type, per source record version loaded into the table.
+
+Additional inherited columns include:
+
+```text
+roomtype
+roomtype_code
+roomtype_map
+roomtype_code_map
+```
+
+`vw_pace_roomtype` adds calculated ADR, occupancy, and RevPAR.
+
+## Partitioning and clustering
+
+The staging pace tables declare:
+
+| Staging table | Partition | Cluster |
+|---|---|---|
+| `stg.stg_pace_property` | `snap_date` | `property_code`, `stay_date` |
+| `stg.stg_pace_segment` | `snap_date` | `property_code`, `stay_date`, `segment` |
+| `stg.stg_pace_roomclass` | `snap_date` | `property_code`, `stay_date`, `roomclass` |
+| `stg.stg_pace_roomtype` | `snap_date` | `property_code`, `stay_date`, `roomtype` |
+
+The `snap_pace_*` creation statements do not explicitly declare partitioning or clustering. Documentation must not assume that the target snapshot tables inherit the staging layout.
+
+A Dataform implementation change is required before the snapshot tables can be described as partitioned or clustered.
+
+## Assertions and uniqueness
+
+The reviewed operation definitions do not declare Dataform assertions for the pace snapshot tables.
+
+The grain statements above describe intended row identity, not currently enforced uniqueness.
+
+At minimum, validation should detect duplicates across the grain columns and confirm valid relationships for:
+
+```text
+property_code
+source_application_code
+segment_code
+roomclass_code
+roomtype_code
+```
+
+REV-70 owns the implemented-versus-recommended assertion inventory.
+
+## Why facts are grain-specific
+
+Metrics uses grain-specific fact families rather than one generic table with a `grain_type` column because each grain has different:
+
+- dimensional keys;
+- required measures;
+- additive behavior;
+- availability logic;
+- mapping dependencies;
+- validation rules;
+- partition and clustering needs;
+- downstream reporting contracts.
+
+A generic design such as:
+
+```text
+grain_type
+entity_code
+metric_code
+metric_value
+```
+
+would allow invalid combinations, hide table-level contracts, complicate joins, and make uniqueness difficult to enforce.
+
+Shared measure names may still be consistent across fact families, but physical tables should preserve explicit grain.
+
+## Planned fact families
+
+The following families are not currently implemented as canonical Dataform facts:
+
+| Family | Status | Required grain decision |
+|---|---|---|
+| Property actual | **PLANNED** | Property and stay date |
+| Segment actual | **PLANNED** | Property, stay date, commercial segment; finance classification treatment must be explicit |
+| Source/channel actual | **PLANNED** | Property, stay date, source/subsource/channel relationship |
+| Room-class actual | **PLANNED** | Property, stay date, room class |
+| Room-type actual | **PLANNED** | Property, stay date, room type |
+| Rate actual | **UNRESOLVED** | Property, stay date, rate code and account classifications |
+| Finance actual | **UNRESOLVED** | Ledger period, property, account, and finance-segment grain |
+| Demand actual | **UNRESOLVED** | Event, market, property, date, and source-specific grain |
+| Pickup facts | **PLANNED** | Defined separately in REV-67 |
+
+Reconstruction reports and historical documentation do not establish these tables as implemented.
+
+## Required lineage and audit columns
+
+A future fact should include the fields needed to identify the observation and its source. Depending on the family, that may include:
+
+```text
+property_code
+stay_date
+snap_date
+source_application_code
+source_report_id
+source_file
+load_ts
+insert_date
+updated_date
+```
+
+Not every fact needs every field, but omission must be intentional and documented.
+
+## Key treatment
+
+- Use governed business codes for conformed dimensions when stable.
+- Use composite grain keys for uniqueness assertions.
+- Introduce a surrogate fact identifier only when a durable row identity is required independently of the natural grain.
+- Do not use one opaque identifier to conceal an undefined grain.
+
+## Compatibility and legacy notes
+
+| Pattern | Status | Treatment |
+|---|---|---|
+| `snap_` prefix | **COMPATIBILITY** | Existing pace tables retain it; new measurable facts should normally use `fact_` |
+| `segment_map` and `segment_code_map` in pace staging/snapshots | **COMPATIBILITY** | Preserve for source lineage until migration contracts are defined |
+| `roomclass_map`, `roomclass_code_map`, `roomtype_map`, `roomtype_code_map` | **COMPATIBILITY** | Source-side fields retained by current ingestion design |
+| Descriptive dimension names stored beside codes | **COMPATIBILITY** | Prefer governed keys in future facts, with names resolved through dimensions/views |
+
+## Dataform source references
+
+```text
+REVREBEL/Metrics-Dataform/definitions/10_create_stg_pace_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/20_create_snap_pace_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/30_create_vw_pace_views.sqlx
+```
+
+## Related documentation
+
+- [Dimensions](/docs/architecture/data/dimensions)
+- [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)
+- [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)

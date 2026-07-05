@@ -6,7 +6,7 @@ has_toc: true
 
 # Data Architecture Decision Register
 
-This interim register prevents unresolved mapping and lookup questions from being presented as implemented architecture. REV-72 owns the full decision-register workstream.
+This interim register prevents unresolved data-model questions from being presented as implemented architecture. REV-72 owns the full decision-register workstream.
 
 | Decision | Current status | Current implementation |
 |---|---|---|
@@ -18,5 +18,9 @@ This interim register prevents unresolved mapping and lookup questions from bein
 | Property/source identifier mapping | **PLANNED** | `map_hotel` is a registry concept; no current Dataform DDL |
 | Global versus property-specific mappings | **UNRESOLVED** | Current implemented mappings are property-scoped |
 | Draft mapping publication workflow | **UNRESOLVED** | Application-database and publication boundary still requires approval |
+| Canonical `dim_segment` physical schema | **UNRESOLVED** | `00_create_core_tables.sqlx` and `05_create_segment_tables.sqlx` define different shapes with `CREATE TABLE IF NOT EXISTS` |
+| Pace table prefix migration | **UNRESOLVED** | Current measurable pace tables use `snap_`; naming standards prefer grain-specific `fact_` for new work |
+| Canonical actual fact families | **PLANNED** | No current Dataform tables with the `fact_` prefix and no implemented actual fact family |
+| Snapshot-table partitioning and clustering | **UNRESOLVED** | Staging tables declare layouts; `snap_pace_*` creation statements do not |
 
 Confirmed decisions should be removed from this register and moved into the canonical subject documentation when Linear approves them or implementation establishes them.
