@@ -1,0 +1,129 @@
+---
+title: Lookup Tables
+nav_order: 4
+has_toc: true
+---
+
+# Lookup Tables
+
+Lookup tables define controlled taxonomies used by mappings, dimensions, enrichment views, reporting, filters, and application picklists.
+
+The current maintained implementation source is `REVREBEL/Metrics-Dataform`. `Metrics-Core` does not currently contain `packages/dataform`, so app registries and fixtures do not independently prove that a lookup exists.
+
+## Ownership
+
+- BigQuery owns published lookup records.
+- Dataform owns DDL, migrations, seeds, dependencies, and assertions.
+- A lookup is **IMPLEMENTED** only when current Dataform creates or manages it.
+
+## Implemented inventory
+
+| Lookup | Status | Grain | Main dependency or consumer |
+|---|---|---|---|
+| `lkp_report_type` | **IMPLEMENTED** | One row per report type | Source-report metadata |
+| `lkp_metric_type` | **IMPLEMENTED** | One row per metric type | Metric classification |
+| `lkp_source_system_type` | **IMPLEMENTED** | One row per broad system category | `lkp_source_application` |
+| `lkp_source_application` | **IMPLEMENTED** | One row per source application | All implemented mappings |
+| `lkp_segment_group` | **IMPLEMENTED** | One row per commercial segment group | `lkp_segment` |
+| `lkp_segment` | **IMPLEMENTED** | One row per commercial segment | Segment and rate models |
+| `lkp_finance_segment` | **IMPLEMENTED** | One row per finance segment | Segment and finance models |
+| `lkp_consortia_category` | **IMPLEMENTED** | One row per consortia category | `lkp_consortia` |
+| `lkp_consortia_focus` | **IMPLEMENTED** | One row per consortia focus | `lkp_consortia` |
+| `lkp_consortia` | **IMPLEMENTED** | One row per consortia | Agency and rate models |
+| `lkp_agency` | **IMPLEMENTED** | One row per IATA/agency identifier | Agency reference |
+| `lkp_industry` | **IMPLEMENTED** | One row per category and industry | `lkp_company` soft join |
+| `lkp_company` | **IMPLEMENTED** | One row per company/account code | Rate and account models |
+| `lkp_source` | **IMPLEMENTED** | One row per standard source | Source and rate models |
+| `lkp_subsource` | **IMPLEMENTED** | One row per standard subsource | Source and rate models |
+| `lkp_channel_group` | **IMPLEMENTED** | One row per channel group | `lkp_channel` |
+| `lkp_channel` | **IMPLEMENTED** | One row per standard channel | Source and rate models |
+| `lkp_ratetype` | **IMPLEMENTED** | One row per rate type | Rate models |
+| `lkp_rate` | **IMPLEMENTED** | One row per standard rate code | Standard rate catalog |
+| `lkp_event_category` | **IMPLEMENTED** | One row per event category | Event and demand models |
+| `lkp_event_impact` | **IMPLEMENTED** | One row per event-impact value | Event and demand models |
+
+## Shared column pattern
+
+Most commercial lookups use:
+
+```text
+code STRING
+name STRING
+description STRING
+sort INT64
+is_active BOOL
+insert_date DATE
+updated_date DATE
+```
+
+The table-specific differences below complete the physical schema.
+
+## Table-specific columns and relationships
+
+| Lookup | Additional or alternate columns | Relationship |
+|---|---|---|
+| `lkp_report_type` | `report_type`, `description`, `is_active`, `insert_date`, `updated_date` | `report_type` is the key |
+| `lkp_metric_type` | `metric_type`, `description`, `is_active`, `insert_date`, `updated_date` | `metric_type` is the key |
+| `lkp_source_application` | `short_name`, `source_system_type_code`, `vendor` | `source_system_type_code → lkp_source_system_type.code` |
+| `lkp_segment` | `segment_group_code` | `segment_group_code → lkp_segment_group.code` |
+| `lkp_consortia` | `short_name`, `consortia_focus_code`, `consortia_category_code` | Joins to focus and category lookups |
+| `lkp_agency` | `iata`, `name`, `corp_profile`, `corporate_code`, `consortia_code`, `consortia_short_name`, `rate_type`, audit fields | `iata` is the business key; `consortia_code → lkp_consortia.code` |
+| `lkp_industry` | `category`, `industry`, `sort`, `is_active`, audit fields | Composite business meaning; no stable industry code |
+| `lkp_company` | `category`, `industry` | `industry` is a soft text join to `lkp_industry.industry` |
+| `lkp_source` | `source` | Optional broader source family or legacy label |
+| `lkp_subsource` | `source_code` added by migration | `source_code → lkp_source.code` |
+| `lkp_channel` | `channel_group_code` | `channel_group_code → lkp_channel_group.code` |
+| `lkp_rate` | `ratetype_code`, `company_code`, `segment_code`, `channel_code`, `source_code`, `subsource_code`, `consortia_code` | Joins to the corresponding controlled lookups |
+| `lkp_event_category` | `event_category`, `insert_timestamp STRING` | Seeded compatibility schema |
+| `lkp_event_impact` | `event_impact`, `insert_timestamp STRING`, `event_impact_bg_color`, `event_impact_font_color` | Seeded compatibility schema |
+
+## Source terminology
+
+`lkp_source_system_type` defines broad categories such as PMS, CRS, and RMS. `lkp_source_application` defines the granular application.
+
+Implemented mapping tables store:
+
+```text
+source_application_code
+```
+
+They do not use `source_system`, `system`, or `source_system_category` as alternate physical mapping columns.
+
+## Unimplemented lookup
+
+### `metrics_core.lkp_roomtype`
+
+**Status: UNRESOLVED**
+
+No current Dataform DDL creates `lkp_roomtype`. Standard room type, room class, bed type, feature, and room pool values remain embedded in `map_roomtype`, with `dim_roomtype` as the production dimension.
+
+An application-registry dependency on `lkp_roomtype` is scaffolding, not a live schema relationship. A normalization decision is still required.
+
+## Soft joins and integrity risks
+
+| Relationship | Risk |
+|---|---|
+| `lkp_company.industry → lkp_industry.industry` | Text drift and collisions |
+| `lkp_agency.rate_type` | Free text is not governed by `lkp_ratetype` |
+| `lkp_agency.consortia_short_name` | Denormalized value may disagree with `lkp_consortia` |
+| Event `insert_timestamp STRING` | Inconsistent audit type |
+| Parent-code relationships | BigQuery does not enforce foreign keys |
+
+Validation requirements are documented in [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies).
+
+## Dataform references
+
+```text
+REVREBEL/Metrics-Dataform/definitions/00_create_core_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/01_create_source_application_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/05_create_segment_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/05_create_global_settings_event_lookups.sqlx
+REVREBEL/Metrics-Dataform/definitions/06_create_source_channel_rate_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/06_migrate_subsource_parent_source.sqlx
+```
+
+## Related documentation
+
+- [Mapping Tables](/docs/architecture/data/mapping-tables)
+- [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)
+- [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)
