@@ -1,0 +1,198 @@
+---
+title: Validation and Dataform Assertions
+nav_order: 12
+has_toc: true
+---
+
+# Validation and Dataform Assertions
+
+This page documents the current Dataform validation state and the assertions required before Metrics warehouse objects can be treated as production-governed datasets.
+
+## Current implementation
+
+Current `REVREBEL/Metrics-Dataform` definitions are primarily `operations` actions that execute DDL. The reviewed definitions do not contain native Dataform assertion actions, table-level `uniqueKey` assertions, `nonNull` assertions, or row-condition assertions.
+
+Therefore:
+
+```text
+implemented Dataform assertions = none identified in the current definitions
+```
+
+DDL descriptions, `SAFE_DIVIDE`, partitioning, clustering, and `CREATE TABLE IF NOT EXISTS` are not data-quality assertions.
+
+## Declared execution dependencies
+
+The reporting-view action declares:
+
+```text
+30_create_vw_pace_views
+  depends on 20_create_snap_pace_tables
+```
+
+Other dependencies are mostly implicit in SQL execution order and object references. Because many definitions are `operations` actions with `hasOutput: false`, Dataform does not automatically provide a complete object-level dependency graph.
+
+This is an implementation limitation, not evidence that the relationships are optional.
+
+## Required assertion families
+
+### Unique-grain assertions
+
+Each measurable table must assert its documented row grain.
+
+Recommended pace keys:
+
+| Table family | Candidate uniqueness contract |
+|---|---|
+| Property pace | `property_code`, `snap_date`, `stay_date`, source identity where multiple sources may coexist |
+| Segment pace | Property pace key plus canonical or source segment identity |
+| Room-class pace | Property pace key plus canonical or source room-class identity |
+| Room-type pace | Property pace key plus canonical or source room-type identity |
+
+The exact source-disambiguation columns remain **UNRESOLVED**. A uniqueness assertion must not be added until the approved grain determines whether multiple applications, reports, or files may coexist for the same business key.
+
+### Required-field assertions
+
+At minimum, production pace rows should evaluate:
+
+- `property_code` is not null;
+- `snap_date` is not null;
+- `stay_date` is not null;
+- `source_application_code` is not null when lineage is required;
+- grain-specific keys are not null;
+- measures required by a published metric are present or explicitly allowed to be null.
+
+Nullability rules must distinguish missing data from valid zero activity.
+
+### Referential and orphan assertions
+
+Recommended checks include:
+
+- pace `property_code` exists in `metrics_core.dim_property`;
+- `source_application_code` exists in `metrics_core.lkp_source_application`;
+- mapping-table source application codes exist in the same lookup;
+- canonical segment values exist in the approved segment dimension or lookup;
+- canonical room-type and room-class values exist in the approved room taxonomy;
+- source-system type codes on applications exist in `lkp_source_system_type`.
+
+These relationships are currently soft joins. BigQuery does not enforce them through the present DDL.
+
+### Mapping coverage assertions
+
+For every source value requiring standardization, validation should report:
+
+- total distinct source codes;
+- mapped distinct source codes;
+- unmapped distinct source codes;
+- rows affected by unmapped values;
+- inactive mappings still receiving data;
+- collisions where one source key maps to multiple active canonical values;
+- canonical values receiving conflicting mappings at the same effective scope.
+
+Unmapped values should not silently become valid canonical values.
+
+### Hierarchy assertions
+
+Recommended hierarchy checks include:
+
+- every source application has a valid broad source-system type;
+- segment belongs to the expected segment group and finance segment where required;
+- room type belongs to one approved room class for the applicable property and period;
+- source, subsource, and channel relationships do not create cycles or conflicting parents;
+- active child records do not point to inactive parents unless explicitly allowed.
+
+### Measure and date assertions
+
+Recommended row conditions include:
+
+- `stay_date` and `snap_date` fall within approved operational ranges;
+- `available_rms`, `rms_otb`, and revenue fields follow approved sign rules;
+- occupancy inputs do not imply impossible inventory states unless overbooking rules explicitly allow them;
+- source extracts do not contain future observation dates beyond an approved tolerance;
+- duplicate file loads do not duplicate business rows;
+- ratio outputs remain null when denominators are zero, consistent with governed metric definitions.
+
+Business exceptions must be encoded explicitly rather than hidden by broad filters.
+
+## Collision and duplicate risks
+
+Current table creation does not prevent:
+
+- duplicate property/date pace rows;
+- multiple active mappings for the same source key;
+- orphan source applications;
+- inconsistent segment or room hierarchy assignments;
+- repeated loads of the same source file;
+- snapshot rows published without a documented load batch.
+
+These are known integrity risks until assertions and operational controls are implemented.
+
+## Assertion severity
+
+A future validation framework should distinguish:
+
+| Severity | Behavior |
+|---|---|
+| Error | Blocks publication because grain, required keys, or metric validity is compromised |
+| Warning | Allows publication with visible risk, such as partial mapping coverage within an approved threshold |
+| Informational | Records profile changes, distribution shifts, or non-blocking anomalies |
+
+Severity thresholds and publication-blocking rules remain **UNRESOLVED**.
+
+## Recommended implementation pattern
+
+Use native Dataform assertions or assertion queries that return failing rows. Keep assertions close to the objects they validate and name them by object and rule.
+
+```text
+assert_{object}_unique_grain
+assert_{object}_required_keys
+assert_{object}_valid_source_application
+assert_{object}_mapping_coverage
+assert_{object}_valid_hierarchy
+assert_{object}_freshness
+```
+
+Assertions should expose enough failing-row context to identify the property, source, dates, mapping key, and load batch.
+
+## Publication gate
+
+A successful DDL action only proves that SQL executed. It does not prove that loaded data is complete, unique, current, mapped, or fit for reporting.
+
+Before publishing a production table or mart, the workflow should require:
+
+1. successful ingestion;
+2. successful transformation;
+3. required assertion results;
+4. freshness evaluation;
+5. mapping-coverage evaluation;
+6. recorded publication status and owner visibility.
+
+No current unified publication gate is implemented.
+
+## Data-health ownership
+
+Assertion outcomes and freshness state should be written to an operational control model that can be consumed by:
+
+- data operators;
+- application health indicators;
+- reporting banners;
+- alerting workflows;
+- incident and remediation processes.
+
+Current Dataform does not persist this consolidated state.
+
+## Implementation priorities
+
+1. Confirm the exact grain and source coexistence rules for each pace table.
+2. Add required-key and unique-grain assertions.
+3. Add source-application and property orphan checks.
+4. Add mapping coverage and collision assertions.
+5. Add freshness checks using source observation and processing timestamps.
+6. Record assertion results and publication status in an operational control model.
+7. Expand the same patterns to actual facts, pickup facts, reporting tables, and marts as they are implemented.
+
+## Related documentation
+
+- [Source Systems and Ingestion](/docs/architecture/data/source-systems-and-ingestion)
+- [Lineage and Freshness](/docs/architecture/data/lineage-and-freshness)
+- [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)
+- [Metric Definitions and Semantic Governance](/docs/architecture/data/metric-definitions)

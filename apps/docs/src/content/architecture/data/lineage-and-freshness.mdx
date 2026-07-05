@@ -1,0 +1,155 @@
+---
+title: Lineage and Freshness
+nav_order: 11
+has_toc: true
+---
+
+# Lineage and Freshness
+
+This page defines how Metrics traces warehouse data to its origin and how freshness should be interpreted across the current data layers.
+
+## Current implementation summary
+
+| Capability | Status | Current behavior |
+|---|---|---|
+| Granular source-application lineage | **IMPLEMENTED** | `source_application_code` appears in current mapping and pace staging schemas |
+| File and report lineage | **IMPLEMENTED** | Pace staging rows carry `source_report` and `source_file` |
+| Staging load timestamp | **IMPLEMENTED** | Pace staging rows carry `load_ts` |
+| Lineage propagation into pace views | **COMPATIBILITY** | Snapshot tables clone staging shape and views select `*`, preserving lineage columns when present |
+| Durable load identifier | **PLANNED** | No implemented `file_load_id` or equivalent relationship |
+| Central refresh history | **PLANNED** | No implemented load-history or data-health table |
+| Enforced freshness service levels | **UNRESOLVED** | No approved cadence matrix or automated stale-data assertion |
+
+## Lineage dimensions
+
+Lineage must answer four different questions:
+
+1. Which application produced the data?
+2. Which report, export, API feed, or file contained it?
+3. When was the source extracted or observed?
+4. When was it loaded and transformed?
+
+These questions require separate fields. A single generic source label is not sufficient.
+
+## Current lineage fields
+
+| Field | Intended meaning | Current limitation |
+|---|---|---|
+| `source_application_code` | Granular source application | Soft relationship to `lkp_source_application.code` |
+| `source_report` | Report or export name | Free text; not linked to a durable report key in staging |
+| `source_file` | Filename or path | Free text; no implemented file registry |
+| `extract_date` | Date the source was generated or extracted | Present in `dim_source_report`, not current pace staging tables |
+| `snap_date` | Observation date of a pace snapshot | Business time, not ingestion time |
+| `stay_date` | Hotel service date represented by the row | Business time, not freshness time |
+| `load_ts` | Timestamp loaded into staging | Present in pace staging tables |
+| `insert_date` | Warehouse insert date | Date precision only |
+| `updated_date` | Warehouse update date | Date precision only; update semantics are not enforced |
+
+## Business time versus processing time
+
+Do not use these fields interchangeably:
+
+```text
+stay_date      = date the hotel activity applies to
+snap_date      = date the pace position was observed
+extract_date   = date the source report was produced
+load_ts        = timestamp the row entered staging
+insert_date    = date the warehouse row was inserted
+updated_date   = date the warehouse row was last updated
+```
+
+A row can be recently loaded while representing an old snapshot. It can also represent a current snapshot that arrived late. Freshness reporting should therefore evaluate both source observation time and processing time.
+
+## Current pace lineage path
+
+```text
+source application / report / file
+  → stg.stg_pace_{grain}
+  → metrics_pace.snap_pace_{grain}
+  → metrics_pace.vw_pace_{grain}
+```
+
+The current `snap_pace_*` tables are created by cloning the corresponding staging schema with an empty `SELECT *`. The reporting views also select `*` and add calculated fields. This preserves staging lineage columns structurally, but Dataform does not currently implement the data movement from staging into snapshots.
+
+## Freshness by layer
+
+### Source and landing
+
+The ingestion owner should record source availability, extraction time, file arrival time, and retry state. No canonical implementation currently records these values.
+
+### Staging
+
+`load_ts` is the current processing-time freshness field for pace staging. A valid staging freshness check should compare the latest expected source observation with the latest successful load, not merely the table modification timestamp.
+
+### Snapshot and fact layers
+
+The current `snap_pace_*` tables have no dedicated transform timestamp, batch identifier, or published-at timestamp. Their freshness cannot be independently proven from current DDL.
+
+### Views
+
+Views have no independent data freshness. They inherit freshness from their underlying tables. A successful view query does not prove that the source data is current.
+
+### Reporting tables and marts
+
+No canonical `rpt_` or `mart_` objects are currently implemented. Future materialized reporting outputs should record refresh history and expose the upstream observation window used to build them.
+
+## Freshness contract
+
+Each production source should eventually define:
+
+| Contract item | Required decision |
+|---|---|
+| Expected cadence | Intraday, daily, weekly, monthly, event-driven, or manual |
+| Expected arrival window | Latest acceptable time after the source period closes |
+| Observation field | Field that identifies the latest source business state |
+| Processing field | Load or publication timestamp |
+| Grace period | Allowed delay before a warning or failure |
+| Backfill behavior | Whether older periods may be reloaded and how they are identified |
+| Consumer impact | Products that must be warned or blocked when stale |
+| Owner | Team or role accountable for remediation |
+
+The cadence matrix and alert thresholds remain **UNRESOLVED**.
+
+## Planned refresh history
+
+Refresh history belongs in an operational control table rather than being inferred from business rows. A future implementation should capture:
+
+- pipeline or action identifier;
+- source application and report;
+- target object;
+- run start and end timestamps;
+- source observation range;
+- inserted, updated, rejected, and unmapped row counts;
+- assertion outcomes;
+- status and error details;
+- retry relationship;
+- Dataform invocation or workflow identifier.
+
+## Data-health visibility
+
+The application and BI consumers should be able to determine:
+
+- latest successful source observation;
+- latest successful warehouse load;
+- whether the current run passed validation;
+- whether mappings are incomplete;
+- whether data is stale, partial, failed, or intentionally unavailable;
+- which owner is responsible for resolution.
+
+No current warehouse object provides this consolidated health state. It is **PLANNED**.
+
+## Known lineage gaps
+
+- `source_application_code` relationships are not enforced.
+- Staging rows do not carry a durable source-report or file-load key.
+- `dim_source_report` is not populated or joined automatically by current Dataform.
+- Snapshot publication time is not recorded.
+- Current views inherit lineage through `SELECT *`, which makes contracts vulnerable to upstream schema changes.
+- No current object records rejected rows, unmapped rows, or assertion outcomes.
+- No approved service-level matrix defines stale data.
+
+## Related documentation
+
+- [Source Systems and Ingestion](/docs/architecture/data/source-systems-and-ingestion)
+- [Validation and Dataform Assertions](/docs/architecture/data/validation-and-assertions)
+- [Reporting Views, Report Tables, and Marts](/docs/architecture/data/reporting-views-and-marts)

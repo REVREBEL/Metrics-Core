@@ -14,6 +14,7 @@ It defines where each data topic belongs, which existing page remains authoritat
 
 - [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
 - [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)
+- [Source Systems and Ingestion](/docs/architecture/data/source-systems-and-ingestion)
 - [Lookup Tables](/docs/architecture/data/lookup-tables)
 - [Mapping Tables](/docs/architecture/data/mapping-tables)
 - [Dimensions](/docs/architecture/data/dimensions)
@@ -22,6 +23,8 @@ It defines where each data topic belongs, which existing page remains authoritat
 - [Reporting Views, Report Tables, and Marts](/docs/architecture/data/reporting-views-and-marts)
 - [Metric Definitions and Semantic Governance](/docs/architecture/data/metric-definitions)
 - [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)
+- [Lineage and Freshness](/docs/architecture/data/lineage-and-freshness)
+- [Validation and Dataform Assertions](/docs/architecture/data/validation-and-assertions)
 - [BigQuery and Dataform](/docs/architecture/data/bigquery-and-dataform)
 - [DuckDB Serving Layer](/docs/architecture/data/duckdb-serving-layer)
 
@@ -51,7 +54,7 @@ UNRESOLVED
 |---|---|---|---|
 | Data architecture overview and ownership | `architecture/data/platform-architecture-and-ownership.mdx` | **Current canonical documentation** | REV-63 |
 | Naming and modeling conventions | `architecture/data/naming-and-modeling-conventions.mdx` | **Current canonical documentation** | REV-64 |
-| Source systems and ingestion | `architecture/data/source-systems-and-ingestion.mdx` | **Planned**; retain `architecture/source-file-ingestion-model.mdx` until consolidated | REV-70 |
+| Source systems and ingestion | `architecture/data/source-systems-and-ingestion.mdx` | **Current canonical documentation** | REV-70 |
 | Lookup tables | `architecture/data/lookup-tables.mdx` | **Current canonical documentation** | REV-65 |
 | Mapping tables | `architecture/data/mapping-tables.mdx` | **Current canonical documentation** | REV-65 |
 | Dimensions | `architecture/data/dimensions.mdx` | **Current canonical documentation** | REV-66 |
@@ -59,9 +62,9 @@ UNRESOLVED
 | Pickup model and tables | `architecture/data/pickup-tables.mdx` | **Current canonical documentation** | REV-67 |
 | Reporting views, report tables, and marts | `architecture/data/reporting-views-and-marts.mdx` | **Current canonical documentation** | REV-68 |
 | Metric definitions and semantic governance | `architecture/data/metric-definitions.mdx` | **Current canonical documentation** | REV-69 |
-| Table dependencies | `architecture/data/table-dependencies.mdx` | **Current canonical documentation** | REV-65; assertion details continue in REV-70 |
-| Lineage and freshness | `architecture/data/lineage-and-freshness.mdx` | **Planned** | REV-70 |
-| Validation and Dataform assertions | `architecture/data/validation-and-assertions.mdx` | **Planned** | REV-70 |
+| Table dependencies | `architecture/data/table-dependencies.mdx` | **Current canonical documentation** | REV-65 |
+| Lineage and freshness | `architecture/data/lineage-and-freshness.mdx` | **Current canonical documentation** | REV-70 |
+| Validation and Dataform assertions | `architecture/data/validation-and-assertions.mdx` | **Current canonical documentation** | REV-70 |
 | BigQuery and Dataform responsibilities | `architecture/data/bigquery-and-dataform.mdx` | **Current canonical documentation** | REV-63 |
 | DuckDB serving responsibilities | `architecture/data/duckdb-serving-layer.mdx` | **Current canonical documentation** | REV-63 |
 | Application database ownership and write-back | `architecture/data/application-data-ownership.mdx` | **Planned** | REV-71 |
@@ -78,7 +81,7 @@ The following documents remain useful for historical or implementation context. 
 - `architecture/mapping-tables.mdx` — legacy pointer to the canonical mapping catalog
 - `architecture/lookup-tables.mdx` — legacy pointer to the canonical lookup catalog
 - `architecture/table-dependencies.mdx` — legacy pointer to the canonical dependency catalog
-- `architecture/source-file-ingestion-model.mdx`
+- `architecture/source-file-ingestion-model.mdx` — historical design reference superseded by the canonical source, lineage, and validation pages
 - `core/segment-model.mdx`
 - `core/source-channel-rate-model.mdx`
 - `core/roomtype-model.mdx`
