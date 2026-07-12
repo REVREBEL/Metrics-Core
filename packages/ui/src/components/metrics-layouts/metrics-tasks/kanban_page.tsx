@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@buttons/button";
 import {
   IconAlertTriangle,
   IconDotsVertical,
@@ -13,7 +14,6 @@ import {
 import { useMemo } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@buttons/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -159,17 +159,22 @@ export function KanbanView({
   const statuses = mode === "initiatives" ? initiativeStatuses : taskStatuses;
 
   const columns = useMemo(() => {
-    if (mode === "initiatives") {
-      return statuses.map((status) => ({
-        ...status,
-        items: initiatives.filter((i) => i.status === status.value),
-      }));
-    } else {
-      return statuses.map((status) => ({
-        ...status,
-        items: tasks.filter((t) => t.status === status.value),
-      }));
+    const itemsByStatus: Record<string, (Initiative | Task)[]> = {};
+    const items = mode === "initiatives" ? initiatives : tasks;
+
+    // Single pass grouping to avoid O(S * T) complexity
+    // where S is number of statuses and T is total items
+    for (const item of items) {
+      if (!itemsByStatus[item.status]) {
+        itemsByStatus[item.status] = [];
+      }
+      itemsByStatus[item.status].push(item);
     }
+
+    return statuses.map((status) => ({
+      ...status,
+      items: itemsByStatus[status.value] || [],
+    }));
   }, [initiatives, tasks, mode, statuses]);
 
   return (
@@ -285,8 +290,10 @@ function InitiativeCard({
   };
 
   // Calculate progress
-  const completedTasks =
-    initiative.tasks?.filter((t) => t.status === "done").length || 0;
+  const cardTasks = initiative.tasks || [];
+  const totalTasks = cardTasks.length;
+  const completedTasks = cardTasks.filter((t) => t.status === "done").length;
+  const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
   return (
     // biome-ignore lint/a11y/useSemanticElements: complex card layout requires div with role="button"
