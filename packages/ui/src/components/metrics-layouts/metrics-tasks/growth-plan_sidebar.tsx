@@ -1,5 +1,8 @@
 "use client";
 
+import { Button } from "@buttons/button";
+import { Input } from "@forms/fields/input";
+import { useDebounce } from "@hooks/use-debounce";
 import {
   IconChevronDown,
   IconDeviceDesktop,
@@ -10,9 +13,8 @@ import {
   IconTrendingUp,
   IconWorld,
 } from "@tabler/icons-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@buttons/button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -24,7 +26,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@forms/fields/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import type { Initiative } from "../data/schema";
@@ -91,21 +92,21 @@ export function GrowthPlanSidebar({
   const [searchQuery, setSearchQuery] = useState("");
   const [teamExpanded, setTeamExpanded] = useState(true);
 
-  const filteredInitiatives = initiatives.filter((i) =>
-    i.title?.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  // ⚡ Bolt: Debounce search input to prevent expensive re-filtering calculations on every keystroke
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  // Calculate overall progress
-  const totalTasks = initiatives.reduce(
-    (acc, i) => acc + (i.tasks?.length || 0),
-    0,
-  );
-  const completedTasks = initiatives.reduce(
-    (acc, i) => acc + (i.tasks?.filter((t) => t.status === "done").length || 0),
-    0,
-  );
-  const _overallProgress =
-    totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+  // ⚡ Bolt: Memoize filtered list of initiatives so it is only re-calculated when initiatives or search query change,
+  // preventing re-filtering on unrelated state changes (e.g., toggling team expanded list)
+  const filteredInitiatives = useMemo(() => {
+    const normalizedQuery = debouncedSearchQuery.toLowerCase().trim();
+    if (!normalizedQuery) return initiatives;
+    return initiatives.filter((i) =>
+      i.title?.toLowerCase().includes(normalizedQuery),
+    );
+  }, [initiatives, debouncedSearchQuery]);
+
+  // ⚡ Bolt: Removed redundant, unused O(N*M) overall progress calculations (totalTasks, completedTasks, _overallProgress)
+  // to prevent unnecessary nested loops over tasks on every single render.
 
   return (
     <div className="flex flex-col h-full border-r border-border bg-card/50">
