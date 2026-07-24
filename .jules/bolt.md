@@ -5,3 +5,7 @@
 ## 2025-05-15 - [Date Formatting in Loops]
 **Learning:** Calling `toLocaleDateString` inside a loop (like `Array.from` or `.map`) is surprisingly expensive because it creates a new `Intl.DateTimeFormat` instance implicitly every time. Moving it outside the loop when the date/options are static significantly improves performance.
 **Action:** Always move static date formatting and expensive object creation outside of render loops or data generation loops. Use `useMemo` for static chart data to prevent redundant calculations on every re-render.
+
+## 2026-07-06 - [Task Grouping Sort Optimization]
+**Learning:** Performing array filtering inside a sort comparator creates a performance bottleneck ((N \log N \cdot M)$). Pre-calculating sort keys during the initial data transformation pass reduces this to (N + M \log M)$.
+**Action:** Always pre-calculate expensive sort criteria during the grouping or mapping phase rather than inside the `sort()` method.
