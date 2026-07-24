@@ -8,7 +8,7 @@ has_toc: true
 
 This section is the canonical entry point for Metrics data-platform documentation.
 
-It defines where each data topic belongs, which existing page remains authoritative during the documentation rebuild, and which follow-up issue will complete the subject documentation.
+It defines where each data topic belongs and which page owns the maintained explanation of that subject.
 
 ## Start here
 
@@ -28,6 +28,7 @@ It defines where each data topic belongs, which existing page remains authoritat
 - [BigQuery and Dataform](/docs/architecture/data/bigquery-and-dataform)
 - [DuckDB Serving Layer](/docs/architecture/data/duckdb-serving-layer)
 - [Application Data Ownership and Write-Back](/docs/architecture/data/application-data-ownership)
+- [Data Architecture Decision Register](/docs/architecture/data/decision-register)
 
 ## Source ownership
 
@@ -51,7 +52,7 @@ UNRESOLVED
 
 ## Canonical topic map
 
-| Topic | Canonical destination | Current disposition | Follow-up |
+| Topic | Canonical destination | Current disposition | Completed through |
 |---|---|---|---|
 | Data architecture overview and ownership | `architecture/data/platform-architecture-and-ownership.mdx` | **Current canonical documentation** | REV-63 |
 | Naming and modeling conventions | `architecture/data/naming-and-modeling-conventions.mdx` | **Current canonical documentation** | REV-64 |
@@ -69,7 +70,7 @@ UNRESOLVED
 | BigQuery and Dataform responsibilities | `architecture/data/bigquery-and-dataform.mdx` | **Current canonical documentation** | REV-63 |
 | DuckDB serving responsibilities | `architecture/data/duckdb-serving-layer.mdx` | **Current canonical documentation** | REV-63 |
 | Application database ownership and write-back | `architecture/data/application-data-ownership.mdx` | **Current canonical documentation** | REV-71 |
-| Unresolved architecture decisions | `architecture/data/decision-register.mdx` | **Interim register; full reconciliation planned** | REV-72 |
+| Unresolved architecture decisions | `architecture/data/decision-register.mdx` | **Current canonical documentation** | REV-72 |
 
 ## Existing-page disposition
 
@@ -87,11 +88,11 @@ The following documents remain useful for historical or implementation context. 
 
 These pages must not be treated as independent confirmation when they repeat prior architecture work.
 
-### Rewrite or split
+### Historical architecture gateway
 
 - `architecture/table-architecture.mdx`
 
-This page currently mixes confirmed design decisions with physical-object claims. The canonical dimension, fact, pickup, and reporting catalogs now own those definitions. The older page should be retained only as conceptual or historical source material until it is rewritten.
+This former architecture catalog is retained as a historical route and now directs readers to the canonical dimension, fact, pickup, reporting, naming, and decision-register pages. It no longer owns physical-object claims.
 
 ### Keep as historical documentation
 
@@ -124,7 +125,7 @@ Domain pages explain source-specific and business-specific behavior. Shared phys
 
 ## Internal audit
 
-The inventory and gap analysis supporting this structure is maintained at:
+The inventory, reconciliation notes, and final validation record supporting this structure are maintained at:
 
 ```text
 apps/docs/src/content/internal/audits/data-documentation-baseline.md
