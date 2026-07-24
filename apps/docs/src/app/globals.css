@@ -1244,13 +1244,109 @@
 }
 
 
-p {
-  margin: 0.5em 0;
-  line-height: 1.25em;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--foreground);
+  font-family: var(--header-font);
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 0;
+  text-wrap: balance;
 }
 
-p+p {
-  margin-top: 20px;
+h1:first-child {
+  font-weight: 700;
+  padding-top: .5em;
+  border-top: none;    
+}
+
+h2:first-child {
+  padding-top: .25em;
+  border-top: none;
+}
+
+h3:first-child {
+  padding-top: .25em;
+  border-top: none;
+}
+
+h4:first-child {
+  padding-top: .25em;
+  border-top: none;
+}
+
+h1 {
+  font-size: 200%;
+  line-height: 1;
+}
+
+h2 {
+  font-size: 150%;
+  line-height: .85;
+}
+
+h3 {
+  font-size: 125%;
+  letter-spacing: .115em;
+  line-height: .85;
+}
+
+h4 {
+  font-size: 115%;
+  letter-spacing: .115em;
+  line-height: .85;
+}
+
+h5 {
+  font-size: 110%;
+  letter-spacing: .115em;
+  line-height: .85;
+}
+
+h6 {
+  font-size: 105%;
+  letter-spacing: .115em;
+  line-height: .85;
+}
+
+h1 + h1 {
+  line-height: 1;
+}
+
+h2 + h2, 
+h3 + h3,
+h4 + h4,
+h5 + h5,
+h6 + h6 {     
+  padding-top: 0;
+  margin-bottom: 0;
+}
+
+h1 + h2,
+h1 + h3 {     
+  padding-top: 0;
+}
+
+h2 + h3,
+h2 + h4,
+h2 + h5,
+h2 + h6 {     
+  padding-top: 0;
+} 
+
+p {
+  line-height: 1.25em;
+  margin: 0.5em 0;
+  text-wrap: pretty;
+}
+
+
+p + p {
+  margin-top: 1.15em;
 }
 
 
@@ -1272,12 +1368,55 @@ a:hover {
   color: var(--color-green) !important;
   text-decoration: underline;
 }
+ul,
+ol {
+  line-height: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 1em;
+}
+
+ul li,
+ol li {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 1em;
+  text-wrap: balance; 
+}
+
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 1em;
+}
+
+ol h4, 
+ul h4 {
+  margin-top: 1em;
+}
+
+h4 ol, 
+h4 ul {
+  margin-top: 1em;
+}
+
+h4 p ol, 
+h4 p ul {
+  margin-top: 5em;
+}
 
 main table,
 article table {
   display: table !important;
   width: 100% !important;
+  font: 90;
   overflow-x: auto;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  padding-bottom: 1.5em;
   border-collapse: collapse !important;
   border: 2px solid var(--table-foreground) !important;
   background-color: var(--table-background) !important;
@@ -1286,9 +1425,11 @@ article table {
 
 main table th,
 article table th {
-  font-family: var(--font-sans) !important;
+  font-family: var(--font-display) !important;
   font-weight: 700 !important;
+  font-size: 95%;
   text-transform: uppercase !important;
+  text-align: left;
   border: 2px solid var(--table-foreground) !important;
   padding: 0.2em 1em !important;
   color: var(--foreground) !important;
