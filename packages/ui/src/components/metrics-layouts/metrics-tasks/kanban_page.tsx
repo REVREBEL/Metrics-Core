@@ -161,20 +161,21 @@ export function KanbanView({
   // BOLT OPTIMIZATION: Use single-pass grouping to reduce complexity from O(S * I) to O(S + I)
   // This prevents redundant filtering of the entire initiatives/tasks array for every column.
   const columns = useMemo(() => {
+    const itemsByStatus: Record<string, (Initiative | Task)[]> = {};
     const items = mode === "initiatives" ? initiatives : tasks;
-    const groupedItems = items.reduce(
-      (acc, item) => {
-        const status = item.status;
-        if (!acc[status]) acc[status] = [];
-        acc[status].push(item);
-        return acc;
-      },
-      {} as Record<string, (Initiative | Task)[]>,
-    );
+
+    // Single pass grouping to avoid O(S * T) complexity
+    // where S is number of statuses and T is total items
+    for (const item of items) {
+      if (!itemsByStatus[item.status]) {
+        itemsByStatus[item.status] = [];
+      }
+      itemsByStatus[item.status].push(item);
+    }
 
     return statuses.map((status) => ({
       ...status,
-      items: groupedItems[status.value] || [],
+      items: itemsByStatus[status.value] || [],
     }));
   }, [initiatives, tasks, mode, statuses]);
 
@@ -303,12 +304,11 @@ const InitiativeCard = memo(
       label: "Uncategorized",
     };
 
-    // BOLT BUG FIX: Defined missing totalTasks and progress variables
-    // BOLT OPTIMIZATION: Use "complete" instead of "done" to match data schema
-    const totalTasks = initiative.tasks?.length || 0;
-    const completedTasks =
-      initiative.tasks?.filter((t) => t.status === "complete").length || 0;
-    const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+  // Calculate progress
+  const cardTasks = initiative.tasks || [];
+  const totalTasks = cardTasks.length;
+  const completedTasks = cardTasks.filter((t) => t.status === "done").length;
+  const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
     return (
       // biome-ignore lint/a11y/useSemanticElements: complex card layout requires div with role="button"

@@ -47,14 +47,16 @@ type PersonGroup = {
   department?: string;
   email?: string;
   tasks: Task[];
-  openCount: number;
+  /** Pre-calculated for sorting performance */
+  openTasksCount: number;
 };
 
 type DepartmentGroup = {
   name: string;
   label: string;
   tasks: Task[];
-  openCount: number;
+  /** Pre-calculated for sorting performance */
+  openTasksCount: number;
 };
 
 function getInitials(name: string): string {
@@ -332,8 +334,9 @@ export function ByPersonView({ tasks, onTaskClick }: ByPersonViewProps) {
   const personGroups = useMemo(() => {
     const groups: Record<string, PersonGroup> = {};
 
-    // ⚡ Bolt: Pre-calculate openCount in a single pass to avoid repeated filtering during sort
-    tasks.forEach((task) => {
+    // Single pass to group and pre-calculate open tasks count
+    // This avoids O(N log N * M) complexity during sorting
+    for (const task of tasks) {
       const key = task.assignedTo || "Unassigned";
       if (!groups[key]) {
         groups[key] = {
@@ -343,19 +346,18 @@ export function ByPersonView({ tasks, onTaskClick }: ByPersonViewProps) {
             : "app_user",
           department: task.assignedTo ? task.assignedDepartment : undefined,
           tasks: [],
-          openCount: 0,
+          openTasksCount: 0,
         };
       }
       groups[key].tasks.push(task);
       if (task.status !== "complete" && task.status !== "canceled") {
-        groups[key].openCount++;
+        groups[key].openTasksCount++;
       }
-    });
+    }
 
-    return Object.values(groups).sort((a, b) => {
-      // Sort by open tasks count (descending)
-      return b.openCount - a.openCount;
-    });
+    return Object.values(groups).sort(
+      (a, b) => b.openTasksCount - a.openTasksCount,
+    );
   }, [tasks]);
 
   return (
@@ -384,8 +386,9 @@ export function ByDepartmentView({
   const departmentGroups = useMemo(() => {
     const groups: Record<string, DepartmentGroup> = {};
 
-    // ⚡ Bolt: Pre-calculate openCount in a single pass to avoid O(N log N * T) complexity during sort
-    tasks.forEach((task) => {
+    // Single pass to group and pre-calculate open tasks count
+    // This avoids O(N log N * M) complexity during sorting
+    for (const task of tasks) {
       const key = task.assignedDepartment || "unassigned";
       if (!groups[key]) {
         const deptInfo = departments.find((d) => d.value === key);
@@ -393,19 +396,18 @@ export function ByDepartmentView({
           name: key,
           label: deptInfo?.label || (key === "unassigned" ? "Unassigned" : key),
           tasks: [],
-          openCount: 0,
+          openTasksCount: 0,
         };
       }
       groups[key].tasks.push(task);
       if (task.status !== "complete" && task.status !== "canceled") {
-        groups[key].openCount++;
+        groups[key].openTasksCount++;
       }
-    });
+    }
 
-    return Object.values(groups).sort((a, b) => {
-      // Sort by open tasks count (descending)
-      return b.openCount - a.openCount;
-    });
+    return Object.values(groups).sort(
+      (a, b) => b.openTasksCount - a.openTasksCount,
+    );
   }, [tasks]);
 
   return (
