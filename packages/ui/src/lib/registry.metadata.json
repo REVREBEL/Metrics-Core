@@ -748,6 +748,23 @@
       }
     ]
   },
+  "components/metrics-layouts/workspace-shell": {
+    "displayName": "workspace-shell",
+    "description": "",
+    "props": [
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": true
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      }
+    ]
+  },
   "primitives/buttons/button-default": {
     "displayName": "button-default",
     "description": "",
@@ -1069,8 +1086,57 @@
       {
         "name": "className",
         "type": "string",
-        "required": false,
-        "description": "Additional CSS classes merged into the component."
+        "required": false
+      },
+      {
+        "name": "companyName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "companyEmail",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "companyLogo",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "salesPlanPercentage",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "metricsData",
+        "type": "{",
+        "required": false
+      },
+      {
+        "name": "icons",
+        "type": "React.ReactNode",
+        "required": true
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "revenueGoal",
+        "type": "string | number",
+        "required": false
+      },
+      {
+        "name": "planCompleted",
+        "type": "string",
+        "required": false
       }
     ]
   },
@@ -1297,8 +1363,32 @@
       {
         "name": "className",
         "type": "string",
-        "required": false,
-        "description": "Additional CSS classes merged into the component."
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "publishedDate",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "productImage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "reachedCount",
+        "type": "string | number",
+        "required": false
+      },
+      {
+        "name": "ordersCount",
+        "type": "string | number",
+        "required": false
       }
     ]
   },
@@ -3996,6 +4086,21 @@
     "description": "",
     "props": [
       {
+        "name": "title",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "image",
+        "type": "string",
+        "required": false
+      },
+      {
         "name": "className",
         "type": "string",
         "required": false,
@@ -4008,6 +4113,41 @@
     "description": "",
     "props": [
       {
+        "name": "title",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "viteLogo",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "reactLogo",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "astroLogo",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "astroDarkLogo",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "code",
+        "type": "string",
+        "required": false
+      },
+      {
         "name": "className",
         "type": "string",
         "required": false,
@@ -4019,6 +4159,21 @@
     "displayName": "v1-3-0",
     "description": "",
     "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "image",
+        "type": "string",
+        "required": false
+      },
       {
         "name": "className",
         "type": "string",

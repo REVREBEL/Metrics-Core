@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-30T09:00:20.080Z",
+  "generatedAt": "2026-07-05T17:17:24.035Z",
   "roots": [
     "primitives",
     "components",
@@ -927,13 +927,15 @@
       "parentId": "components",
       "kind": "group",
       "depth": 1,
-      "directFiles": [],
+      "directFiles": [
+        "packages/ui/src/components/metrics-layouts/workspace-shell.tsx"
+      ],
       "children": [
         "components/metrics-layouts/metrics-help-desk",
         "components/metrics-layouts/metrics-settings",
         "components/metrics-layouts/metrics-tasks"
       ],
-      "directFileCount": 0,
+      "directFileCount": 1,
       "childCount": 3
     },
     "components": {
@@ -1316,10 +1318,11 @@
         "packages/ui/src/context/font-provider.tsx",
         "packages/ui/src/context/layout-provider.tsx",
         "packages/ui/src/context/search-provider.tsx",
-        "packages/ui/src/context/theme-provider.tsx"
+        "packages/ui/src/context/theme-provider.tsx",
+        "packages/ui/src/context/workspace-provider.tsx"
       ],
       "children": [],
-      "directFileCount": 5,
+      "directFileCount": 6,
       "childCount": 0
     },
     "icons/BrandIcons": {
@@ -5771,6 +5774,7 @@
         "packages/ui/src/lib/docs.ts",
         "packages/ui/src/lib/events.ts",
         "packages/ui/src/lib/format-code.ts",
+        "packages/ui/src/lib/formatters.ts",
         "packages/ui/src/lib/google-fonts.ts",
         "packages/ui/src/lib/handle-server-error.ts",
         "packages/ui/src/lib/highlight-code.ts",
@@ -5798,7 +5802,7 @@
         "lib/lookups",
         "lib/mapping-tables"
       ],
-      "directFileCount": 34,
+      "directFileCount": 35,
       "childCount": 3
     }
   }
