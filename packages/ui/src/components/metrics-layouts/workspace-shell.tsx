@@ -83,6 +83,8 @@ const ENGAGEMENT_OPTIONS = [
   },
 ];
 
+const GLOBAL_NAV_TABS = ["Overview", "Workspaces", "Integrations", "Analytics"];
+
 const SIDEBAR_NAV_ITEMS = [
   {
     id: "metrics",
@@ -134,8 +136,6 @@ const SIDEBAR_NAV_ITEMS = [
   },
 ];
 
-const GLOBAL_NAV_TABS = ["Overview", "Workspaces", "Integrations", "Analytics"];
-
 const AUDIT_CHECKLIST = [
   { label: "Workspace provider linked", ok: true },
   { label: "Routing boundary secure", ok: true },
@@ -160,19 +160,16 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
 
   // Retrieve selected object details for high fidelity display
-  // Memoized to avoid redundant .find() calls on every render
   const currentWorkspace = useMemo(
     () =>
       WORKSPACE_OPTIONS.find((w) => w.id === activeWorkspace) ||
       scope.workspace,
     [activeWorkspace, scope.workspace],
   );
-
   const currentHotel = useMemo(
     () => HOTEL_OPTIONS.find((h) => h.id === activeHotel) || scope.hotel,
     [activeHotel, scope.hotel],
   );
-
   const currentEngagement = useMemo(
     () =>
       ENGAGEMENT_OPTIONS.find((e) => e.id === activeEngagement) ||
@@ -181,7 +178,6 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
   );
 
   // Determine active item dynamically based on active route path
-  // Memoized to avoid redundant .find() calls on every render
   const currentItem = useMemo(
     () =>
       SIDEBAR_NAV_ITEMS.find(

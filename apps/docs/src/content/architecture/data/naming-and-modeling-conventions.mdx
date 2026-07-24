@@ -1,0 +1,580 @@
+---
+title: Naming and Modeling Conventions
+nav_order: 2
+has_toc: true
+---
+
+# Naming and Modeling Conventions
+
+This document defines the canonical naming and modeling conventions for the Metrics analytical warehouse.
+
+It reconciles approved design decisions with the currently maintained Dataform implementation. It does not rename existing objects. Any physical rename requires a separate migration plan with compatibility and downstream-impact handling.
+
+## Current Dataform source
+
+At the time of this review, `REVREBEL/Metrics-Core` does not contain a `packages/dataform` directory or `.sqlx` definitions.
+
+The current maintained Dataform implementation is:
+
+```text
+REVREBEL/Metrics-Dataform
+```
+
+References in this document therefore use repository-qualified paths such as:
+
+```text
+REVREBEL/Metrics-Dataform/definitions/00_create_core_tables.sqlx
+```
+
+A future move into `Metrics-Core/packages/dataform` is not treated as implemented until that directory and its definitions exist on the current branch.
+
+## Status vocabulary
+
+Every documented object or convention must use one of these statuses when implementation is not self-evident:
+
+| Status | Meaning |
+|---|---|
+| **IMPLEMENTED** | Current Dataform creates, migrates, or manages the object or field. |
+| **PLANNED** | Approved target architecture that is not yet created by current Dataform. |
+| **COMPATIBILITY** | Retained to support existing data, consumers, migrations, or earlier naming. It is not the preferred pattern for new work. |
+| **DEPRECATED** | Still present temporarily but scheduled for removal through an approved migration. |
+| **UNRESOLVED** | Product, schema, ownership, or migration decision is still required. |
+
+Use exactly one status value per status field. Put qualifiers such as “requires verification,” “target convention,” or “legacy prefix” in a Notes column or nearby prose.
+
+Documentation, UI registries, and fixtures must not promote a **PLANNED** or **UNRESOLVED** object as a live warehouse table.
+
+# General naming rules
+
+## Lowercase `snake_case`
+
+Warehouse schemas, tables, views, and columns use lowercase `snake_case`.
+
+Preferred:
+
+```text
+metrics_core
+map_segment
+source_application_code
+finance_segment_code
+updated_date
+```
+
+Avoid:
+
+```text
+MetricsCore
+mapSegment
+source-application-code
+FinanceSegmentCode
+updatedDate
+```
+
+Source-system spelling may be preserved in raw ingestion metadata, but standardized warehouse objects use the Metrics convention.
+
+## Names communicate business meaning
+
+A field name describes the business concept, not only its storage type.
+
+Implemented examples include:
+
+```text
+stay_date
+extract_date
+property_code
+segment_group_code
+source_report_id
+is_active
+```
+
+Avoid generic names such as `value`, `type`, `date`, or `status` when the table contains more than one plausible business meaning.
+
+## Abbreviations
+
+Use abbreviations only when they are approved hospitality or platform terms and remain unambiguous.
+
+Implemented examples include:
+
+```text
+str_id
+crs_id
+pms_id
+rms_id
+gl_code
+iata
+available_rms
+```
+
+Metric abbreviations such as `adr`, `occ`, `revpar`, `rev`, and `rms` belong to the governed metric vocabulary. They must not be improvised independently in a source-specific model or UI component.
+
+# Object prefix framework
+
+## Canonical published object families
+
+| Prefix | Responsibility | Status | Notes and current examples |
+|---|---|---|---|
+| `dim_` | Conformed descriptive entities and analytical dimensions | **IMPLEMENTED** | Current examples include `dim_property`, `dim_date`, `dim_segment`, `dim_roomtype`, `dim_metric`, and `dim_source_report`. |
+| `lkp_` | Controlled code lists, classifications, and allowed-value references | **IMPLEMENTED** | Current examples include `lkp_segment`, `lkp_finance_segment`, `lkp_channel`, and `lkp_rate`. |
+| `map_` | Source-application value to standardized taxonomy relationships | **IMPLEMENTED** | Current examples include `map_segment`, `map_roomtype`, `map_source`, and `map_rate`. |
+| `vw_` | Read-oriented views that enrich, flatten, or expose warehouse relationships | **IMPLEMENTED** | Current examples include `vw_segment`, `vw_source`, `vw_rate`, and `vw_source_application`. |
+| `fact_` | Measurable business observations at an explicit grain | **PLANNED** | Some fact objects may already exist, but each object must be verified individually in the fact-table catalog before being labeled implemented. |
+| `rpt_` | Stable report-ready outputs for a defined reporting use case | **PLANNED** | GA4 and source-specific reporting outputs require object-level verification. |
+| `mart_` | Curated cross-model analytical datasets optimized for repeated consumption | **PLANNED** | Daily property, segment, source, and room-type marts require object-level verification. |
+
+The prefix communicates responsibility. It does not replace an explicit grain statement or implementation status.
+
+## Processing prefixes
+
+Processing-layer prefixes are separate from published semantic object families.
+
+| Prefix | Use | Status | Notes |
+|---|---|---|---|
+| `stg_` | Typed, cleaned, source-aligned staging data before semantic modeling | **PLANNED** | Approved target convention; verify each object before describing it as implemented. |
+| `raw_` | Minimally transformed source-landed data in a source-owned raw layer | **PLANNED** | Current use requires verification. |
+| `snap_` | Historical snapshot prefix from earlier architecture material | **COMPATIBILITY** | Legacy prefix. Whether any future snapshot object should use it remains unresolved. |
+
+The preferred architecture models measurable pace and snapshot observations as grain-specific `fact_` tables with explicit observation fields. Do not introduce a new `snap_` table solely because older prefix documentation lists it.
+
+## Prefix exceptions
+
+- Dataform operation files are implementation units and do not need a warehouse object prefix.
+- Temporary migration helpers may use a clearly scoped migration name, but must not become permanent consumer contracts.
+- Source-native raw objects may retain vendor terminology inside a source-owned raw dataset when lineage requires it.
+
+# Entity and identifier columns
+
+## Lookup-table identity
+
+Controlled lookup tables generally use generic identity columns because the table name provides the domain:
+
+```text
+lkp_segment.code
+lkp_segment.name
+lkp_segment.description
+lkp_segment.sort
+```
+
+This pattern is **IMPLEMENTED** across the current commercial lookup tables.
+
+Do not mechanically rename `lkp_segment.code` to `segment_code`. Downstream tables use the domain-qualified foreign-key name.
+
+## Domain-qualified codes
+
+Use `{domain}_code` when a table references or carries a standardized business code:
+
+```text
+property_code
+segment_code
+finance_segment_code
+segment_group_code
+source_application_code
+source_code
+subsource_code
+channel_code
+ratetype_code
+company_code
+consortia_code
+roomtype_code
+```
+
+A `_code` identifies a controlled business value or source-system code. It is not assumed to be globally unique unless the model explicitly defines it that way.
+
+## Identifier suffix `_id`
+
+Use `_id` for identifiers that represent a distinct record, external platform identity, report instance, or surrogate identifier rather than a controlled taxonomy code.
+
+Implemented examples include:
+
+```text
+source_report_id
+str_id
+crs_id
+pms_id
+rms_id
+rateshop_id
+```
+
+Do not use `_id` and `_code` interchangeably. `property_code` is the canonical Metrics business code, while `pms_id` is a source-platform identifier stored on the property dimension.
+
+## Natural and surrogate keys
+
+### Natural or business keys
+
+A stable governed business code may be the documented key:
+
+```text
+lkp_segment.code
+lkp_channel.code
+dim_property.property_code
+```
+
+### Composite scoped keys
+
+Source-value mappings are normally scoped by multiple columns. A typical logical key is:
+
+```text
+property_code
++ source_application_code
++ code
+```
+
+The exact uniqueness rule must be implemented with a Dataform assertion before documentation describes it as enforced.
+
+### Surrogate keys
+
+Use a surrogate `_id` or numeric key when:
+
+- the natural key is unstable;
+- the record is versioned or event-like;
+- multiple sources can produce the same natural identifier;
+- downstream storage or join performance requires one;
+- durable identity is required independently of mutable business attributes.
+
+Current example:
+
+```text
+dim_date.date_key
+```
+
+Do not introduce a surrogate key automatically when a governed code and documented scope provide a stable identity.
+
+# Standard column suffixes and patterns
+
+## Dates
+
+Use a business-qualified `_date` column for a BigQuery `DATE`:
+
+```text
+stay_date
+open_date
+close_date
+extract_date
+insert_date
+updated_date
+month_start_date
+```
+
+A bare `date` is permitted only when the object has one unambiguous daily reporting grain. Current core Dataform uses `stay_date` for `dim_date`, so new hotel-service models should prefer the explicit business term.
+
+## Timestamps
+
+Use a business-qualified `_timestamp` for a warehouse `TIMESTAMP` when the field represents an event time and the existing model does not establish another approved name.
+
+Target examples:
+
+```text
+booking_timestamp
+source_updated_timestamp
+published_timestamp
+```
+
+This convention is **PLANNED** for models that require timestamp precision. Current core Dataform primarily uses `DATE` audit columns.
+
+Application databases may use `_at` conventions such as `created_at` and `updated_at` when established by the application ORM. Do not mix `_at` and `_timestamp` within the same data layer without documenting the boundary.
+
+## Booleans
+
+Boolean columns use a predicate form:
+
+```text
+is_active
+is_weekend
+is_additive
+has_breakfast
+can_publish
+```
+
+Implemented examples are `is_active`, `is_weekend`, and `is_additive`.
+
+Avoid ambiguous boolean names such as `active`, `weekend`, or `additive`.
+
+## Amounts
+
+Use `_amount` when a column contains a monetary amount and the business term does not already have a governed metric name.
+
+Target examples:
+
+```text
+planned_expense_amount
+actual_expense_amount
+tax_amount
+```
+
+Governed hospitality measures may retain approved metric names such as `rev` or `total_rev`. Currency, unit, and aggregation behavior belong in the metric definition and column description.
+
+## Rates and ratios
+
+Use `_rate` for a rate that is not already an approved named metric:
+
+```text
+commission_rate
+conversion_rate
+cancellation_rate
+```
+
+Named metrics such as `adr`, `occ`, and `revpar` retain their governed names.
+
+Do not use `_rate` for a hotel rate-plan code. The current commercial taxonomy uses `rate` or `rate_code` for the product and `ratetype_code` for its classification.
+
+## Counts
+
+Use `_count` when the domain noun alone could be interpreted as a label or collection:
+
+```text
+reservation_count
+cancellation_count
+night_count
+```
+
+Approved base metric abbreviations such as `rms` may be used when defined by the Metrics Library. Do not mix `rooms`, `room_count`, and `rms` within the same governed metric family without a compatibility reason.
+
+## Percentages
+
+Use `_pct` for a stored percentage value:
+
+```text
+budget_reach_pct
+commission_pct
+variance_pct
+```
+
+Use `_pct_chg` for percentage change when that metric naming convention is approved:
+
+```text
+rev_pct_chg_ly
+adr_pct_chg_ly
+```
+
+A column description must state whether the stored value uses decimal form (`0.25`) or whole-percent form (`25`). New analytical models should prefer decimal form unless a source-compatibility requirement is documented.
+
+## Sort order
+
+Lookup tables currently use generic `sort` because the table supplies the domain. Enriched views expose domain-qualified names such as:
+
+```text
+segment_sort
+segment_group_sort
+source_sort
+channel_sort
+```
+
+Both patterns are **IMPLEMENTED** and intentional.
+
+# Audit columns
+
+## Current warehouse standard
+
+Implemented core tables generally use:
+
+```text
+is_active BOOL
+insert_date DATE
+updated_date DATE
+```
+
+Some source-report or append-only objects use only the fields that apply, such as `dim_source_report.insert_date`.
+
+These names are **IMPLEMENTED**. They remain the compatibility standard for current core tables.
+
+New models must document:
+
+- whether the object is mutable or append-only;
+- which process sets the audit values;
+- whether each audit value is a business date or processing date;
+- whether timestamp precision is required;
+- whether deletion or deactivation is represented by `is_active`, an end date, or a separate status.
+
+Do not rename `insert_date` and `updated_date` as part of documentation work. A timestamp migration requires a separate issue, downstream impact review, and compatibility plan.
+
+# Source lineage columns
+
+Use the following implemented lineage vocabulary where applicable:
+
+| Column | Meaning | Current use |
+|---|---|---|
+| `source_application_code` | Granular application that supplied the source value or report | Mapping tables and `dim_source_report` |
+| `source_report_id` | Distinct imported report or report-definition identifier | `dim_source_report` |
+| `source_report` | Readable report name | `dim_source_report` |
+| `source_file` | Source filename or path | `dim_property`, `dim_source_report` |
+| `extract_date` | Date the source was extracted | `dim_source_report` |
+| `property_code` | Property scope when the record is property-specific | Dimensions, mappings, and report metadata |
+
+`source_application_code` is the preferred implemented relationship for source-value mappings. Do not introduce generic alternatives such as `system`, `source_system`, or `source_system_category` for the same relationship.
+
+`source_system_type` describes a category of systems; it does not replace the granular source application identity.
+
+# Property and source-application scoping
+
+## Property scope
+
+Use `property_code` when a value, mapping, dimension row, report, or fact can vary by hotel.
+
+Implemented examples include:
+
+```text
+dim_property.property_code
+dim_roomtype.property_code
+map_segment.property_code
+map_roomtype.property_code
+map_source.property_code
+map_rate.property_code
+dim_source_report.property_code
+```
+
+A globally governed lookup such as `lkp_segment` or `lkp_channel` does not require `property_code` unless the ownership model is intentionally changed.
+
+## Source-application scope
+
+Use `source_application_code` when the same source value can have different meanings across PMS, CRS, RMS, booking-engine, or other application contexts.
+
+Implemented mappings use:
+
+```text
+property_code
++ source_application_code
++ source code or value
+```
+
+Property identity may require a different source-identifier model. Do not assume a future `map_hotel` must copy the exact scope of current value-mapping tables.
+
+# Mapping-table source and standard fields
+
+## Preferred current pattern
+
+Current migrated mappings use generic source-side fields inside a domain-specific table:
+
+```text
+map_segment.code
+map_segment.name
+map_segment.description
+map_source.code
+map_source.name
+map_source.description
+map_rate.code
+map_rate.name
+map_rate.description
+```
+
+The standardized targets are domain-qualified:
+
+```text
+segment_code
+finance_segment_code
+source_code
+subsource_code
+channel_code
+ratetype_code
+company_code
+consortia_code
+```
+
+This is the preferred **IMPLEMENTED** pattern for new source-value mapping work unless a domain has an approved exception.
+
+## Compatibility pattern
+
+`map_roomtype` currently retains source-side compatibility fields:
+
+```text
+roomtype_map
+roomtype_code_map
+roomclass_map
+roomclass_code_map
+roompool_map
+roompool_code_map
+```
+
+The `_map` pattern is **COMPATIBILITY**, not the default for new mapping tables. Do not remove it until room taxonomy and migration requirements are approved.
+
+# Commercial and finance taxonomy boundaries
+
+Commercial and finance segment taxonomies are separate governed concepts.
+
+| Concept | Canonical field | Lookup |
+|---|---|---|
+| Commercial segment | `segment_code` | `lkp_segment.code` |
+| Commercial segment group | `segment_group_code` | `lkp_segment_group.code` |
+| Finance segment | `finance_segment_code` | `lkp_finance_segment.code` |
+| Ledger relationship | `gl_code` | External finance or ledger relationship; no current core lookup confirmed |
+
+`segment_code` must not be reused to mean a finance segment. A row may carry both commercial and finance classifications when the mapping supports both.
+
+Current Dataform implements this separation in `map_segment`, `dim_segment`, and `vw_segment`.
+
+# Table grain statements
+
+Every dimension, fact, mapping, report, and mart must document what one row represents.
+
+Use this format:
+
+```text
+One row per {business entity or observation}
+scoped by {property/source/report/date/version dimensions}.
+```
+
+Examples based on current models:
+
+```text
+lkp_segment
+One row per governed commercial segment code.
+
+dim_date
+One row per hotel stay date.
+
+map_segment
+One row per property, source application, and source segment code mapping.
+
+dim_source_report
+One row per source report identifier.
+```
+
+A grain statement is documentation, not an enforcement mechanism. The corresponding Dataform unique-key assertion must be added or verified separately.
+
+Fact tables must include the observation date, snapshot or version field, and dimensional scope required to distinguish rows. The exact grain of every fact table will be verified in the fact-table catalog.
+
+# Legacy and compatibility register
+
+| Name or pattern | Status | Treatment |
+|---|---|---|
+| `insert_date`, `updated_date` | **IMPLEMENTED** | Current core audit columns use `DATE`. Do not rename without a migration. |
+| `roomtype_map`, `roomtype_code_map`, and related `_map` fields | **COMPATIBILITY** | Current `map_roomtype` retains inline room taxonomy and source-side mapping fields. |
+| Generic `system` or `source_system` fields in mapping registries | **DEPRECATED** | Current Dataform mappings use `source_application_code`. Registry adapters may remain temporarily. |
+| `snap_` published table prefix | **COMPATIBILITY** | Legacy prefix. New measurable snapshots should use grain-specific `fact_` models unless a separate decision approves otherwise. |
+| `map_rate_code` | **DEPRECATED** | Stale documentation example. The current implemented table is `map_rate`. |
+| `act_` fact prefix heading | **DEPRECATED** | Documentation error. The approved prefix is `fact_`. |
+| Compact metric fields such as `rms_bgt` and `rev_bgt` | **UNRESOLVED** | Use only when a governed metric definition and current physical column are verified. |
+| Bare `date` as a universal daily grain | **DEPRECATED** | Current `dim_date` uses `stay_date`; prefer the business-qualified date. |
+
+# Enforcement and migrations
+
+These conventions govern new work and documentation. They do not authorize automatic renames.
+
+Before renaming a warehouse object or column:
+
+1. Identify all Dataform dependencies.
+2. Identify application, BI, export, and DuckDB consumers.
+3. Define the compatibility period.
+4. Add replacement fields or views where required.
+5. Migrate consumers.
+6. Validate row counts, keys, and metric results.
+7. Deprecate and remove the old contract through a separate approved issue.
+
+# Implementation references reviewed
+
+The conventions above were reconciled against current definitions including:
+
+```text
+REVREBEL/Metrics-Dataform/definitions/00_create_core_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/05_create_segment_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/06_create_source_channel_rate_tables.sqlx
+apps/docs/src/content/architecture/column-naming-standards.mdx
+apps/docs/src/content/architecture/prefix_standards.mdx
+```
+
+The standalone `REVREBEL/Metrics-Dataform` repository is the current maintained Dataform implementation source. This statement should be revised if the definitions are later moved into `REVREBEL/Metrics-Core`.
+
+# Related documentation
+
+- [Data Architecture](/docs/architecture/data)
+- [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
+- [Mapping Tables](/docs/architecture/data/mapping-tables)
+- [Lookup Tables](/docs/architecture/data/lookup-tables)

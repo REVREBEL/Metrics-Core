@@ -1,0 +1,226 @@
+---
+title: Data Platform Architecture and Ownership
+nav_order: 1
+has_toc: true
+---
+
+# Data Platform Architecture and Ownership
+
+Metrics is a hotel Commercial OS. Its data platform must support analytical reporting, operational planning, governed metric definitions, workflow state, and reusable knowledge without allowing one layer to silently take ownership of another.
+
+This page defines the canonical ownership boundaries for the data platform.
+
+## Source hierarchy
+
+When sources disagree, use this order:
+
+1. Linear defines product intent, approved terminology, workspace boundaries, and data-ownership decisions.
+2. Repository code defines the current application implementation.
+3. Dataform defines the current warehouse schema and dependency graph.
+4. Documentation explains the architecture but must be reconciled against the sources above.
+5. Registries and fixtures are scaffolding unless current implementation confirms otherwise.
+
+## Platform model
+
+```text
+Source systems and files
+        ↓
+BigQuery raw and staging data
+        ↓
+Dataform-managed lookup, mapping, dimension, fact, view, report, and mart layers
+        ↓
+Controlled serving contracts
+        ↓
+DuckDB and application data services
+        ↓
+Feature workflows and workspace routes
+        ↓
+UI components and presentation formatting
+```
+
+The application database runs beside this analytical path:
+
+```text
+Users, workspaces, engagements, drafts, approvals, campaigns, notes, preferences
+        ↓
+Application services and feature workflows
+        ↓
+Published analytical records or configuration when an approved publication process exists
+```
+
+The analytical warehouse and the application database solve different problems. They may exchange approved records, but neither should be used as an accidental substitute for the other.
+
+# Ownership matrix
+
+| Layer | Owns | Must not own |
+|---|---|---|
+| BigQuery | Canonical analytical storage, history, raw and staged source data, warehouse tables, reporting outputs | Unpublished UI drafts, transient component state, visual formatting rules |
+| Dataform | Warehouse DDL, transformations, dependencies, assertions, migrations, table documentation close to implementation | Product workflow state, client-side runtime behavior, component presentation |
+| Application database | Users, roles, workspaces, engagements, drafts, approvals, campaigns, notes, preferences, workflow audit state | Canonical warehouse facts, source-system history, ad hoc duplicate metric formulas |
+| DuckDB | Fast analytical serving, local or server-side query execution, read-optimized working sets | Canonical metric definitions, canonical warehouse schema, workflow source of truth |
+| `packages/data` | Intended home for data clients, adapters, query contracts, validation, and analytical runtimes | Visual primitives and feature-specific UI composition |
+| `packages/metrics` | Intended home for metric definitions, formulas, dimensions, aggregation, null behavior, and format metadata | Warehouse ingestion, direct UI rendering, arbitrary component-local calculations |
+| `packages/ui` | Reusable visual primitives, layouts, components, and presentation behavior | BigQuery clients, warehouse queries, DuckDB initialization, business calculations, persistence ownership |
+| `apps/app/features` | Domain workflows, feature services, feature state, and application composition | Shared warehouse ownership, reusable visual primitives, duplicated metric semantics |
+| `apps/app/app` | Routes, layouts, boundaries, providers, loading/error states, and feature composition | Domain calculations, warehouse query implementations, reusable data clients |
+
+# Canonical warehouse versus analytical serving
+
+## BigQuery is the warehouse authority
+
+BigQuery owns the durable analytical record, including:
+
+- raw and staged source data;
+- lookup and mapping tables;
+- dimensions and fact tables;
+- pace, actual, pickup, and other analytical history;
+- reporting views, report tables, and marts;
+- lineage, refresh history, and warehouse audit metadata where implemented.
+
+A table is not considered implemented because it appears in a UI registry, fixture, architecture diagram, or historical report. Current Dataform DDL is required to describe it as implemented.
+
+## Dataform is the warehouse implementation authority
+
+Dataform owns:
+
+- creation and migration of warehouse objects;
+- transformation logic;
+- dependency order;
+- assertions and data-quality checks;
+- object-level documentation maintained with the SQL definitions;
+- compatibility migrations and deprecation work.
+
+The standalone `REVREBEL/Metrics-Dataform` repository is a synchronized mirror. The repository-owned source remains `packages/dataform` when present.
+
+## DuckDB is a serving layer
+
+DuckDB may:
+
+- query read-optimized extracts or Parquet files;
+- serve fast local or server-side analytical interactions;
+- calculate request-level aggregations from governed base measures;
+- cache analytical results behind a controlled service contract.
+
+DuckDB does not own:
+
+- canonical table definitions;
+- metric governance;
+- source mapping standards;
+- durable workflow state;
+- published warehouse history.
+
+The current repository includes a browser-side DuckDB WASM hook at `packages/ui/src/hooks/use-hotel-analytics.ts`. It initializes DuckDB in a client hook, loads same-origin WASM assets, reads `/data/dashboard_current.parquet`, and calculates hotel KPIs directly in SQL. That is the current implementation of one analytics path, not the approved long-term ownership boundary.
+
+# Workflow state versus analytical facts
+
+## Application workflow state
+
+The application database is the expected owner of records such as:
+
+- users and roles;
+- organizations, workspaces, and engagements;
+- budget and forecast drafts;
+- initiatives, tasks, campaigns, and approvals;
+- notes, comments, and preferences;
+- draft mapping changes;
+- publication status and workflow audit history.
+
+These records change because users work with the application. They are not automatically warehouse facts.
+
+## Analytical facts
+
+BigQuery is the owner of records such as:
+
+- source-system observations;
+- pace snapshots;
+- actual production;
+- pickup history;
+- standardized mappings and dimensions;
+- reporting outputs and marts;
+- durable analytical history.
+
+Published planning or campaign results may become analytical facts after a defined validation and publication process. The publication boundary must be explicit; browser components must not write directly to BigQuery.
+
+# Metric definitions versus presentation formatting
+
+Metric semantics and visual presentation are separate responsibilities.
+
+## Metric semantics
+
+The intended `packages/metrics` layer owns:
+
+- metric identity and name;
+- base and calculated formulas;
+- source fields;
+- allowed dimensions;
+- aggregation behavior;
+- null and divide-by-zero behavior;
+- unit and format metadata;
+- compatibility and deprecation status.
+
+## Presentation
+
+`packages/ui` may render:
+
+- currency, percent, count, duration, and decimal displays;
+- positive, negative, warning, and neutral visual states;
+- labels, tooltips, tables, charts, and cards;
+- loading, empty, error, and success states.
+
+It must not invent the formula or aggregation rule for ADR, Occupancy, RevPAR, ALOS, or any other governed metric.
+
+# Browser, server, and scheduled processing
+
+| Processing location | Appropriate responsibilities | Inappropriate responsibilities |
+|---|---|---|
+| Browser | Interaction state, presentation, small request-level calculations, approved DuckDB-WASM serving where justified | Secrets, direct BigQuery writes, canonical transformations, unrestricted warehouse SQL |
+| Server/application service | Authenticated data access, app-database operations, query contracts, controlled publication, server-side analytical serving | UI-only state, duplicated Dataform transformation logic |
+| Scheduled warehouse processing | Ingestion, transformation, mappings, dimensions, facts, marts, assertions, refresh history | User draft state, transient component behavior |
+
+The browser-versus-server DuckDB target remains an architecture decision. Documentation must describe the current browser implementation and the intended serving boundary separately.
+
+# Current implementation versus intended architecture
+
+## Current implementation confirmed in the repository
+
+- `packages/ui/src/lib/bigquery/biq-query_client.ts` creates a server-side `@google-cloud/bigquery` client and reads `GOOGLE_APPLICATION_CREDENTIALS_JSON` when supplied.
+- BigQuery query and mapping utilities currently exist under `packages/ui/src/lib/bigquery` and `packages/ui/src/lib/mapping-tables`.
+- `packages/ui/src/hooks/use-hotel-analytics.ts` is a client hook that initializes `@duckdb/duckdb-wasm`, registers a Parquet file, and computes hotel KPIs.
+- `packages/ui/package.json` includes `@google-cloud/bigquery` and `drizzle-orm` as development dependencies and includes UI, charting, form, validation, and framework dependencies.
+- The current workspace configuration includes all folders under `packages/*`, but `packages/data/package.json` and `packages/metrics/package.json` were not present at the time of this review.
+
+## Intended architecture
+
+- Data clients, adapters, query contracts, validation, BigQuery access, and DuckDB runtime ownership belong in `packages/data` or another approved non-UI data package.
+- Metric definitions and reusable formulas belong in `packages/metrics` or an approved governed semantic package.
+- `packages/ui` remains presentation-focused.
+- Feature workflows live under `apps/app/features` and routes remain composition boundaries under `apps/app/app`.
+
+## Current gaps
+
+| Gap | Current state | Required follow-up |
+|---|---|---|
+| Data package boundary | No current `packages/data/package.json` found | Create only through an implementation issue after package naming and migration scope are confirmed |
+| Metrics package boundary | No current `packages/metrics/package.json` found | Confirm whether the package is planned, renamed, or not yet scaffolded before moving formulas |
+| BigQuery ownership | BigQuery utilities currently live under `packages/ui` | Plan migration without breaking current consumers |
+| DuckDB ownership | Browser runtime and KPI SQL live in a UI hook | Decide browser, server, or hybrid serving model and move runtime ownership accordingly |
+| Formula governance | KPI formulas are calculated in the DuckDB hook | Reconcile with the future Metrics Library before declaring one canonical implementation |
+| Application database | No current canonical package or schema was confirmed during this review | Document the implemented persistence layer when it exists; do not invent one |
+
+# Rules for future implementation
+
+1. Do not add warehouse queries or analytical runtimes to `packages/ui`.
+2. Do not copy metric formulas into cards, pages, charts, or route components.
+3. Do not write directly from browser components to BigQuery.
+4. Do not describe a planned package or table as implemented.
+5. Keep current-state and target-state sections separate until migration is complete.
+6. Use Dataform for canonical warehouse transformations and assertions.
+7. Use application services for workflow persistence and controlled publication.
+8. Use DuckDB only through a documented serving contract.
+
+# Related documentation
+
+- [Data Architecture](/docs/architecture/data)
+- [BigQuery and Dataform](/docs/architecture/data/bigquery-and-dataform)
+- [DuckDB Serving Layer](/docs/architecture/data/duckdb-serving-layer)
+- `apps/docs/src/content/internal/audits/data-documentation-baseline.md`

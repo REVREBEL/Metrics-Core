@@ -1,0 +1,141 @@
+---
+title: DuckDB Serving Layer
+nav_order: 13
+has_toc: true
+---
+
+# DuckDB Serving Layer
+
+DuckDB is an analytical serving technology for Metrics. It is not the canonical warehouse, metric registry, workflow database, or governance authority.
+
+## Approved responsibility
+
+DuckDB may be used to:
+
+- query read-optimized analytical extracts;
+- serve fast local or server-side interactions;
+- aggregate governed base measures for a user request;
+- support offline or low-latency analytical experiences;
+- cache controlled analytical datasets behind a documented contract.
+
+DuckDB must not own:
+
+- canonical warehouse schemas;
+- mapping and lookup definitions;
+- metric identity or formula governance;
+- durable source history;
+- workflow drafts or approvals;
+- publication state.
+
+## Current browser implementation
+
+The repository currently includes:
+
+```text
+packages/ui/src/hooks/use-hotel-analytics.ts
+```
+
+That client hook:
+
+- imports `@duckdb/duckdb-wasm`;
+- initializes same-origin WASM and worker assets;
+- registers `/data/dashboard_current.parquet`;
+- opens a persistent browser connection;
+- runs hotel summary SQL;
+- calculates Occupancy, ADR, RevPAR, variances, and budget progress.
+
+This is **current implementation**, not the permanent ownership model.
+
+It creates three architecture conflicts:
+
+1. DuckDB runtime initialization is inside `packages/ui`.
+2. Metric formulas are embedded in a presentation-owned hook.
+3. A static Parquet path acts as an implicit data contract without a separately governed adapter layer.
+
+## Target boundary
+
+The intended boundary is:
+
+```text
+BigQuery and Dataform
+        ↓
+approved extract, mart, or query contract
+        ↓
+packages/data or approved data-service layer
+        ↓
+DuckDB runtime
+        ↓
+validated analytical result
+        ↓
+feature workflow
+        ↓
+packages/ui presentation
+```
+
+The runtime may ultimately be browser-side, server-side, or hybrid. That deployment choice remains unresolved. Regardless of location, the ownership rules do not change.
+
+## Browser responsibilities
+
+Browser-side DuckDB is appropriate only when:
+
+- the dataset is approved for client delivery;
+- no secrets, credentials, or restricted source paths are exposed to the client;
+- file size and memory use are acceptable;
+- query behavior is constrained;
+- results are validated before presentation;
+- the browser does not become the only implementation of canonical metric logic.
+
+## Server responsibilities
+
+Server-side DuckDB may be appropriate for:
+
+- controlled access to larger analytical extracts;
+- authenticated multi-source queries;
+- centralized caching;
+- protecting credentials, source paths, and restricted datasets;
+- keeping runtime and formula implementation out of presentation packages.
+
+## Scheduled responsibilities
+
+Scheduled processing should prepare stable inputs for DuckDB rather than requiring every browser session to reconstruct warehouse semantics.
+
+Examples include:
+
+- exported Parquet marts;
+- normalized snapshots;
+- governed metric-ready datasets;
+- freshness metadata;
+- partitioned property or date extracts.
+
+## Formula rule
+
+DuckDB may execute a governed formula, but it must not define the formula independently.
+
+For example, if ADR, Occupancy, or RevPAR SQL is executed by DuckDB, the formula and aggregation rules must originate from the approved Metrics Library or semantic contract. UI hooks and cards should consume that contract rather than maintain their own version.
+
+## Data contract requirements
+
+Every DuckDB-backed experience should define:
+
+- source dataset or extract;
+- schema and version;
+- freshness expectation;
+- allowed dimensions and filters;
+- metric definitions used;
+- null and divide-by-zero behavior;
+- execution location;
+- authorization boundary;
+- fallback and error behavior.
+
+## Migration note
+
+Moving the current browser hook is implementation work, not part of this documentation issue. Until that migration occurs, documentation must state both:
+
+- the current browser-WASM implementation; and
+- the intended non-UI ownership boundary.
+
+## Related documentation
+
+- [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
+- [BigQuery and Dataform](/docs/architecture/data/bigquery-and-dataform)
+- [Data Architecture](/docs/architecture/data)

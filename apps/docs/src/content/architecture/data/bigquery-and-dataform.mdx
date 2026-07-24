@@ -1,0 +1,118 @@
+---
+title: BigQuery and Dataform
+nav_order: 12
+has_toc: true
+---
+
+# BigQuery and Dataform
+
+BigQuery and Dataform together form the canonical warehouse layer for Metrics.
+
+## BigQuery responsibilities
+
+BigQuery owns the durable analytical record:
+
+- raw and staged source data;
+- lookup and mapping tables;
+- dimensions and facts;
+- pace, actual, pickup, and other analytical history;
+- reporting views, report tables, and marts;
+- warehouse lineage and refresh metadata where implemented.
+
+BigQuery does not own transient UI state, unpublished drafts, presentation formatting, or ad hoc component formulas.
+
+## Dataform responsibilities
+
+Dataform owns the implementation of the warehouse model:
+
+- object creation and migration;
+- SQL transformations;
+- dependency order;
+- assertions and quality checks;
+- compatibility migrations;
+- deprecation work;
+- implementation-adjacent object documentation.
+
+The repository-owned source is `packages/dataform`. The standalone `REVREBEL/Metrics-Dataform` repository is a synchronized mirror and must not be treated as a competing architecture authority.
+
+## Implementation-status rule
+
+A table, view, report, or mart is **IMPLEMENTED** only when current Dataform creates or manages it.
+
+References in any of the following are not enough by themselves:
+
+- UI registries;
+- fixtures;
+- diagrams;
+- historical reports;
+- prior documentation;
+- planned schemas.
+
+Use the following status vocabulary:
+
+```text
+IMPLEMENTED
+PLANNED
+COMPATIBILITY
+DEPRECATED
+UNRESOLVED
+```
+
+## Application access
+
+Server-side application code may query BigQuery through controlled data clients and query contracts.
+
+The current repository includes `packages/ui/src/lib/bigquery/biq-query_client.ts`, which creates the BigQuery client. This is current implementation evidence, but the file is located in the wrong architectural package.
+
+BigQuery credentials must be provisioned through centrally managed configuration or environment injection. Application code must treat those credentials as an injected dependency rather than constructing or embedding them ad hoc. Secure storage, rotation, and baseline configuration belong to the data-platform and infrastructure owners; consuming services are responsible for using the provided client only through approved query contracts.
+
+The intended ownership boundary is:
+
+```text
+packages/data or approved data package
+  ├── BigQuery client
+  ├── query contracts
+  ├── result validation
+  ├── adapters
+  └── publication services
+```
+
+`packages/ui` must not become the owner of warehouse clients or queries.
+
+## Write boundaries
+
+- Browser components must not write directly to BigQuery.
+- Workflow drafts should persist through the application database and service layer.
+- Publishing mappings, planning records, or configuration to the warehouse requires validation, authorization, audit history, and a controlled service boundary.
+- Dataform remains responsible for transformations after published data reaches the warehouse layer.
+
+## Scheduled processing
+
+Scheduled processing is appropriate for:
+
+- source ingestion;
+- mapping and normalization;
+- dimensional and fact transformations;
+- pickup calculations;
+- report and mart refreshes;
+- assertions;
+- freshness and lineage updates.
+
+Scheduled processing is not the owner of transient user interactions, draft edits, or local presentation state.
+
+## Current implementation notes
+
+At the time of this review:
+
+- current mapping DDL is documented for `map_segment`, `map_roomtype`, `map_source`, and `map_rate`;
+- broader conceptual fact, pickup, report, and mart inventories still require object-by-object verification in later issues;
+- BigQuery utility code is present under `packages/ui`, which conflicts with the intended package boundary;
+- no current `packages/data/package.json` was found.
+
+These mismatches are implementation gaps, not reasons to redefine the ownership model.
+
+## Related documentation
+
+- [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
+- [Data Architecture](/docs/architecture/data)
+- [DuckDB Serving Layer](/docs/architecture/data/duckdb-serving-layer)

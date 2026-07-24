@@ -8,99 +8,62 @@ nav_order: 1
 
 ## Metrics Platform
 
-Metrics is REVREBEL’s internal business intelligence and analytics platform designed to centralize, standardize, and analyze hospitality data across operational systems.
+Metrics is REVREBEL’s internal business intelligence and analytics platform for centralizing, standardizing, and analyzing hospitality data across operational systems.
 
-The platform exists because hotel data is rarely clean, consistent, or organized the same way twice.
+PMS exports, CRS reports, RMS forecasts, booking-engine data, pace reports, spreadsheets, and vendor systems all structure information differently. Metrics provides a shared reporting framework that turns those sources into consistent operational intelligence for forecasting, revenue strategy, distribution analysis, performance reporting, and decision-making.
 
-PMS exports, CRS reports, RMS forecasts, booking engine data, pace reports, spreadsheets, and vendor systems all structure information differently. Metrics provides a unified reporting framework that transforms those disconnected datasets into a consistent operational intelligence layer used for forecasting, revenue strategy, distribution analysis, performance reporting, and decision-making.
+## Documentation standards
 
-The objective is not simply consolidating data, the objective is creating a reliable operational system where revenue teams, analysts, dashboards, automation workflows, and reporting layers all interpret metrics consistently.
+This library maintains the standards used throughout Metrics, including:
 
-Metrics supports:
+- data-platform architecture and ownership;
+- naming and modeling conventions;
+- warehouse tables and dependencies;
+- dimensional and metric definitions;
+- source-specific processing;
+- planning and intelligence models;
+- application and design-system architecture.
 
-* revenue strategy,
-* forecasting,
-* pace analysis,
-* pickup reporting,
-* pricing intelligence,
-* distribution analysis,
-* benchmarking,
-* and operational performance tracking.
+Claims about the warehouse must be verified against current Dataform definitions. Product terminology and workspace boundaries follow the current Metrics initiative in Linear.
 
-The platform is intentionally structured around how hospitality reporting behaves operationally — including snapshot-based pace reporting, comp-set benchmarking, forecast versioning, event overlays, and multi-source reconciliation workflows.
-
-**Because hospitality reporting is complicated enough already. The infrastructure underneath it shouldn’t make it worse.**
-
-
-
-# Documentation Standards
-
-This documentation library defines the canonical standards used throughout the Metrics Platform, including:
-
-* warehouse architecture,
-* naming conventions,
-* table structures,
-* dimensional modeling,
-* benchmark processing,
-* event intelligence,
-* planning frameworks,
-* and semantic reporting standards.
-
-These standards exist to preserve:
-
-* reporting consistency,
-* benchmark integrity,
-* operational traceability,
-* and downstream analytical stability across the platform.
-
-
-
-# Standards
+## Primary documentation
 
 <Columns cols={2}>
   <Card
+    title="Data Architecture"
+    icon="wand-magic-sparkles"
+    href="/docs/architecture/data"
+  >
+    Canonical navigation for BigQuery, Dataform, DuckDB, lookup, mapping, dimension, fact, pickup, reporting, lineage, and application-data documentation.
+  </Card>
+  <Card
     title="Database Column Naming Standards"
     icon="robot"
-    href="/column-naming-standards/"
+    href="/docs/architecture/column-naming-standards"
   >
+    Current column naming rules and source material for the consolidated naming and modeling standard.
   </Card>
   <Card
-    title="CoStar Processing Standards"
-    icon="eye"
-    href="/costar-processing-standards/"
-  >
-  </Card>
-  <Card
-    title="Forecast & Pricing Table Models"
-    icon="bolt"
-    href="/forecast-pricing-models/"
-  >
-  </Card>
-  <Card
-    title="Events Table Model"
-    icon="wand-magic-sparkles"
-    href="/events-table-model/"
-  >
-  </Card>
-    <Card
     title="Metrics Table Architecture"
-    icon="wand-magic-sparkles"
-    href="/costar-processing-standards/"
+    icon="eye"
+    href="/docs/architecture/table-architecture"
   >
+    Existing conceptual table architecture. Physical object claims remain subject to Dataform verification during the documentation rebuild.
   </Card>
-    <Card
-    title="Google Analytics"
-    icon="wand-magic-sparkles"
-    href="/google-analytics/"
+  <Card
+    title="Design System Registry"
+    icon="layout-dashboard"
+    href="/docs/design-system"
   >
+    Shared UI package structure, component boundaries, and registry conventions.
   </Card>
 </Columns>
 
+## Domain documentation
 
+Domain sections explain source-specific and business-specific behavior. Shared warehouse definitions belong in the Data Architecture section.
 
-* [Database Column Naming Standards](./column-naming-standards/)
-* [Metrics Table Architecture](./metrics-table-architecture/)
-* [CoStar Processing Standards](./costar-processing-standards/)
-* [Forecast & Pricing Table Models](./forecast-pricing-models/)
-* [Events Table Model](./events-table-model/)
-
+- [Google Analytics](/docs/google-analytics)
+- [CoStar Processing Standards](/docs/co-star/data_processing_guide)
+- [Forecast and Pricing Table Models](/docs/finance/forecast-budget-and-pricing-table-models)
+- [Events Table Model](/docs/demand/events-table-model)

@@ -1,0 +1,177 @@
+---
+title: Mapping Tables
+nav_order: 5
+has_toc: true
+---
+
+# Mapping Tables
+
+Mapping tables preserve source-application values and resolve them into the governed Metrics taxonomy.
+
+The current maintained Dataform implementation source is `REVREBEL/Metrics-Dataform`. App registries and fixtures are scaffolding unless current Dataform creates the physical table.
+
+## Implemented inventory
+
+| Mapping | Status | Grain | Purpose |
+|---|---|---|---|
+| `metrics_core.map_segment` | **IMPLEMENTED** | One row per property, source application, and source segment code | Commercial and finance segment mapping |
+| `metrics_core.map_roomtype` | **COMPATIBILITY** | One row per property, source application, and source room-type/room-class mapping | Embedded room taxonomy mapping |
+| `metrics_core.map_source` | **IMPLEMENTED** | One row per property, source application, and source/subsource code | Source, subsource, and channel mapping |
+| `metrics_core.map_rate` | **IMPLEMENTED** | One row per property, source application, and source rate code | Full commercial rate classification |
+
+`map_roomtype` is implemented physically, but its embedded taxonomy and `_map` field pattern are compatibility design rather than the preferred pattern for new mappings.
+
+## Implemented schemas
+
+### `metrics_core.map_segment`
+
+| Column | Type | Meaning | Dependency |
+|---|---|---|---|
+| `property_code` | `STRING` | Property scope | Property reference |
+| `source_application_code` | `STRING` | Source application | `lkp_source_application.code` |
+| `code` | `STRING` | Source segment code | Source value |
+| `name` | `STRING` | Source segment name | Source value |
+| `description` | `STRING` | Source description | — |
+| `segment_code` | `STRING` | Standard commercial segment | `lkp_segment.code` |
+| `finance_segment_code` | `STRING` | Standard finance segment | `lkp_finance_segment.code` |
+| `gl_code` | `STRING` | Ledger reference | External finance reference |
+| `is_active` | `BOOL` | Active flag | — |
+| `insert_date` | `DATE` | Insert date | — |
+| `updated_date` | `DATE` | Last update date | — |
+
+Current downstream path:
+
+```text
+map_segment → dim_segment → vw_segment
+```
+
+### `metrics_core.map_roomtype`
+
+| Column | Type | Meaning |
+|---|---|---|
+| `property_code` | `STRING` | Property scope |
+| `source_application_code` | `STRING` | Source application; joins to `lkp_source_application.code` |
+| `roomtype_map` | `STRING` | Source room-type value |
+| `roomtype_code_map` | `STRING` | Source room-type code |
+| `roomtype` | `STRING` | Standard room-type name |
+| `roomtype_code` | `STRING` | Standard room-type code |
+| `roomclass` | `STRING` | Standard room class |
+| `roomclass_code` | `STRING` | Standard room-class code |
+| `roomclass_map` | `STRING` | Source room-class value |
+| `roomclass_code_map` | `STRING` | Source room-class code |
+| `bedtype` | `STRING` | Standard bed type |
+| `bedtype_code` | `STRING` | Standard bed-type code |
+| `roomfeature` | `STRING` | Primary standard room feature |
+| `roompool` | `STRING` | Standard room pool |
+| `roompool_code` | `STRING` | Standard room-pool code |
+| `roompool_map` | `STRING` | Source room-pool value |
+| `roompool_code_map` | `STRING` | Source room-pool code |
+| `related_roomtypes` | `STRING` | Descriptive related-room list |
+| `available_rms` | `INT64` | Room inventory when known |
+| `is_active` | `BOOL` | Active flag |
+| `insert_date` | `DATE` | Insert date |
+| `updated_date` | `DATE` | Last update date |
+
+No current `lkp_roomtype` exists. Room type, class, bed, feature, and pool values are embedded in this table and surfaced through `dim_roomtype`. Normalization remains unresolved.
+
+### `metrics_core.map_source`
+
+| Column | Type | Meaning | Dependency |
+|---|---|---|---|
+| `property_code` | `STRING` | Property scope | Property reference |
+| `source_application_code` | `STRING` | Source application | `lkp_source_application.code` |
+| `code` | `STRING` | Source-application source/subsource code | Source value |
+| `name` | `STRING` | Source-application name | Source value |
+| `description` | `STRING` | Source description | — |
+| `code_reference` | `STRING` | Whether `code` maps a source or subsource | Allowed values `source_code`, `subsource_code` |
+| `source_code` | `STRING` | Standard source | `lkp_source.code` |
+| `subsource_code` | `STRING` | Standard subsource | `lkp_subsource.code` |
+| `channel_code` | `STRING` | Standard channel | `lkp_channel.code` |
+| `is_active` | `BOOL` | Active flag | — |
+| `insert_date` | `DATE` | Insert date | — |
+| `updated_date` | `DATE` | Last update date | — |
+
+Current downstream path:
+
+```text
+map_source → vw_source
+```
+
+Channel classification is currently implemented through `map_source.channel_code`; no separate `map_channel` table exists.
+
+### `metrics_core.map_rate`
+
+| Column | Type | Meaning | Dependency |
+|---|---|---|---|
+| `property_code` | `STRING` | Property scope | Property reference |
+| `source_application_code` | `STRING` | Source application | `lkp_source_application.code` |
+| `code` | `STRING` | Source rate code | Source value |
+| `name` | `STRING` | Source rate name | Source value |
+| `description` | `STRING` | Source rate description | — |
+| `ratetype_code` | `STRING` | Standard rate type | `lkp_ratetype.code` |
+| `company_code` | `STRING` | Standard company/account | `lkp_company.code` |
+| `segment_code` | `STRING` | Standard commercial segment | `lkp_segment.code` |
+| `channel_code` | `STRING` | Standard channel | `lkp_channel.code` |
+| `source_code` | `STRING` | Standard source | `lkp_source.code` |
+| `subsource_code` | `STRING` | Standard subsource | `lkp_subsource.code` |
+| `consortia_code` | `STRING` | Standard consortia | `lkp_consortia.code` |
+| `is_active` | `BOOL` | Active flag | — |
+| `insert_date` | `DATE` | Insert date | — |
+| `updated_date` | `DATE` | Last update date | — |
+
+Current downstream path:
+
+```text
+map_rate → vw_rate
+```
+
+## Source lineage terminology
+
+All implemented source-value mappings use:
+
+```text
+source_application_code → lkp_source_application.code
+```
+
+`lkp_source_application.source_system_type_code` then connects the application to its broad system category.
+
+Generic registry fields such as `source_system`, `source_value`, `standard_code`, or a universal `source_code` field are not the physical schema. Each mapping table has its own columns and targets.
+
+## Registry-only and architecture-only objects
+
+| Object | Status | Current truth | Required decision or action |
+|---|---|---|---|
+| `metrics_core.map_hotel` | **PLANNED** | Registry concept only; no current Dataform DDL | Define source-property identity model and relationship to `dim_property` |
+| `metrics_core.map_channel` | **UNRESOLVED** | Current channel mapping is `map_source.channel_code` | Decide whether a separate table provides additional value |
+| `metrics_core.map_market` | **UNRESOLVED** | No current DDL and no approved canonical market taxonomy | Define market meaning and ownership first |
+| `metrics_core.map_agency` | **UNRESOLVED** | `lkp_agency` exists, but no source-value agency mapping exists | Decide whether source agency codes need property/application mapping |
+| `metrics_core.map_source_metric` | **UNRESOLVED** | Architecture reference only | Define whether it maps raw report columns, metric codes, or ingestion contracts |
+
+These objects must not appear as live editable warehouse tables until Dataform creates them and their ownership is approved.
+
+## Known integrity risks
+
+- BigQuery does not enforce mapping foreign keys.
+- Property references are semantic; current mapping DDL does not declare a physical foreign key to `dim_property`.
+- Existing rows created before migration may have null `source_application_code`.
+- `map_source.code_reference` requires controlled-value validation.
+- `map_roomtype` allows taxonomy drift because standard values are embedded rather than lookup-backed.
+- Multi-target `map_rate` rows can contain incomplete or contradictory classifications.
+
+Validation requirements are documented in [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies).
+
+## Dataform references
+
+```text
+REVREBEL/Metrics-Dataform/definitions/00_create_core_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/05_create_segment_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/05_migrate_segment_mapping_schema.sqlx
+REVREBEL/Metrics-Dataform/definitions/06_create_source_channel_rate_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/06_migrate_source_rate_mapping_schema.sqlx
+```
+
+## Related documentation
+
+- [Lookup Tables](/docs/architecture/data/lookup-tables)
+- [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)
+- [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)

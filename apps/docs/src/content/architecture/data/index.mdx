@@ -1,0 +1,133 @@
+---
+title: Data Architecture
+nav_order: 2
+has_toc: true
+---
+
+# Data Architecture
+
+This section is the canonical entry point for Metrics data-platform documentation.
+
+It defines where each data topic belongs, which existing page remains authoritative during the documentation rebuild, and which follow-up issue will complete the subject documentation.
+
+## Start here
+
+- [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
+- [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)
+- [Source Systems and Ingestion](/docs/architecture/data/source-systems-and-ingestion)
+- [Lookup Tables](/docs/architecture/data/lookup-tables)
+- [Mapping Tables](/docs/architecture/data/mapping-tables)
+- [Dimensions](/docs/architecture/data/dimensions)
+- [Fact Tables](/docs/architecture/data/fact-tables)
+- [Pickup Tables](/docs/architecture/data/pickup-tables)
+- [Reporting Views, Report Tables, and Marts](/docs/architecture/data/reporting-views-and-marts)
+- [Metric Definitions and Semantic Governance](/docs/architecture/data/metric-definitions)
+- [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)
+- [Lineage and Freshness](/docs/architecture/data/lineage-and-freshness)
+- [Validation and Dataform Assertions](/docs/architecture/data/validation-and-assertions)
+- [BigQuery and Dataform](/docs/architecture/data/bigquery-and-dataform)
+- [DuckDB Serving Layer](/docs/architecture/data/duckdb-serving-layer)
+- [Application Data Ownership and Write-Back](/docs/architecture/data/application-data-ownership)
+
+## Source ownership
+
+Use the following authority order when these sources differ:
+
+1. Linear defines product intent, approved terminology, and initiative or project boundaries.
+2. Repository code defines the current application implementation.
+3. Dataform defines the current warehouse schema, dependencies, mappings, lookups, and assertions.
+4. Documentation explains the system but must be reconciled against the sources above.
+5. Registries and fixtures are application scaffolding unless current implementation confirms otherwise.
+
+Documentation must distinguish:
+
+```text
+IMPLEMENTED
+PLANNED
+COMPATIBILITY
+DEPRECATED
+UNRESOLVED
+```
+
+## Canonical topic map
+
+| Topic | Canonical destination | Current disposition | Follow-up |
+|---|---|---|---|
+| Data architecture overview and ownership | `architecture/data/platform-architecture-and-ownership.mdx` | **Current canonical documentation** | REV-63 |
+| Naming and modeling conventions | `architecture/data/naming-and-modeling-conventions.mdx` | **Current canonical documentation** | REV-64 |
+| Source systems and ingestion | `architecture/data/source-systems-and-ingestion.mdx` | **Current canonical documentation** | REV-70 |
+| Lookup tables | `architecture/data/lookup-tables.mdx` | **Current canonical documentation** | REV-65 |
+| Mapping tables | `architecture/data/mapping-tables.mdx` | **Current canonical documentation** | REV-65 |
+| Dimensions | `architecture/data/dimensions.mdx` | **Current canonical documentation** | REV-66 |
+| Fact tables | `architecture/data/fact-tables.mdx` | **Current canonical documentation** | REV-66 |
+| Pickup model and tables | `architecture/data/pickup-tables.mdx` | **Current canonical documentation** | REV-67 |
+| Reporting views, report tables, and marts | `architecture/data/reporting-views-and-marts.mdx` | **Current canonical documentation** | REV-68 |
+| Metric definitions and semantic governance | `architecture/data/metric-definitions.mdx` | **Current canonical documentation** | REV-69 |
+| Table dependencies | `architecture/data/table-dependencies.mdx` | **Current canonical documentation** | REV-65 |
+| Lineage and freshness | `architecture/data/lineage-and-freshness.mdx` | **Current canonical documentation** | REV-70 |
+| Validation and Dataform assertions | `architecture/data/validation-and-assertions.mdx` | **Current canonical documentation** | REV-70 |
+| BigQuery and Dataform responsibilities | `architecture/data/bigquery-and-dataform.mdx` | **Current canonical documentation** | REV-63 |
+| DuckDB serving responsibilities | `architecture/data/duckdb-serving-layer.mdx` | **Current canonical documentation** | REV-63 |
+| Application database ownership and write-back | `architecture/data/application-data-ownership.mdx` | **Current canonical documentation** | REV-71 |
+| Unresolved architecture decisions | `architecture/data/decision-register.mdx` | **Interim register; full reconciliation planned** | REV-72 |
+
+## Existing-page disposition
+
+### Retain for historical and implementation reference
+
+The following documents remain useful for historical or implementation context. They are not authoritative when a canonical page listed above supersedes their policy or terminology.
+
+- `architecture/column-naming-standards.mdx`
+- `architecture/prefix_standards.mdx`
+- `architecture/source-file-ingestion-model.mdx` — historical design reference superseded by the canonical source, lineage, and validation pages
+- `core/segment-model.mdx`
+- `core/source-channel-rate-model.mdx`
+- `core/roomtype-model.mdx`
+- domain documentation under `rms`, `demand`, and `google-analytics`
+
+These pages must not be treated as independent confirmation when they repeat prior architecture work.
+
+### Rewrite or split
+
+- `architecture/table-architecture.mdx`
+
+This page currently mixes confirmed design decisions with physical-object claims. The canonical dimension, fact, pickup, and reporting catalogs now own those definitions. The older page should be retained only as conceptual or historical source material until it is rewritten.
+
+### Keep as historical documentation
+
+- `development/app-migration/01-legacy-application-audit.md`
+- historical route, iframe, registry-adapter, or browser DuckDB migration material
+
+Historical pages should receive explicit banners when they are next edited. They are evidence of prior implementation, not the current architecture authority.
+
+## Navigation order
+
+1. Overview and ownership
+2. Naming and modeling conventions
+3. Source systems and ingestion
+4. Lookup tables
+5. Mapping tables
+6. Dimensions
+7. Fact tables
+8. Pickup tables
+9. Reporting views and marts
+10. Metric definitions
+11. Dependencies, lineage, and validation
+12. BigQuery and Dataform
+13. DuckDB serving layer
+14. Application data ownership
+15. Decision register
+
+## Domain documentation boundary
+
+Domain pages explain source-specific and business-specific behavior. Shared physical schemas belong in the lookup, mapping, dimension, fact, pickup, and reporting catalogs.
+
+## Internal audit
+
+The inventory and gap analysis supporting this structure is maintained at:
+
+```text
+apps/docs/src/content/internal/audits/data-documentation-baseline.md
+```
+
+That audit is an internal work artifact. This page is the navigable canonical index for the maintained documentation set.
