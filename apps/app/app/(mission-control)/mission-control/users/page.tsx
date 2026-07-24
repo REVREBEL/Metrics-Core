@@ -10,7 +10,7 @@ import {
   Users,
   UserX,
 } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 interface UserProfile {
   id: string;
@@ -21,6 +21,42 @@ interface UserProfile {
   tokenCount: number;
   lastActive: string;
 }
+
+const getRoleBadgeColor = (role: UserProfile["role"]) => {
+  switch (role) {
+    case "System Admin":
+      return "bg-violet-500/10 text-violet-400 border-violet-500/20";
+    case "SBU Manager":
+      return "bg-blue-500/10 text-blue-400 border-blue-500/20";
+    case "General Manager":
+      return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+    case "Auditor":
+      return "bg-amber-500/10 text-amber-400 border-amber-500/20";
+  }
+};
+
+const getStatusBadge = (status: UserProfile["status"]) => {
+  switch (status) {
+    case "active":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          ACTIVE
+        </span>
+      );
+    case "suspended":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+          SUSPENDED
+        </span>
+      );
+    case "provisioning":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 animate-pulse">
+          PENDING
+        </span>
+      );
+  }
+};
 
 export default function UserRegistryPage() {
   const [users, setUsers] = useState<UserProfile[]>([
@@ -93,49 +129,24 @@ export default function UserRegistryPage() {
     );
   };
 
-  const filteredUsers = users.filter((u) => {
-    const matchesSearch =
-      u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      u.email.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesRole = roleFilter === "all" || u.role === roleFilter;
-    return matchesSearch && matchesRole;
-  });
+  // Optimized: Use useMemo to prevent expensive filtering on every re-render
+  // This avoids recalculation when user status is toggled or tokens are revoked.
+  const filteredUsers = useMemo(() => {
+    const lowerSearchQuery = searchQuery.toLowerCase();
 
-  const getRoleBadgeColor = (role: UserProfile["role"]) => {
-    switch (role) {
-      case "System Admin":
-        return "bg-violet-500/10 text-violet-400 border-violet-500/20";
-      case "SBU Manager":
-        return "bg-blue-500/10 text-blue-400 border-blue-500/20";
-      case "General Manager":
-        return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
-      case "Auditor":
-        return "bg-amber-500/10 text-amber-400 border-amber-500/20";
-    }
-  };
+    return users.filter((u) => {
+      // Early return if role doesn't match
+      if (roleFilter !== "all" && u.role !== roleFilter) return false;
 
-  const getStatusBadge = (status: UserProfile["status"]) => {
-    switch (status) {
-      case "active":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            ACTIVE
-          </span>
-        );
-      case "suspended":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400 border border-red-500/20">
-            SUSPENDED
-          </span>
-        );
-      case "provisioning":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 animate-pulse">
-            PENDING
-          </span>
-        );
-    }
-  };
+      // Only perform search if there's a query
+      if (!lowerSearchQuery) return true;
+
+      return (
+        u.name.toLowerCase().includes(lowerSearchQuery) ||
+        u.email.toLowerCase().includes(lowerSearchQuery)
+      );
+    });
+  }, [users, searchQuery, roleFilter]);
 
   return (
     <div className="space-y-6">
