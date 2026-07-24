@@ -8,10 +8,10 @@ import {
   IconClock,
   IconUser,
 } from "@tabler/icons-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui-core/card";
 import { useMemo } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui-core/card";
 import {
   Collapsible,
   CollapsibleContent,
@@ -47,12 +47,16 @@ type PersonGroup = {
   department?: string;
   email?: string;
   tasks: Task[];
+  /** Pre-calculated for sorting performance */
+  openTasksCount: number;
 };
 
 type DepartmentGroup = {
   name: string;
   label: string;
   tasks: Task[];
+  /** Pre-calculated for sorting performance */
+  openTasksCount: number;
 };
 
 function getInitials(name: string): string {
@@ -330,7 +334,9 @@ export function ByPersonView({ tasks, onTaskClick }: ByPersonViewProps) {
   const personGroups = useMemo(() => {
     const groups: Record<string, PersonGroup> = {};
 
-    tasks.forEach((task) => {
+    // Single pass to group and pre-calculate open tasks count
+    // This avoids O(N log N * M) complexity during sorting
+    for (const task of tasks) {
       const key = task.assignedTo || "Unassigned";
       if (!groups[key]) {
         groups[key] = {
@@ -340,21 +346,18 @@ export function ByPersonView({ tasks, onTaskClick }: ByPersonViewProps) {
             : "app_user",
           department: task.assignedTo ? task.assignedDepartment : undefined,
           tasks: [],
+          openTasksCount: 0,
         };
       }
       groups[key].tasks.push(task);
-    });
+      if (task.status !== "complete" && task.status !== "canceled") {
+        groups[key].openTasksCount++;
+      }
+    }
 
-    return Object.values(groups).sort((a, b) => {
-      // Sort by open tasks count (descending)
-      const aOpen = a.tasks.filter(
-        (t) => t.status !== "complete" && t.status !== "canceled",
-      ).length;
-      const bOpen = b.tasks.filter(
-        (t) => t.status !== "complete" && t.status !== "canceled",
-      ).length;
-      return bOpen - aOpen;
-    });
+    return Object.values(groups).sort(
+      (a, b) => b.openTasksCount - a.openTasksCount,
+    );
   }, [tasks]);
 
   return (
@@ -383,7 +386,9 @@ export function ByDepartmentView({
   const departmentGroups = useMemo(() => {
     const groups: Record<string, DepartmentGroup> = {};
 
-    tasks.forEach((task) => {
+    // Single pass to group and pre-calculate open tasks count
+    // This avoids O(N log N * M) complexity during sorting
+    for (const task of tasks) {
       const key = task.assignedDepartment || "unassigned";
       if (!groups[key]) {
         const deptInfo = departments.find((d) => d.value === key);
@@ -391,21 +396,18 @@ export function ByDepartmentView({
           name: key,
           label: deptInfo?.label || (key === "unassigned" ? "Unassigned" : key),
           tasks: [],
+          openTasksCount: 0,
         };
       }
       groups[key].tasks.push(task);
-    });
+      if (task.status !== "complete" && task.status !== "canceled") {
+        groups[key].openTasksCount++;
+      }
+    }
 
-    return Object.values(groups).sort((a, b) => {
-      // Sort by open tasks count (descending)
-      const aOpen = a.tasks.filter(
-        (t) => t.status !== "complete" && t.status !== "canceled",
-      ).length;
-      const bOpen = b.tasks.filter(
-        (t) => t.status !== "complete" && t.status !== "canceled",
-      ).length;
-      return bOpen - aOpen;
-    });
+    return Object.values(groups).sort(
+      (a, b) => b.openTasksCount - a.openTasksCount,
+    );
   }, [tasks]);
 
   return (

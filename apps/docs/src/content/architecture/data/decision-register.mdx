@@ -1,0 +1,476 @@
+---
+title: Data Architecture Decision Register
+nav_order: 15
+has_toc: true
+---
+
+# Data Architecture Decision Register
+
+This is the canonical register for unresolved Metrics data-architecture decisions.
+
+Its purpose is to prevent a missing implementation, registry entry, historical document, or prior ChatGPT recommendation from being presented as approved architecture.
+
+## How to use this register
+
+A decision belongs here when at least one of the following is true:
+
+- Linear has not approved the target behavior;
+- current Dataform and repository code implement conflicting contracts;
+- multiple technically valid options remain;
+- an ownership, migration, versioning, or publication boundary is not settled;
+- implementation cannot proceed safely without a product or architecture decision.
+
+A missing table or package is not automatically an unresolved product decision. When product direction is already clear and only implementation remains, the item should be tracked as **PLANNED** in the canonical subject documentation rather than retained here.
+
+## Decision record fields
+
+Each item records:
+
+| Field | Meaning |
+|---|---|
+| Decision ID | Stable identifier used in issues, reviews, and implementation plans |
+| Decision question | The precise question that still requires approval |
+| Decision owner | Role or workstream accountable for approval; named ownership may be assigned later |
+| Current evidence | What Linear, repository code, Dataform, and docs currently show |
+| Current options | Viable choices still under consideration |
+| Blocking impact | Work that should not be finalized until the decision is made |
+| Affected contracts | Relevant tables, packages, routes, or documentation |
+| Related work | Linear issues or canonical docs that own follow-up |
+
+## Mapping and taxonomy decisions
+
+### DAR-001 — Channel mapping ownership
+
+**Decision question:** Should channel remain a canonical target on `map_source`, or should source-system channel values be managed through a separate `map_channel` table?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Governance and Commercial Taxonomy |
+| Current evidence | Dataform currently implements `map_source.channel_code`. No current `map_channel` DDL exists. Application registries have referenced a separate channel mapping concept. |
+| Current options | Keep channel on `map_source`; create property/source-scoped `map_channel`; create a global channel mapping with property overrides. |
+| Blocking impact | Channel mapping UI, uniqueness assertions, source/channel lineage, and future source-grain facts. |
+| Affected contracts | `metrics_core.map_source`, `metrics_core.lkp_channel`, mapping registry, source and channel documentation. |
+| Related work | REV-65, REV-72; [Mapping Tables](/docs/architecture/data/mapping-tables) |
+
+### DAR-002 — Agency mapping layer
+
+**Decision question:** Does agency require source-value mapping, or is the governed agency lookup sufficient?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Governance and Sales Distribution |
+| Current evidence | `lkp_agency` exists. No current `map_agency` DDL exists. |
+| Current options | Lookup only; property/source-scoped `map_agency`; agency handled through company/source mappings; defer until an agency-bearing fact is implemented. |
+| Blocking impact | Agency reporting grain, agency normalization, orphan assertions, and application mapping workflows. |
+| Affected contracts | `metrics_core.lkp_agency`, future agency facts and mappings, mapping registry. |
+| Related work | REV-65, REV-72 |
+
+### DAR-003 — Canonical market definition
+
+**Decision question:** What does `market` mean in Metrics, and does it represent a demand market, geographic market, PMS market code, commercial classification, or another governed concept?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Product, Revenue Strategy, and Data Governance |
+| Current evidence | No current `map_market` DDL exists. Historical and source-system usage of “market” is not sufficiently consistent to define one canonical model. |
+| Current options | Governed commercial market taxonomy; source-native market codes mapped to a lookup; geographic market dimension; separate concepts with distinct names. |
+| Blocking impact | `map_market`, market dimensions, market-segment relationships, reporting filters, and PMS import contracts. |
+| Affected contracts | Future `lkp_market`, `map_market`, facts carrying market identifiers, domain docs. |
+| Related work | REV-65, REV-72 |
+
+### DAR-004 — Room taxonomy normalization
+
+**Decision question:** Should room type, room class, and room pool become separate governed lookups and mappings, or remain embedded in the current room-type mapping contract?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Governance and Rooms Analytics |
+| Current evidence | Current `map_roomtype` retains room-type, room-class, and room-pool compatibility fields. No current `lkp_roomtype` DDL exists. |
+| Current options | Normalize all three entities; normalize room type and class but retain room pool as source metadata; preserve current embedded model; property-owned room taxonomy with global classifications. |
+| Blocking impact | Room facts, room-class pickup, hierarchy assertions, room inventory mapping, and migration of compatibility fields. |
+| Affected contracts | `map_roomtype`, `dim_roomtype`, future room lookups, room-class and room-type facts. |
+| Related work | REV-65, REV-66, REV-67, REV-72; [Dimensions](/docs/architecture/data/dimensions) |
+
+### DAR-005 — `map_source_metric` responsibility
+
+**Decision question:** Is `map_source_metric` a source-field-to-metric mapping, a source taxonomy mapping, a metric availability registry, or an obsolete concept?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Metrics Library and Data Governance |
+| Current evidence | No current Dataform DDL exists. The name appears in earlier architecture and registry concepts without one approved contract. |
+| Current options | Source-field mapping to governed metric codes; source-specific metric alias registry; availability metadata; remove the concept. |
+| Blocking impact | Metric ingestion, source reconciliation, metric lineage, and the Metrics Library publication model. |
+| Affected contracts | Future `map_source_metric`, `packages/metrics`, ingestion metadata, metric definitions. |
+| Related work | REV-65, REV-69, REV-72 |
+
+### DAR-006 — Mapping scope and override hierarchy
+
+**Decision question:** Which mappings are global, which are property-specific, and can a property override a global mapping?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Governance and Tenancy Architecture |
+| Current evidence | Current implemented mappings are generally property- and source-application-scoped. Global fallback behavior is not implemented. |
+| Current options | Property-only mappings; global mappings with property overrides; organization-level mappings with property overrides; domain-specific scope rules. |
+| Blocking impact | Unique keys, publication conflicts, inherited mappings, permissions, and mapping UI behavior. |
+| Affected contracts | `map_segment`, `map_roomtype`, `map_source`, `map_rate`, future mapping tables, application persistence. |
+| Related work | REV-65, REV-71, REV-72 |
+
+### DAR-007 — Property/source identifier mapping
+
+**Decision question:** What is the canonical model for associating property identifiers from PMS, CRS, RMS, GA4, rate-shopping, and other source applications with `dim_property.property_code`?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Platform and Data Governance |
+| Current evidence | `map_hotel` appears in registry concepts, but no current Dataform DDL exists. `dim_property` carries several source identifiers directly. |
+| Current options | Dedicated source-identifier mapping table; source-specific columns on `dim_property`; hybrid model with primary identifiers plus extensible mappings. |
+| Blocking impact | Multi-source ingestion, property matching, source onboarding, lineage, and identifier migration. |
+| Affected contracts | `dim_property`, future `map_hotel` or property identifier table, ingestion contracts. |
+| Related work | REV-65, REV-70, REV-72 |
+
+## Dimension, fact, and pickup decisions
+
+### DAR-008 — Canonical `dim_segment` schema
+
+**Decision question:** Which current `dim_segment` definition is canonical, and how should the conflicting DDL be migrated?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Platform and Commercial Taxonomy |
+| Current evidence | `00_create_core_tables.sqlx` and `05_create_segment_tables.sqlx` define different shapes using `CREATE TABLE IF NOT EXISTS`. Runtime shape can depend on creation history. |
+| Current options | Adopt the commercial/finance segment model; preserve the earlier shape with an enriched view; create a migration to one replacement dimension. |
+| Blocking impact | Segment joins, facts, view contracts, assertions, and reliable deployment. |
+| Affected contracts | `metrics_core.dim_segment`, `vw_segment`, segment mappings, Dataform migrations. |
+| Related work | REV-64, REV-66, REV-72 |
+
+### DAR-009 — Pace snapshot migration
+
+**Decision question:** Should current `snap_pace_*` tables remain compatibility tables, be renamed to grain-specific `fact_` tables, or be replaced by new facts while retaining compatibility views?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Platform |
+| Current evidence | Current measurable pace tables use `snap_`. Canonical naming guidance prefers explicit grain-specific `fact_` tables for new work. |
+| Current options | Keep indefinitely as compatibility objects; migrate physical tables and retain compatibility views; create new facts and deprecate snapshots. |
+| Blocking impact | New ingestion, downstream reports, table naming, migration sequence, and compatibility guarantees. |
+| Affected contracts | `metrics_pace.snap_pace_*`, `vw_pace_*`, staging tables, DuckDB extracts. |
+| Related work | REV-64, REV-66, REV-72 |
+
+### DAR-010 — Snapshot partitioning and clustering
+
+**Decision question:** What partition and clustering contract should apply to the physical pace snapshot or replacement fact tables?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Platform |
+| Current evidence | Staging tables declare layouts. Current snapshot creation statements do not. |
+| Current options | Partition by `stay_date`; partition by `snap_date`; partition by one and cluster by the other plus property/grain keys; redesign during fact migration. |
+| Blocking impact | Query cost, refresh strategy, retention, and production fact implementation. |
+| Affected contracts | `snap_pace_*`, future pace facts, reporting views. |
+| Related work | REV-66, REV-70, REV-72 |
+
+### DAR-011 — Pace source coexistence and unique grain
+
+**Decision question:** May multiple source applications, reports, or load batches coexist for the same property, observation date, stay date, and analytical grain?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Platform and Data Governance |
+| Current evidence | Current staging carries source application, report, file, and load timestamps. The approved uniqueness key has not been established. |
+| Current options | One authoritative source per property and grain; multiple sources distinguished in the physical grain; source-priority resolution before facts; retain raw coexistence only in staging. |
+| Blocking impact | Unique-key assertions, source precedence, duplicate handling, and fact grain. |
+| Affected contracts | `stg_pace_*`, `snap_pace_*`, future pace facts, source priority configuration. |
+| Related work | REV-66, REV-70, REV-72 |
+
+### DAR-012 — Pickup source grain
+
+**Decision question:** Which governed source identifier belongs in source-level pickup facts?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Revenue Strategy, Metrics Library, and Data Governance |
+| Current evidence | Source, subsource, and channel are modeled separately in the commercial taxonomy. No pickup facts are implemented. |
+| Current options | Separate source, subsource, and channel pickup families; one source fact carrying all compatible codes; durable source-key dimension; limit pickup to canonical source only. |
+| Blocking impact | Source pickup grain, metric aggregation, channel reporting, and pickup table design. |
+| Affected contracts | Future pickup facts, `map_source`, source lookups, metric dimensions. |
+| Related work | REV-67, REV-72 |
+
+### DAR-013 — Pickup comparison model
+
+**Decision question:** How should non-fixed-day comparisons such as prior year, prior forecast cycle, and prior budget version be represented?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Metrics Library and Data Platform |
+| Current evidence | Fixed rolling windows use the planned `window_days INT64` convention. Other comparison types cannot be represented reliably by that field alone. |
+| Current options | Add `comparison_type`; add comparison-version keys; create separate fact families; model comparison periods in a governed dimension. |
+| Blocking impact | Pickup schema, metric codes, prior-year analysis, and forecast-cycle reporting. |
+| Affected contracts | Future pickup facts and comparison dimensions. |
+| Related work | REV-67, REV-69, REV-72 |
+
+### DAR-014 — Pickup numeric storage type
+
+**Decision question:** What physical type should the long/narrow pickup `metric_value` use?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Platform and Metrics Library |
+| Current evidence | Long/narrow metric storage is conceptually approved, but no physical fact exists. Candidate metrics include counts, currency, rates, ratios, and potentially higher-precision values. |
+| Current options | `NUMERIC`; `BIGNUMERIC`; typed value columns; separate tables by metric family. |
+| Blocking impact | Precision, performance, validation, exports, and metric compatibility. |
+| Affected contracts | Future pickup facts, metric definitions, serving extracts. |
+| Related work | REV-67, REV-69, REV-72 |
+
+### DAR-015 — Room-class pickup family
+
+**Decision question:** Should room-class pickup be a first-class fact family?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Revenue Strategy and Data Platform |
+| Current evidence | Current pace supports room-class snapshots. The approved pickup family currently names property, segment, source, and room type. |
+| Current options | Add room-class pickup; derive from room type where hierarchy is reliable; omit until a use case is approved. |
+| Blocking impact | Pickup table family, room taxonomy normalization, and reporting parity with pace. |
+| Affected contracts | Future room-class pickup fact, room mappings, room hierarchy. |
+| Related work | REV-67, REV-72 |
+
+## Metrics Library and reporting decisions
+
+### DAR-016 — Metric persistence and executable formulas
+
+**Decision question:** Which parts of a governed metric definition are code-owned, application-database-owned, or warehouse-owned, and how are formulas executed consistently?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Metrics Library, Data Platform, and Application Architecture |
+| Current evidence | Dataform SQL and compatibility DuckDB SQL contain formulas. `packages/metrics` and a versioned metric registry are not implemented. |
+| Current options | Code-first definitions; database-first definitions; hybrid metadata plus executable code; compiled definitions published to both warehouse and serving layers. |
+| Blocking impact | Versioning, approvals, formula execution, test parity, cards, reports, and AI consumers. |
+| Affected contracts | `packages/metrics`, Dataform calculations, DuckDB queries, application persistence. |
+| Related work | REV-69, REV-71, REV-72 |
+
+### DAR-017 — Metric comparison taxonomy
+
+**Decision question:** What are the canonical identities and names for absolute variance, percentage change, percentage-point change, attainment, and index metrics?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Metrics Library and Revenue Strategy |
+| Current evidence | Compatibility calculations exist, but naming and units are not consistently governed. |
+| Current options | Separate metric codes per comparison type; base metric plus comparison metadata; governed formula templates. |
+| Blocking impact | Dashboard labels, exports, report consistency, and metric versioning. |
+| Affected contracts | Metric definitions, DuckDB calculations, report and card configurations. |
+| Related work | REV-69, REV-72 |
+
+### DAR-018 — ALOS denominator and stay treatment
+
+**Decision question:** Should ALOS use reservations, arrivals, completed stays, or another denominator, and how should cancellations, no-shows, multi-room reservations, split stays, and in-house stays be handled?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Revenue Strategy and Metrics Library |
+| Current evidence | No governed reservation-count or stay-count denominator is implemented in current Dataform outputs. |
+| Current options | Reservation-based ALOS; completed-stay ALOS; separate booked and realized ALOS metrics. |
+| Blocking impact | ALOS publication, required facts, source precedence, and dimensional support. |
+| Affected contracts | Future reservation/stay facts, metric definitions, reporting outputs. |
+| Related work | REV-69, REV-72 |
+
+### DAR-019 — Metric mart storage shape
+
+**Decision question:** Should metric marts store named columns, long/narrow metric-code rows, or both?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Platform and Metrics Library |
+| Current evidence | No canonical `mart_` objects are implemented. Planned pickup uses a long/narrow concept, while current views expose named fields. |
+| Current options | Named wide marts; long/narrow metric rows; governed wide marts built from a metric registry; use-case-specific combination. |
+| Blocking impact | BI contracts, schema evolution, DuckDB extracts, and generic card queries. |
+| Affected contracts | Future marts, `packages/data`, metric registry, exports. |
+| Related work | REV-68, REV-69, REV-72 |
+
+## Application ownership and publication decisions
+
+### DAR-020 — Application persistence technology and package boundary
+
+**Decision question:** Which persistence technology, schema package, and migration ownership will store application workflow state?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Application Architecture and Platform Foundation |
+| Current evidence | No canonical production application-database package or schema is confirmed. Current UI workflows are largely fixture- or local-state-backed. |
+| Current options | Postgres with an approved ORM; managed application database service; separate service-owned schemas; phased persistence by feature. |
+| Blocking impact | Users, permissions, workspaces, drafts, approvals, campaigns, notes, and publication jobs. |
+| Affected contracts | Future database package, app services, auth, tenancy, migrations. |
+| Related work | REV-15, REV-59, REV-71, REV-72 |
+
+### DAR-021 — Manual budget and forecast publication shape
+
+**Decision question:** How should an approved budget or forecast version be published into the analytical warehouse?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Commercial Planning, Metrics Library, and Data Platform |
+| Current evidence | Draft ownership is assigned to the application database. No current manual-plan fact exists in Dataform. |
+| Current options | Grain-specific plan facts; long/narrow manual-plan fact; report tables generated from application records; hybrid base fact plus governed marts. |
+| Blocking impact | Commercial Plan persistence, scenario reporting, budget attainment, revisions, and warehouse write-back. |
+| Affected contracts | Application planning schema, future plan facts, metric definitions, reports and marts. |
+| Related work | REV-66, REV-69, REV-71, REV-72 |
+
+### DAR-022 — Planning version and supersession rules
+
+**Decision question:** How are published plans revised without rewriting historical reporting?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Commercial Planning and Data Governance |
+| Current evidence | Canonical docs require immutable or versioned publication, but no version-selection rule is approved. |
+| Current options | Effective-dated versions; explicit supersession chain; one active version per scenario and period with full history; snapshot each publication. |
+| Blocking impact | Historical dashboards, approvals, exports, forecast cycles, and reconciliation. |
+| Affected contracts | Application planning records, warehouse plan facts, report filters. |
+| Related work | REV-71, REV-72 |
+
+### DAR-023 — Mapping and planning publication transport
+
+**Decision question:** How do approved application records reach BigQuery safely and idempotently?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Application Architecture and Data Platform |
+| Current evidence | Direct browser-to-BigQuery writes are prohibited. No canonical service, staging table, generated-file, or job contract is implemented. |
+| Current options | Authenticated publication service with warehouse merge; application-generated versioned files consumed by ingestion; controlled staging tables plus Dataform processing; event-driven pipeline. |
+| Blocking impact | Mapping publication, manual plans, retries, audit, security, and failure recovery. |
+| Affected contracts | App services, publication jobs, staging tables, Dataform assertions, audit models. |
+| Related work | REV-70, REV-71, REV-72 |
+
+### DAR-024 — Publication state and identifier contract
+
+**Decision question:** What states and durable identifiers connect an application version, approval, publication job, and warehouse batch?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Application Architecture and Data Platform |
+| Current evidence | Approval and publication are documented as separate concerns, but no shared identifier or state schema exists. |
+| Current options | Application-owned publication ID propagated to the warehouse; warehouse batch ID written back to the app; paired IDs with one correlation key. |
+| Blocking impact | Idempotency, retries, reconciliation, audit, and support diagnostics. |
+| Affected contracts | Application audit, publication jobs, warehouse load history, reporting lineage. |
+| Related work | REV-70, REV-71, REV-72 |
+
+## Serving, ingestion, and operations decisions
+
+### DAR-025 — Browser versus server-side DuckDB
+
+**Decision question:** Which analytical workloads should run in browser DuckDB-WASM, server-side DuckDB, or a hybrid serving architecture?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Platform and Application Architecture |
+| Current evidence | A browser-side DuckDB-WASM hook exists under `packages/ui`. Canonical ownership guidance places analytical runtimes outside the UI package. |
+| Current options | Browser-only for approved extracts; server-only; hybrid by dataset size, sensitivity, and interaction pattern. |
+| Blocking impact | Package migration, security, caching, offline behavior, query contracts, and deployment architecture. |
+| Affected contracts | `packages/ui/src/hooks/use-hotel-analytics.ts`, planned `packages/data`, Parquet serving, app services. |
+| Related work | REV-63, REV-72; [DuckDB Serving Layer](/docs/architecture/data/duckdb-serving-layer) |
+
+### DAR-026 — Ingestion orchestration and scheduling
+
+**Decision question:** Which service owns file acquisition, API extraction, scheduling, retries, quarantine, and notifications before Dataform transformations run?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Platform |
+| Current evidence | Dataform creates warehouse structures. No canonical ingestion service or scheduler is implemented. |
+| Current options | Managed cloud workflows; dedicated ingestion service; source-specific jobs behind one control contract; external orchestrator. |
+| Blocking impact | Production source onboarding, refresh SLAs, retry behavior, and ownership of failed loads. |
+| Affected contracts | Ingestion services, staging tables, load registry, Dataform workflows. |
+| Related work | REV-70, REV-72 |
+
+### DAR-027 — Load and refresh control model
+
+**Decision question:** What operational tables and identifiers will record source loads, transformations, assertions, freshness, retries, and publication health?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Platform and Data Operations |
+| Current evidence | Staging rows carry descriptive lineage and `load_ts`. No durable file-load key, refresh-history table, or consolidated data-health model exists. |
+| Current options | Central load and action history model; separate ingestion and transformation control tables; external observability system plus warehouse summary tables. |
+| Blocking impact | Freshness reporting, lineage, failure visibility, idempotency, and support operations. |
+| Affected contracts | Future control tables, `dim_source_report`, staging rows, application health indicators. |
+| Related work | REV-70, REV-72 |
+
+### DAR-028 — Assertion severity and publication gate
+
+**Decision question:** Which assertion failures block publication, which permit publication with warnings, and where are those outcomes persisted?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Governance and Data Platform |
+| Current evidence | Current Dataform definitions contain no native assertions or unified publication gate. |
+| Current options | Strict blocking by default; severity-based thresholds; domain-specific gates; staged warning period before enforcement. |
+| Blocking impact | Production trust, mapping coverage, fact publication, and data-health status. |
+| Affected contracts | Dataform assertions, workflow orchestration, control tables, application health surfaces. |
+| Related work | REV-70, REV-72 |
+
+### DAR-029 — Freshness service levels
+
+**Decision question:** What cadence, arrival window, grace period, warning threshold, and failure threshold apply to each production source and output?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Data Operations and Product Owners |
+| Current evidence | Freshness semantics are documented, but no approved source-by-source service-level matrix exists. |
+| Current options | Source-specific contracts; domain-level defaults with exceptions; consumer-tier service levels. |
+| Blocking impact | Alerts, stale-data banners, publication gates, and operational accountability. |
+| Affected contracts | Source registry, load history, marts, application health indicators. |
+| Related work | REV-70, REV-72 |
+
+### DAR-030 — Future pricing-data scope and ownership
+
+**Decision question:** Which pricing observations belong in Metrics, at what grain, from which sources, and under which ownership model?
+
+| Field | Current record |
+|---|---|
+| Decision owner | Revenue Strategy, Product, and Data Platform |
+| Current evidence | Historical pricing and rate-shop documents exist, but no current canonical pricing fact family is implemented in Dataform. |
+| Current options | Public-rate observations only; property strategy and restrictions; competitor rate-shop facts; separate source-specific facts with governed marts; defer until source contracts are approved. |
+| Blocking impact | Pricing dashboards, competitive reporting, rate-shop ingestion, restrictions modeling, and pricing recommendations. |
+| Affected contracts | Future pricing facts, rate lookups and mappings, source lineage, reporting marts. |
+| Related work | REV-66, REV-68, REV-72 |
+
+## Confirmed boundaries removed from the unresolved list
+
+These items are no longer open architecture questions, although implementation work may remain:
+
+| Confirmed boundary | Canonical documentation |
+|---|---|
+| BigQuery owns canonical analytical history and published warehouse outputs | [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership) |
+| Application persistence owns drafts, approvals, notes, preferences, and other workflow state | [Application Data Ownership and Write-Back](/docs/architecture/data/application-data-ownership) |
+| Browser components must not write directly to BigQuery | [Application Data Ownership and Write-Back](/docs/architecture/data/application-data-ownership) |
+| Draft mapping edits belong in application workflow state before controlled publication | [Application Data Ownership and Write-Back](/docs/architecture/data/application-data-ownership) |
+| Current `map_source` physically carries `channel_code` | [Mapping Tables](/docs/architecture/data/mapping-tables) |
+| No current canonical pickup facts are implemented | [Pickup Tables](/docs/architecture/data/pickup-tables) |
+| No current canonical `rpt_` or `mart_` objects are implemented | [Reporting Views, Report Tables, and Marts](/docs/architecture/data/reporting-views-and-marts) |
+| No native Dataform assertions were identified in the reviewed definitions | [Validation and Dataform Assertions](/docs/architecture/data/validation-and-assertions) |
+
+## Decision process
+
+1. Confirm that the question is still unresolved in Linear, repository code, and Dataform.
+2. Assign an accountable decision owner.
+3. Record viable options and downstream impact.
+4. Approve the decision in Linear or another designated product record.
+5. Update the canonical subject documentation.
+6. Remove the item from this register.
+7. Create implementation and migration issues where needed.
+8. Add assertions or tests that prevent regression when the decision affects a physical contract.
+
+## Related documentation
+
+- [Data Architecture](/docs/architecture/data)
+- [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
+- [Mapping Tables](/docs/architecture/data/mapping-tables)
+- [Fact Tables](/docs/architecture/data/fact-tables)
+- [Pickup Tables](/docs/architecture/data/pickup-tables)
+- [Metric Definitions and Semantic Governance](/docs/architecture/data/metric-definitions)
+- [Lineage and Freshness](/docs/architecture/data/lineage-and-freshness)
+- [Validation and Dataform Assertions](/docs/architecture/data/validation-and-assertions)
+- [Application Data Ownership and Write-Back](/docs/architecture/data/application-data-ownership)

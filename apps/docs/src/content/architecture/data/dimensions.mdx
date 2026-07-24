@@ -1,0 +1,285 @@
+---
+title: Dimensions
+nav_order: 6
+has_toc: true
+---
+
+# Dimensions
+
+This page is the canonical catalog for implemented analytical dimensions in Metrics.
+
+The current maintained Dataform implementation source is `REVREBEL/Metrics-Dataform`. `REVREBEL/Metrics-Core` does not currently contain `packages/dataform`, so implementation claims below are based on the current definitions in the standalone Dataform repository.
+
+## Dimension principles
+
+- A dimension describes a reusable business entity or classification.
+- One row must represent one documented business grain.
+- Dimensions may use a governed natural key, a scoped composite key, or a surrogate key when required.
+- A lookup is not automatically a dimension, and a mapping table is not automatically a dimension.
+- Source, channel, rate, and related taxonomies are currently exposed through lookup, mapping, and enrichment-view models rather than separate `dim_` tables.
+
+## Implemented inventory
+
+| Dimension | Status | One row per | Partitioning | Clustering | Assertions in reviewed DDL |
+|---|---|---|---|---|---|
+| `metrics_core.dim_property` | **IMPLEMENTED** | Governed property code | None declared | None declared | None declared |
+| `metrics_core.dim_date` | **IMPLEMENTED** | Hotel stay/service date | None declared | None declared | None declared |
+| `metrics_core.dim_segment` | **COMPATIBILITY** | Property and source-segment relationship or standard segment row, depending on existing physical schema | None declared | None declared | None declared |
+| `metrics_core.dim_roomtype` | **IMPLEMENTED** | Property and standardized room-type code | None declared | None declared | None declared |
+| `metrics_core.dim_metric` | **IMPLEMENTED** | Metric code | None declared | None declared | None declared |
+| `metrics_core.dim_source_report` | **IMPLEMENTED** | Source report identifier | None declared | None declared | None declared |
+
+`dim_segment` is marked **COMPATIBILITY** because current Dataform contains two `CREATE TABLE IF NOT EXISTS` definitions with different schemas. The deployed shape depends on which definition created the table first and whether the table predated the normalized definition. This must be resolved in Dataform before one schema is presented as universally authoritative.
+
+## `metrics_core.dim_property`
+
+**Grain:** one row per governed `property_code`.
+
+**Key:** `property_code` is the natural business key. No separate surrogate property key is defined.
+
+Current columns:
+
+```text
+property_code
+property_name
+property_shortname
+property_status
+rating
+brand
+market
+city
+state
+country
+timezone
+str_id
+crs_id
+pms_id
+rms_id
+rateshop_id
+available_rms
+open_date
+close_date
+source_file
+insert_date
+updated_date
+```
+
+External identifiers such as `pms_id`, `crs_id`, and `rms_id` are source-platform identifiers. They do not replace the canonical property code.
+
+No current `map_hotel` table resolves source-specific property identifiers. That relationship remains planned or unresolved.
+
+## `metrics_core.dim_date`
+
+**Grain:** one row per `stay_date`.
+
+**Keys:**
+
+- `stay_date` is the natural date key used by hotel-service facts.
+- `date_key` is an implemented numeric surrogate in `YYYYMMDD` form.
+
+Current columns:
+
+```text
+stay_date
+date_key
+year
+quarter
+month
+month_name
+month_start_date
+week
+day_of_week
+day_of_week_no
+is_weekend
+```
+
+The explicit `stay_date` name is preferred over a generic `date` because hotel models distinguish stay dates, snapshot dates, extraction dates, and processing dates.
+
+## `metrics_core.dim_segment`
+
+### Normalized target definition
+
+The normalized definition in `05_create_segment_tables.sqlx` models:
+
+```text
+property_code
+map_segment_code
+segment_code
+segment_group_code
+finance_segment_code
+gl_code
+is_active
+insert_date
+updated_date
+```
+
+**Intended grain:** one row per property and source segment code resolved to commercial and finance classifications.
+
+Relationships:
+
+```text
+map_segment_code → map_segment.code
+segment_code → lkp_segment.code
+segment_group_code → lkp_segment_group.code
+finance_segment_code → lkp_finance_segment.code
+```
+
+`vw_segment` enriches this normalized code set with names, descriptions, and sort order.
+
+### Compatibility definition
+
+`00_create_core_tables.sqlx` also defines `dim_segment` with denormalized names and classifications, including:
+
+```text
+segment
+segment_code
+segment_group
+segment_group_code
+finance_segment
+finance_segment_code
+gl_code
+segment_category
+rate_basis
+segment_sort
+is_active
+insert_date
+updated_date
+```
+
+Because both definitions use `CREATE TABLE IF NOT EXISTS`, current Dataform does not migrate one shape into the other. Documentation therefore cannot claim a single deployed physical schema without inspecting the target BigQuery table.
+
+### Commercial versus finance segments
+
+Commercial and finance segment classifications are separate:
+
+```text
+segment_code → lkp_segment.code
+finance_segment_code → lkp_finance_segment.code
+```
+
+A row may carry both. `segment_code` must not be reused to mean the finance classification.
+
+## `metrics_core.dim_roomtype`
+
+**Grain:** one row per property and standardized `roomtype_code`.
+
+**Logical key:** `property_code + roomtype_code`.
+
+Current columns:
+
+```text
+property_code
+roomtype
+roomtype_code
+roomclass
+roomclass_code
+bedtype
+bedtype_code
+roomfeature
+roompool
+roompool_code
+related_roomtypes
+available_rms
+roomtype_sort
+is_active
+insert_date
+updated_date
+```
+
+There is no implemented `lkp_roomtype`. Room type, class, bed type, feature, and room pool values are currently standardized through the compatibility `map_roomtype` model and then represented in `dim_roomtype`.
+
+## `metrics_core.dim_metric`
+
+**Grain:** one row per `metric_code`.
+
+Current columns:
+
+```text
+metric_code
+metric_name
+metric_category
+metric_type
+is_additive
+calc_method
+formula
+display_format
+description
+insert_date
+updated_date
+```
+
+This table is an implemented metric dictionary, but it does not by itself establish that every formula is governed, validated, or consumed consistently by the application. REV-69 owns semantic-governance documentation.
+
+## `metrics_core.dim_source_report`
+
+**Grain:** one row per `source_report_id`.
+
+Current columns:
+
+```text
+source_report_id
+source_application_code
+source_report
+source_file
+property_code
+report_grain
+report_type
+extract_date
+insert_date
+```
+
+Relationships:
+
+```text
+source_application_code → lkp_source_application.code
+property_code → dim_property.property_code
+report_type → lkp_report_type.report_type
+```
+
+The latter two are semantic relationships in current DDL; BigQuery does not enforce them as physical foreign keys.
+
+## Dimensions not currently implemented
+
+The following concepts may appear in planning material or application scaffolding but are not implemented as current `dim_` tables:
+
+| Concept | Status | Current implementation |
+|---|---|---|
+| Source | **UNRESOLVED** as a separate dimension | `map_source`, source lookups, and `vw_source` |
+| Channel | **UNRESOLVED** as a separate dimension | `lkp_channel`, `lkp_channel_group`, and `vw_source`/`vw_rate` |
+| Rate | **UNRESOLVED** as a separate dimension | `map_rate`, `lkp_rate`, and `vw_rate` |
+| Company/account | **UNRESOLVED** as a separate dimension | `lkp_company` and `vw_rate` |
+| Agency | **UNRESOLVED** as a separate dimension | `lkp_agency`; no `map_agency` |
+| Market | **UNRESOLVED** | Property text field and no approved market dimension or mapping |
+
+Do not create duplicate `dim_` tables solely to mirror every lookup. A separate dimension should have a distinct analytical grain, durable key, and consumer need.
+
+## Required lineage and audit behavior
+
+Dimensions should carry only the lineage and audit fields appropriate to their ownership model.
+
+Current patterns include:
+
+```text
+source_file
+source_application_code
+insert_date
+updated_date
+is_active
+```
+
+`dim_date` has no audit columns in current DDL. `dim_source_report` is append-oriented and has `insert_date` but no `updated_date` or `is_active`.
+
+## Dataform source references
+
+```text
+REVREBEL/Metrics-Dataform/definitions/00_create_core_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/05_create_segment_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/01_create_source_application_tables.sqlx
+```
+
+## Related documentation
+
+- [Fact Tables](/docs/architecture/data/fact-tables)
+- [Mapping Tables](/docs/architecture/data/mapping-tables)
+- [Lookup Tables](/docs/architecture/data/lookup-tables)
+- [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)
