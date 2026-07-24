@@ -280,6 +280,23 @@ The earlier legacy-location pages under `apps/docs/src/content/architecture` for
 
 These documents were created from then-current repository and Dataform definitions. They should be updated when the schema changes and should not be treated as independent proof of the schema.
 
+## StayInTouch PMS pipeline memory
+
+The StayInTouch PMS source documentation is maintained at:
+
+```text
+apps/docs/src/content/stay-in-touch-pms/index.mdx
+```
+
+Durable pipeline context:
+
+- The former Step 06 has been removed.
+- The final Step 05 now includes both final naming/code amendments and the BigQuery upload function using `pandas_gbq.to_gbq`.
+- Future documentation and PR reviews must not assume a six-step pipeline or look for a separate Step 06 upload module.
+- Before reviewing links, verify the current committed Step 05 notebook and Python-export filenames because historical notebook names included numbered suffixes and spelling variants.
+- The final BigQuery destination remains `dovetailco.stg.pms_reservations` unless the current pipeline implementation shows otherwise.
+- Treat the source page as maintained source-specific documentation, not as independent proof of current pipeline behavior. Verify claims against the committed pipeline assets and current warehouse implementation.
+
 ## Decision discipline
 
 Before stating that something is missing, invalid, planned, or implemented:
