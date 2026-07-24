@@ -332,7 +332,7 @@ export function ByPersonView({ tasks, onTaskClick }: ByPersonViewProps) {
   const personGroups = useMemo(() => {
     const groups: Record<string, PersonGroup> = {};
 
-    // ⚡ Bolt: Pre-calculate openCount in a single pass to avoid O(N log N * T) complexity during sort
+    // ⚡ Bolt: Pre-calculate openCount in a single pass to avoid repeated filtering during sort
     tasks.forEach((task) => {
       const key = task.assignedTo || "Unassigned";
       if (!groups[key]) {
