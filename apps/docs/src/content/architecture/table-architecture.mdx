@@ -1,333 +1,62 @@
-
+---
 title: Metrics Table Architecture
 nav_order: 3
 has_toc: true
 permalink: /metrics-table-architecture/
-
+---
 
 # Metrics Table Architecture
 
-## Metrics Platform
+> **Historical route:** This page formerly combined conceptual architecture with physical table claims. It is retained so existing links continue to work, but it no longer defines the canonical warehouse inventory.
 
-This document defines the canonical table structure used throughout the Metrics Platform.
+Metrics uses grain-specific analytical structures rather than one generalized fact table. That design direction remains current, but implementation status and exact object names must be read from the maintained subject catalogs and verified against Dataform.
 
-The objective is to maintain a stable, predictable reporting framework across hospitality systems that rarely speak the same language.
+## Canonical architecture pages
 
-PMS exports, CRS reports, RMS feeds, booking engine datasets, spreadsheets, and vendor reports all structure data differently. Some arrive wide. Some arrive sparse. Some arrive held together with merged Excel cells and optimism.
+Use these pages for the current model:
 
-The Metrics Platform standardizes those inputs into a consistent warehouse architecture designed for:
-- operational reporting,
-- benchmarking,
-- forecasting,
-- dashboarding,
-- automation workflows,
-- and downstream analytics.
+- [Data Platform Architecture and Ownership](/docs/architecture/data/platform-architecture-and-ownership)
+- [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)
+- [Lookup Tables](/docs/architecture/data/lookup-tables)
+- [Mapping Tables](/docs/architecture/data/mapping-tables)
+- [Dimensions](/docs/architecture/data/dimensions)
+- [Fact Tables](/docs/architecture/data/fact-tables)
+- [Pickup Tables](/docs/architecture/data/pickup-tables)
+- [Reporting Views, Report Tables, and Marts](/docs/architecture/data/reporting-views-and-marts)
+- [Metric Definitions and Semantic Governance](/docs/architecture/data/metric-definitions)
+- [Mapping and Lookup Dependencies](/docs/architecture/data/table-dependencies)
+- [Data Architecture Decision Register](/docs/architecture/data/decision-register)
 
-**The goal is not simply storing hotel data, the goal is creating a durable semantic layer where metrics remain interpretable regardless of source system.**
+## Durable design principles
 
+The following principles remain part of the Metrics architecture:
 
+- model analytical data by business grain;
+- separate snapshot pace, actual production, pickup movement, planning, pricing, and benchmark intelligence;
+- preserve additive source measures in fact layers;
+- govern reusable derived metrics through semantic definitions, views, reports, or marts;
+- keep pickup structures long and narrow where comparison windows would otherwise create schema explosion;
+- normalize inconsistent source-system values through governed lookup and mapping layers;
+- preserve source lineage and historical meaning rather than rewriting prior benchmark or mapping context.
 
-# Architecture Philosophy
+## Status discipline
 
-The warehouse structure separates datasets by operational grain rather than forcing all reporting into a single generalized fact table.
+An object must not be described as implemented solely because it appeared in the former catalog, an architecture diagram, an application registry, or a fixture.
 
-Hospitality reporting behaves differently depending on:
-- reporting cadence,
-- snapshot behavior,
-- dimensional complexity,
-- pickup logic,
-- and forecasting requirements.
-
-Because of this, the Metrics Platform intentionally separates:
-- pace reporting,
-- actual production,
-- pickup activity,
-- pricing observations,
-- benchmark intelligence,
-- and planning data
-
-into independent but interoperable reporting layers.
-
-This preserves:
-- reporting consistency,
-- dimensional flexibility,
-- historical continuity,
-- and operational clarity.
-
-
-
-# Core Design Principles
-
-## Grain-First Architecture
-
-Fact tables are separated by business grain:
-- property,
-- segment,
-- source/channel,
-- and roomtype.
-
-This structure prevents unnecessary dimensional sparsity while preserving reporting flexibility.
-
-
-
-## Wide Pace & Actual Tables
-
-Core pace and actual tables remain intentionally wide.
-
-Hospitality reporting frequently relies on:
-- same-time-last-year comparisons,
-- forecast overlays,
-- budget variance,
-- pickup analysis,
-- and operational KPI calculations.
-
-Wide structures simplify dashboard development, semantic modeling, and BI tool performance.
-
-
-
-## Long Pickup Structures
-
-Pickup datasets remain long/narrow because pickup windows and comparison periods expand rapidly.
-
-This structure prevents schema explosion while preserving reporting flexibility across:
-- rolling pickup windows,
-- comparison periods,
-- and dynamic pace analysis.
-
-
-
-## Source Metrics vs Derived Metrics
-
-Fact tables preserve additive and source-provided metrics.
-
-Derived KPIs such as:
-- ADR,
-- OCC,
-- RevPAR,
-- indexes,
-- and percentage changes
-
-are calculated within marts or semantic reporting views when base metrics are available.
-
-This preserves:
-- calculation consistency,
-- warehouse flexibility,
-- and reporting reproducibility.
-
-
-
-## Mapping & Normalization
-
-Source systems rarely align on naming conventions.
-
-The Metrics Platform uses mapping layers to normalize:
-- segments,
-- sources,
-- roomtypes,
-- channels,
-- and raw metric structures.
-
-This preserves source traceability while maintaining standardized reporting behavior downstream.
-
-
-
-# Warehouse Table Structure
-
-## Core Dimensions
-
-Core dimensions establish the standardized operational reference layer used throughout the warehouse.
-
-| Table | Purpose |
-|---|---|
-| `dim_property` | Standardized hotel and property reference layer |
-| `dim_date` | Calendar and reporting date dimension |
-| `dim_segment` | Standardized segment reference layer |
-| `dim_source` | Standardized booking source and channel layer |
-| `dim_roomtype` | Standardized roomtype and room classification layer |
-| `dim_metric` | Centralized metric dictionary and calculation framework |
-| `dim_source_report` | Source-report metadata and ingestion tracking |
-
-
-
-## Mapping Tables
-
-Mapping tables preserve source-system relationships while standardizing operational reporting structures.
-
-| Table | Purpose |
-|---|---|
-| `map_segment` | Maps source segment values to standardized segment structures |
-| `map_source` | Maps source/channel values to standardized channel structures |
-| `map_roomtype` | Maps source roomtypes to standardized roomtype structures |
-| `map_source_metric` | Maps raw report columns to standardized metric structures |
-
-These layers allow inconsistent vendor exports and operational systems to resolve into a unified reporting framework.
-
-Because hospitality systems have an almost artistic relationship with inconsistent naming conventions.
-
-
-
-# Pace Fact Tables
-
-Pace tables store snapshot-based on-the-books performance data.
-
-These datasets preserve booking-position behavior at a specific point in time.
-
-Pace reporting supports:
-- demand analysis,
-- forecasting,
-- pickup tracking,
-- booking velocity,
-- wash analysis,
-- and operational pacing.
-
-| Table | Purpose |
-|---|---|
-| `fact_pace_property` | Property-level pace snapshots |
-| `fact_pace_segment` | Segment-level pace snapshots |
-| `fact_pace_source` | Source/channel-level pace snapshots |
-| `fact_pace_roomtype` | Roomtype-level pace snapshots |
-
-
-
-# Actual Fact Tables
-
-Actual tables store finalized operational production.
-
-These datasets represent:
-- realized room production,
-- revenue production,
-- occupancy,
-- arrivals,
-- cancellations,
-- no-shows,
-- and transactional operational behavior.
-
-Actual datasets maintain the same dimensional grain as their matching pace tables while removing unnecessary snapshot behavior.
-
-| Table | Purpose |
-|---|---|
-| `fact_actual_property` | Property-level actual performance |
-| `fact_actual_segment` | Segment-level actual performance |
-| `fact_actual_source` | Source/channel-level actual performance |
-| `fact_actual_roomtype` | Roomtype-level actual performance |
-
-
-
-# Pickup Fact Tables
-
-Pickup reporting measures booking movement between reporting snapshots.
-
-Pickup tables intentionally use a long-format structure because:
-- pickup windows expand over time,
-- comparison periods vary,
-- and reporting flexibility matters more than fixed-schema simplicity.
-
-| Table | Purpose |
-|---|---|
-| `fact_pickup_property` | Property-level pickup activity |
-| `fact_pickup_segment` | Segment-level pickup activity |
-| `fact_pickup_source` | Source/channel-level pickup activity |
-| `fact_pickup_roomtype` | Roomtype-level pickup activity |
-
-Pickup tables support:
-- booking velocity analysis,
-- trend monitoring,
-- demand pacing,
-- and forecast movement analysis.
-
-
-
-# Flexible Metric Observation Layer
-
-Some hospitality metrics behave inconsistently across systems.
-
-Rather than forcing every irregular metric into standardized wide tables, the Metrics Platform uses a flexible observation framework.
-
-| Table | Purpose |
-|---|---|
-| `fact_metric_observation` | Flexible storage layer for sparse, irregular, or evolving metrics |
-
-This structure supports:
-- experimental metrics,
-- vendor-specific reporting,
-- one-off operational metrics,
-- dynamic benchmarking fields,
-- and evolving reporting requirements.
-
-The warehouse remains structured without becoming rigid.
-
-
-
-# BI Marts & Semantic Views
-
-BI marts provide dashboard-ready reporting layers derived from operational fact tables.
-
-These views standardize:
-- KPI calculations,
-- comparison logic,
-- reporting relationships,
-- and dashboard consumption.
-
-| View | Purpose |
-|---|---|
-| `mart_property_daily` | Property-level daily reporting mart |
-| `mart_segment_daily` | Segment-level daily reporting mart |
-| `mart_source_daily` | Source/channel daily reporting mart |
-| `mart_roomtype_daily` | Roomtype-level daily reporting mart |
-
-These marts calculate:
-- ADR,
-- OCC,
-- RevPAR,
-- variance metrics,
-- pace comparisons,
-- and percentage-change calculations.
-
-The objective is creating stable reporting logic once — instead of rebuilding KPI calculations inside every dashboard.
-
-
-
-# Shared Warehouse Standards
-
-All warehouse objects follow:
-- standardized lowercase `snake_case`,
-- approved metric abbreviations,
-- standardized dimensional relationships,
-- and canonical semantic naming structures.
-
-Reference:
-- Database Column Naming Standards
-- CoStar Processing Standards
-- Forecast & Pricing Table Models
-
-
-
-# Warehouse Design Philosophy
-
-The Metrics Platform warehouse is intentionally structured around how hospitality reporting behaves operationally.
-
-Different datasets:
-- update differently,
-- snapshot differently,
-- aggregate differently,
-- and support different business questions.
-
-The warehouse architecture preserves those distinctions rather than flattening everything into a single reporting layer.
-
-The objective is not simply organizing tables.
-
-The objective is creating a reporting framework where:
-- metrics remain interpretable,
-- dashboards remain stable,
-- benchmark logic remains trustworthy,
-- and operational decisions remain grounded in consistent data behavior.
-
-Because clean architecture matters.
-
-Especially when the source file arrived named:
+Use the following labels in maintained documentation:
 
 ```text
-final_v2_actual_USE_THIS_latest(3).xlsx
+IMPLEMENTED
+PLANNED
+COMPATIBILITY
+DEPRECATED
+UNRESOLVED
 ```
 
+Dataform is the authority for current warehouse object names, schemas, and dependencies. Repository code is the authority for current application behavior. Linear is the authority for approved product intent and terminology.
 
+## Why the old catalog was retired
+
+The previous version listed objects such as `fact_pace_*`, `fact_actual_*`, `fact_pickup_*`, `fact_metric_observation`, and several marts as though they formed one current physical inventory. Current Dataform instead implements a narrower set that includes staging, snapshot, lookup, mapping, dimension, and view objects, while several broader families remain architecture decisions or future implementation work.
+
+Keeping those categories in one undifferentiated table made conceptual direction look like deployed schema. The canonical pages now separate those two truths cleanly.
