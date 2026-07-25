@@ -1,0 +1,357 @@
+---
+title: "StayInTouch PMS Source"
+sidebarTitle: "StayInTouch PMS"
+description: "Raw exports, five-step processing pipeline, warehouse schema, and source-specific modeling notes for StayInTouch PMS data in Metrics."
+---
+
+# StayInTouch PMS Source
+
+This page is the maintained source-specific reference for StayInTouch PMS data used by Metrics. It documents the raw report pair, CRS enrichment file, five-step processing pipeline, standardized BigQuery output, and source behaviors discovered while validating rooms, revenue, reservations, pace, and STLY reporting.
+
+Everything documented here applies to the **StayInTouch PMS** source unless another source is explicitly named. Repository code and current warehouse definitions remain the implementation source of truth.
+
+## Source overview
+
+| Attribute | Current value |
+| --- | --- |
+| Source system | StayInTouch PMS |
+| Property represented by current samples | Now Now NoHo / `NNNH` |
+| PMS property code seen in filenames | `JFKNOW` |
+| BigQuery destination | `dovetailco.stg.pms_reservations` |
+| Primary grain | One reservation stay-date row |
+| Primary production fields | `rms_otb`, `rev_otb` |
+| Historical snapshot identifier | `snap_date` derived from the source filename |
+| Pipeline runtime | Modular Google Colab / Python workflow using Google Drive handoffs |
+| CRS enrichment key | PMS confirmation number matched to CRS PMS confirmation code |
+
+## Stored reference assets
+
+### Raw and processed samples
+
+- [`NNNH_JFKNOW_RESV_Export_20260723132117.csv`](   ../../../public/example_files/pms_systems/stayintouch_file_examples/NNNH_JFKNOW_RESV_Export_20260723132117.csv) — reservation-level StayInTouch export.
+- [`NNNH_JFKNOW_STAY_Export_20260723132125.csv`](   ../../../public/example_files/pms_systems/stayintouch_file_examples/NNNH_JFKNOW_STAY_Export_20260723132125.csv) — stay-date production export and primary row-level reporting source.
+- [`20260723_JFKNOW_crs_reservations.csv`](         ../../../public/example_files/pms_systems/stayintouch_file_examples/20260723_JFKNOW_crs_reservations.csv) — CRS reservation extract used to enrich PMS rows with channel and subsource attributes.
+- [`20260723_NNNH_standardized_data.csv`](          ../../../public/example_files/pms_systems/stayintouch_file_example/20260723_NNNH_standardized_data.csv) — final standardized output representative of the file loaded into BigQuery.
+
+### Five-step pipeline notebooks and Python exports
+
+
+
+../../../public/example_files/pms_systems/stayintouch_data_pipeline
+
+| Step | Notebook | Python export | Purpose |
+| --- | --- | --- | --- |
+| 01 | [`Step01_StayInTouch_MergePMSReports.ipynb`](../assets/StayInTouchPMS_DataPipline/Step01_StayInTouch_MergePMSReports.ipynb) | [`../../../public/example_files/pms_systems/stayintouch_data_pipeline/Step01_StayInTouch_MergePMSReports.py) | Load the latest RESV and STAY reports, detect headers, extract filename metadata, and merge reservation attributes into stay-date rows. |
+| 02 | [`Step02_StayInTouch_AmemdPMSDataCRSData.ipynb`](../assets/StayInTouchPMS_DataPipline/Step02_StayInTouch_AmemdPMSDataCRSData.ipynb) | [`../../../public/example_files/pms_systems/stayintouch_data_pipeline/step02_stayintouch_amemdpmsdatacrsdata.py) | Join CRS channel, secondary-channel, subsource, and rate-type fields to PMS rows. |
+| 03 | [`Step03_StayInTouch_NormalizeHeaders.ipynb`](../assets/StayInTouchPMS_DataPipline/Step03_StayInTouch_NormalizeHeaders.ipynb) | [`step03_stayintouch_normalizeheaders.py`](../../../public/example_files/pms_systems/stayintouch_data_pipeline/step03_stayintouch_normalizeheaders.py) | Normalize headers into shared Metrics naming and map source columns to warehouse fields. |
+| 04 | [`Step04_StayInTouch_StandardizeData.ipynb`](../assets/StayInTouchPMS_DataPipline/Step04_StayInTouch_StandardizeData.ipynb) | [`step04_stayintouch_standardizedata.py`](../../../public/example_files/pms_systems/stayintouch_data_pipeline/step04_stayintouch_standardizedata.py) | Apply rate, segment, channel, source, subsource, and override mappings. |
+| 05 | [`step05_stayintouch_amendcodenames.ipynb`](../assets/StayInTouchPMS_DataPipline/step05_stayintouch_amendcodenames.ipynb) | [`step05_stayintouch_amendcodenames.py`](../../../public/example_files/pms_systems/stayintouch_data_pipeline/step05_stayintouch_amendcodenames.py) | Apply final code/name amendments, attach groups and sort order, prepare the final export, and upload the completed dataset to BigQuery with `pandas_gbq.to_gbq`. |
+
+> The directory name currently uses `DataPipline`, and some historical filenames preserve spelling variants such as `Amemd`. Keep links aligned to committed paths until the assets are deliberately renamed together.
+
+## Pipeline lineage
+
+```text
+StayInTouch RESV export
+        +
+StayInTouch STAY export
+        |
+        v
+Step 01: Merge PMS reports
+        +
+CRS reservation export
+        |
+        v
+Step 02: Enrich PMS rows with CRS attributes
+        |
+        v
+Step 03: Normalize headers
+        |
+        v
+Step 04: Apply mapping hierarchy and overrides
+        |
+        v
+Step 05: Final naming, export preparation, and BigQuery upload
+        |
+        v
+dovetailco.stg.pms_reservations
+```
+
+## Step 01: merge StayInTouch reports
+
+The pipeline searches for the latest files matching `_RESV_Export` and `_STAY_Export`. It detects the real CSV header using anchor text rather than assuming a fixed row number. Current anchors include labels such as `Reservation Id`, `Hotel Code`, `Arrival Date`, `Lead Days`, and `Nights`.
+
+The reservation export contributes selected reservation-level attributes when available, including arrival and departure dates, arrival rate code, departure room type, cancellation date, booking timestamp, first and last night rates, lead days, nights, origin code, postal code, purpose of stay, and state.
+
+The reservation subset is left-joined to the stay report using:
+
+```text
+Reservation Id + Hotel Code
+```
+
+The merged output receives `PROPERTY_CODE` and `SNAP_DATE`, parsed from the source filename.
+
+## Step 02: CRS enrichment
+
+The CRS file is matched to PMS data after identifiers are cleaned and values such as `.0`, blanks, `nan`, `none`, and `null` are removed.
+
+| PMS side | CRS side |
+| --- | --- |
+| `Confirmation Number` or `confirmation_number` | `PMS_Confirm_Code` or `pms_conf` |
+
+The CRS enrichment contributes fields such as:
+
+| CRS source field | Processed field |
+| --- | --- |
+| `Confirm_No` | `crs_confirm_no` |
+| `Channel_Connect_Confirm_NO` | `channel_confirm_no` |
+| `Channel_Cd` | `crs_channel_code` |
+| `Sec_Channel_Desc` | `crs_channel` |
+| `Sub_Src_CD` | `crs_subsource_code` |
+| `Sub_Source` | `crs_subsource` |
+| `Rate_Type_Code` | `crs_rate_type` |
+
+Unmatched enrichment values are filled with `Unknown`. Merge quality should be monitored by tracking matched confirmation numbers and unknown CRS attributes.
+
+## Step 03: normalized headers
+
+The pipeline uses the shared `revrebel_column_standardizer` when available, with a snake-case fallback. Important mappings include:
+
+| Source or normalized header | Final header |
+| --- | --- |
+| `f_n_b_revenue` | `fb_revenue` |
+| `rate_code` | `pms_ratecode` |
+| `sold` | `rms_otb` |
+| `rev` | `rev_otb` |
+| `rate_amount` | `rate` |
+| `original_rate_amount` | `original_rate` |
+| `reservation_status` | `status` |
+| `adult_count` | `adults` |
+| `child_count` | `children` |
+| `arrival_rate_code` | `arrival_pms_ratecode` |
+| `first_night_price` | `first_night_rate` |
+| `last_night_price` | `last_night_rate` |
+| `departure_room_type` | `departure_roomtype` |
+| `created_at_hz` | `book_date` |
+
+Merge-conflict fields may be retained separately as `pms_segment`, `pms_source`, and `pms_sub_segment`.
+
+## Steps 04 and 05: standardization and final publication
+
+Step 04 loads mapping tables for rates, CRS channels, CRS subsources, PMS sources, segments, channels, PMS segments, and explicit overrides. The mapping sequence enriches blank values without casually replacing valid source values.
+
+Step 05 is the final pipeline stage. It:
+
+1. applies final code-to-name amendments;
+2. attaches stable business names, groups, and sort values;
+3. performs final validation and export preparation;
+4. uploads the completed standardized data to `dovetailco.stg.pms_reservations` using `pandas_gbq.to_gbq`.
+
+Important reporting fields include:
+
+```text
+segment
+segment_code
+segment_group
+segment_group_code
+segment_sort
+source
+source_code
+source_sort
+channel
+channel_code
+channel_sort
+subsource
+subsource_code
+pms_ratecode
+ratecode_name
+```
+
+Sort fields are part of the reporting contract and should be used instead of alphabetic ordering when present.
+
+## Final standardized schema
+
+Core StayInTouch fields include:
+
+```text
+stay_date
+confirmation_number
+rate
+original_rate
+status
+roomtype
+room_no
+block_count
+rms_otb
+rev_otb
+addon_revenue
+fb_revenue
+other_revenue
+tax_revenue
+fee_revenue
+total_revenue
+updated_at
+arrival_room_count
+departure_room_count
+stay_type
+arrival_date
+departure_date
+cancel_date
+book_date
+first_night_rate
+last_night_rate
+lead_days
+nights
+unique_lead_days
+unique_nights
+```
+
+The fully enriched output also carries property, snapshot, rate-plan, segment, source, channel, subsource, CRS, group, and sort fields.
+
+## Grain and metric behavior
+
+The base table is primarily a **reservation stay-date table**. A multi-night reservation normally appears once for each stay date. Room nights and nightly room revenue are additive after duplicate source rows are resolved, but reservation counts require intentional deduplication.
+
+Use:
+
+```sql
+COUNT(DISTINCT confirmation_number)
+```
+
+at the intended reporting grain. A reservation may appear under multiple segments or room types when attributes change across stay dates, so dimensional reservation counts may overlap even when property-level totals are correct.
+
+Use `rms_otb` for room production and `rev_otb` for current OTB or final room revenue. ADR should normally be calculated as:
+
+```sql
+SAFE_DIVIDE(SUM(rev_otb), SUM(rms_otb))
+```
+
+## Status and cancellation behavior
+
+Known status variants include `CANCELED`, `CANCELLED`, `Cancel`, `NOSHOW`, `NO SHOW`, `CHECKEDOUT`, `CHECKEDIN`, and `RESERVED`. Normalize status values with trimming and uppercase before filtering.
+
+When a reservation is canceled, StayInTouch retains the stay-date rows but changes current production to:
+
+```text
+rms_otb = 0
+rev_otb = 0
+```
+
+Retained fields such as `stay_date`, `confirmation_number`, `rate`, `original_rate`, `arrival_date`, `departure_date`, `cancel_date`, `book_date`, `nights`, and `lead_days` support historical reconstruction.
+
+## Reconstructing STLY OTB without a stored snapshot
+
+A reservation existed at a historical snapshot when:
+
+```sql
+book_date <= as_of_date
+AND (
+  cancel_date IS NULL
+  OR cancel_date > as_of_date
+)
+```
+
+For rows that later canceled and now have zero production:
+
+1. restore one room night for each eligible stay-date row;
+2. restore only when the current status is canceled and `cancel_date > as_of_date`;
+3. do not restore zero rows with no cancellation date;
+4. reconstruct room revenue from the lower valid positive value of `rate` and `original_rate`.
+
+Recommended guarded rate expression:
+
+```sql
+CASE
+  WHEN rate > 0 AND original_rate > 0
+    THEN LEAST(rate, original_rate)
+  WHEN rate > 0 AND (original_rate IS NULL OR original_rate <= 0)
+    THEN rate
+  WHEN original_rate > 0 AND (rate IS NULL OR rate <= 0)
+    THEN original_rate
+  ELSE NULL
+END
+```
+
+When neither retained rate is positive, the room night may still be reconstructed but revenue should remain unavailable and be tracked with a missing-rate diagnostic rather than silently treated as a valid zero-rate night.
+
+This method is not identical to a true immutable daily snapshot when later rate, stay-date, room-type, segment, or partial-cancellation changes cannot be recovered. Future ingestion should preserve immutable daily snapshots or effective-dated reservation history.
+
+## Snapshot and comparison rules
+
+For STLY comparisons:
+
+- TY uses the requested `snap_date`.
+- STLY uses `DATE_SUB(snap_date, INTERVAL 1 YEAR)`.
+- Closed months use final actual production.
+- The current month is `ACTUAL_OTB`.
+- Future months are `OTB`.
+- Full-year rows combine closed actual months with current and future OTB.
+
+The reporting window currently follows:
+
+| Snapshot date | Report years shown |
+| --- | --- |
+| January 1 through September 30 | Current calendar year only |
+| October 1 through December 31 | Current year plus following year |
+| January 1 of the new year | Prior year drops; new current year only |
+
+## Date and duration fields
+
+Use source dates directly when possible:
+
+```sql
+lead_days = DATE_DIFF(arrival_date, book_date, DAY)
+nights    = DATE_DIFF(departure_date, arrival_date, DAY)
+```
+
+`unique_lead_days` and `unique_nights` may be populated only on selected reservation rows and should not be summed across stay-date grain.
+
+## Deduplication guidance
+
+`MAX(rms_otb)` and `MAX(rev_otb)` may suppress duplicated stay-night rows, but are safe only when repeated rows represent the same economic record. Validate whether duplicates represent copied rows, multiple rooms, separate revenue components, or changing dimension assignments.
+
+A candidate duplicate key is:
+
+```text
+confirmation_number
+stay_date
+roomtype
+metric code only when preserving a changing dimension
+```
+
+Do not add changing dimensions to property-total deduplication unless preserving multiple assignments is intentional.
+
+## Validation controls
+
+The pipeline contains a standing January 2026 success criterion:
+
+| Filter | Expected value |
+| --- | ---: |
+| Stay dates | January 1–31, 2026 |
+| Status | `CHECKEDOUT` |
+| `SUM(rms_otb)` | 2,235 |
+| `SUM(rev_otb)` | 175,872 |
+
+Additional controls should compare row counts and production totals after each step, report unmatched PMS-to-CRS reservations, identify duplicate stay-night keys, track unassigned reporting dimensions, and compare reconstructed STLY results against any retained RMS snapshot extract.
+
+## Known implementation notes
+
+- Pipeline modules exchange files through `data_upload`, `data_processed`, `data_export`, and `data_failed` folders in Google Drive.
+- Source files move to `data_processed` only after successful processing.
+- Header detection should remain anchor-based rather than fixed-row based.
+- Step 03 depends on the shared `REVREBEL/Metrics-Dataform` column standardizer.
+- Step 04 currently reads operational mapping tables from Google Sheets.
+- Step 05 is the final pipeline stage and owns BigQuery upload.
+- There is no separate Step 06 in the current pipeline.
+- `Unassigned` is a valid reporting bucket and must remain in totals.
+- Total rows must be calculated from the underlying population rather than by adding overlapping dimensional reservation counts.
+
+## Open improvements
+
+- Persist immutable daily PMS snapshots before status changes zero out OTB fields.
+- Store effective-dated reservation changes for rates, dates, status, room type, segment, source, channel, and subsource.
+- Promote operational mapping tables into governed warehouse or Dataform tables.
+- Add automated schema-drift checks against standardized sample headers.
+- Add explicit multi-room reservation handling and tests.
+- Add pipeline-level reconciliation artifacts to each processed batch.
+- Resolve historical filename spelling and directory naming in one coordinated migration so documentation links do not break.
