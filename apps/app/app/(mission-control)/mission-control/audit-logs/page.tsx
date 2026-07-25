@@ -11,7 +11,7 @@ import {
   Search,
   ShieldCheck,
 } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 interface AuditLogEntry {
   id: string;
@@ -21,6 +21,29 @@ interface AuditLogEntry {
   severity: "info" | "warning" | "security";
   ipAddress: string;
 }
+
+const getSeverityBadge = (sev: AuditLogEntry["severity"]) => {
+  switch (sev) {
+    case "info":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+          <Info className="size-3" /> INFO
+        </span>
+      );
+    case "warning":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+          <AlertTriangle className="size-3" /> WARNING
+        </span>
+      );
+    case "security":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+          <ShieldCheck className="size-3" /> SECURITY
+        </span>
+      );
+  }
+};
 
 export default function AuditLogsPage() {
   const [logs] = useState<AuditLogEntry[]>([
@@ -79,15 +102,29 @@ export default function AuditLogsPage() {
   const [exporting, setExporting] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
 
-  const filteredLogs = logs.filter((log) => {
-    const matchesSearch =
-      log.actor.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      log.action.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      log.id.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesSeverity =
-      severityFilter === "all" || log.severity === severityFilter;
-    return matchesSearch && matchesSeverity;
-  });
+  // Optimized: Use useMemo to prevent expensive filtering and string operations on every re-render.
+  // This avoids recalculation when export state changes or toast notifications trigger a render.
+  const filteredLogs = useMemo(() => {
+    const lowerSearchQuery = searchQuery.toLowerCase();
+
+    return logs.filter((log) => {
+      // Early return if severity filter does not match
+      if (severityFilter !== "all" && log.severity !== severityFilter) {
+        return false;
+      }
+
+      // Only perform search if there is a query
+      if (!lowerSearchQuery) {
+        return true;
+      }
+
+      return (
+        log.actor.toLowerCase().includes(lowerSearchQuery) ||
+        log.action.toLowerCase().includes(lowerSearchQuery) ||
+        log.id.toLowerCase().includes(lowerSearchQuery)
+      );
+    });
+  }, [logs, searchQuery, severityFilter]);
 
   const triggerExport = () => {
     setExporting(true);
@@ -98,29 +135,6 @@ export default function AuditLogsPage() {
       );
       setTimeout(() => setNotification(null), 4000);
     }, 2000);
-  };
-
-  const getSeverityBadge = (sev: AuditLogEntry["severity"]) => {
-    switch (sev) {
-      case "info":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
-            <Info className="size-3" /> INFO
-          </span>
-        );
-      case "warning":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
-            <AlertTriangle className="size-3" /> WARNING
-          </span>
-        );
-      case "security":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-bold bg-red-500/10 text-red-400 border border-red-500/20">
-            <ShieldCheck className="size-3" /> SECURITY
-          </span>
-        );
-    }
   };
 
   return (
