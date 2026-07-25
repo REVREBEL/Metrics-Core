@@ -28,20 +28,24 @@ Everything documented here applies to the **StayInTouch PMS** source unless anot
 
 ### Raw and processed samples
 
-- [`NNNH_JFKNOW_RESV_Export_20260723132117.csv`](../assets/StayInTouchPMS_DataSamples/NNNH_JFKNOW_RESV_Export_20260723132117.csv) — reservation-level StayInTouch export.
-- [`NNNH_JFKNOW_STAY_Export_20260723132125.csv`](../assets/StayInTouchPMS_DataSamples/NNNH_JFKNOW_STAY_Export_20260723132125.csv) — stay-date production export and primary row-level reporting source.
-- [`20260723_JFKNOW_crs_reservations.csv`](../assets/StayInTouchPMS_DataSamples/20260723_JFKNOW_crs_reservations.csv) — CRS reservation extract used to enrich PMS rows with channel and subsource attributes.
-- [`20260723_NNNH_standardized_data.csv`](../assets/StayInTouchPMS_DataSamples/20260723_NNNH_standardized_data.csv) — final standardized output representative of the file loaded into BigQuery.
+- [`NNNH_JFKNOW_RESV_Export_20260723132117.csv`](   ../../../public/example_files/pms_systems/stayintouch_file_examples/NNNH_JFKNOW_RESV_Export_20260723132117.csv) — reservation-level StayInTouch export.
+- [`NNNH_JFKNOW_STAY_Export_20260723132125.csv`](   ../../../public/example_files/pms_systems/stayintouch_file_examples/NNNH_JFKNOW_STAY_Export_20260723132125.csv) — stay-date production export and primary row-level reporting source.
+- [`20260723_JFKNOW_crs_reservations.csv`](         ../../../public/example_files/pms_systems/stayintouch_file_examples/20260723_JFKNOW_crs_reservations.csv) — CRS reservation extract used to enrich PMS rows with channel and subsource attributes.
+- [`20260723_NNNH_standardized_data.csv`](          ../../../public/example_files/pms_systems/stayintouch_file_example/20260723_NNNH_standardized_data.csv) — final standardized output representative of the file loaded into BigQuery.
 
 ### Five-step pipeline notebooks and Python exports
 
+
+
+../../../public/example_files/pms_systems/stayintouch_data_pipeline
+
 | Step | Notebook | Python export | Purpose |
 | --- | --- | --- | --- |
-| 01 | [`Step01_StayInTouch_MergePMSReports.ipynb`](../assets/StayInTouchPMS_DataPipline/Step01_StayInTouch_MergePMSReports.ipynb) | [`Step01_StayInTouch_MergePMSReports.py`](../assets/StayInTouchPMS_DataPipline/Step01_StayInTouch_MergePMSReports.py) | Load the latest RESV and STAY reports, detect headers, extract filename metadata, and merge reservation attributes into stay-date rows. |
-| 02 | [`Step02_StayInTouch_AmemdPMSDataCRSData.ipynb`](../assets/StayInTouchPMS_DataPipline/Step02_StayInTouch_AmemdPMSDataCRSData.ipynb) | [`step02_stayintouch_amemdpmsdatacrsdata.py`](../assets/StayInTouchPMS_DataPipline/step02_stayintouch_amemdpmsdatacrsdata.py) | Join CRS channel, secondary-channel, subsource, and rate-type fields to PMS rows. |
-| 03 | [`Step03_StayInTouch_NormalizeHeaders.ipynb`](../assets/StayInTouchPMS_DataPipline/Step03_StayInTouch_NormalizeHeaders.ipynb) | [`step03_stayintouch_normalizeheaders.py`](../assets/StayInTouchPMS_DataPipline/step03_stayintouch_normalizeheaders.py) | Normalize headers into shared Metrics naming and map source columns to warehouse fields. |
-| 04 | [`Step04_StayInTouch_StandardizeData.ipynb`](../assets/StayInTouchPMS_DataPipline/Step04_StayInTouch_StandardizeData.ipynb) | [`step04_stayintouch_standardizedata.py`](../assets/StayInTouchPMS_DataPipline/step04_stayintouch_standardizedata.py) | Apply rate, segment, channel, source, subsource, and override mappings. |
-| 05 | [`step05_stayintouch_amendcodenames.ipynb`](../assets/StayInTouchPMS_DataPipline/step05_stayintouch_amendcodenames.ipynb) | [`step05_stayintouch_amendcodenames.py`](../assets/StayInTouchPMS_DataPipline/step05_stayintouch_amendcodenames.py) | Apply final code/name amendments, attach groups and sort order, prepare the final export, and upload the completed dataset to BigQuery with `pandas_gbq.to_gbq`. |
+| 01 | [`Step01_StayInTouch_MergePMSReports.ipynb`](../assets/StayInTouchPMS_DataPipline/Step01_StayInTouch_MergePMSReports.ipynb) | [`../../../public/example_files/pms_systems/stayintouch_data_pipeline/Step01_StayInTouch_MergePMSReports.py) | Load the latest RESV and STAY reports, detect headers, extract filename metadata, and merge reservation attributes into stay-date rows. |
+| 02 | [`Step02_StayInTouch_AmemdPMSDataCRSData.ipynb`](../assets/StayInTouchPMS_DataPipline/Step02_StayInTouch_AmemdPMSDataCRSData.ipynb) | [`../../../public/example_files/pms_systems/stayintouch_data_pipeline/step02_stayintouch_amemdpmsdatacrsdata.py) | Join CRS channel, secondary-channel, subsource, and rate-type fields to PMS rows. |
+| 03 | [`Step03_StayInTouch_NormalizeHeaders.ipynb`](../assets/StayInTouchPMS_DataPipline/Step03_StayInTouch_NormalizeHeaders.ipynb) | [`step03_stayintouch_normalizeheaders.py`](../../../public/example_files/pms_systems/stayintouch_data_pipeline/step03_stayintouch_normalizeheaders.py) | Normalize headers into shared Metrics naming and map source columns to warehouse fields. |
+| 04 | [`Step04_StayInTouch_StandardizeData.ipynb`](../assets/StayInTouchPMS_DataPipline/Step04_StayInTouch_StandardizeData.ipynb) | [`step04_stayintouch_standardizedata.py`](../../../public/example_files/pms_systems/stayintouch_data_pipeline/step04_stayintouch_standardizedata.py) | Apply rate, segment, channel, source, subsource, and override mappings. |
+| 05 | [`step05_stayintouch_amendcodenames.ipynb`](../assets/StayInTouchPMS_DataPipline/step05_stayintouch_amendcodenames.ipynb) | [`step05_stayintouch_amendcodenames.py`](../../../public/example_files/pms_systems/stayintouch_data_pipeline/step05_stayintouch_amendcodenames.py) | Apply final code/name amendments, attach groups and sort order, prepare the final export, and upload the completed dataset to BigQuery with `pandas_gbq.to_gbq`. |
 
 > The directory name currently uses `DataPipline`, and some historical filenames preserve spelling variants such as `Amemd`. Keep links aligned to committed paths until the assets are deliberately renamed together.
 
