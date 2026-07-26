@@ -1,0 +1,114 @@
+---
+title: Shared Column Name Catalog
+nav_order: 3
+has_toc: true
+---
+
+# Shared Column Name Catalog
+
+This page is the consolidated audit reference for shared Metrics warehouse column names. Use it when reviewing source pipelines, standardized upload files, staging tables, Dataform models, and downstream reporting contracts.
+
+This catalog records approved names and abbreviations. It does not automatically rename existing physical columns. Repository code and current Dataform definitions remain the implementation source of truth, and any physical rename requires dependency review and migration handling.
+
+## Core rules
+
+- Use lowercase `snake_case`.
+- Use `no` as the approved abbreviation for number.
+- Use `amt` as the approved abbreviation for monetary amount.
+- Do not add `_name` to standard business label columns. Use paired label and code fields such as `rate` and `rate_code`, `source` and `source_code`, or `segment` and `segment_code`.
+- Preserve source-qualified prefixes such as `pms_` and `crs_` when the field intentionally represents a source-native value.
+- Use governed metric abbreviations such as `rev`, `rms`, `adr`, and `occ` consistently.
+
+## Shared source and reservation columns
+
+| Approved column | Meaning or usage |
+|---|---|
+| `pms_rate_code` | PMS rate-plan code. |
+| `pms_arrival_rate_code` | PMS rate-plan code applicable at arrival. |
+| `roomtype_code` | Standardized room-type code. |
+| `departure_roomtype` | Source or reported departure room type. Retained without a `_name` suffix. |
+| `adults` | Adult guest count. |
+| `children` | Child guest count. |
+| `company` | Company label. |
+| `travel_agent` | Travel-agent label. |
+| `state` | State value supplied by the source. |
+| `crs_confirm_no` | CRS confirmation number. |
+| `channel_confirm_no` | Channel confirmation number. |
+| `crs_channel` | CRS channel label. |
+| `crs_subsource` | CRS subsource label. |
+| `source_system` | Source system associated with the record or source reference. |
+| `updated_date` | Record update date in the warehouse contract. |
+
+## Revenue and monetary columns
+
+| Approved column | Meaning or usage |
+|---|---|
+| `rev_addon` | Add-on revenue. |
+| `rev_fb` | Food-and-beverage revenue. |
+| `rev_other` | Other revenue. |
+| `rev_total` | Total revenue. |
+| `fee_amt` | Fee amount. |
+| `tax_amt` | Tax amount. |
+| `rate_amt` | General room-rate amount when no further context is required. |
+| `rate_amt_current` | Current room-rate amount. |
+| `rate_amt_original` | Original room-rate amount. |
+| `rate_amt_first_night` | First-night room-rate amount. |
+| `rate_amt_last_night` | Last-night room-rate amount. |
+
+## Source-native PMS dimensions
+
+| Approved column | Meaning or usage |
+|---|---|
+| `pms_segment` | PMS-native segment label or value. |
+| `pms_source` | PMS-native source label or value. |
+| `pms_sub_segment` | PMS-native sub-segment label or value. |
+
+These source-native fields may coexist with governed Metrics fields such as `segment`, `segment_code`, `source`, `source_code`, `subsource`, and `subsource_code` when lineage and reconciliation require both representations.
+
+## Reservation-level helper columns
+
+| Approved column | Meaning or usage |
+|---|---|
+| `unique_lead_days` | Reservation-level lead days populated according to the source pipeline's deduplication convention. |
+| `unique_nights` | Reservation-level nights populated according to the source pipeline's deduplication convention. |
+
+These fields must not be summed blindly across stay-date grain. Their population and aggregation rules belong in the source documentation and metric definition.
+
+## Standard label and code pairs
+
+Use the business label without `_name`, paired with the controlled code:
+
+```text
+rate          + rate_code
+source        + source_code
+channel       + channel_code
+segment       + segment_code
+subsource     + subsource_code
+roomtype      + roomtype_code
+property      + property_code
+```
+
+Source-qualified variants follow the same intent where both a label and code are available:
+
+```text
+crs_channel       + crs_channel_code
+crs_subsource     + crs_subsource_code
+pms_rate          + pms_rate_code
+```
+
+## Audit use
+
+When reviewing a standardized source file:
+
+1. Compare every shared field against this catalog.
+2. Identify source-native fields that intentionally remain outside the shared vocabulary.
+3. Record compatibility exceptions rather than silently creating another synonym.
+4. Verify physical implementation against current Dataform before describing a rename as implemented.
+5. Update this catalog when a durable shared naming decision is approved.
+
+## Related documentation
+
+- [Naming and Modeling Conventions](/docs/architecture/data/naming-and-modeling-conventions)
+- [Metric Definitions and Semantic Governance](/docs/architecture/data/metric-definitions)
+- [Source Systems and Ingestion](/docs/architecture/data/source-systems-and-ingestion)
+- [StayInTouch PMS Source](/docs/stay-in-touch-pms)
