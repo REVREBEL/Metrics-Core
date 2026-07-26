@@ -229,56 +229,25 @@ metrics_core.lkp_roomtype
 
 Important rule: this list is historical working context, not permanent truth. Re-check current Dataform before using it.
 
-The app mapping registry previously used generic fields such as:
-
-```text
-source_system
-source_code
-source_value
-standard_code
-```
-
-Current Dataform mapping tables use table-specific schemas and generally standardize source lineage through:
-
-```text
-source_application_code
-```
-
-Before recommending registry changes, compare the registry directly to current Dataform and determine whether the registry has since been corrected.
-
 ## Canonical data architecture documentation
 
-Maintained architecture documentation now lives under:
+Maintained architecture documentation lives under:
 
 ```text
 apps/docs/src/content/architecture/data
 ```
 
-Key pages include:
+The Shared Column Name Catalog at `architecture/data/shared-column-names.mdx` is canonical for shared column names and abbreviations. It supersedes conflicting older column-level examples in `naming-and-modeling-conventions.mdx`, while that page continues to govern object families, grain, status, and migration discipline.
 
-```text
-platform-architecture-and-ownership.mdx
-naming-and-modeling-conventions.mdx
-source-systems-and-ingestion.mdx
-lookup-tables.mdx
-mapping-tables.mdx
-dimensions.mdx
-fact-tables.mdx
-pickup-tables.mdx
-reporting-views-and-marts.mdx
-metric-definitions.mdx
-table-dependencies.mdx
-lineage-and-freshness.mdx
-validation-and-assertions.mdx
-bigquery-and-dataform.mdx
-duckdb-serving-layer.mdx
-application-data-ownership.mdx
-decision-register.mdx
-```
+Durable shared-column decisions:
 
-The earlier legacy-location pages under `apps/docs/src/content/architecture` for mapping tables, lookup tables, and table dependencies were removed. Do not recreate or link to those deleted routes.
-
-These documents were created from then-current repository and Dataform definitions. They should be updated when the schema changes and should not be treated as independent proof of the schema.
+- `no` abbreviates number.
+- `amt` abbreviates monetary amount.
+- Standard business labels do not use `_name`; use label/code pairs such as `source` and `source_code`.
+- `source_system` identifies the specific system or application, such as StayInTouch or Duetto.
+- `source_system_type` identifies the system category, such as PMS, RMS, CRS, or booking engine.
+- Existing `source_application_code` physical fields remain implementation compatibility until a reviewed migration occurs.
+- Governed metric abbreviations include `rev`, `rms`, `adr`, and `occ`.
 
 ## StayInTouch PMS pipeline memory
 
