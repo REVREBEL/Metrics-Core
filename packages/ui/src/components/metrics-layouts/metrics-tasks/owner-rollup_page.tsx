@@ -5,9 +5,9 @@ import {
   IconCircleCheck,
   IconClock,
 } from "@tabler/icons-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui-core/card";
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui-core/card";
 import {
   Table,
   TableBody,
@@ -64,6 +64,13 @@ function StatusBadge({ status }: { status: RollupStatus }) {
   );
 }
 
+const ROLLUP_PRIORITY_MAP: Record<RollupStatus, number> = {
+  at_risk: 0,
+  watch: 1,
+  on_track: 2,
+  complete: 3,
+};
+
 export function OwnerRollupView({ initiatives }: OwnerRollupViewProps) {
   const rollupData = useMemo(() => {
     return initiatives
@@ -74,21 +81,33 @@ export function OwnerRollupView({ initiatives }: OwnerRollupViewProps) {
       }))
       .sort((a, b) => {
         // Sort by status priority: at_risk, watch, on_track, complete
-        const priority = { at_risk: 0, watch: 1, on_track: 2, complete: 3 };
-        return priority[a.ownerStatus] - priority[b.ownerStatus];
+        return (
+          ROLLUP_PRIORITY_MAP[a.ownerStatus] -
+          ROLLUP_PRIORITY_MAP[b.ownerStatus]
+        );
       });
   }, [initiatives]);
 
   const stats = useMemo(() => {
     const total = rollupData.length;
-    const onTrack = rollupData.filter(
-      (r) => r.ownerStatus === "on_track",
-    ).length;
-    const watch = rollupData.filter((r) => r.ownerStatus === "watch").length;
-    const atRisk = rollupData.filter((r) => r.ownerStatus === "at_risk").length;
-    const complete = rollupData.filter(
-      (r) => r.ownerStatus === "complete",
-    ).length;
+    let onTrack = 0;
+    let watch = 0;
+    let atRisk = 0;
+    let complete = 0;
+
+    for (const r of rollupData) {
+      const status = r.ownerStatus;
+      if (status === "on_track") {
+        onTrack++;
+      } else if (status === "watch") {
+        watch++;
+      } else if (status === "at_risk") {
+        atRisk++;
+      } else if (status === "complete") {
+        complete++;
+      }
+    }
+
     return { total, onTrack, watch, atRisk, complete };
   }, [rollupData]);
 

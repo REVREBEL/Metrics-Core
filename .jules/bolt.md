@@ -24,3 +24,7 @@
 ## 2026-07-06 - [Task Grouping Sort Optimization]
 **Learning:** Performing array filtering inside a sort comparator creates a performance bottleneck ((N \log N \cdot M)$). Pre-calculating sort keys during the initial data transformation pass reduces this to (N + M \log M)$.
 **Action:** Always pre-calculate expensive sort criteria during the grouping or mapping phase rather than inside the `sort()` method.
+
+## 2026-07-26 - [Single-Pass Loop & Date Hoisting Optimization]
+**Learning:** Running multiple `.filter()` traversals over the same array to gather statistics is a waste of CPU cycles ($O(K \cdot N)$), and instantiating `new Date()` inside loops creates immense garbage collection overhead. In addition, performing expensive computations for unused variables (e.g., `_overdueTasks` inside `DepartmentCard`) wastes resources.
+**Action:** Refactor multiple `.filter` blocks into a single-pass `for...of` loop to compute stats in $O(N)$ with no array allocations. Hoist `new Date()` and map lookups outside of render/loop contexts, and prune unused loop computations.
