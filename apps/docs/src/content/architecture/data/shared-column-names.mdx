@@ -6,18 +6,42 @@ has_toc: true
 
 # Shared Column Name Catalog
 
-This page is the consolidated audit reference for shared Metrics warehouse column names. Use it when reviewing source pipelines, standardized upload files, staging tables, Dataform models, and downstream reporting contracts.
+This page is the canonical audit reference for shared Metrics warehouse column names. Use it when reviewing source pipelines, standardized upload files, staging tables, Dataform models, and downstream reporting contracts.
 
-This catalog records approved names and abbreviations. It does not automatically rename existing physical columns. Repository code and current Dataform definitions remain the implementation source of truth, and any physical rename requires dependency review and migration handling.
+This catalog records approved names and abbreviations. It does not automatically rename existing physical columns. Repository code and current Dataform definitions remain implementation truth, and any physical rename requires dependency review and migration handling.
+
+Where this catalog conflicts with an older column-level rule in `naming-and-modeling-conventions.mdx`, this catalog governs the shared column name. The broader naming-and-modeling page continues to govern object families, grain, status, and migration discipline.
 
 ## Core rules
 
 - Use lowercase `snake_case`.
 - Use `no` as the approved abbreviation for number.
-- Use `amt` as the approved abbreviation for monetary amount.
+- Use `amt` as the approved abbreviation for a monetary amount.
 - Do not add `_name` to standard business label columns. Use paired label and code fields such as `rate` and `rate_code`, `source` and `source_code`, or `segment` and `segment_code`.
 - Preserve source-qualified prefixes such as `pms_` and `crs_` when the field intentionally represents a source-native value.
-- Use governed metric abbreviations such as `rev`, `rms`, `adr`, and `occ` consistently.
+- Use governed metric abbreviations consistently.
+
+### Governed metric abbreviations
+
+| Abbreviation | Meaning |
+|---|---|
+| `rev` | Revenue. |
+| `rms` | Rooms or room production. |
+| `adr` | Average daily rate. |
+| `occ` | Occupancy. |
+
+## Source-system fields
+
+These two fields are approved and have different meanings:
+
+| Approved column | Meaning or usage |
+|---|---|
+| `source_system` | Specific source application or system, such as `STAYINTOUCH`, `DUETTO`, `SYNXIS`, or `SITEMINDER`. |
+| `source_system_type` | Source-system category, such as `PMS`, `RMS`, `CRS`, or `BOOKING_ENGINE`. |
+
+`source_system` identifies the specific system. `source_system_type` classifies that system. Neither field substitutes for a business-domain code such as `source_code`.
+
+The earlier `source_application_code` guidance remains an implementation compatibility reference for existing Dataform objects. New shared source contracts use `source_system` and `source_system_type`; migrations of existing physical columns require a separate dependency review.
 
 ## Shared source and reservation columns
 
@@ -26,7 +50,7 @@ This catalog records approved names and abbreviations. It does not automatically
 | `pms_rate_code` | PMS rate-plan code. |
 | `pms_arrival_rate_code` | PMS rate-plan code applicable at arrival. |
 | `roomtype_code` | Standardized room-type code. |
-| `departure_roomtype` | Source or reported departure room type. Retained without a `_name` suffix. |
+| `departure_roomtype` | Source or reported departure room type. |
 | `adults` | Adult guest count. |
 | `children` | Child guest count. |
 | `company` | Company label. |
@@ -36,10 +60,11 @@ This catalog records approved names and abbreviations. It does not automatically
 | `channel_confirm_no` | Channel confirmation number. |
 | `crs_channel` | CRS channel label. |
 | `crs_subsource` | CRS subsource label. |
-| `source_system` | Source system associated with the record or source reference. |
 | `updated_date` | Record update date in the warehouse contract. |
 
 ## Revenue and monetary columns
+
+`amt` is the approved monetary suffix for shared Metrics column names. This supersedes the older `_amount` target examples in `naming-and-modeling-conventions.mdx` for new shared column contracts. Existing `_amount` physical columns remain compatibility fields until migrated.
 
 | Approved column | Meaning or usage |
 |---|---|
