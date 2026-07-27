@@ -23,7 +23,7 @@ The current maintained implementation source is `REVREBEL/Metrics-Dataform`. `Me
 | `lkp_report_type` | **IMPLEMENTED** | One row per report type | Source-report metadata |
 | `lkp_metric_type` | **IMPLEMENTED** | One row per metric type | Metric classification |
 | `lkp_source_system_type` | **IMPLEMENTED** | One row per broad system category | `lkp_source_application` |
-| `lkp_source_application` | **IMPLEMENTED** | One row per source application | All implemented mappings |
+| `lkp_source_system` | **IMPLEMENTED** | One row per source application | All implemented mappings |
 | `lkp_segment_group` | **IMPLEMENTED** | One row per commercial segment group | `lkp_segment` |
 | `lkp_segment` | **IMPLEMENTED** | One row per commercial segment | Segment and rate models |
 | `lkp_finance_segment` | **IMPLEMENTED** | One row per finance segment | Segment and finance models |
@@ -64,7 +64,7 @@ The table-specific differences below complete the physical schema.
 |---|---|---|
 | `lkp_report_type` | `report_type`, `description`, `is_active`, `insert_date`, `updated_date` | `report_type` is the key |
 | `lkp_metric_type` | `metric_type`, `description`, `is_active`, `insert_date`, `updated_date` | `metric_type` is the key |
-| `lkp_source_application` | `short_name`, `source_system_type_code`, `vendor` | `source_system_type_code → lkp_source_system_type.code` |
+| `lkp_source_system` | `short_name`, `source_system_type_code`, `vendor` | `source_system_type_code → lkp_source_system_type.code` |
 | `lkp_segment` | `segment_group_code` | `segment_group_code → lkp_segment_group.code` |
 | `lkp_consortia` | `short_name`, `consortia_focus_code`, `consortia_category_code` | Joins to focus and category lookups |
 | `lkp_agency` | `iata`, `name`, `corp_profile`, `corporate_code`, `consortia_code`, `consortia_short_name`, `rate_type`, audit fields | `iata` is the business key; `consortia_code → lkp_consortia.code` |
@@ -84,7 +84,7 @@ The table-specific differences below complete the physical schema.
 Implemented mapping tables store:
 
 ```text
-source_application_code
+source_system_code
 ```
 
 They do not use `source_system`, `system`, or `source_system_category` as alternate physical mapping columns.
@@ -115,7 +115,7 @@ Validation requirements are documented in [Mapping and Lookup Dependencies](/doc
 
 ```text
 REVREBEL/Metrics-Dataform/definitions/00_create_core_tables.sqlx
-REVREBEL/Metrics-Dataform/definitions/01_create_source_application_tables.sqlx
+REVREBEL/Metrics-Dataform/definitions/01_create_source_system_tables.sqlx
 REVREBEL/Metrics-Dataform/definitions/05_create_segment_tables.sqlx
 REVREBEL/Metrics-Dataform/definitions/05_create_global_settings_event_lookups.sqlx
 REVREBEL/Metrics-Dataform/definitions/06_create_source_channel_rate_tables.sqlx

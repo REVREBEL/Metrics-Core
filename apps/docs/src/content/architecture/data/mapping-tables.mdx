@@ -28,7 +28,7 @@ The current maintained Dataform implementation source is `REVREBEL/Metrics-Dataf
 | Column | Type | Meaning | Dependency |
 |---|---|---|---|
 | `property_code` | `STRING` | Property scope | Property reference |
-| `source_application_code` | `STRING` | Source application | `lkp_source_application.code` |
+| `source_system_code` | `STRING` | Source application | `lkp_source_application.code` |
 | `code` | `STRING` | Source segment code | Source value |
 | `name` | `STRING` | Source segment name | Source value |
 | `description` | `STRING` | Source description | — |
@@ -50,7 +50,7 @@ map_segment → dim_segment → vw_segment
 | Column | Type | Meaning |
 |---|---|---|
 | `property_code` | `STRING` | Property scope |
-| `source_application_code` | `STRING` | Source application; joins to `lkp_source_application.code` |
+| `source_system_code` | `STRING` | Source application; joins to `lkp_source_application.code` |
 | `roomtype_map` | `STRING` | Source room-type value |
 | `roomtype_code_map` | `STRING` | Source room-type code |
 | `roomtype` | `STRING` | Standard room-type name |
@@ -79,7 +79,7 @@ No current `lkp_roomtype` exists. Room type, class, bed, feature, and pool value
 | Column | Type | Meaning | Dependency |
 |---|---|---|---|
 | `property_code` | `STRING` | Property scope | Property reference |
-| `source_application_code` | `STRING` | Source application | `lkp_source_application.code` |
+| `source_system_code` | `STRING` | Source application | `lkp_source_application.code` |
 | `code` | `STRING` | Source-application source/subsource code | Source value |
 | `name` | `STRING` | Source-application name | Source value |
 | `description` | `STRING` | Source description | — |
@@ -104,7 +104,7 @@ Channel classification is currently implemented through `map_source.channel_code
 | Column | Type | Meaning | Dependency |
 |---|---|---|---|
 | `property_code` | `STRING` | Property scope | Property reference |
-| `source_application_code` | `STRING` | Source application | `lkp_source_application.code` |
+| `source_system_code` | `STRING` | Source application | `lkp_source_application.code` |
 | `code` | `STRING` | Source rate code | Source value |
 | `name` | `STRING` | Source rate name | Source value |
 | `description` | `STRING` | Source rate description | — |

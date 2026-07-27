@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@buttons/button";
 import {
   IconAlertCircle,
   IconCalendar,
@@ -8,9 +9,8 @@ import {
   IconCircleCheck,
   IconClock,
 } from "@tabler/icons-react";
-import { useMemo, useState } from "react";
-import { Button } from "@buttons/button";
 import { Card, CardContent } from "@ui-core/card";
+import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { Task } from "../data/schema";
 
@@ -159,23 +159,36 @@ export function CalendarView({ tasks, onTaskClick }: CalendarViewProps) {
   };
 
   // Stats for current view
+  // ⚡ Bolt: Single pass loop for stats, and hoisted `new Date()` outside the loop
   const stats = useMemo(() => {
-    const currentMonthTasks = tasks.filter((task) => {
-      if (!task.dueDate) return false;
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+    const now = new Date();
+
+    let total = 0;
+    let complete = 0;
+    let overdue = 0;
+
+    for (const task of tasks) {
+      if (!task.dueDate) continue;
       const [year, month] = task.dueDate.split("-").map(Number);
-      return (
-        month - 1 === currentDate.getMonth() &&
-        year === currentDate.getFullYear()
-      );
-    });
+      if (month - 1 === currentMonth && year === currentYear) {
+        total++;
+        if (task.status === "complete") {
+          complete++;
+        } else if (task.status !== "canceled") {
+          const taskDueDate = new Date(task.dueDate);
+          if (taskDueDate < now) {
+            overdue++;
+          }
+        }
+      }
+    }
 
     return {
-      total: currentMonthTasks.length,
-      complete: currentMonthTasks.filter((t) => t.status === "complete").length,
-      overdue: currentMonthTasks.filter((t) => {
-        if (t.status === "complete" || t.status === "canceled") return false;
-        return new Date(t.dueDate as string) < new Date();
-      }).length,
+      total,
+      complete,
+      overdue,
     };
   }, [tasks, currentDate]);
 

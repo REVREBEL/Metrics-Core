@@ -128,25 +128,44 @@ function PersonCard({
   person: PersonGroup;
   onTaskClick?: (task: Task) => void;
 }) {
-  const openTasks = person.tasks.filter(
-    (t) => t.status !== "complete" && t.status !== "canceled",
-  );
-  const overdueTasks = person.tasks.filter((t) => {
-    if (!t.dueDate || t.status === "complete" || t.status === "canceled")
-      return false;
-    return new Date(t.dueDate) < new Date();
-  });
-  const completedTasks = person.tasks.filter((t) => t.status === "complete");
+  // ⚡ Bolt: Calculate stats in a single pass O(N) loop and memoize results. Hoist `new Date()`.
+  const cardStats = useMemo(() => {
+    const now = new Date();
+    let completedCount = 0;
+    let overdueCount = 0;
+    const openTasksList: Task[] = [];
+
+    for (const t of person.tasks) {
+      if (t.status === "complete") {
+        completedCount++;
+      } else if (t.status !== "canceled") {
+        openTasksList.push(t);
+        if (t.dueDate) {
+          const taskDueDate = new Date(t.dueDate);
+          if (taskDueDate < now) {
+            overdueCount++;
+          }
+        }
+      }
+    }
+
+    return {
+      completedCount,
+      overdueCount,
+      openTasks: openTasksList,
+    };
+  }, [person.tasks]);
+
   const completionRate =
     person.tasks.length > 0
-      ? Math.round((completedTasks.length / person.tasks.length) * 100)
+      ? Math.round((cardStats.completedCount / person.tasks.length) * 100)
       : 0;
 
   const typeLabel =
     assigneeTypes.find((t) => t.value === person.type)?.label || person.type;
 
   return (
-    <Collapsible defaultOpen={openTasks.length > 0}>
+    <Collapsible defaultOpen={cardStats.openTasks.length > 0}>
       <Card>
         <CollapsibleTrigger asChild>
           <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
@@ -183,20 +202,24 @@ function PersonCard({
                       className="text-green-500"
                       strokeWidth={1.5}
                     />
-                    <span className="font-medium">{completedTasks.length}</span>
+                    <span className="font-medium">
+                      {cardStats.completedCount}
+                    </span>
                   </span>
                   <span className="flex items-center gap-1 text-muted-foreground">
                     <IconClock size={20} stroke={1.5} strokeWidth={1.5} />
-                    <span>{openTasks.length}</span>
+                    <span>{cardStats.openTasks.length}</span>
                   </span>
-                  {overdueTasks.length > 0 && (
+                  {cardStats.overdueCount > 0 && (
                     <span className="flex items-center gap-1 text-red-500">
                       <IconAlertCircle
                         size={20}
                         stroke={1.5}
                         strokeWidth={1.5}
                       />
-                      <span className="font-medium">{overdueTasks.length}</span>
+                      <span className="font-medium">
+                        {cardStats.overdueCount}
+                      </span>
                     </span>
                   )}
                 </div>
@@ -236,25 +259,37 @@ function DepartmentCard({
   department: DepartmentGroup;
   onTaskClick?: (task: Task) => void;
 }) {
-  const openTasks = department.tasks.filter(
-    (t) => t.status !== "complete" && t.status !== "canceled",
-  );
-  const blockedTasks = department.tasks.filter((t) => t.status === "blocked");
-  const _overdueTasks = department.tasks.filter((t) => {
-    if (!t.dueDate || t.status === "complete" || t.status === "canceled")
-      return false;
-    return new Date(t.dueDate) < new Date();
-  });
-  const completedTasks = department.tasks.filter(
-    (t) => t.status === "complete",
-  );
+  // ⚡ Bolt: Calculate stats in a single pass O(N) loop and memoize results. Removed unused _overdueTasks.
+  const cardStats = useMemo(() => {
+    let completedCount = 0;
+    let blockedCount = 0;
+    const openTasksList: Task[] = [];
+
+    for (const t of department.tasks) {
+      if (t.status === "complete") {
+        completedCount++;
+      } else if (t.status !== "canceled") {
+        openTasksList.push(t);
+        if (t.status === "blocked") {
+          blockedCount++;
+        }
+      }
+    }
+
+    return {
+      completedCount,
+      blockedCount,
+      openTasks: openTasksList,
+    };
+  }, [department.tasks]);
+
   const completionRate =
     department.tasks.length > 0
-      ? Math.round((completedTasks.length / department.tasks.length) * 100)
+      ? Math.round((cardStats.completedCount / department.tasks.length) * 100)
       : 0;
 
   return (
-    <Collapsible defaultOpen={openTasks.length > 0}>
+    <Collapsible defaultOpen={cardStats.openTasks.length > 0}>
       <Card>
         <CollapsibleTrigger asChild>
           <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
@@ -284,20 +319,24 @@ function DepartmentCard({
                       className="text-green-500"
                       strokeWidth={1.5}
                     />
-                    <span className="font-medium">{completedTasks.length}</span>
+                    <span className="font-medium">
+                      {cardStats.completedCount}
+                    </span>
                   </span>
                   <span className="flex items-center gap-1 text-muted-foreground">
                     <IconClock size={20} stroke={1.5} strokeWidth={1.5} />
-                    <span>{openTasks.length}</span>
+                    <span>{cardStats.openTasks.length}</span>
                   </span>
-                  {blockedTasks.length > 0 && (
+                  {cardStats.blockedCount > 0 && (
                     <span className="flex items-center gap-1 text-red-500">
                       <IconAlertCircle
                         size={20}
                         stroke={1.5}
                         strokeWidth={1.5}
                       />
-                      <span className="font-medium">{blockedTasks.length}</span>
+                      <span className="font-medium">
+                        {cardStats.blockedCount}
+                      </span>
                     </span>
                   )}
                 </div>

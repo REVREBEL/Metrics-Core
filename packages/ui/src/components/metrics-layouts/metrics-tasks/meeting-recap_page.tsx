@@ -8,9 +8,9 @@ import {
   IconFileText,
   IconPlus,
 } from "@tabler/icons-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui-core/card";
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@ui-core/card";
 import { initiativeStatuses, taskStatuses } from "../data/data";
 import type { Initiative, Task } from "../data/schema";
 
@@ -207,16 +207,28 @@ export function MeetingRecapView({
 
   // Summary stats
   const stats = useMemo(() => {
-    const activeInitiatives = initiatives.filter(
-      (i) => i.status === "active" || i.status === "planning",
-    ).length;
-    const atRiskInitiatives = initiatives.filter(
-      (i) => i.status === "at_risk" || i.status === "blocked",
-    ).length;
-    const openTasks = tasks.filter(
-      (t) => t.status !== "complete" && t.status !== "canceled",
-    ).length;
-    const blockedTasks = tasks.filter((t) => t.status === "blocked").length;
+    let activeInitiatives = 0;
+    let atRiskInitiatives = 0;
+    for (const i of initiatives) {
+      const status = i.status;
+      if (status === "active" || status === "planning") {
+        activeInitiatives++;
+      } else if (status === "at_risk" || status === "blocked") {
+        atRiskInitiatives++;
+      }
+    }
+
+    let openTasks = 0;
+    let blockedTasks = 0;
+    for (const t of tasks) {
+      const status = t.status;
+      if (status !== "complete" && status !== "canceled") {
+        openTasks++;
+      }
+      if (status === "blocked") {
+        blockedTasks++;
+      }
+    }
 
     return { activeInitiatives, atRiskInitiatives, openTasks, blockedTasks };
   }, [initiatives, tasks]);
