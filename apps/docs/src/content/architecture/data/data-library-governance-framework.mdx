@@ -1,0 +1,92 @@
+---
+title: Data Library Governance Framework
+nav_order: 13
+has_toc: true
+---
+
+# Data Library Governance Framework
+
+## Current implementation
+
+The authenticated Metrics workspace route at `/metrics-library` now reads its
+lookup and mapping navigation and column behavior from one application-owned
+registry:
+
+```text
+apps/app/features/data-library/registry.ts
+```
+
+The registry is an allowlist. A future `data_library_tables` database record may
+supplement display metadata, but it must not expose an arbitrary warehouse
+table that is absent from the code-owned registry.
+
+The first registered definitions are:
+
+| Category | Physical table | Grain | Logical key |
+|---|---|---|---|
+| Lookup | `metrics_core.lkp_segment` | One row per standard commercial segment code | `code` |
+| Mapping | `metrics_core.map_segment` | One row per property, source application, and source segment code | `property_code`, `source_application_code`, `code` |
+
+The column names and dependencies are verified against the current standalone
+`REVREBEL/Metrics-Dataform` definitions. BigQuery/Dataform owns current
+published values. Publication remains deferred behind the server-only
+`DataLibraryPublicationAdapter`; browser components do not write to BigQuery.
+
+## Repository schema gap
+
+REV-74 identifies these deployed application tables:
+
+```text
+app_audit_log
+app_users
+data_library_tables
+lookup_table_change_requests
+lookup_table_draft_edits
+user_roles
+```
+
+The current `Metrics-Core` `dev` branch declares a Drizzle/Postgres package at
+`packages/db/package.json`, but it contains no repository-owned schema source,
+migrations, database client, auth helpers, permission service, or audit
+service. No application database environment variable is declared in the
+repository `.env.example`.
+
+This is an explicit difference between the deployed environment described by
+Linear and the repository implementation. The framework does not invent a
+second schema. Durable draft, change-request, permission, and audit behavior
+remains blocked until the existing deployed schema and repository-owned service
+contracts are restored or supplied.
+
+## Validation and conflicts
+
+Registry metadata identifies required, editable, read-only, and lookup-dependent
+fields. Full validation must run at the future authenticated server boundary
+before drafts are saved or submitted.
+
+Current Dataform defines `updated_date DATE` on both registered tables. The
+segment seed initializes it as null, and no non-null row version or timestamp
+constraint is implemented. Optimistic conflict detection is therefore
+**UNRESOLVED**. The UI and service must not claim conflict safety until a
+reliable concurrency contract is approved.
+
+## Implemented versus deferred
+
+**IMPLEMENTED**
+
+- authenticated workspace route composition;
+- registry-driven lookup and mapping navigation;
+- verified definitions for `lkp_segment` and `map_segment`;
+- editable/read-only and dependency metadata;
+- search across registered tables;
+- empty-state behavior that does not present fixtures as live data;
+- server-only publication adapter boundary.
+
+**DEFERRED**
+
+- warehouse row-read adapter;
+- application-database-backed draft persistence;
+- change-request submission and review;
+- role-backed view, edit, review, and publish enforcement;
+- application audit events;
+- optimistic conflict enforcement;
+- BigQuery publication.
