@@ -83,23 +83,37 @@ function RecapSectionCard({ section }: { section: RecapSection }) {
   );
 }
 
+// ⚡ Bolt: Hoist Intl.DateTimeFormat instance to avoid expensive re-creation.
+const meetingRecapDateFormatter = new Intl.DateTimeFormat("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+
 export function MeetingRecapView({
   initiatives,
   tasks,
   meetingDate,
 }: MeetingRecapViewProps) {
-  const recapDate = meetingDate ? new Date(meetingDate) : new Date();
-  const recapDateStr = recapDate.toISOString().split("T")[0];
-  const formattedDate = recapDate.toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
+  // ⚡ Bolt: Memoize date variables to avoid recreating Date objects and re-running
+  // expensive formatters and ISO conversions on every render.
+  // This also provides stable references for oneWeekAgo and recapDate, ensuring the
+  // sections useMemo actually works and skips redundant array iterations.
+  const { recapDate, recapDateStr, formattedDate, oneWeekAgo } = useMemo(() => {
+    const rDate = meetingDate ? new Date(meetingDate) : new Date();
+    const rDateStr = rDate.toISOString().split("T")[0];
+    const fmtDate = meetingRecapDateFormatter.format(rDate);
+    const lastWeek = new Date(rDate);
+    lastWeek.setDate(lastWeek.getDate() - 7);
 
-  // One week ago for "since last meeting" comparisons
-  const oneWeekAgo = new Date(recapDate);
-  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    return {
+      recapDate: rDate,
+      recapDateStr: rDateStr,
+      formattedDate: fmtDate,
+      oneWeekAgo: lastWeek,
+    };
+  }, [meetingDate]);
 
   const sections = useMemo((): RecapSection[] => {
     // New initiatives (created in the last week)
