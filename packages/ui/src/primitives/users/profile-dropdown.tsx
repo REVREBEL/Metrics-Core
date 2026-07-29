@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@buttons/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@ui-core/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +13,10 @@ import {
   DropdownMenuTrigger,
 } from "@dropdowns/dropdown-menu";
 import Link from "next/link";
+<<<<<<< Updated upstream
 import { Avatar, AvatarImage, AvatarFallback } from "@ui-core/avatar";
+=======
+>>>>>>> Stashed changes
 import { SignOutDialog } from "@users/sign-out-dialog";
 import useDialogState from "@/hooks/use-dialog-state";
 

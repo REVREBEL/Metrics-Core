@@ -18,7 +18,7 @@ const Login = () => {
            <img src={Logo.src} alt='RevRebel Logo' className='h-10 w-auto' />
 
           <div>
-            <CardTitle className='mb-1.5 text-2xl'>Sign in to Shadcn Studio</CardTitle>
+            <CardTitle className='mb-1.5 text-2xl'>Sign in to Metrics</CardTitle>
             <CardDescription className='text-base'>Ship Faster and Focus on Growth.</CardDescription>
           </div>
         </CardHeader>

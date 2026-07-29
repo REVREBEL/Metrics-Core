@@ -1,4 +1,4 @@
-import { Field, FieldLabel } from "@auto-form/fields/field";
+import { Field, FieldLabel } from "@forms/fields/field";
 import { Badge } from "@ui-core";
 import { Input } from "./input";
 

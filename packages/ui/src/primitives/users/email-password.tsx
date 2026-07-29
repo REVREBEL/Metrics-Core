@@ -2,7 +2,11 @@
 
 import { useMemo, useState } from 'react'
 
+<<<<<<< Updated upstream
 import { IconCheck, IconMail, IconX, IconEye, IconEyeOff } from '@tabler/icons-react'
+=======
+import { IconCheck, IconMailFilled, IconX, IconEye, IconEyeOff } from '@tabler/icons-react'
+>>>>>>> Stashed changes
 
 import { Button } from '@buttons/button'
 import { Input } from '@inputs/input'

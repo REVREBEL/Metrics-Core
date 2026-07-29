@@ -10,9 +10,9 @@ import { FormField } from "@forms/form";
 import { type useForm, useFormContext } from "react-hook-form";
 import * as React from "react";
 import * as z from "zod";
-import { beautifyObjectName, getBaseSchema, getBaseType, sortFieldsByOrder, zodToHtmlInputProps } from "@auto-form/helpers"
-import { FieldConfig, FieldConfigItem, Dependency } from "@auto-form/types"
-import { DEFAULT_ZOD_HANDLERS, INPUT_COMPONENTS } from "@auto-form/config";
+import { beautifyObjectName, getBaseSchema, getBaseType, sortFieldsByOrder, zodToHtmlInputProps } from "@forms/helpers"
+import { FieldConfig, FieldConfigItem, Dependency } from "@forms/types"
+import { DEFAULT_ZOD_HANDLERS, INPUT_COMPONENTS } from "@forms/config";
 import AutoFormArray from "./array";
 import resolveDependencies from "../dependencies";
 

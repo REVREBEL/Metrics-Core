@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "packages/ui/src/primitives/inputs/input-invalid.tsx",
-      "content": "import { Field, FieldDescription, FieldLabel } from \"@auto-form/fields/field\";\nimport { Input } from \"./input\";\n\nexport function InputInvalid() {\n  return (\n    <Field data-invalid>\n      <FieldLabel htmlFor=\"input-invalid\">Invalid Input</FieldLabel>\n      <Input id=\"input-invalid\" placeholder=\"Error\" aria-invalid />\n      <FieldDescription>\n        This field contains validation errors.\n      </FieldDescription>\n    </Field>\n  );\n}\n",
+      "content": "import { Field, FieldDescription, FieldLabel } from \"@forms/fields/field\";\nimport { Input } from \"./input\";\n\nexport function InputInvalid() {\n  return (\n    <Field data-invalid>\n      <FieldLabel htmlFor=\"input-invalid\">Invalid Input</FieldLabel>\n      <Input id=\"input-invalid\" placeholder=\"Error\" aria-invalid />\n      <FieldDescription>\n        This field contains validation errors.\n      </FieldDescription>\n    </Field>\n  );\n}\n",
       "type": "registry:ui",
       "target": "src/primitive/inputs/input-invalid.tsx"
     }

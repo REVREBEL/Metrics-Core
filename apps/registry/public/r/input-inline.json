@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "packages/ui/src/primitives/inputs/input-inline.tsx",
-      "content": "import { Field } from \"@auto-form/fields/field\";\nimport { Button } from \"@buttons/button\";\nimport { Input } from \"./input\";\n\nexport function InputInline() {\n  return (\n    <Field orientation=\"horizontal\">\n      <Input type=\"search\" placeholder=\"Search...\" />\n      <Button>Search</Button>\n    </Field>\n  );\n}\n",
+      "content": "import { Field } from \"@forms/fields/field\";\nimport { Button } from \"@buttons/button\";\nimport { Input } from \"./input\";\n\nexport function InputInline() {\n  return (\n    <Field orientation=\"horizontal\">\n      <Input type=\"search\" placeholder=\"Search...\" />\n      <Button>Search</Button>\n    </Field>\n  );\n}\n",
       "type": "registry:ui",
       "target": "src/primitive/inputs/input-inline.tsx"
     }

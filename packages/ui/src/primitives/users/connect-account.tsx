@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import { XIcon, PlusIcon } from 'lucide-react'
+import { IconX, IconPlus } from '@tabler/icons-react'
 
 import {
   Dialog,
@@ -97,13 +97,13 @@ const ConnectedAccount = () => {
 
               <p className='text-sm font-medium'>{account.name}</p>
               <Button
-                size='xs'
+                size='sm'
                 variant='ghost'
                 className='text-primary bg-primary/10 rounded-md transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none'
                 aria-label={`Remove ${account.name}`}
                 onClick={() => handleRemoveAccount(account.id)}
               >
-                <XIcon className='size-3' aria-hidden='true' />
+                <IconX className='size-3' aria-hidden='true' />
               </Button>
             </div>
           ))}
@@ -112,7 +112,7 @@ const ConnectedAccount = () => {
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button variant='outline' className='h-10.5' onClick={() => setIsDialogOpen(true)}>
-                <PlusIcon className='size-4' />
+                <IconPlus className='size-4' />
                 Add App
               </Button>
             </DialogTrigger>

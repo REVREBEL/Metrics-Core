@@ -2,7 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+<<<<<<< Updated upstream
 import { IconUpload, IconTrash, IconPolaroid } from '@tabler/icons-react'
+=======
+import { IconCloudUpload, IconTrash, IconPolaroid } from '@tabler/icons-react'
+>>>>>>> Stashed changes
 
 import { Button } from '@buttons/button'
 import { Input } from '@inputs/input'
@@ -110,18 +114,18 @@ const PersonalInfo = () => {
                 {preview ? (
                   <img src={preview} alt='avatar preview' className='h-full w-full object-cover' />
                 ) : (
-                  <ImageIcon />
+                  <IconPolaroid />
                 )}
               </div>
 
               <div className='flex items-center gap-2'>
                 <input ref={inputRef} type='file' accept='image/*' className='hidden' onChange={onSelect} />
                 <Button type='button' variant='outline' onClick={openPicker} className='flex items-center gap-2'>
-                  <UploadCloudIcon />
+                  <IconCloudUpload />
                   Upload avatar
                 </Button>
                 <Button type='button' variant='ghost' onClick={remove} disabled={!file} className='text-destructive'>
-                  <TrashIcon />
+                  <IconTrash />
                 </Button>
               </div>
             </div>

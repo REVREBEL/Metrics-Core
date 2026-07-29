@@ -19,7 +19,7 @@ The intended structure is:
 
 The current `tsconfig.json` alias set is the source of truth for imports such as:
 
-- `@auto-form/*`
+- `@forms/*`
 - `@buttons/*`
 - `@charts/*`
 - `@data-grid/*`

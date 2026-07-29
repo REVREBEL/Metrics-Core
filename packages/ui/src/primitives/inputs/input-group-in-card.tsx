@@ -1,4 +1,4 @@
-import { Field, FieldGroup, FieldLabel } from "@auto-form/fields/field";
+import { Field, FieldGroup, FieldLabel } from "@forms/fields/field";
 import { Button } from "@buttons/button";
 import { IconExternalLink, IconMail } from "@tabler/icons-react";
 import {

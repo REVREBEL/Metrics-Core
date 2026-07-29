@@ -1,4 +1,4 @@
-import { Skeleton } from "./skeleton";
+import { Skeleton } from "@skeleton/skeleton";
 
 export function SkeletonAvatar() {
   return (
