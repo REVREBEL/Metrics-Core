@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "ignoreDeprecations": "5.0",
+    "ignoreDeprecations": "6.0",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -17,6 +17,8 @@
     "paths": {
       "@repo/data": ["./packages/data/src/index.ts"],
       "@repo/data/*": ["./packages/data/src/*"],
+      "@repo/db": ["./packages/db/src/index.ts"],
+      "@repo/db/*": ["./packages/db/src/*"],
       "@/*": ["./packages/ui/src/*"],
 
       "@/registry": ["./registry.json"],
