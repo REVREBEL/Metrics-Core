@@ -62,10 +62,11 @@ export async function fetchFeatureDataLibraryRows(
     };
   }
 
-  // 3. Permission check against read permissions
-  if (authContext?.permissions) {
+  // 3. Permission check against read permissions (fail closed)
+  if (authContext) {
+    const permissions = authContext.permissions ?? [];
     const hasPermission = tableDef.permissions.read.some((requiredPerm) =>
-      authContext.permissions?.includes(requiredPerm),
+      permissions.includes(requiredPerm),
     );
     if (!hasPermission) {
       return {

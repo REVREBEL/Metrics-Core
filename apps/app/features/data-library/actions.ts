@@ -10,23 +10,32 @@ import {
 
 export async function resolveServerAuthContext() {
   const reqHeaders = await headers();
+
+  // Read verified session attributes injected by workspace middleware
   const userId =
     reqHeaders.get("x-user-id") || reqHeaders.get("x-workspace-user-id");
-  const isAuthenticated = reqHeaders.get("x-unauthenticated") !== "true";
+  const isAuthenticated = reqHeaders.get("x-authenticated") === "true";
 
   const permissionsHeader = reqHeaders.get("x-user-permissions");
   const permissions = permissionsHeader
-    ? permissionsHeader.split(",").map((p) => p.trim())
-    : [
-        "data_library.lookup_tables.view",
-        "data_library.lookup_tables.edit",
-        "data_library.mapping_tables.view",
-        "data_library.mapping_tables.edit",
-      ];
+    ? permissionsHeader
+        .split(",")
+        .map((p) => p.trim())
+        .filter(Boolean)
+    : [];
+
+  // Fail closed: No verified session or missing user ID returns unauthenticated context
+  if (!isAuthenticated || !userId) {
+    return {
+      userId: "",
+      isAuthenticated: false,
+      permissions: [],
+    };
+  }
 
   return {
-    userId: userId || "00000000-0000-0000-0000-000000000001",
-    isAuthenticated,
+    userId,
+    isAuthenticated: true,
     permissions,
   };
 }

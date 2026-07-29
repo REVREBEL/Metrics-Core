@@ -3,13 +3,31 @@ import { fetchFeatureDataLibraryFilterOptions } from "../../../../features/data-
 
 export const dynamic = "force-dynamic";
 
-function getWorkspaceAuthContext(_request: NextRequest) {
+function getWorkspaceAuthContext(request: NextRequest) {
+  const userId =
+    request.headers.get("x-user-id") ||
+    request.headers.get("x-workspace-user-id");
+  const isAuthenticated = request.headers.get("x-authenticated") === "true";
+  const permissionsHeader = request.headers.get("x-user-permissions");
+  const permissions = permissionsHeader
+    ? permissionsHeader
+        .split(",")
+        .map((p) => p.trim())
+        .filter(Boolean)
+    : ["data_library.lookup_tables.view", "data_library.mapping_tables.view"];
+
+  if (!isAuthenticated || !userId) {
+    return {
+      userId: "",
+      isAuthenticated: false,
+      permissions: [],
+    };
+  }
+
   return {
+    userId,
     isAuthenticated: true,
-    permissions: [
-      "data_library.lookup_tables.view",
-      "data_library.mapping_tables.view",
-    ],
+    permissions,
   };
 }
 

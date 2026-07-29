@@ -80,7 +80,7 @@ reliable concurrency contract is approved.
 - dynamic filter-option endpoint (`/api/data-library/filter-options`);
 - interactive DataGrid and three-panel Table/Row Inspector;
 - empty-state, loading-skeleton, and retryable error-state UI handling;
-- application-database-backed draft persistence (`@repo/db`, `lookup_table_draft_edits`);
+- application-database-backed draft persistence (`@repo/db`, `lookup_table_draft_edits` via migration `0000_lookup_table_draft_edits.sql` mirroring deployed PostgreSQL schema);
 - metadata-driven validation & live lookup dependency validation;
 - 3-layer overlay model (sourceValues, draftValues, effectiveValues);
 - application audit events (`app_audit_log`);
