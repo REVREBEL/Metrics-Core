@@ -83,6 +83,14 @@ function RecapSectionCard({ section }: { section: RecapSection }) {
   );
 }
 
+// ⚡ Bolt: Hoist Intl.DateTimeFormat instance to avoid expensive re-creation.
+const meetingRecapDateFormatter = new Intl.DateTimeFormat("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+
 export function MeetingRecapView({
   initiatives,
   tasks,
