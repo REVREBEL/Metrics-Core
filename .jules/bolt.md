@@ -32,3 +32,7 @@
 ## 2026-07-27 - [Broken Memoization via Unstable Date Dependencies]
 **Learning:** Passing newly instantiated Date objects or non-primitives created directly in the render body into a `useMemo` dependency array completely breaks memoization. Since React does strict reference equality checks (`===`), the new references on every render trigger re-computation of the memoized block (e.g. running 5 separate `.filter()` traversals over thousands of items). Furthermore, implicit `toLocaleDateString` calls recreate the expensive `Intl.DateTimeFormat` object.
 **Action:** Always group and memoize unstable variables (like dynamic dates) in a single `useMemo` block first, or extract them, before passing them as dependencies. Also, hoist `Intl.DateTimeFormat` formatters to package level to avoid implicit creation costs.
+
+## 2026-07-28 - [Server-Side Database Filter Caching & Coalescing]
+**Learning:** Uncached or concurrent client-side requests to database lookups/distinct option filters can result in redundant network requests and slow page transitions. Implementing a server-side cache that stores active promises prevents request duplication (coalescing) while serving subsequent requests from memory under a short-lived TTL.
+**Action:** Always coalesce in-flight queries by caching their promise immediately on key-lookup, and evict the cache entry on failure to enable robust retries.

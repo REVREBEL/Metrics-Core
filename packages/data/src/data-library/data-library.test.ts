@@ -92,7 +92,11 @@ test("buildDataLibraryQuery - basic SELECT, visible columns only", () => {
   assert.ok(result.sql.includes("SELECT `code`, `name`, `sort`, `is_active`"));
   assert.ok(!result.sql.includes("`internal_notes`"));
   assert.ok(result.sql.includes("FROM `metrics_core`.`lkp_segment`"));
-  assert.ok(result.sql.includes("ORDER BY `sort` ASC NULLS LAST, `code` ASC NULLS LAST"));
+  assert.ok(
+    result.sql.includes(
+      "ORDER BY `sort` ASC NULLS LAST, `code` ASC NULLS LAST",
+    ),
+  );
   assert.strictEqual(result.params.limitParam, 25);
   assert.strictEqual(result.params.offsetParam, 0);
 });
@@ -105,7 +109,11 @@ test("buildDataLibraryQuery - parameterized search across searchable text column
     search: " transient ",
   });
 
-  assert.ok(result.sql.includes("LOWER(`code`) LIKE @searchParam OR LOWER(`name`) LIKE @searchParam"));
+  assert.ok(
+    result.sql.includes(
+      "LOWER(`code`) LIKE @searchParam OR LOWER(`name`) LIKE @searchParam",
+    ),
+  );
   assert.ok(!result.sql.includes("LOWER(`is_active`)"));
   assert.strictEqual(result.params.searchParam, "%transient%");
 });
@@ -139,7 +147,9 @@ test("buildDataLibraryQuery - deduplicates primary key in ORDER BY when requeste
 
   // Should sort by `code` DESC NULLS LAST and NOT append `code` ASC NULLS LAST twice
   assert.ok(result.sql.includes("ORDER BY `code` DESC NULLS LAST"));
-  assert.ok(!result.sql.includes("ORDER BY `code` DESC NULLS LAST, `code` ASC"));
+  assert.ok(
+    !result.sql.includes("ORDER BY `code` DESC NULLS LAST, `code` ASC"),
+  );
 });
 
 test("buildDataLibraryQuery - rejects invalid page or pageSize bounds", () => {
@@ -165,7 +175,10 @@ test("buildDataLibraryQuery - rejects invalid page or pageSize bounds", () => {
 });
 
 test("buildDataLibraryFilterOptionsQuery - generates SELECT DISTINCT with limit", () => {
-  const filterQuery = buildDataLibraryFilterOptionsQuery(mockDefinition, "code");
+  const filterQuery = buildDataLibraryFilterOptionsQuery(
+    mockDefinition,
+    "code",
+  );
   assert.strictEqual(filterQuery.columnKey, "code");
   assert.ok(filterQuery.sql.includes("SELECT DISTINCT `code` AS value"));
   assert.ok(filterQuery.sql.includes("FROM `metrics_core`.`lkp_segment`"));

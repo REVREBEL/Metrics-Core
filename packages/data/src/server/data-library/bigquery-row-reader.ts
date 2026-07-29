@@ -10,8 +10,8 @@ import type {
   DataLibraryFilterOptionsResponse,
   DataLibraryQueryOptions,
   DataLibraryReadDefinition,
-  DataLibraryRowsResponse,
   DataLibraryResponse,
+  DataLibraryRowsResponse,
 } from "../../data-library/query-contract";
 
 let _bqClient: BigQuery | null = null;
@@ -29,7 +29,9 @@ function getBigQueryClient(): BigQuery {
       _bqClient = new BigQuery({ projectId, credentials, location });
       return _bqClient;
     } catch {
-      throw new Error("GOOGLE_APPLICATION_CREDENTIALS_JSON set but could not be parsed as valid JSON.");
+      throw new Error(
+        "GOOGLE_APPLICATION_CREDENTIALS_JSON set but could not be parsed as valid JSON.",
+      );
     }
   }
 
@@ -94,7 +96,9 @@ export async function executeDataLibraryRowRead(
     const total =
       countRows.length > 0 && countRows[0].total_count !== undefined
         ? Number(
-            typeof countRows[0].total_count === "object" && countRows[0].total_count !== null && "value" in countRows[0].total_count
+            typeof countRows[0].total_count === "object" &&
+              countRows[0].total_count !== null &&
+              "value" in countRows[0].total_count
               ? (countRows[0].total_count as { value: unknown }).value
               : countRows[0].total_count,
           )
@@ -104,7 +108,10 @@ export async function executeDataLibraryRowRead(
       const row: Record<string, unknown> = {};
       for (const colDef of definition.columns) {
         if (colDef.visible !== false) {
-          row[colDef.key] = normalizeBigQueryValue(rawRow[colDef.key], colDef.type);
+          row[colDef.key] = normalizeBigQueryValue(
+            rawRow[colDef.key],
+            colDef.type,
+          );
         }
       }
       return row;
@@ -126,9 +133,15 @@ export async function executeDataLibraryRowRead(
     };
 
     return response;
-  } catch (error: any) {
-    const errorMessage = error?.message || "BigQuery query execution failed.";
-    const isTimeout = errorMessage.toLowerCase().includes("timeout") || error?.code === 504;
+  } catch (error: unknown) {
+    const errorMessage =
+      (error as Error)?.message || "BigQuery query execution failed.";
+    const isTimeout =
+      errorMessage.toLowerCase().includes("timeout") ||
+      (typeof error === "object" &&
+        error !== null &&
+        "code" in error &&
+        (error as { code: unknown }).code === 504);
 
     return {
       success: false,
@@ -143,44 +156,79 @@ export async function executeDataLibraryRowRead(
   }
 }
 
+interface FilterOptionsCacheEntry {
+  promise: Promise<
+    DataLibraryFilterOptionsResponse | { success: false; error: unknown }
+  >;
+  expiresAt: number;
+}
+
+const filterOptionsCache = new Map<string, FilterOptionsCacheEntry>();
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
 export async function executeDataLibraryFilterOptionsRead(
   definition: DataLibraryReadDefinition,
   columnKey: string,
-): Promise<DataLibraryFilterOptionsResponse | { success: false; error: any }> {
-  try {
-    const { sql, columnKey: key } = buildDataLibraryFilterOptionsQuery(definition, columnKey);
-    const bq = getBigQueryClient();
-    const location = process.env.BQ_DATA_LOCATION ?? "us-central1";
+): Promise<
+  DataLibraryFilterOptionsResponse | { success: false; error: unknown }
+> {
+  const cacheKey = `${definition.key}:${columnKey}`;
+  const now = Date.now();
+  const cached = filterOptionsCache.get(cacheKey);
 
-    const [rows] = await bq.query({
-      query: sql,
-      location,
-      jobTimeoutMs: 10000,
-    });
-
-    const options = (rows as Array<Record<string, unknown>>).map((row) => {
-      const strVal = String(row.value ?? "");
-      return {
-        label: strVal,
-        value: strVal,
-      };
-    });
-
-    return {
-      success: true,
-      data: {
-        columnKey: key,
-        options,
-      },
-    };
-  } catch (error: any) {
-    return {
-      success: false,
-      error: {
-        code: "QUERY_FAILED",
-        message: `Failed to fetch filter options: ${error?.message || "Unknown error"}`,
-        retryable: true,
-      },
-    };
+  if (cached && cached.expiresAt > now) {
+    return cached.promise;
   }
+
+  // Coalesce request by storing the promise immediately
+  const promise = (async () => {
+    try {
+      const { sql, columnKey: key } = buildDataLibraryFilterOptionsQuery(
+        definition,
+        columnKey,
+      );
+      const bq = getBigQueryClient();
+      const location = process.env.BQ_DATA_LOCATION ?? "us-central1";
+
+      const [rows] = await bq.query({
+        query: sql,
+        location,
+        jobTimeoutMs: 10000,
+      });
+
+      const options = (rows as Array<Record<string, unknown>>).map((row) => {
+        const strVal = String(row.value ?? "");
+        return {
+          label: strVal,
+          value: strVal,
+        };
+      });
+
+      return {
+        success: true,
+        data: {
+          columnKey: key,
+          options,
+        },
+      } as DataLibraryFilterOptionsResponse;
+    } catch (error: unknown) {
+      // Evict from cache on failure so a subsequent request can retry
+      filterOptionsCache.delete(cacheKey);
+      return {
+        success: false,
+        error: {
+          code: "QUERY_FAILED",
+          message: `Failed to fetch filter options: ${(error as Error)?.message || "Unknown error"}`,
+          retryable: true,
+        },
+      };
+    }
+  })();
+
+  filterOptionsCache.set(cacheKey, {
+    promise,
+    expiresAt: now + CACHE_TTL_MS,
+  });
+
+  return promise;
 }
