@@ -80,13 +80,15 @@ reliable concurrency contract is approved.
 - dynamic filter-option endpoint (`/api/data-library/filter-options`);
 - interactive DataGrid and three-panel Table/Row Inspector;
 - empty-state, loading-skeleton, and retryable error-state UI handling;
+- application-database-backed draft persistence (`@repo/db`, `lookup_table_draft_edits`);
+- metadata-driven validation & live lookup dependency validation;
+- 3-layer overlay model (sourceValues, draftValues, effectiveValues);
+- application audit events (`app_audit_log`);
 - server-only publication adapter boundary.
 
 **DEFERRED**
 
-- application-database-backed draft persistence;
 - change-request submission and review;
-- role-backed RBAC view, edit, review, and publish enforcement;
-- application audit events;
+- role-backed RBAC review and publish enforcement;
 - optimistic conflict enforcement;
 - BigQuery publication.

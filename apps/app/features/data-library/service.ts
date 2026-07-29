@@ -10,12 +10,27 @@ import {
   executeDataLibraryFilterOptionsRead,
   executeDataLibraryRowRead,
 } from "@repo/data/server/data-library";
+import { canonicalizeRowKey } from "./canonicalizer";
+import { listFeatureDraftEdits } from "./draft-service";
 import { getDataLibraryTableDefinition, toReadDefinition } from "./registry";
 
 export interface FeatureAuthContext {
+  userId?: string;
   isAuthenticated: boolean;
   permissions?: string[];
 }
+
+export type DataLibraryOverlayRow = Record<string, unknown> & {
+  _overlay?: {
+    rowKey: string;
+    sourceValues: Record<string, unknown>;
+    draftValues: Record<string, unknown> | null;
+    effectiveValues: Record<string, unknown>;
+    draftId?: string;
+    draftUpdatedAt?: string;
+    dirtyColumns: string[];
+  };
+};
 
 export async function fetchFeatureDataLibraryRows(
   options: DataLibraryQueryOptions,
@@ -66,7 +81,79 @@ export async function fetchFeatureDataLibraryRows(
 
   // 4. Execute row reading via @repo/data
   const readDef = toReadDefinition(tableDef);
-  return executeDataLibraryRowRead(readDef, options);
+  const result = await executeDataLibraryRowRead(readDef, options);
+
+  if (!result.success) {
+    return result;
+  }
+
+  // 5. Query active drafts for the table & user if userId is available
+  const draftMap = new Map<
+    string,
+    { id: string; updatedAt: string; draftPayload: Record<string, unknown> }
+  >();
+
+  if (authContext?.userId) {
+    try {
+      const drafts = await listFeatureDraftEdits(options.tableKey, {
+        userId: authContext.userId,
+        isAuthenticated: true,
+        permissions: authContext.permissions,
+      });
+
+      for (const d of drafts) {
+        draftMap.set(d.rowKey, {
+          id: d.id,
+          updatedAt: d.updatedAt.toISOString(),
+          draftPayload: d.draftPayload,
+        });
+      }
+    } catch {
+      // Database unconfigured or unavailable; proceed with clean source rows
+    }
+  }
+
+  // 6. Map rows into 3-Layer Overlay model
+  const overlayRows: DataLibraryOverlayRow[] = result.data.rows.map(
+    (sourceRow) => {
+      const rowKey = canonicalizeRowKey(tableDef.primaryKey, sourceRow);
+      const activeDraft = draftMap.get(rowKey);
+
+      const dirtyColumns: string[] = [];
+      const effectiveValues: Record<string, unknown> = { ...sourceRow };
+      const draftValues = activeDraft ? activeDraft.draftPayload : null;
+
+      if (draftValues) {
+        for (const [key, draftVal] of Object.entries(draftValues)) {
+          if (sourceRow[key] !== draftVal) {
+            dirtyColumns.push(key);
+            effectiveValues[key] = draftVal;
+          }
+        }
+      }
+
+      return {
+        ...effectiveValues,
+        _overlay: {
+          rowKey,
+          sourceValues: sourceRow,
+          draftValues,
+          effectiveValues,
+          draftId: activeDraft?.id,
+          draftUpdatedAt: activeDraft?.updatedAt,
+          dirtyColumns,
+        },
+      };
+    },
+  );
+
+  return {
+    ...result,
+    data: {
+      ...result.data,
+      rows: overlayRows,
+    },
+  };
 }
 
 export async function fetchFeatureDataLibraryFilterOptions(
@@ -80,7 +167,6 @@ export async function fetchFeatureDataLibraryFilterOptions(
       error: {
         code: "UNAUTHENTICATED",
         message: "You must be signed into an active workspace session.",
-        retryable: false,
       },
     };
   }
