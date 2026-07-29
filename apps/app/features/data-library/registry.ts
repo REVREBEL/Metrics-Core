@@ -1,3 +1,5 @@
+import type { DataLibraryReadDefinition } from "@repo/data/data-library";
+
 export type DataLibraryTableCategory = "lookup" | "mapping";
 
 export type DataLibraryColumnType = "boolean" | "date" | "integer" | "string";
@@ -10,6 +12,11 @@ export type DataLibraryColumnDefinition = {
   required: boolean;
   description: string;
   lookupDependency?: string;
+  searchable?: boolean;
+  sortable?: boolean;
+  filterable?: boolean;
+  visible?: boolean;
+  defaultWidth?: number;
 };
 
 export type DataLibraryTableDefinition = {
@@ -22,6 +29,10 @@ export type DataLibraryTableDefinition = {
   description: string;
   grain: string;
   primaryKey: string[];
+  defaultSort: {
+    column: string;
+    direction: "asc" | "desc";
+  };
   columns: DataLibraryColumnDefinition[];
   permissions: {
     read: string[];
@@ -52,7 +63,7 @@ const mappingPermissions = {
   publish: ["data_library.mapping_tables.publish"],
 };
 
-export const dataLibraryTableRegistry = [
+export const dataLibraryTableRegistry: readonly DataLibraryTableDefinition[] = [
   {
     key: "metrics_core.lkp_segment",
     dataset: "metrics_core",
@@ -64,6 +75,10 @@ export const dataLibraryTableRegistry = [
       "Controlled commercial segment values used by the segment mapping workflow.",
     grain: "One row per standard commercial segment code.",
     primaryKey: ["code"],
+    defaultSort: {
+      column: "sort",
+      direction: "asc",
+    },
     columns: [
       {
         key: "code",
@@ -72,6 +87,10 @@ export const dataLibraryTableRegistry = [
         editable: false,
         required: true,
         description: "Stable standard commercial segment code.",
+        searchable: true,
+        sortable: true,
+        filterable: true,
+        visible: true,
       },
       {
         key: "name",
@@ -80,6 +99,10 @@ export const dataLibraryTableRegistry = [
         editable: true,
         required: true,
         description: "Segment display name.",
+        searchable: true,
+        sortable: true,
+        filterable: false,
+        visible: true,
       },
       {
         key: "description",
@@ -88,6 +111,10 @@ export const dataLibraryTableRegistry = [
         editable: true,
         required: false,
         description: "Definition or usage notes for the segment.",
+        searchable: true,
+        sortable: true,
+        filterable: false,
+        visible: true,
       },
       {
         key: "sort",
@@ -96,6 +123,10 @@ export const dataLibraryTableRegistry = [
         editable: true,
         required: false,
         description: "Display order for reporting.",
+        searchable: false,
+        sortable: true,
+        filterable: false,
+        visible: true,
       },
       {
         key: "segment_group_code",
@@ -105,6 +136,10 @@ export const dataLibraryTableRegistry = [
         required: true,
         lookupDependency: "metrics_core.lkp_segment_group",
         description: "Parent standard segment group code.",
+        searchable: true,
+        sortable: true,
+        filterable: true,
+        visible: true,
       },
       {
         key: "is_active",
@@ -113,6 +148,10 @@ export const dataLibraryTableRegistry = [
         editable: true,
         required: true,
         description: "Whether the segment is active.",
+        searchable: false,
+        sortable: true,
+        filterable: true,
+        visible: true,
       },
       {
         key: "insert_date",
@@ -121,6 +160,10 @@ export const dataLibraryTableRegistry = [
         editable: false,
         required: false,
         description: "Warehouse insert date.",
+        searchable: false,
+        sortable: true,
+        filterable: false,
+        visible: true,
       },
       {
         key: "updated_date",
@@ -129,6 +172,10 @@ export const dataLibraryTableRegistry = [
         editable: false,
         required: false,
         description: "Warehouse update date.",
+        searchable: false,
+        sortable: true,
+        filterable: false,
+        visible: true,
       },
     ],
     permissions: lookupPermissions,
@@ -151,6 +198,10 @@ export const dataLibraryTableRegistry = [
       "Maps property and source-application segment values to governed commercial and finance segments.",
     grain: "One row per property, source application, and source segment code.",
     primaryKey: ["property_code", "source_application_code", "code"],
+    defaultSort: {
+      column: "property_code",
+      direction: "asc",
+    },
     columns: [
       {
         key: "property_code",
@@ -159,6 +210,10 @@ export const dataLibraryTableRegistry = [
         editable: false,
         required: true,
         description: "Property code for the source mapping.",
+        searchable: true,
+        sortable: true,
+        filterable: true,
+        visible: true,
       },
       {
         key: "source_application_code",
@@ -168,6 +223,10 @@ export const dataLibraryTableRegistry = [
         required: true,
         lookupDependency: "metrics_core.lkp_source_application",
         description: "Application that supplied the segment value.",
+        searchable: true,
+        sortable: true,
+        filterable: true,
+        visible: true,
       },
       {
         key: "code",
@@ -176,6 +235,10 @@ export const dataLibraryTableRegistry = [
         editable: false,
         required: true,
         description: "Source-application segment code.",
+        searchable: true,
+        sortable: true,
+        filterable: true,
+        visible: true,
       },
       {
         key: "name",
@@ -184,6 +247,10 @@ export const dataLibraryTableRegistry = [
         editable: false,
         required: false,
         description: "Source-application segment name or label.",
+        searchable: true,
+        sortable: true,
+        filterable: false,
+        visible: true,
       },
       {
         key: "description",
@@ -192,6 +259,10 @@ export const dataLibraryTableRegistry = [
         editable: false,
         required: false,
         description: "Source-application description, when supplied.",
+        searchable: true,
+        sortable: true,
+        filterable: false,
+        visible: true,
       },
       {
         key: "segment_code",
@@ -201,6 +272,10 @@ export const dataLibraryTableRegistry = [
         required: true,
         lookupDependency: "metrics_core.lkp_segment",
         description: "Governed commercial segment code.",
+        searchable: true,
+        sortable: true,
+        filterable: true,
+        visible: true,
       },
       {
         key: "finance_segment_code",
@@ -210,6 +285,10 @@ export const dataLibraryTableRegistry = [
         required: false,
         lookupDependency: "metrics_core.lkp_finance_segment",
         description: "Governed finance segment code.",
+        searchable: true,
+        sortable: true,
+        filterable: true,
+        visible: true,
       },
       {
         key: "gl_code",
@@ -218,6 +297,10 @@ export const dataLibraryTableRegistry = [
         editable: true,
         required: false,
         description: "General or guest ledger code, when available.",
+        searchable: true,
+        sortable: true,
+        filterable: false,
+        visible: true,
       },
       {
         key: "is_active",
@@ -226,6 +309,10 @@ export const dataLibraryTableRegistry = [
         editable: true,
         required: true,
         description: "Whether the mapping is active.",
+        searchable: false,
+        sortable: true,
+        filterable: true,
+        visible: true,
       },
       {
         key: "insert_date",
@@ -234,6 +321,10 @@ export const dataLibraryTableRegistry = [
         editable: false,
         required: false,
         description: "Warehouse insert date.",
+        searchable: false,
+        sortable: true,
+        filterable: false,
+        visible: true,
       },
       {
         key: "updated_date",
@@ -242,6 +333,10 @@ export const dataLibraryTableRegistry = [
         editable: false,
         required: false,
         description: "Warehouse update date.",
+        searchable: false,
+        sortable: true,
+        filterable: false,
+        visible: true,
       },
     ],
     permissions: mappingPermissions,
@@ -253,7 +348,7 @@ export const dataLibraryTableRegistry = [
         "The current warehouse DDL has no non-null version or timestamp suitable for optimistic locking.",
     },
   },
-] as const satisfies readonly DataLibraryTableDefinition[];
+];
 
 export function listDataLibraryTableDefinitions(
   category?: DataLibraryTableCategory,
@@ -267,4 +362,36 @@ export function getDataLibraryTableDefinition(
   key: string,
 ): DataLibraryTableDefinition | undefined {
   return dataLibraryTableRegistry.find((definition) => definition.key === key);
+}
+
+export function toReadDefinition(
+  definition: DataLibraryTableDefinition,
+): DataLibraryReadDefinition {
+  return {
+    key: definition.key,
+    dataset: definition.dataset,
+    table: definition.table,
+    primaryKey: [...definition.primaryKey],
+    defaultSort: { ...definition.defaultSort },
+    permissions: {
+      read: [...definition.permissions.read],
+      edit: [...definition.permissions.edit],
+      review: [...definition.permissions.review],
+      publish: [...definition.permissions.publish],
+    },
+    columns: definition.columns.map((col) => ({
+      key: col.key,
+      label: col.label,
+      type: col.type,
+      editable: col.editable,
+      required: col.required,
+      description: col.description,
+      lookupDependency: col.lookupDependency,
+      searchable: col.searchable,
+      sortable: col.sortable,
+      filterable: col.filterable,
+      visible: col.visible,
+      defaultWidth: col.defaultWidth,
+    })),
+  };
 }
