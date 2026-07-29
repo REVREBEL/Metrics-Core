@@ -9,16 +9,18 @@ has_toc: true
 ## Current implementation
 
 The authenticated Metrics workspace route at `/metrics-library` now reads its
-lookup and mapping navigation and column behavior from one application-owned
-registry:
+lookup and mapping navigation, capability metadata, and column behavior from
+the application-owned registry:
 
 ```text
 apps/app/features/data-library/registry.ts
 ```
 
-The registry is an allowlist. A future `data_library_tables` database record may
-supplement display metadata, but it must not expose an arbitrary warehouse
-table that is absent from the code-owned registry.
+The registry is the authoritative warehouse security allowlist. Linear defines the
+live read requirement, while Dataform implements physical tables and columns. A future
+`data_library_tables` database record may supplement operational display metadata,
+but it must not expose an arbitrary warehouse table that is absent from the code-owned
+registry.
 
 The first registered definitions are:
 
@@ -27,14 +29,12 @@ The first registered definitions are:
 | Lookup | `metrics_core.lkp_segment` | One row per standard commercial segment code | `code` |
 | Mapping | `metrics_core.map_segment` | One row per property, source application, and source segment code | `property_code`, `source_application_code`, `code` |
 
-The column names and dependencies are verified against the current standalone
-`REVREBEL/Metrics-Dataform` definitions. BigQuery/Dataform owns current
-published values. Publication remains deferred behind the server-only
-`DataLibraryPublicationAdapter`; browser components do not write to BigQuery.
+Live rows are queried through the server-only warehouse data adapter in `@repo/data/server/data-library`.
+Browser components do not receive warehouse credentials, construct raw SQL queries, or access BigQuery directly.
 
 ## Repository schema gap
 
-REV-74 identifies these deployed application tables:
+REV-74 and REV-75 acknowledge these deployed application database tables:
 
 ```text
 app_audit_log
@@ -51,17 +51,16 @@ migrations, database client, auth helpers, permission service, or audit
 service. No application database environment variable is declared in the
 repository `.env.example`.
 
-This is an explicit difference between the deployed environment described by
-Linear and the repository implementation. The framework does not invent a
-second schema. Durable draft, change-request, permission, and audit behavior
-remains blocked until the existing deployed schema and repository-owned service
-contracts are restored or supplied.
+The application database does not introduce warehouse identifiers. Durable draft,
+change-request, role-backed permission assignment, and audit behavior remain
+blocked until the existing deployed schema and repository-owned service contracts
+are restored or supplied.
 
 ## Validation and conflicts
 
-Registry metadata identifies required, editable, read-only, and lookup-dependent
-fields. Full validation must run at the future authenticated server boundary
-before drafts are saved or submitted.
+Registry metadata identifies required, editable, read-only, filterable, sortable,
+searchable, and lookup-dependent fields. Full validation runs at the server
+boundary before queries are built and executed.
 
 Current Dataform defines `updated_date DATE` on both registered tables. The
 segment seed initializes it as null, and no non-null row version or timestamp
@@ -74,19 +73,20 @@ reliable concurrency contract is approved.
 **IMPLEMENTED**
 
 - authenticated workspace route composition;
-- registry-driven lookup and mapping navigation;
+- registry-driven lookup and mapping navigation and column capabilities;
 - verified definitions for `lkp_segment` and `map_segment`;
-- editable/read-only and dependency metadata;
-- search across registered tables;
-- empty-state behavior that does not present fixtures as live data;
+- server-only BigQuery row-read adapter in `@repo/data/server/data-library`;
+- parameterized search, sorting, filtering, and pagination over live warehouse rows;
+- dynamic filter-option endpoint (`/api/data-library/filter-options`);
+- interactive DataGrid and three-panel Table/Row Inspector;
+- empty-state, loading-skeleton, and retryable error-state UI handling;
 - server-only publication adapter boundary.
 
 **DEFERRED**
 
-- warehouse row-read adapter;
 - application-database-backed draft persistence;
 - change-request submission and review;
-- role-backed view, edit, review, and publish enforcement;
+- role-backed RBAC view, edit, review, and publish enforcement;
 - application audit events;
 - optimistic conflict enforcement;
 - BigQuery publication.
