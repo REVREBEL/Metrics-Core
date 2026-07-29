@@ -83,68 +83,78 @@ function RecapSectionCard({ section }: { section: RecapSection }) {
   );
 }
 
+// ⚡ Bolt: Hoist Intl.DateTimeFormat instance to avoid expensive re-creation.
+const meetingRecapDateFormatter = new Intl.DateTimeFormat("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+
 export function MeetingRecapView({
   initiatives,
   tasks,
   meetingDate,
 }: MeetingRecapViewProps) {
-  const recapDate = meetingDate ? new Date(meetingDate) : new Date();
-  const recapDateStr = recapDate.toISOString().split("T")[0];
-  const formattedDate = recapDate.toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
+  // ⚡ Bolt: Memoize formatted date to prevent re-calculation of Intl formatting on every render.
+  const formattedDate = useMemo(() => {
+    const recapDate = meetingDate ? new Date(meetingDate) : new Date();
+    return recapDate.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  }, [meetingDate]);
 
-  // One week ago for "since last meeting" comparisons
-  const oneWeekAgo = new Date(recapDate);
-  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
+  // ⚡ Bolt: Single pass O(N + M) grouping and filtering inside useMemo.
+  // This also hoists new Date() and date string comparisons, and keeps stable dependencies
+  // to ensure that the useMemo cache actually hits (previously invalidated by fresh Date object references).
   const sections = useMemo((): RecapSection[] => {
-    // New initiatives (created in the last week)
-    const newInitiatives = initiatives.filter((i) => {
+    const recapDate = meetingDate ? new Date(meetingDate) : new Date();
+    const recapDateStr = recapDate.toISOString().split("T")[0];
+
+    const oneWeekAgo = new Date(recapDate);
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+    const newInitiatives: Initiative[] = [];
+    const reviewedInitiatives: Initiative[] = [];
+
+    // Single-pass loop for initiatives
+    for (const i of initiatives) {
       const created = new Date(i.createdAt);
-      return created >= oneWeekAgo && created <= recapDate;
-    });
+      if (created >= oneWeekAgo && created <= recapDate) {
+        newInitiatives.push(i);
+      } else {
+        const updated = new Date(i.updatedAt);
+        if (created < oneWeekAgo && updated >= oneWeekAgo && updated <= recapDate) {
+          reviewedInitiatives.push(i);
+        }
+      }
+    }
 
-    // Reviewed initiatives (updated in the last week, not new)
-    const reviewedInitiatives = initiatives.filter((i) => {
-      const created = new Date(i.createdAt);
-      const updated = new Date(i.updatedAt);
-      return (
-        created < oneWeekAgo && updated >= oneWeekAgo && updated <= recapDate
-      );
-    });
+    const completedTasks: Task[] = [];
+    const overdueTasks: Task[] = [];
+    const newAssignments: Task[] = [];
 
-    // Completed tasks (completed in the last week)
-    const completedTasks = tasks.filter((t) => {
-      if (t.status !== "complete" || !t.completedAt) return false;
-      const completed = new Date(t.completedAt);
-      return completed >= oneWeekAgo && completed <= recapDate;
-    });
-
-    // Overdue tasks
-    const overdueTasks = tasks.filter((t) => {
-      if (!t.dueDate || t.status === "complete" || t.status === "canceled")
-        return false;
-      return t.dueDate.split("T")[0] < recapDateStr;
-    });
-
-    // New assignments (tasks created in the last week)
-    const newAssignments = tasks.filter((t) => {
+    // Single-pass loop for tasks
+    for (const t of tasks) {
       const created = new Date(t.createdAt);
-      return created >= oneWeekAgo && created <= recapDate;
-    });
+      if (created >= oneWeekAgo && created <= recapDate) {
+        newAssignments.push(t);
+      }
 
-    // Active/open initiatives for summary
-    const _activeInitiatives = initiatives.filter(
-      (i) =>
-        i.status === "active" ||
-        i.status === "planning" ||
-        i.status === "at_risk" ||
-        i.status === "blocked",
-    );
+      if (t.status === "complete" && t.completedAt) {
+        const completed = new Date(t.completedAt);
+        if (completed >= oneWeekAgo && completed <= recapDate) {
+          completedTasks.push(t);
+        }
+      } else if (t.status !== "canceled" && t.dueDate) {
+        if (t.dueDate.split("T")[0] < recapDateStr) {
+          overdueTasks.push(t);
+        }
+      }
+    }
 
     return [
       {
@@ -203,7 +213,7 @@ export function MeetingRecapView({
         emptyMessage: "No new assignments this period",
       },
     ];
-  }, [initiatives, tasks, oneWeekAgo, recapDate, recapDateStr]);
+  }, [initiatives, tasks, meetingDate]);
 
   // Summary stats
   const stats = useMemo(() => {
