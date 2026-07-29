@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, FieldDescription, FieldGroup, FieldLabel } from "@auto-form/fields/field";
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@forms/fields/field";
 import { ButtonGroup, ButtonGroupText } from "@buttons/button-group";
 import {
   DropdownMenu,

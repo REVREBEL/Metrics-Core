@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "packages/ui/src/primitives/inputs/input-disabled.tsx",
-      "content": "import { Field, FieldDescription, FieldLabel } from \"@auto-form/fields/field\";\nimport { Input } from \"./input\";\n\nexport function InputDisabled() {\n  return (\n    <Field data-disabled>\n      <FieldLabel htmlFor=\"input-demo-disabled\">Email</FieldLabel>\n      <Input\n        id=\"input-demo-disabled\"\n        type=\"email\"\n        placeholder=\"Email\"\n        disabled\n      />\n      <FieldDescription>This field is currently disabled.</FieldDescription>\n    </Field>\n  );\n}\n",
+      "content": "import { Field, FieldDescription, FieldLabel } from \"@forms/fields/field\";\nimport { Input } from \"./input\";\n\nexport function InputDisabled() {\n  return (\n    <Field data-disabled>\n      <FieldLabel htmlFor=\"input-demo-disabled\">Email</FieldLabel>\n      <Input\n        id=\"input-demo-disabled\"\n        type=\"email\"\n        placeholder=\"Email\"\n        disabled\n      />\n      <FieldDescription>This field is currently disabled.</FieldDescription>\n    </Field>\n  );\n}\n",
       "type": "registry:ui",
       "target": "src/primitive/inputs/input-disabled.tsx"
     }

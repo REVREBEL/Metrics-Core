@@ -1,4 +1,4 @@
-import { Field, FieldDescription, FieldLabel } from "@auto-form/fields/field";
+import { Field, FieldDescription, FieldLabel } from "@forms/fields/field";
 import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from "@popovers/popover";
 import {
   IconBoltFilled,

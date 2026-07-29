@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "packages/ui/src/primitives/inputs/input-group-inline-start.tsx",
-      "content": "import { Field, FieldDescription, FieldLabel } from \"@auto-form/fields/field\";\nimport { IconSearch } from \"@tabler/icons-react\";\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"./input-group\";\n\nexport function InputGroupInlineStart() {\n  return (\n    <Field className=\"max-w-sm\">\n      <FieldLabel htmlFor=\"inline-start-input\">Input</FieldLabel>\n      <InputGroup>\n        <InputGroupInput id=\"inline-start-input\" placeholder=\"Search...\" />\n        <InputGroupAddon align=\"inline-start\">\n          <IconSearch className=\"text-muted-foreground\" />\n        </InputGroupAddon>\n      </InputGroup>\n      <FieldDescription>Icon positioned at the start.</FieldDescription>\n    </Field>\n  );\n}\n",
+      "content": "import { Field, FieldDescription, FieldLabel } from \"@forms/fields/field\";\nimport { IconSearch } from \"@tabler/icons-react\";\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"./input-group\";\n\nexport function InputGroupInlineStart() {\n  return (\n    <Field className=\"max-w-sm\">\n      <FieldLabel htmlFor=\"inline-start-input\">Input</FieldLabel>\n      <InputGroup>\n        <InputGroupInput id=\"inline-start-input\" placeholder=\"Search...\" />\n        <InputGroupAddon align=\"inline-start\">\n          <IconSearch className=\"text-muted-foreground\" />\n        </InputGroupAddon>\n      </InputGroup>\n      <FieldDescription>Icon positioned at the start.</FieldDescription>\n    </Field>\n  );\n}\n",
       "type": "registry:ui",
       "target": "src/primitive/inputs/input-group-inline-start.tsx"
     }

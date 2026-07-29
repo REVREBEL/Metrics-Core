@@ -4,7 +4,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@ui-core";
+} from "@ui-core/card";
 import { ChartNoAxesColumnIncreasingIcon } from "lucide-react";
 
 function EmptyState() {

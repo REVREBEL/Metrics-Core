@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, FieldLabel, FieldError } from "@auto-form/fields/field"
+import { Field, FieldLabel, FieldError } from "@forms/fields/field"
 import { Button } from "@buttons/button";
 import {
   Combobox,

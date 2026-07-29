@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, FieldLabel } from "@auto-form/fields/field";
+import { Field, FieldLabel } from "@forms/fields/field";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "./input-otp";
 

@@ -5,7 +5,7 @@ const srcDir = '/Users/garystringham/github-revrebel/Migration/REBEL-APP/package
 const tsconfigPath = '/Users/garystringham/github-revrebel/Migration/REBEL-APP/tsconfig.json';
 
 const folders = [
-  { alias: '@auto-form', dir: 'forms' },
+  { alias: '@forms', dir: 'forms' },
   { alias: '@buttons', dir: 'buttons' },
   { alias: '@charts', dir: 'charts' },
   { alias: '@data-grid', dir: 'data-grid' },
@@ -115,16 +115,16 @@ if (exportMap['@popovers']) {
   exportMap['@popovers']['PopoverContent'] = '@popovers/popover';
   exportMap['@popovers']['PopoverAnchor'] = '@popovers/popover';
 }
-if (exportMap['@auto-form']) {
-  exportMap['@auto-form']['Field'] = '@auto-form/fields/field';
-  exportMap['@auto-form']['FieldLabel'] = '@auto-form/fields/field';
-  exportMap['@auto-form']['FieldDescription'] = '@auto-form/fields/field';
-  exportMap['@auto-form']['FieldGroup'] = '@auto-form/fields/field';
-  exportMap['@auto-form']['AutoForm'] = '@forms/form';
-  exportMap['@auto-form']['AutoFormSubmit'] = '@forms/form';
-  exportMap['@auto-form']['useAutoForm'] = '@forms/form';
-  exportMap['@auto-form']['FieldSet'] = '@auto-form/fields/field';
-  exportMap['@auto-form']['FieldLegend'] = '@auto-form/fields/field';
+if (exportMap['@forms']) {
+  exportMap['@forms']['Field'] = '@forms/fields/field';
+  exportMap['@forms']['FieldLabel'] = '@forms/fields/field';
+  exportMap['@forms']['FieldDescription'] = '@forms/fields/field';
+  exportMap['@forms']['FieldGroup'] = '@forms/fields/field';
+  exportMap['@forms']['AutoForm'] = '@forms/form';
+  exportMap['@forms']['AutoFormSubmit'] = '@forms/form';
+  exportMap['@forms']['useAutoForm'] = '@forms/form';
+  exportMap['@forms']['FieldSet'] = '@forms/fields/field';
+  exportMap['@forms']['FieldLegend'] = '@forms/fields/field';
 }
 
 function rewriteFileImports(filePath) {
