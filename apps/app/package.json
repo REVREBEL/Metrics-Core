@@ -11,7 +11,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "dependencies": {
+    "@repo/data": "workspace:*",
     "@repo/ui": "workspace:*",
+    "@tanstack/react-table": "^8.21.3",
     "clsx": "^2.1.1",
     "lucide-react": "^1.0.0",
     "next": "16.2.9",
