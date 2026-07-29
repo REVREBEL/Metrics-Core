@@ -1,4 +1,4 @@
-import { Field } from "@auto-form/fields/field";
+import { Field } from "@forms/fields/field";
 import { Button } from "@buttons/button";
 import { Input } from "./input";
 

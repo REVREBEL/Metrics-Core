@@ -10,7 +10,7 @@ import { Separator } from "@ui-core/separator";
 import { IconTrash } from "@tabler/icons-react";
 import { useFieldArray, type useForm } from "react-hook-form";
 import type * as z from "zod";
-import { beautifyObjectName } from "@auto-form/helpers";
+import { beautifyObjectName } from "@forms/helpers";
 import AutoFormObject from "./object";
 import { PlusIcon } from "@radix-ui/react-icons";
 

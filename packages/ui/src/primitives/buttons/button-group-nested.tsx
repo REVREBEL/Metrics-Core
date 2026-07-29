@@ -1,7 +1,7 @@
 import AudioLinesIcon from "@icons/AudioLinesStrokeRounded";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@inputs/input-group";
 import { IconPlus } from "@tabler/icons-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@ui-core";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@ui-core/tooltip";
 import { Button } from "./button";
 import { ButtonGroup } from "./button-group";
 

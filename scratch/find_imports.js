@@ -4,7 +4,7 @@ const path = require('path');
 const srcDir = '/Users/garystringham/github-revrebel/Migration/REBEL-APP/packages/ui/src';
 
 const aliases = [
-  '@auto-form',
+  '@forms',
   '@buttons',
   '@charts',
   '@data-grid',

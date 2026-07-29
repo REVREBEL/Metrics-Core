@@ -1,4 +1,4 @@
-import { Field, FieldDescription, FieldLabel } from "@auto-form/fields/field";
+import { Field, FieldDescription, FieldLabel } from "@forms/fields/field";
 import { Textarea } from "./textarea";
 
 export function TextareaField() {

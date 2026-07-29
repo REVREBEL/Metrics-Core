@@ -1,8 +1,8 @@
 "use client"
 
 import { useRouter, usePathname } from 'next/navigation';
-import { useAuthStore } from '@/stores/auth-store'
-import { ConfirmDialog } from '@/components/confirm-dialog'
+import { useAuthStore } from '@users/auth-store'
+import { ConfirmDialog } from '@users/confirm-dialog'
 
 interface SignOutDialogProps {
   open: boolean
