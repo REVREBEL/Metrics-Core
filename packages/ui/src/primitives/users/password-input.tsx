@@ -1,9 +1,9 @@
 "use client"
 
 import * as React from 'react'
-import { Eye, EyeOff } from 'lucide-react'
+import { IconEye, IconEyeOff } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
-import { Button } from './ui/button'
+import { Button } from '@buttons/button'
 
 type PasswordInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -37,7 +37,7 @@ export function PasswordInput({
         className='absolute end-1 top-1/2 h-6 w-6 -translate-y-1/2 rounded-md text-muted-foreground'
         onClick={() => setShowPassword((prev) => !prev)}
       >
-        {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+        {showPassword ? <IconEye size={18} /> : <IconEyeOff size={18} />}
       </Button>
     </div>
   )

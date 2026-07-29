@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-05T17:17:24.035Z",
+  "generatedAt": "2026-07-29T10:01:48.769Z",
   "roots": [
     "primitives",
     "components",
@@ -814,10 +814,11 @@
       "kind": "group",
       "depth": 1,
       "directFiles": [
+        "packages/ui/src/components/metrics-core/display-metric.tsx",
         "packages/ui/src/components/metrics-core/metrics-button.tsx"
       ],
       "children": [],
-      "directFileCount": 1,
+      "directFileCount": 2,
       "childCount": 0
     },
     "components/metrics-layouts/metrics-help-desk": {

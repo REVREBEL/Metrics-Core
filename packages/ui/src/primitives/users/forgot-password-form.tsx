@@ -1,8 +1,8 @@
 'use client'
 
-import { Button } from '@ui-core'
-import { Input } from '@ui-core'
-import { Label } from '@ui-core'
+import { Button } from '@buttons/button'
+import { Input } from '@inputs/input'
+import { Label } from '@ui-core/label'
 
 const ForgotPasswordForm = () => {
   return (

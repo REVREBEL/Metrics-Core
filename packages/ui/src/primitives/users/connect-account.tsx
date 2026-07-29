@@ -12,10 +12,10 @@ import {
   DialogDescription,
   DialogFooter,
   DialogTrigger
-} from '@ui-core'
-import { Button } from '@ui-core'
-import { Input } from '@ui-core'
-import { Label } from '@ui-core'
+} from '@ui-core/dialog'
+import { Button } from '@buttons/button'
+import { Input } from '@inputs/input'
+import { Label } from '@ui-core/label'
 
 interface ConnectedAccount {
   id: string

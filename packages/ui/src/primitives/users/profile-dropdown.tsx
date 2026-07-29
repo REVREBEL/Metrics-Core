@@ -12,7 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@dropdowns/dropdown-menu";
 import Link from "next/link";
-import { SignOutDialog } from "@/components/sign-out-dialog";
+import { Avatar, AvatarImage, AvatarFallback } from "@ui-core/avatar";
+import { SignOutDialog } from "@users/sign-out-dialog";
 import useDialogState from "@/hooks/use-dialog-state";
 
 export function ProfileDropdown() {

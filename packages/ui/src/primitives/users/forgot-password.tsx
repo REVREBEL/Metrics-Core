@@ -1,8 +1,8 @@
 import { ChevronLeftIcon } from 'lucide-react'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui-core'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui-core/card'
 
-import ForgotPasswordForm from '@/components/shadcn-studio/blocks/forgot-password-01/forgot-password-form'
+import ForgotPasswordForm from '@users/forgot-password/forgot-password-form'
 import AuthBackgroundShape from '@icons/AuthBackgroundShape'
 import Logo from '@icons/revrebel.png'
 

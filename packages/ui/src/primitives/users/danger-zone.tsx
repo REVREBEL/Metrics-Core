@@ -1,7 +1,7 @@
 import { Trash2Icon } from 'lucide-react'
 
-import { Card, CardContent } from '@ui-core'
-import { Button } from '@ui-core'
+import { Card, CardContent } from '@ui-core/card'
+import { Button } from '@buttons/button'
 import {
   Dialog,
   DialogTrigger,
@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose
-} from '@ui-core'
+} from '@ui-core/dialog'
 
 const DangerZone = () => {
   return (

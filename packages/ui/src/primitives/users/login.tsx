@@ -1,6 +1,6 @@
 "use client";
 
-import { Logo } from "@ui-core";
+import { Logo } from "@ui-core/logo";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -17,8 +17,8 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@ui-core";
-import { Separator } from "@ui-core";
+} from "@forms/form";
+import { Separator } from "@ui-core/separator";
 
 const formSchema = z.object({
 	email: z.string().email({

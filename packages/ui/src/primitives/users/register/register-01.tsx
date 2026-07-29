@@ -4,7 +4,7 @@ import { Separator } from '@ui-core/separator'
 
 import Logo from '@icons/revrebel.png'
 import AuthBackgroundShape from '@icons/AuthBackgroundShape'
-import RegisterForm from '@users/register-01/register-form'
+import RegisterForm from '@users/register/register-form'
 
 const Register = () => {
   return (

@@ -4,10 +4,10 @@ import { useState } from 'react'
 
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
 
-import { Button } from '@ui-core'
-import { Checkbox } from '@ui-core'
-import { Input } from '@ui-core'
-import { Label } from '@ui-core'
+import { Button } from '@buttons/button'
+import { Checkbox } from '@ui-core/checkbox'
+import { Input } from '@inputs/input'
+import { Label } from '@ui-core/label'
 
 const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false)
