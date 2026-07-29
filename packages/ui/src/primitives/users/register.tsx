@@ -1,10 +1,10 @@
-import { Button } from '@ui-core'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui-core'
-import { Separator } from '@ui-core'
+import { Button } from '@buttons/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui-core/card'
+import { Separator } from '@ui-core/separator'
 
 import Logo from '@icons/revrebel.png'
 import AuthBackgroundShape from '@icons/AuthBackgroundShape'
-import RegisterForm from '@users/register-01/register-form'
+import RegisterForm from '@users/register/register-form'
 
 const Register = () => {
   return (

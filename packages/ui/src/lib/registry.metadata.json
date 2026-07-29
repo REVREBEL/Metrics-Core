@@ -1,4 +1,93 @@
 {
+  "components/metrics-core/display-metric": {
+    "displayName": "display-metric",
+    "description": "",
+    "props": [
+      {
+        "name": "value",
+        "type": "number | null | undefined",
+        "required": true
+      },
+      {
+        "name": "format",
+        "type": "DisplayMetricFormat",
+        "required": false
+      },
+      {
+        "name": "currency",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "locale",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "decimals",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "showPositiveSign",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "redIfNegative",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "inherit",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "varianceColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "emptyValue",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "valueClassName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "signClassName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS classes merged into the component."
+      },
+      {
+        "name": "children",
+        "type": "React.ReactNode",
+        "required": false,
+        "description": "Child content rendered inside the component."
+      },
+      {
+        "name": "HTML attributes",
+        "type": "React.ComponentProps<\"span\">",
+        "required": false,
+        "description": "Accepts standard span element attributes."
+      }
+    ]
+  },
   "components/metrics-core/metrics-button": {
     "displayName": "metrics-button",
     "description": "",

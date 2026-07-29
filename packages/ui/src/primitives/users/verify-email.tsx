@@ -1,5 +1,5 @@
-import { Button } from '@ui-core'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui-core'
+import { Button } from '@buttons/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui-core/card'
 
 import Logo from '@icons/revrebel.png'
 import AuthBackgroundShape from '@icons/AuthBackgroundShape'

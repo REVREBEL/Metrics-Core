@@ -4,8 +4,8 @@ import { useState } from 'react'
 
 import { PlusIcon } from 'lucide-react'
 
-import { Input } from '@ui-core'
-import { Button } from '@ui-core'
+import { Input } from '@inputs/input'
+import { Button } from '@buttons/button'
 
 const SocialUrl = () => {
   const [urls, setUrls] = useState<string[]>(['', '', ''])

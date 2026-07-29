@@ -1,10 +1,10 @@
 import { Button } from '@buttons/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui-core'
-import { Separator } from '@ui-core'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ui-core/card'
+import { Separator } from '@ui-core/separator'
 
 import Logo from '@icons/revrebel.png'
 import AuthBackgroundShape from '@icons/AuthBackgroundShape'
-import LoginForm from '@users/login-page-01/login-form'
+import LoginForm from '@users/login-page/login-form'
 
 const Login = () => {
   return (

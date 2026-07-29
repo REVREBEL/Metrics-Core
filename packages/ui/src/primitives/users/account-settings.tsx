@@ -1,10 +1,10 @@
-import { Separator } from '@ui-core'
+import { Separator } from '@ui-core/separator'
 
-import PersonalInfo from '@users/account-settings-01/content/personal-info'
-import EmailPass from '@users/account-settings-01/content/email-password'
-import ConnectAccount from '@users/account-settings-01/content/connect-account'
-import SocialUrl from '@users/account-settings-01/content/social-url'
-import DangerZone from '@users/account-settings-01/content/danger-zone'
+import PersonalInfo from '@users/account-settings/content/personal-info'
+import EmailPass from '@users//account-settings/content/email-password'
+import ConnectAccount from '@users/account-settings/content/connect-account'
+import SocialUrl from '@users/account-settings/content/social-url'
+import DangerZone from '@users/account-settings/content/danger-zone'
 
 const UserGeneral = () => {
   return (

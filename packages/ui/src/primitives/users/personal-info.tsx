@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { UploadCloudIcon, TrashIcon, ImageIcon } from 'lucide-react'
+import { IconUpload, IconTrash, IconPolaroid } from '@tabler/icons-react'
 
-import { Button } from '@ui-core'
-import { Input } from '@ui-core'
-import { Label } from '@ui-core'
+import { Button } from '@buttons/button'
+import { Input } from '@inputs/input'
+import { Label } from '@ui-core/label'
 import {
   Select,
   SelectContent,
@@ -14,7 +14,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@ui-core'
+} from '@ui-core/select'
 
 const countries = [
   { value: 'india', label: 'India', flag: 'https://cdn.shadcnstudio.com/ss-assets/flags/india.png' },
