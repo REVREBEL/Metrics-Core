@@ -14,7 +14,7 @@ function getWorkspaceAuthContext(request: NextRequest) {
         .split(",")
         .map((p) => p.trim())
         .filter(Boolean)
-    : ["data_library.lookup_tables.view", "data_library.mapping_tables.view"];
+    : [];
 
   if (!isAuthenticated || !userId) {
     return {

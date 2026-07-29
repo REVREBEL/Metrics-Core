@@ -1,15 +1,10 @@
-import "server-only";
-
 import type {
   DataLibraryErrorResponse,
   DataLibraryFilterOptionsResponse,
   DataLibraryQueryOptions,
   DataLibraryResponse,
 } from "@repo/data/data-library";
-import {
-  executeDataLibraryFilterOptionsRead,
-  executeDataLibraryRowRead,
-} from "@repo/data/server/data-library";
+import type { DraftRepository } from "@repo/db";
 import { canonicalizeRowKey } from "./canonicalizer";
 import { listFeatureDraftEdits } from "./draft-service";
 import { getDataLibraryTableDefinition, toReadDefinition } from "./registry";
@@ -35,6 +30,7 @@ export type DataLibraryOverlayRow = Record<string, unknown> & {
 export async function fetchFeatureDataLibraryRows(
   options: DataLibraryQueryOptions,
   authContext?: FeatureAuthContext,
+  draftRepo?: DraftRepository,
 ): Promise<DataLibraryResponse> {
   // 1. Authenticated workspace check
   if (authContext && !authContext.isAuthenticated) {
@@ -82,6 +78,9 @@ export async function fetchFeatureDataLibraryRows(
 
   // 4. Execute row reading via @repo/data
   const readDef = toReadDefinition(tableDef);
+  const { executeDataLibraryRowRead } = await import(
+    "@repo/data/server/data-library"
+  );
   const result = await executeDataLibraryRowRead(readDef, options);
 
   if (!result.success) {
@@ -96,11 +95,15 @@ export async function fetchFeatureDataLibraryRows(
 
   if (authContext?.userId) {
     try {
-      const drafts = await listFeatureDraftEdits(options.tableKey, {
-        userId: authContext.userId,
-        isAuthenticated: true,
-        permissions: authContext.permissions,
-      });
+      const drafts = await listFeatureDraftEdits(
+        options.tableKey,
+        {
+          userId: authContext.userId,
+          isAuthenticated: true,
+          permissions: authContext.permissions,
+        },
+        draftRepo,
+      );
 
       for (const d of drafts) {
         draftMap.set(d.rowKey, {
@@ -185,5 +188,8 @@ export async function fetchFeatureDataLibraryFilterOptions(
   }
 
   const readDef = toReadDefinition(tableDef);
+  const { executeDataLibraryFilterOptionsRead } = await import(
+    "@repo/data/server/data-library"
+  );
   return executeDataLibraryFilterOptionsRead(readDef, columnKey);
 }

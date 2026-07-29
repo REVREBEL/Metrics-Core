@@ -1,6 +1,7 @@
 "use server";
 
-import { headers } from "next/headers";
+import { appUsers, eq, getDb, userRoles } from "@repo/db";
+import { cookies } from "next/headers";
 import type { SaveDraftChangesPayload } from "./draft-service";
 import {
   discardAllFeatureDraftEdits,
@@ -8,36 +9,61 @@ import {
   saveFeatureDraftEdits,
 } from "./draft-service";
 
-export async function resolveServerAuthContext() {
-  const reqHeaders = await headers();
+export async function getCurrentWorkspaceSession() {
+  try {
+    const cookieStore = await cookies();
+    const sessionToken =
+      cookieStore.get("metrics_session")?.value ||
+      cookieStore.get("session_token")?.value;
 
-  // Read verified session attributes injected by workspace middleware
-  const userId =
-    reqHeaders.get("x-user-id") || reqHeaders.get("x-workspace-user-id");
-  const isAuthenticated = reqHeaders.get("x-authenticated") === "true";
+    if (!sessionToken) {
+      return {
+        userId: "",
+        isAuthenticated: false,
+        permissions: [],
+      };
+    }
 
-  const permissionsHeader = reqHeaders.get("x-user-permissions");
-  const permissions = permissionsHeader
-    ? permissionsHeader
-        .split(",")
-        .map((p) => p.trim())
-        .filter(Boolean)
-    : [];
+    const db = getDb();
+    const [user] = await db
+      .select({
+        id: appUsers.id,
+        isActive: appUsers.isActive,
+        permissions: userRoles.permissions,
+      })
+      .from(appUsers)
+      .leftJoin(userRoles, eq(userRoles.userId, appUsers.id))
+      .where(eq(appUsers.id, sessionToken))
+      .limit(1);
 
-  // Fail closed: No verified session or missing user ID returns unauthenticated context
-  if (!isAuthenticated || !userId) {
+    if (!user?.isActive) {
+      return {
+        userId: "",
+        isAuthenticated: false,
+        permissions: [],
+      };
+    }
+
+    const permissions = Array.isArray(user.permissions)
+      ? (user.permissions as string[])
+      : [];
+
+    return {
+      userId: user.id,
+      isAuthenticated: true,
+      permissions,
+    };
+  } catch {
     return {
       userId: "",
       isAuthenticated: false,
       permissions: [],
     };
   }
+}
 
-  return {
-    userId,
-    isAuthenticated: true,
-    permissions,
-  };
+export async function resolveServerAuthContext() {
+  return getCurrentWorkspaceSession();
 }
 
 export async function saveDraftEditsAction(payload: SaveDraftChangesPayload) {

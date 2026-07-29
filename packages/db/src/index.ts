@@ -3,6 +3,8 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
 
+export { and, eq, inArray } from "drizzle-orm";
+
 export * from "./schema";
 
 export class DatabaseConfigurationError extends Error {

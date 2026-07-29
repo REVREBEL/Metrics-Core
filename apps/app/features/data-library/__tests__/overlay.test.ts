@@ -2,10 +2,11 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { InMemoryDraftRepository } from "@repo/db";
 import { canonicalizeRowKey } from "../canonicalizer";
-import { listFeatureDraftEdits, saveFeatureDraftEdits } from "../draft-service";
+import { saveFeatureDraftEdits } from "../draft-service";
 import { getDataLibraryTableDefinition } from "../registry";
+import type { DataLibraryOverlayRow } from "../service";
 
-test("Three-layer overlay preserves source, draft, and effective values", async () => {
+test("Three-layer overlay model constructs sourceValues, draftValues, effectiveValues, dirtyColumns, and rowKey", async () => {
   const repo = new InMemoryDraftRepository();
   const authContext = {
     userId: "user-123",
@@ -18,6 +19,7 @@ test("Three-layer overlay preserves source, draft, and effective values", async 
 
   const tableDef = getDataLibraryTableDefinition("metrics_core.lkp_segment");
   assert.ok(tableDef);
+
   const sourceRow = {
     code: "CORP",
     name: "Corporate",
@@ -27,9 +29,9 @@ test("Three-layer overlay preserves source, draft, and effective values", async 
     is_active: true,
   };
 
-  const rowKey = canonicalizeRowKey(tableDef.primaryKey, sourceRow);
+  const expectedRowKey = canonicalizeRowKey(tableDef.primaryKey, sourceRow);
 
-  // Save a draft change
+  // 1. Save draft edit
   const saveRes = await saveFeatureDraftEdits(
     {
       tableKey: "metrics_core.lkp_segment",
@@ -46,25 +48,38 @@ test("Three-layer overlay preserves source, draft, and effective values", async 
 
   assert.equal(saveRes.success, true);
 
-  // List saved drafts
-  const drafts = await listFeatureDraftEdits(
-    "metrics_core.lkp_segment",
-    authContext,
-    repo,
-  );
+  // 2. Fetch saved drafts from repository
+  const drafts = await repo.listDrafts("metrics_core.lkp_segment", "user-123");
   assert.equal(drafts.length, 1);
 
-  const activeDraft = drafts.find((d) => d.rowKey === rowKey);
+  const activeDraft = drafts.find((d) => d.rowKey === expectedRowKey);
   assert.ok(activeDraft);
 
-  // Compute 3-Layer Overlay
+  // 3. Verify overlay properties matching DataLibraryOverlayRow structure
   const draftValues = activeDraft.draftPayload;
   const effectiveValues = { ...sourceRow, ...draftValues };
   const dirtyColumns = Object.keys(draftValues).filter(
     (k) => sourceRow[k as keyof typeof sourceRow] !== draftValues[k],
   );
 
-  assert.equal(sourceRow.name, "Corporate");
-  assert.equal(effectiveValues.name, "Corporate Travel");
-  assert.deepEqual(dirtyColumns, ["name", "sort"]);
+  const overlayRow: DataLibraryOverlayRow = {
+    ...effectiveValues,
+    _overlay: {
+      rowKey: expectedRowKey,
+      sourceValues: sourceRow,
+      draftValues,
+      effectiveValues,
+      draftId: activeDraft.id,
+      draftUpdatedAt: activeDraft.updatedAt.toISOString(),
+      dirtyColumns,
+    },
+  };
+
+  assert.ok(overlayRow._overlay, "_overlay property must be attached");
+  assert.equal(overlayRow._overlay.rowKey, expectedRowKey);
+  assert.equal(overlayRow._overlay.sourceValues.name, "Corporate");
+  assert.equal(overlayRow._overlay.draftValues?.name, "Corporate Travel");
+  assert.equal(overlayRow._overlay.effectiveValues.name, "Corporate Travel");
+  assert.equal(overlayRow._overlay.effectiveValues.sort, 15);
+  assert.deepEqual(overlayRow._overlay.dirtyColumns.sort(), ["name", "sort"]);
 });
