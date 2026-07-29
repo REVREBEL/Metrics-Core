@@ -1,0 +1,270 @@
+---
+title: Component Organization
+summary: Repository rules for classifying, building, documenting, and distributing Metrics-Core UI components.
+---
+
+# Component organization
+
+This page is the maintained guide for UI component ownership in `REVREBEL/Metrics-Core`.
+
+## Core model
+
+The repository separates source ownership, visual documentation, distribution, and application workflow:
+
+```text
+packages/ui       reusable presentation source
+apps/storybook    visual documentation and isolated validation
+apps/registry     shadcn registry distribution
+apps/app          application routes and feature workflows
+apps/docs         maintained system documentation
+```
+
+Storybook and the registry solve different problems:
+
+```text
+Storybook = inspect, exercise, and document real source components
+Registry  = distribute approved source components and dependencies
+```
+
+Do not replace either with a generic preview layer.
+
+## Component classifications
+
+### shadcn-native primitives
+
+Source root:
+
+```text
+packages/ui/src/primitives/<domain>
+```
+
+Use for low-level, product-agnostic controls following shadcn and Radix patterns. Examples include buttons, inputs, overlays, menus, and chart primitives.
+
+A primitive may consume shared design tokens but may not embed Metrics workflows, hotel terminology, data access, or application state.
+
+### Metrics-specific components
+
+Source root:
+
+```text
+packages/ui/src/components/metrics-core
+```
+
+Use for reusable Metrics visual patterns that compose primitives and encode product presentation. These components may understand Metrics display concepts but must remain free of fetching, mutations, permissions, and feature workflow orchestration.
+
+### Metrics layouts
+
+Source root:
+
+```text
+packages/ui/src/components/metrics-layouts
+```
+
+Use for reusable structural composition such as shells, panels, grids, and page arrangements. Layouts may compose primitives and Metrics components but may not own application data behavior.
+
+### Application feature components
+
+Source root:
+
+```text
+apps/app/features/<feature>
+```
+
+Use when a component owns fetching, server actions, mutations, permissions, workflow state, feature-specific validation, or data orchestration.
+
+Feature components may compose `packages/ui` components. Do not move feature business logic into the shared UI package merely to make it reusable.
+
+### Registry metadata and helpers
+
+Approved roots:
+
+```text
+packages/ui/src/ui-registry
+apps/registry
+```
+
+These areas own registry definitions, dependencies, install targets, generation, and install documentation. They do not own canonical component source.
+
+## Classification decision
+
+Before creating a file, answer:
+
+1. Is this product-agnostic and low-level?
+2. Is it a reusable Metrics visual pattern?
+3. Is it reusable structure without workflow behavior?
+4. Does it fetch, mutate, authorize, or orchestrate a feature?
+5. Is the requested work distribution metadata rather than source UI?
+
+Record the answer in the pull request.
+
+## Folder rules
+
+Preserve the current source roots:
+
+```text
+packages/ui/src/primitives
+packages/ui/src/components
+packages/ui/src/styles
+packages/ui/src/fonts
+packages/ui/src/ui-registry
+```
+
+Do not add a new top-level folder under `primitives` or `components` without an explicit architectural reason, updated documentation, and review of package exports and aliases.
+
+Do not flatten or reorganize existing folders as collateral work.
+
+## Aliases
+
+The root `tsconfig.json` is authoritative for TypeScript path aliases. Existing aliases may include:
+
+```text
+@buttons/*
+@charts/*
+@inputs/*
+@layouts/*
+@metrics-core/*
+@metrics-layouts/*
+@styles/*
+@/*
+```
+
+Prefer these aliases over deep relative imports when they are currently defined.
+
+Do not duplicate the full alias map in Next.js, Storybook, Vite, or test configuration. Configure tools to consume the root TypeScript paths where supported. Add a tool-specific mapping only when required, and document the runtime reason.
+
+## Mandatory component delivery contract
+
+A reusable component request includes the following work unless explicitly excluded:
+
+1. **Classification** with source root and reasoning.
+2. **Canonical source** in the approved folder.
+3. **Export** through the current package export surface when intended for package consumers.
+4. **Colocated Storybook story** beside the source component.
+5. **Representative states and Controls** supported by the component.
+6. **Registry eligibility decision** recorded as `yes`, `no`, or `deferred`.
+7. **Tests** for meaningful behavior, interaction, accessibility, or transformation logic.
+8. **Documentation** when public usage or repository conventions change.
+9. **Validation** using current repository scripts.
+
+Silence does not exclude Storybook. Registry distribution is not automatic.
+
+## Storybook contract
+
+Stories should be colocated:
+
+```text
+button.tsx
+button.stories.tsx
+```
+
+A story must render the real canonical component. Do not create generic preview substitutes.
+
+Use the current Storybook framework types and include, where materially applicable:
+
+- default or playground with Controls;
+- variants;
+- loading;
+- disabled;
+- empty;
+- error;
+- destructive or warning;
+- selected and unselected;
+- overflow and responsive behavior;
+- interaction tests;
+- accessible labels and keyboard behavior.
+
+Use Autodocs when supported. A large design-reference example may supplement stories, but it should not be the only coverage.
+
+Shared styles should come from the approved entry point, currently `packages/ui/src/styles/globals.css` and its configured alias when present. Do not recreate theme tokens inside Storybook.
+
+## Registry contract
+
+The registry distributes approved source components. A registry item must:
+
+- have a unique stable name;
+- reference real canonical source files;
+- use the correct item type;
+- declare package and registry dependencies;
+- use an approved install target;
+- include required supporting files;
+- generate valid current output;
+- document providers, styles, aliases, and compatibility requirements.
+
+A component is a good registry candidate when it is reusable outside the current feature, has a stable dependency surface, and does not depend on application secrets or data access.
+
+A Metrics-specific component may remain internal. Record the reason rather than forcing it into the registry.
+
+## Tests
+
+Add tests when a component includes:
+
+- interaction or keyboard behavior;
+- state transitions;
+- formatting or transformation rules;
+- accessibility contracts;
+- nontrivial variants;
+- error or fallback behavior;
+- registry generation logic.
+
+Do not add hollow snapshot coverage solely to satisfy a checkbox.
+
+## Validation
+
+Inspect current package scripts before choosing commands. Run the supported equivalents of:
+
+```text
+format or lint
+typecheck
+unit and interaction tests
+Storybook story discovery/build
+registry schema/generation validation
+package or application build
+```
+
+Also confirm:
+
+- source and story paths exist;
+- package exports resolve;
+- registry files reference real source;
+- registry names are unique;
+- install targets use approved roots;
+- generated output is current;
+- aliases were not duplicated unnecessarily;
+- no undocumented top-level UI folder was introduced.
+
+Report checks as passed, failed, or not run with a reason.
+
+## Pull request contract
+
+Every reusable component pull request should include:
+
+```text
+Classification:
+Source path:
+Story path:
+Registry item:
+Exports updated:
+Tests added or updated:
+Documentation updated:
+Validation run:
+Known limitations:
+```
+
+## Agent skills
+
+Repository workflows live under:
+
+```text
+.agents/skills/metrics-core
+```
+
+The initial focused skills are:
+
+- `component-classification`
+- `component-authoring`
+- `storybook-story-authoring`
+- `registry-item-authoring`
+- `ui-validation`
+- `repo-documentation`
+
+Agents should use the narrowest relevant skill and read the root plus nearest scoped `AGENTS.md` before editing.
