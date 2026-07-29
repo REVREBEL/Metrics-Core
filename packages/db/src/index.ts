@@ -1,4 +1,4 @@
-import { eq, and, inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
@@ -36,27 +36,41 @@ export interface AuditLogRecord {
   afterState?: Record<string, unknown> | null;
 }
 
+export interface SaveDraftWithAuditInput {
+  tableKey: string;
+  userId: string;
+  rowKey: string;
+  originalPayload?: Record<string, unknown> | null;
+  draftPayload: Record<string, unknown>;
+}
+
 export interface DraftRepository {
   listDrafts(tableKey: string, userId: string): Promise<DraftEditRecord[]>;
-  saveDraft(draft: {
-    tableKey: string;
-    userId: string;
-    rowKey: string;
-    originalPayload?: Record<string, unknown> | null;
-    draftPayload: Record<string, unknown>;
-  }): Promise<DraftEditRecord>;
+  saveDraft(draft: SaveDraftWithAuditInput): Promise<DraftEditRecord>;
+  saveDraftsWithAudit(
+    tableKey: string,
+    userId: string,
+    records: SaveDraftWithAuditInput[],
+  ): Promise<DraftEditRecord[]>;
   discardDrafts(tableKey: string, userId: string, rowKeys: string[]): Promise<number>;
+  discardDraftsWithAudit(tableKey: string, userId: string, rowKeys: string[]): Promise<number>;
   discardAllDrafts(tableKey: string, userId: string): Promise<number>;
+  discardAllDraftsWithAudit(tableKey: string, userId: string): Promise<number>;
   recordAuditLog(audit: AuditLogRecord): Promise<void>;
 }
 
+let cachedDb: ReturnType<typeof drizzle> | null = null;
+
 export function getDb() {
+  if (cachedDb) return cachedDb;
+
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {
     throw new DatabaseConfigurationError();
   }
   const client = postgres(connectionString);
-  return drizzle(client, { schema });
+  cachedDb = drizzle(client, { schema });
+  return cachedDb;
 }
 
 export class PostgresDraftRepository implements DraftRepository {
@@ -91,13 +105,7 @@ export class PostgresDraftRepository implements DraftRepository {
     }));
   }
 
-  async saveDraft(input: {
-    tableKey: string;
-    userId: string;
-    rowKey: string;
-    originalPayload?: Record<string, unknown> | null;
-    draftPayload: Record<string, unknown>;
-  }): Promise<DraftEditRecord> {
+  async saveDraft(input: SaveDraftWithAuditInput): Promise<DraftEditRecord> {
     const [inserted] = await this.db
       .insert(schema.lookupTableDraftEdits)
       .values({
@@ -137,6 +145,86 @@ export class PostgresDraftRepository implements DraftRepository {
     };
   }
 
+  async saveDraftsWithAudit(
+    tableKey: string,
+    userId: string,
+    records: SaveDraftWithAuditInput[],
+  ): Promise<DraftEditRecord[]> {
+    return this.db.transaction(async (tx) => {
+      const savedResults: DraftEditRecord[] = [];
+
+      for (const input of records) {
+        // Find existing draft to check action and beforeState
+        const [existing] = await tx
+          .select()
+          .from(schema.lookupTableDraftEdits)
+          .where(
+            and(
+              eq(schema.lookupTableDraftEdits.userId, userId),
+              eq(schema.lookupTableDraftEdits.tableKey, tableKey),
+              eq(schema.lookupTableDraftEdits.rowKey, input.rowKey),
+            ),
+          )
+          .limit(1);
+
+        const action = existing ? "DRAFT_UPDATED" : "DRAFT_CREATED";
+        const beforeState = existing
+          ? (existing.draftPayload as Record<string, unknown>)
+          : null;
+
+        const [saved] = await tx
+          .insert(schema.lookupTableDraftEdits)
+          .values({
+            tableKey,
+            userId,
+            rowKey: input.rowKey,
+            originalPayload: input.originalPayload ?? null,
+            draftPayload: input.draftPayload,
+            status: "draft",
+            updatedAt: new Date(),
+          })
+          .onConflictDoUpdate({
+            target: [
+              schema.lookupTableDraftEdits.userId,
+              schema.lookupTableDraftEdits.tableKey,
+              schema.lookupTableDraftEdits.rowKey,
+            ],
+            set: {
+              draftPayload: input.draftPayload,
+              originalPayload: input.originalPayload ?? undefined,
+              status: "draft",
+              updatedAt: new Date(),
+            },
+          })
+          .returning();
+
+        await tx.insert(schema.appAuditLog).values({
+          actorId: userId,
+          entityType: "lookup_table_draft_edits",
+          entityId: saved.id,
+          action,
+          metadata: { tableKey, rowKey: input.rowKey },
+          beforeState,
+          afterState: input.draftPayload,
+        });
+
+        savedResults.push({
+          id: saved.id,
+          tableKey: saved.tableKey,
+          userId: saved.userId,
+          rowKey: saved.rowKey,
+          originalPayload: saved.originalPayload as Record<string, unknown> | null,
+          draftPayload: saved.draftPayload as Record<string, unknown>,
+          status: saved.status,
+          createdAt: saved.createdAt,
+          updatedAt: saved.updatedAt,
+        });
+      }
+
+      return savedResults;
+    });
+  }
+
   async discardDrafts(tableKey: string, userId: string, rowKeys: string[]): Promise<number> {
     if (!rowKeys || rowKeys.length === 0) {
       throw new Error("discardDrafts requires a non-empty array of rowKeys.");
@@ -156,6 +244,38 @@ export class PostgresDraftRepository implements DraftRepository {
     return deleted.length;
   }
 
+  async discardDraftsWithAudit(
+    tableKey: string,
+    userId: string,
+    rowKeys: string[],
+  ): Promise<number> {
+    if (!rowKeys || rowKeys.length === 0) {
+      throw new Error("discardDraftsWithAudit requires a non-empty array of rowKeys.");
+    }
+
+    return this.db.transaction(async (tx) => {
+      const deleted = await tx
+        .delete(schema.lookupTableDraftEdits)
+        .where(
+          and(
+            eq(schema.lookupTableDraftEdits.tableKey, tableKey),
+            eq(schema.lookupTableDraftEdits.userId, userId),
+            inArray(schema.lookupTableDraftEdits.rowKey, rowKeys),
+          ),
+        )
+        .returning({ id: schema.lookupTableDraftEdits.id });
+
+      await tx.insert(schema.appAuditLog).values({
+        actorId: userId,
+        entityType: "lookup_table_draft_edits",
+        action: "DRAFT_DISCARDED",
+        metadata: { tableKey, rowKeys, count: deleted.length },
+      });
+
+      return deleted.length;
+    });
+  }
+
   async discardAllDrafts(tableKey: string, userId: string): Promise<number> {
     const deleted = await this.db
       .delete(schema.lookupTableDraftEdits)
@@ -168,6 +288,32 @@ export class PostgresDraftRepository implements DraftRepository {
       .returning({ id: schema.lookupTableDraftEdits.id });
 
     return deleted.length;
+  }
+
+  async discardAllDraftsWithAudit(
+    tableKey: string,
+    userId: string,
+  ): Promise<number> {
+    return this.db.transaction(async (tx) => {
+      const deleted = await tx
+        .delete(schema.lookupTableDraftEdits)
+        .where(
+          and(
+            eq(schema.lookupTableDraftEdits.tableKey, tableKey),
+            eq(schema.lookupTableDraftEdits.userId, userId),
+          ),
+        )
+        .returning({ id: schema.lookupTableDraftEdits.id });
+
+      await tx.insert(schema.appAuditLog).values({
+        actorId: userId,
+        entityType: "lookup_table_draft_edits",
+        action: "DRAFT_DISCARD_ALL",
+        metadata: { tableKey, count: deleted.length },
+      });
+
+      return deleted.length;
+    });
   }
 
   async recordAuditLog(audit: AuditLogRecord): Promise<void> {
@@ -205,13 +351,7 @@ export class InMemoryDraftRepository implements DraftRepository {
     return results;
   }
 
-  async saveDraft(input: {
-    tableKey: string;
-    userId: string;
-    rowKey: string;
-    originalPayload?: Record<string, unknown> | null;
-    draftPayload: Record<string, unknown>;
-  }): Promise<DraftEditRecord> {
+  async saveDraft(input: SaveDraftWithAuditInput): Promise<DraftEditRecord> {
     const key = this.getKey(input.tableKey, input.userId, input.rowKey);
     const existing = this.drafts.get(key);
     const now = new Date();
@@ -230,6 +370,36 @@ export class InMemoryDraftRepository implements DraftRepository {
     return { ...record };
   }
 
+  async saveDraftsWithAudit(
+    tableKey: string,
+    userId: string,
+    records: SaveDraftWithAuditInput[],
+  ): Promise<DraftEditRecord[]> {
+    const savedResults: DraftEditRecord[] = [];
+
+    for (const input of records) {
+      const key = this.getKey(tableKey, userId, input.rowKey);
+      const existing = this.drafts.get(key);
+      const action = existing ? "DRAFT_UPDATED" : "DRAFT_CREATED";
+      const beforeState = existing ? existing.draftPayload : null;
+
+      const saved = await this.saveDraft(input);
+      savedResults.push(saved);
+
+      this.auditLogs.push({
+        actorId: userId,
+        entityType: "lookup_table_draft_edits",
+        entityId: saved.id,
+        action,
+        metadata: { tableKey, rowKey: input.rowKey },
+        beforeState,
+        afterState: input.draftPayload,
+      });
+    }
+
+    return savedResults;
+  }
+
   async discardDrafts(tableKey: string, userId: string, rowKeys: string[]): Promise<number> {
     if (!rowKeys || rowKeys.length === 0) {
       throw new Error("discardDrafts requires a non-empty array of rowKeys.");
@@ -244,6 +414,21 @@ export class InMemoryDraftRepository implements DraftRepository {
     return count;
   }
 
+  async discardDraftsWithAudit(
+    tableKey: string,
+    userId: string,
+    rowKeys: string[],
+  ): Promise<number> {
+    const count = await this.discardDrafts(tableKey, userId, rowKeys);
+    this.auditLogs.push({
+      actorId: userId,
+      entityType: "lookup_table_draft_edits",
+      action: "DRAFT_DISCARDED",
+      metadata: { tableKey, rowKeys, count },
+    });
+    return count;
+  }
+
   async discardAllDrafts(tableKey: string, userId: string): Promise<number> {
     let count = 0;
     for (const [key, draft] of Array.from(this.drafts.entries())) {
@@ -252,6 +437,20 @@ export class InMemoryDraftRepository implements DraftRepository {
         count++;
       }
     }
+    return count;
+  }
+
+  async discardAllDraftsWithAudit(
+    tableKey: string,
+    userId: string,
+  ): Promise<number> {
+    const count = await this.discardAllDrafts(tableKey, userId);
+    this.auditLogs.push({
+      actorId: userId,
+      entityType: "lookup_table_draft_edits",
+      action: "DRAFT_DISCARD_ALL",
+      metadata: { tableKey, count },
+    });
     return count;
   }
 

@@ -53,6 +53,38 @@ test("validateRowDraft rejects primary key field mutations", () => {
   assert.match(res.errors.code, /read-only|immutable/i);
 });
 
+test("saveFeatureDraftEdits rejects unauthenticated and unauthorized requests (fail-closed)", async () => {
+  const repo = new InMemoryDraftRepository();
+
+  // 1. Unauthenticated
+  const unauthRes = await saveFeatureDraftEdits(
+    {
+      tableKey: "metrics_core.lkp_segment",
+      changes: [
+        { originalPayload: { code: "CORP" }, draftPayload: { name: "Test" } },
+      ],
+    },
+    { userId: "", isAuthenticated: false },
+    { draftRepo: repo },
+  );
+  assert.equal(unauthRes.success, false);
+  assert.match(unauthRes.message ?? "", /signed in/i);
+
+  // 2. Unauthorized (empty permissions)
+  const noPermRes = await saveFeatureDraftEdits(
+    {
+      tableKey: "metrics_core.lkp_segment",
+      changes: [
+        { originalPayload: { code: "CORP" }, draftPayload: { name: "Test" } },
+      ],
+    },
+    { userId: "user-1", isAuthenticated: true, permissions: [] },
+    { draftRepo: repo },
+  );
+  assert.equal(noPermRes.success, false);
+  assert.match(noPermRes.message ?? "", /permission/i);
+});
+
 test("saveFeatureDraftEdits validates lookup dependency: permits active, rejects invalid/inactive new selection", async () => {
   const repo = new InMemoryDraftRepository();
   const authContext = {
@@ -134,7 +166,7 @@ test("saveFeatureDraftEdits validates lookup dependency: permits active, rejects
   assert.equal(activeRes.savedCount, 1);
 });
 
-test("saveFeatureDraftEdits persists and updates drafts in InMemoryDraftRepository", async () => {
+test("saveFeatureDraftEdits persists, logs DRAFT_CREATED vs DRAFT_UPDATED, and updates drafts atomically", async () => {
   const repo = new InMemoryDraftRepository();
   const authContext = {
     userId: "user-123",
@@ -142,6 +174,7 @@ test("saveFeatureDraftEdits persists and updates drafts in InMemoryDraftReposito
     permissions: ["data_library.lookup_tables.edit"],
   };
 
+  // Initial save -> DRAFT_CREATED
   const saveRes = await saveFeatureDraftEdits(
     {
       tableKey: "metrics_core.lkp_segment",
@@ -163,10 +196,29 @@ test("saveFeatureDraftEdits persists and updates drafts in InMemoryDraftReposito
   assert.equal(drafts.length, 1);
   assert.equal(drafts[0].draftPayload.name, "Corporate Travel");
   assert.equal(repo.auditLogs.length, 1);
-  assert.equal(repo.auditLogs[0].action, "DRAFT_UPDATED");
+  assert.equal(repo.auditLogs[0].action, "DRAFT_CREATED");
+
+  // Subsequent save -> DRAFT_UPDATED
+  await saveFeatureDraftEdits(
+    {
+      tableKey: "metrics_core.lkp_segment",
+      changes: [
+        {
+          originalPayload: { code: "CORP", name: "Corporate" },
+          draftPayload: { name: "Corporate & Group Travel" },
+        },
+      ],
+    },
+    authContext,
+    { draftRepo: repo },
+  );
+
+  assert.equal(repo.auditLogs.length, 2);
+  assert.equal(repo.auditLogs[1].action, "DRAFT_UPDATED");
+  assert.deepEqual(repo.auditLogs[1].beforeState, { name: "Corporate Travel" });
 });
 
-test("discardFeatureDraftEdits requires non-empty rowKeys and discardAllFeatureDraftEdits removes all drafts", async () => {
+test("discardFeatureDraftEdits discards selected row and logs audit event", async () => {
   const repo = new InMemoryDraftRepository();
   const authContext = {
     userId: "user-123",
@@ -188,29 +240,70 @@ test("discardFeatureDraftEdits requires non-empty rowKeys and discardAllFeatureD
     { draftRepo: repo },
   );
 
-  // Empty rowKeys guard
-  const emptyRes = await discardFeatureDraftEdits(
-    "metrics_core.lkp_segment",
-    [],
-    authContext,
-    repo,
-  );
-  assert.equal(emptyRes.success, false);
+  const rowKey = canonicalizeRowKey(["code"], { code: "CORP" });
 
-  // Discard All
-  const discardAllRes = await discardAllFeatureDraftEdits(
+  // Discard selected row
+  const discardRes = await discardFeatureDraftEdits(
     "metrics_core.lkp_segment",
+    [rowKey],
     authContext,
     repo,
   );
-  assert.equal(discardAllRes.success, true);
-  assert.equal(discardAllRes.discardedCount, 1);
+
+  assert.equal(discardRes.success, true);
+  assert.equal(discardRes.discardedCount, 1);
 
   const remaining = await repo.listDrafts(
     "metrics_core.lkp_segment",
     "user-123",
   );
   assert.equal(remaining.length, 0);
+
+  const discardAudit = repo.auditLogs.find(
+    (a) => a.action === "DRAFT_DISCARDED",
+  );
+  assert.ok(discardAudit);
+});
+
+test("discardAllFeatureDraftEdits removes all drafts and logs DRAFT_DISCARD_ALL audit event", async () => {
+  const repo = new InMemoryDraftRepository();
+  const authContext = {
+    userId: "user-123",
+    isAuthenticated: true,
+    permissions: ["data_library.lookup_tables.edit"],
+  };
+
+  await saveFeatureDraftEdits(
+    {
+      tableKey: "metrics_core.lkp_segment",
+      changes: [
+        {
+          originalPayload: { code: "CORP" },
+          draftPayload: { name: "Corporate Travel" },
+        },
+      ],
+    },
+    authContext,
+    { draftRepo: repo },
+  );
+
+  const res = await discardAllFeatureDraftEdits(
+    "metrics_core.lkp_segment",
+    authContext,
+    repo,
+  );
+
+  assert.equal(res.success, true);
+  assert.equal(res.discardedCount, 1);
+
+  const remaining = await repo.listDrafts(
+    "metrics_core.lkp_segment",
+    "user-123",
+  );
+  assert.equal(remaining.length, 0);
+
+  const audit = repo.auditLogs.find((a) => a.action === "DRAFT_DISCARD_ALL");
+  assert.ok(audit);
 });
 
 test("PostgresDraftRepository throws DatabaseConfigurationError when DATABASE_URL is missing", () => {

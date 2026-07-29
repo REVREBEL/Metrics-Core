@@ -3,7 +3,7 @@ import { PostgresDraftRepository } from "@repo/db";
 import { canonicalizeRowKey } from "./canonicalizer";
 import type { LookupValueFetcher } from "./lookup-resolver";
 import { validateLookupDependencies } from "./lookup-resolver";
-import { getDataLibraryTableDefinition } from "./registry";
+import { getDataLibraryTableDefinition, toReadDefinition } from "./registry";
 import { validateRowDraft } from "./validation";
 
 export interface SaveDraftChangesPayload {
@@ -32,6 +32,37 @@ export function getDefaultDraftRepository(): DraftRepository {
   return new PostgresDraftRepository();
 }
 
+export const defaultLiveLookupFetcher: LookupValueFetcher = async (
+  tableKey: string,
+  search: string,
+) => {
+  const tableDef = getDataLibraryTableDefinition(tableKey);
+  if (!tableDef) {
+    throw new Error(`Referenced lookup table '${tableKey}' is not registered.`);
+  }
+
+  const readDef = toReadDefinition(tableDef);
+  const { executeDataLibraryRowRead } = await import(
+    "@repo/data/server/data-library"
+  );
+  const res = await executeDataLibraryRowRead(readDef, {
+    tableKey,
+    page: 1,
+    pageSize: 100,
+    search,
+  });
+
+  if (!res.success) {
+    throw new Error(`Failed to load referenced lookup table '${tableKey}'.`);
+  }
+
+  return res.data.rows.map((r) => ({
+    code: String(r.code ?? "").trim(),
+    segment_code: String(r.segment_code ?? "").trim(),
+    is_active: Boolean(r.is_active ?? true),
+  }));
+};
+
 export async function listFeatureDraftEdits(
   tableKey: string,
   authContext: DraftAuthContext,
@@ -46,13 +77,13 @@ export async function listFeatureDraftEdits(
     throw new Error(`Table '${tableKey}' is not registered.`);
   }
 
-  if (authContext.permissions) {
-    const hasRead = tableDef.permissions.read.some((p) =>
-      authContext.permissions?.includes(p),
-    );
-    if (!hasRead) {
-      throw new Error("FORBIDDEN");
-    }
+  // Fail closed permission check
+  const permissions = authContext.permissions ?? [];
+  const hasRead = tableDef.permissions.read.some((p) =>
+    permissions.includes(p),
+  );
+  if (!hasRead) {
+    throw new Error("FORBIDDEN");
   }
 
   return draftRepo.listDrafts(tableKey, authContext.userId);
@@ -67,6 +98,7 @@ export async function saveFeatureDraftEdits(
   },
 ): Promise<SaveDraftResult> {
   const draftRepo = options?.draftRepo ?? getDefaultDraftRepository();
+  const lookupFetcher = options?.lookupFetcher ?? defaultLiveLookupFetcher;
 
   // 1. Auth check
   if (!authContext.isAuthenticated) {
@@ -85,17 +117,16 @@ export async function saveFeatureDraftEdits(
     };
   }
 
-  // 3. Permission check against category edit permission
-  if (authContext.permissions) {
-    const hasEdit = tableDef.permissions.edit.some((p) =>
-      authContext.permissions?.includes(p),
-    );
-    if (!hasEdit) {
-      return {
-        success: false,
-        message: "You do not have permission to edit rows in this table.",
-      };
-    }
+  // 3. Permission check against category edit permission (fail closed)
+  const permissions = authContext.permissions ?? [];
+  const hasEdit = tableDef.permissions.edit.some((p) =>
+    permissions.includes(p),
+  );
+  if (!hasEdit) {
+    return {
+      success: false,
+      message: "You do not have permission to edit rows in this table.",
+    };
   }
 
   if (!payload.changes || payload.changes.length === 0) {
@@ -107,12 +138,15 @@ export async function saveFeatureDraftEdits(
 
   // 4. Validate and canonicalize each change
   const validatedRecords: Array<{
+    tableKey: string;
+    userId: string;
     rowKey: string;
     originalPayload: Record<string, unknown> | null;
     draftPayload: Record<string, unknown>;
   }> = [];
 
   const fieldErrors: Record<string, string> = {};
+  const details: Record<string, Record<string, string>> = {};
 
   for (let idx = 0; idx < payload.changes.length; idx++) {
     const change = payload.changes[idx];
@@ -121,8 +155,16 @@ export async function saveFeatureDraftEdits(
 
     // Validate metadata rules (type, required, read-only, primary key)
     const valRes = validateRowDraft(tableDef, draft, orig);
+    const canonicalKey = canonicalizeRowKey(
+      tableDef.primaryKey,
+      orig
+        ? { ...orig, ...valRes.normalizedChanges }
+        : valRes.normalizedChanges,
+    );
+
     if (!valRes.valid) {
       Object.assign(fieldErrors, valRes.errors);
+      details[canonicalKey] = valRes.errors;
       continue;
     }
 
@@ -131,22 +173,17 @@ export async function saveFeatureDraftEdits(
       valRes.normalizedChanges,
       orig,
       tableDef.columns,
-      options?.lookupFetcher,
+      lookupFetcher,
     );
     if (!lookupRes.valid) {
       Object.assign(fieldErrors, lookupRes.errors);
+      details[canonicalKey] = lookupRes.errors;
       continue;
     }
 
-    // Canonicalize row key using primary key fields in registry order
-    const canonicalKey = canonicalizeRowKey(
-      tableDef.primaryKey,
-      orig
-        ? { ...orig, ...valRes.normalizedChanges }
-        : valRes.normalizedChanges,
-    );
-
     validatedRecords.push({
+      tableKey: payload.tableKey,
+      userId: authContext.userId,
       rowKey: canonicalKey,
       originalPayload: orig,
       draftPayload: valRes.normalizedChanges,
@@ -158,40 +195,21 @@ export async function saveFeatureDraftEdits(
       success: false,
       message: "Fix validation errors before saving draft.",
       errors: fieldErrors,
+      details,
     };
   }
 
-  // 5. Persist via repository
-  let savedCount = 0;
-  for (const record of validatedRecords) {
-    const saved = await draftRepo.saveDraft({
-      tableKey: payload.tableKey,
-      userId: authContext.userId,
-      rowKey: record.rowKey,
-      originalPayload: record.originalPayload,
-      draftPayload: record.draftPayload,
-    });
-
-    await draftRepo.recordAuditLog({
-      actorId: authContext.userId,
-      entityType: "lookup_table_draft_edits",
-      entityId: saved.id,
-      action: "DRAFT_UPDATED",
-      metadata: {
-        tableKey: payload.tableKey,
-        rowKey: record.rowKey,
-      },
-      beforeState: record.originalPayload ?? null,
-      afterState: record.draftPayload,
-    });
-
-    savedCount++;
-  }
+  // 5. Persist via atomic transactional repository call
+  const savedRecords = await draftRepo.saveDraftsWithAudit(
+    payload.tableKey,
+    authContext.userId,
+    validatedRecords,
+  );
 
   return {
     success: true,
-    savedCount,
-    message: `${savedCount} draft row edit${savedCount === 1 ? "" : "s"} saved successfully.`,
+    savedCount: savedRecords.length,
+    message: `${savedRecords.length} draft row edit${savedRecords.length === 1 ? "" : "s"} saved successfully.`,
   };
 }
 
@@ -221,27 +239,20 @@ export async function discardFeatureDraftEdits(
     return { success: false, message: `Table '${tableKey}' not found.` };
   }
 
-  if (authContext.permissions) {
-    const hasEdit = tableDef.permissions.edit.some((p) =>
-      authContext.permissions?.includes(p),
-    );
-    if (!hasEdit) {
-      return { success: false, message: "Forbidden." };
-    }
+  // Fail closed permission check
+  const permissions = authContext.permissions ?? [];
+  const hasEdit = tableDef.permissions.edit.some((p) =>
+    permissions.includes(p),
+  );
+  if (!hasEdit) {
+    return { success: false, message: "Forbidden." };
   }
 
-  const count = await draftRepo.discardDrafts(
+  const count = await draftRepo.discardDraftsWithAudit(
     tableKey,
     authContext.userId,
     rowKeys,
   );
-
-  await draftRepo.recordAuditLog({
-    actorId: authContext.userId,
-    entityType: "lookup_table_draft_edits",
-    action: "DRAFT_DISCARDED",
-    metadata: { tableKey, rowKeys, count },
-  });
 
   return {
     success: true,
@@ -264,23 +275,19 @@ export async function discardAllFeatureDraftEdits(
     return { success: false, message: `Table '${tableKey}' not found.` };
   }
 
-  if (authContext.permissions) {
-    const hasEdit = tableDef.permissions.edit.some((p) =>
-      authContext.permissions?.includes(p),
-    );
-    if (!hasEdit) {
-      return { success: false, message: "Forbidden." };
-    }
+  // Fail closed permission check
+  const permissions = authContext.permissions ?? [];
+  const hasEdit = tableDef.permissions.edit.some((p) =>
+    permissions.includes(p),
+  );
+  if (!hasEdit) {
+    return { success: false, message: "Forbidden." };
   }
 
-  const count = await draftRepo.discardAllDrafts(tableKey, authContext.userId);
-
-  await draftRepo.recordAuditLog({
-    actorId: authContext.userId,
-    entityType: "lookup_table_draft_edits",
-    action: "DRAFT_DISCARD_ALL",
-    metadata: { tableKey, count },
-  });
+  const count = await draftRepo.discardAllDraftsWithAudit(
+    tableKey,
+    authContext.userId,
+  );
 
   return {
     success: true,
