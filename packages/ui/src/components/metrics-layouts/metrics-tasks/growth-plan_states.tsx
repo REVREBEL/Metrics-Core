@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@buttons/button";
 import {
   IconAlertCircle,
   IconBuilding,
@@ -12,7 +13,6 @@ import {
   IconPresentation,
   IconUser,
 } from "@tabler/icons-react";
-import { Button } from "@buttons/button";
 import type { GrowthPlanView } from "./growth-plan-view-switcher";
 
 type EmptyStateProps = {

@@ -1,9 +1,5 @@
 "use client";
 
-import { Check, Copy } from "lucide-react";
-import { useState } from "react";
-
-import { OpenInV0Button } from "./open-in-v0";
 import { Button } from "@buttons/button";
 import {
   Card,
@@ -16,6 +12,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@ui-core";
+import { Check, Copy } from "lucide-react";
+import { useState } from "react";
+import { OpenInV0Button } from "./open-in-v0";
 
 type Component = {
   name: string;

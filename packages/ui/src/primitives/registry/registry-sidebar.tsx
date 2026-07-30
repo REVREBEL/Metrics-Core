@@ -56,24 +56,25 @@ function folderHref(folder: string) {
 
 const sourceFolderGroups: FolderGroup[] = Object.entries(
   REGISTRY as Record<string, PlaygroundEntry>,
-).reduce<FolderGroup[]>((groups, [id, entry]) => {
-  if (!entry || typeof entry !== "object") return groups;
+)
+  .reduce<FolderGroup[]>((groups, [id, entry]) => {
+    if (!entry || typeof entry !== "object") return groups;
 
-  const folder = getFolderFromSourcePath(entry.metadata?.sourcePath);
-  let group = groups.find((candidate) => candidate.folder === folder);
-  if (!group) {
-    group = { folder, items: [] };
-    groups.push(group);
-  }
+    const folder = getFolderFromSourcePath(entry.metadata?.sourcePath);
+    let group = groups.find((candidate) => candidate.folder === folder);
+    if (!group) {
+      group = { folder, items: [] };
+      groups.push(group);
+    }
 
-  group.items.push({
-    name: id,
-    title: toTitle(entry.name ?? id),
-    path: `${folderHref(folder)}#${id}`,
-  });
+    group.items.push({
+      name: id,
+      title: toTitle(entry.name ?? id),
+      path: `${folderHref(folder)}#${id}`,
+    });
 
-  return groups;
-}, [])
+    return groups;
+  }, [])
   .map((group) => ({
     ...group,
     items: group.items.sort((a, b) => a.title.localeCompare(b.title)),
@@ -139,7 +140,11 @@ function SourceFolderSection({
       </div>
       <div className="space-y-1">
         {groups.map((group) => (
-          <details key={group.folder} className="group" open={group.items.length < 12}>
+          <details
+            key={group.folder}
+            className="group"
+            open={group.items.length < 12}
+          >
             <summary className="cursor-pointer truncate rounded-md px-2 py-1.5 font-medium text-muted-foreground text-xs hover:bg-muted hover:text-foreground">
               {group.folder}
               <span className="ml-1 text-muted-foreground/70">

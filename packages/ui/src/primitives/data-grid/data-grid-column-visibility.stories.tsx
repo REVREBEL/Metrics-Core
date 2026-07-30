@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { DataGridColumnVisibility } from "./data-grid-column-visibility";
 import { DataGridProvider } from "./data-grid";
-import React from "react";
+import { DataGridColumnVisibility } from "./data-grid-column-visibility";
 
 const meta = {
   title: "Primitives/Data Grid/Data Grid Column Visibility",

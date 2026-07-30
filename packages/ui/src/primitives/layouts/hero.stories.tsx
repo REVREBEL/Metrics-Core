@@ -21,6 +21,7 @@ export const Default: Story = {
       "Beautifully designed, expertly crafted components that follow the best practices of accessibility and performance.",
     buttonText: "Get Started",
     buttonLink: "#",
-    backgroundImage: "https://images.unsplash.com/photo-1588345921523-c2dcd57f7d60?w=800&dpr=2&q=80",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1588345921523-c2dcd57f7d60?w=800&dpr=2&q=80",
   },
 };

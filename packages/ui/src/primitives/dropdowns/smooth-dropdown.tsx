@@ -10,9 +10,10 @@ import {
   IconSettings,
   IconUser,
 } from "@tabler/icons-react";
-import { useState, useRef, useEffect } from "react";
 import { motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import useMeasure from "react-use-measure";
+
 // Change Here
 const menuItems = [
   { id: "profile", label: "Profile", icon: IconUser },
@@ -154,10 +155,10 @@ export default function TwentyTwelveOne() {
                       isLogout && showIndicator
                         ? "text-red-600"
                         : isActive
-                        ? "text-foreground"
-                        : isLogout
-                        ? "text-muted-foreground hover:text-red-600"
-                        : "text-muted-foreground hover:text-foreground"
+                          ? "text-foreground"
+                          : isLogout
+                            ? "text-muted-foreground hover:text-red-600"
+                            : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {/* Hover/Active background indicator */}

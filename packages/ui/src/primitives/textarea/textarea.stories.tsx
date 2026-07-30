@@ -18,7 +18,11 @@ export const Default: Story = {
   args: {
     placeholder: "Type your message here.",
   },
-  render: (args) => <div className="w-80"><Textarea {...args} /></div>,
+  render: (args) => (
+    <div className="w-80">
+      <Textarea {...args} />
+    </div>
+  ),
 };
 
 export const Disabled: Story = {
@@ -26,5 +30,9 @@ export const Disabled: Story = {
     placeholder: "Type your message here.",
     disabled: true,
   },
-  render: (args) => <div className="w-80"><Textarea {...args} /></div>,
+  render: (args) => (
+    <div className="w-80">
+      <Textarea {...args} />
+    </div>
+  ),
 };

@@ -24,7 +24,11 @@ export const Default: Story = {
       { label: "Svelte", value: "svelte" },
     ],
   },
-  render: (args) => <div className="w-48"><SelectDropdown {...args} /></div>,
+  render: (args) => (
+    <div className="w-48">
+      <SelectDropdown {...args} />
+    </div>
+  ),
 };
 
 export const Pending: Story = {
@@ -32,5 +36,9 @@ export const Pending: Story = {
     isPending: true,
     items: [],
   },
-  render: (args) => <div className="w-48"><SelectDropdown {...args} /></div>,
+  render: (args) => (
+    <div className="w-48">
+      <SelectDropdown {...args} />
+    </div>
+  ),
 };

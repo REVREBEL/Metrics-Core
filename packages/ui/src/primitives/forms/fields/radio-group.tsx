@@ -3,8 +3,8 @@ import { RadioGroup, RadioGroupItem } from "@ui-core/radio-group";
 import type * as z from "zod";
 import AutoFormLabel from "../common/label";
 import AutoFormTooltip from "../common/tooltip";
-import type { AutoFormInputComponentProps } from "../types";
 import { getBaseSchema } from "../helpers";
+import type { AutoFormInputComponentProps } from "../types";
 
 /**
  * Get enum values from a ZodEnum schema.

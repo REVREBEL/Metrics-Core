@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { FormItem } from "./form";
-import { Form } from "./form";
-import React from "react";
 import { useForm } from "react-hook-form";
+import { Form, FormItem } from "./form";
 
 const meta = {
   title: "Primitives/Forms/Form Item",

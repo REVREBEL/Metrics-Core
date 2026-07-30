@@ -84,7 +84,7 @@ function RecapSectionCard({ section }: { section: RecapSection }) {
 }
 
 // ⚡ Bolt: Hoist Intl.DateTimeFormat instance to avoid expensive re-creation.
-const meetingRecapDateFormatter = new Intl.DateTimeFormat("en-US", {
+const _meetingRecapDateFormatter = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
   month: "long",
   day: "numeric",
@@ -127,7 +127,11 @@ export function MeetingRecapView({
         newInitiatives.push(i);
       } else {
         const updated = new Date(i.updatedAt);
-        if (created < oneWeekAgo && updated >= oneWeekAgo && updated <= recapDate) {
+        if (
+          created < oneWeekAgo &&
+          updated >= oneWeekAgo &&
+          updated <= recapDate
+        ) {
           reviewedInitiatives.push(i);
         }
       }

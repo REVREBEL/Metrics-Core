@@ -1,32 +1,24 @@
-import * as React from "react"
-import type { Editor } from "@tiptap/react"
-import { toggleVariants } from "../ui-core/toggle"
-import type { VariantProps } from "class-variance-authority"
-import { CaretDownIcon, CheckIcon } from "@radix-ui/react-icons"
-import { ToolbarButton } from "../buttons/toolbar-button"
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "../popovers/popover"
-import { ToggleGroup, ToggleGroupItem } from "../ui-core/toggle-group"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "../ui-core/tooltip"
-import { useTheme } from "../../hooks/use-theme"
+import { CaretDownIcon, CheckIcon } from "@radix-ui/react-icons";
+import type { Editor } from "@tiptap/react";
+import type { VariantProps } from "class-variance-authority";
+import * as React from "react";
+import { useTheme } from "../../hooks/use-theme";
+import { ToolbarButton } from "../buttons/toolbar-button";
+import { Popover, PopoverContent, PopoverTrigger } from "../popovers/popover";
+import type { toggleVariants } from "../ui-core/toggle";
+import { ToggleGroup, ToggleGroupItem } from "../ui-core/toggle-group";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui-core/tooltip";
 
 interface ColorItem {
-  cssVar: string
-  label: string
-  darkLabel?: string
+  cssVar: string;
+  label: string;
+  darkLabel?: string;
 }
 
 interface ColorPalette {
-  label: string
-  colors: ColorItem[]
-  inverse: string
+  label: string;
+  colors: ColorItem[];
+  inverse: string;
 }
 
 const COLORS: ColorPalette[] = [
@@ -69,16 +61,16 @@ const COLORS: ColorPalette[] = [
       { cssVar: "var(--mt-accent-purple-subtler)", label: "Purple subtle" },
     ],
   },
-]
+];
 
 const MemoizedColorButton = React.memo<{
-  color: ColorItem
-  isSelected: boolean
-  inverse: string
-  onClick: (value: string) => void
+  color: ColorItem;
+  isSelected: boolean;
+  inverse: string;
+  onClick: (value: string) => void;
 }>(({ color, isSelected, inverse, onClick }) => {
-  const isDarkMode = useTheme()
-  const label = isDarkMode && color.darkLabel ? color.darkLabel : color.label
+  const isDarkMode = useTheme();
+  const label = isDarkMode && color.darkLabel ? color.darkLabel : color.label;
 
   return (
     <Tooltip>
@@ -90,8 +82,8 @@ const MemoizedColorButton = React.memo<{
           aria-label={label}
           style={{ backgroundColor: color.cssVar }}
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault()
-            onClick(color.cssVar)
+            e.preventDefault();
+            onClick(color.cssVar);
           }}
         >
           {isSelected && (
@@ -106,22 +98,22 @@ const MemoizedColorButton = React.memo<{
         <p>{label}</p>
       </TooltipContent>
     </Tooltip>
-  )
-})
+  );
+});
 
-MemoizedColorButton.displayName = "MemoizedColorButton"
+MemoizedColorButton.displayName = "MemoizedColorButton";
 
 const MemoizedColorPicker = React.memo<{
-  palette: ColorPalette
-  selectedColor: string
-  inverse: string
-  onColorChange: (value: string) => void
+  palette: ColorPalette;
+  selectedColor: string;
+  inverse: string;
+  onColorChange: (value: string) => void;
 }>(({ palette, selectedColor, inverse, onColorChange }) => (
   <ToggleGroup
     type="single"
     value={selectedColor}
     onValueChange={(value: string) => {
-      if (value) onColorChange(value)
+      if (value) onColorChange(value);
     }}
     className="gap-1.5"
   >
@@ -135,12 +127,12 @@ const MemoizedColorPicker = React.memo<{
       />
     ))}
   </ToggleGroup>
-))
+));
 
-MemoizedColorPicker.displayName = "MemoizedColorPicker"
+MemoizedColorPicker.displayName = "MemoizedColorPicker";
 
 interface SectionThreeProps extends VariantProps<typeof toggleVariants> {
-  editor: Editor
+  editor: Editor;
 }
 
 export const SectionThree: React.FC<SectionThreeProps> = ({
@@ -149,31 +141,31 @@ export const SectionThree: React.FC<SectionThreeProps> = ({
   variant,
 }) => {
   const color =
-    editor.getAttributes("textStyle")?.color || "hsl(var(--foreground))"
-  const [selectedColor, setSelectedColor] = React.useState(color)
+    editor.getAttributes("textStyle")?.color || "hsl(var(--foreground))";
+  const [selectedColor, setSelectedColor] = React.useState(color);
 
   const handleColorChange = React.useCallback(
     (value: string) => {
-      setSelectedColor(value)
+      setSelectedColor(value);
       if (editor.state.storedMarks) {
-        const textStyleMarkType = editor.schema.marks.textStyle
+        const textStyleMarkType = editor.schema.marks.textStyle;
         if (textStyleMarkType) {
           editor.view.dispatch(
-            editor.state.tr.removeStoredMark(textStyleMarkType)
-          )
+            editor.state.tr.removeStoredMark(textStyleMarkType),
+          );
         }
       }
 
       setTimeout(() => {
-        (editor.chain() as any).setColor(value).run()
-      }, 0)
+        (editor.chain() as any).setColor(value).run();
+      }, 0);
     },
-    [editor]
-  )
+    [editor],
+  );
 
   React.useEffect(() => {
-    setSelectedColor(color)
-  }, [color])
+    setSelectedColor(color);
+  }, [color]);
 
   return (
     <Popover>
@@ -219,9 +211,9 @@ export const SectionThree: React.FC<SectionThreeProps> = ({
         </div>
       </PopoverContent>
     </Popover>
-  )
-}
+  );
+};
 
-SectionThree.displayName = "SectionThree"
+SectionThree.displayName = "SectionThree";
 
-export default SectionThree
+export default SectionThree;

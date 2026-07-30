@@ -1,36 +1,36 @@
-"use client"
+"use client";
 
-import { useRouter, usePathname } from 'next/navigation';
-import { useAuthStore } from '@users/auth-store'
-import { ConfirmDialog } from '@users/confirm-dialog'
+import { useAuthStore } from "@users/auth-store";
+import { ConfirmDialog } from "@users/confirm-dialog";
+import { usePathname, useRouter } from "next/navigation";
 
 interface SignOutDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
-  const navigate = useRouter()
-  const pathname = usePathname()
-  const { auth } = useAuthStore()
+  const navigate = useRouter();
+  const pathname = usePathname();
+  const { auth } = useAuthStore();
 
   const handleSignOut = () => {
-    auth.reset()
+    auth.reset();
     // Preserve current location for redirect after sign-in
-    const currentPath = pathname
-    navigate.push(`/sign-in?redirect=${encodeURIComponent(currentPath)}`)
-  }
+    const currentPath = pathname;
+    navigate.push(`/sign-in?redirect=${encodeURIComponent(currentPath)}`);
+  };
 
   return (
     <ConfirmDialog
       open={open}
       onOpenChange={onOpenChange}
-      title='Sign out'
-      desc='Are you sure you want to sign out? You will need to sign in again to access your account.'
-      confirmText='Sign out'
+      title="Sign out"
+      desc="Are you sure you want to sign out? You will need to sign in again to access your account."
+      confirmText="Sign out"
       destructive
       handleConfirm={handleSignOut}
-      className='sm:max-w-sm'
+      className="sm:max-w-sm"
     />
-  )
+  );
 }

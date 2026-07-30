@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
+import { Button } from "../buttons/button";
 import {
   Sheet,
   SheetContent,
@@ -8,7 +8,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./sheet";
-import { Button } from "../buttons/button";
 
 const meta: Meta<typeof Sheet> = {
   title: "Primitives/UI Core/Sheet",
@@ -81,7 +80,9 @@ export const Bottom: Story = {
       <SheetContent side="bottom">
         <SheetHeader>
           <SheetTitle>Bottom Sheet</SheetTitle>
-          <SheetDescription>This sheet appears from the bottom.</SheetDescription>
+          <SheetDescription>
+            This sheet appears from the bottom.
+          </SheetDescription>
         </SheetHeader>
       </SheetContent>
     </Sheet>

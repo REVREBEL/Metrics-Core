@@ -179,10 +179,7 @@
         "packages/ui/src/primitives/forms/shared-form-types.ts",
         "packages/ui/src/primitives/forms/types.ts"
       ],
-      "children": [
-        "primitives/forms/common",
-        "primitives/forms/fields"
-      ],
+      "children": ["primitives/forms/common", "primitives/forms/fields"],
       "directFileCount": 6,
       "childCount": 2
     },
@@ -299,9 +296,7 @@
         "packages/ui/src/primitives/layouts/swap-layout-loader.tsx",
         "packages/ui/src/primitives/layouts/swap-layout.tsx"
       ],
-      "children": [
-        "primitives/layouts/data"
-      ],
+      "children": ["primitives/layouts/data"],
       "directFileCount": 15,
       "childCount": 1
     },
@@ -329,9 +324,7 @@
       "parentId": "primitives",
       "kind": "group",
       "depth": 1,
-      "directFiles": [
-        "packages/ui/src/primitives/lists/list-item.tsx"
-      ],
+      "directFiles": ["packages/ui/src/primitives/lists/list-item.tsx"],
       "children": [],
       "directFileCount": 1,
       "childCount": 0
@@ -519,9 +512,7 @@
       "directFiles": [
         "packages/ui/src/primitives/timelines/timeline-component-05.tsx"
       ],
-      "children": [
-        "primitives/timelines/content"
-      ],
+      "children": ["primitives/timelines/content"],
       "directFileCount": 1,
       "childCount": 1
     },
@@ -652,9 +643,7 @@
       "directFiles": [
         "packages/ui/src/primitives/users/account-settings-01/account-settings-01.tsx"
       ],
-      "children": [
-        "primitives/users/account-settings-01/content"
-      ],
+      "children": ["primitives/users/account-settings-01/content"],
       "directFileCount": 1,
       "childCount": 1
     },
@@ -776,9 +765,7 @@
       "parentId": null,
       "kind": "landing",
       "depth": 0,
-      "directFiles": [
-        "packages/ui/src/primitives/utils.ts"
-      ],
+      "directFiles": ["packages/ui/src/primitives/utils.ts"],
       "children": [
         "primitives/buttons",
         "primitives/charts",
@@ -915,9 +902,7 @@
         "packages/ui/src/components/metrics-layouts/metrics-tasks/workstream-mutate_drawer.tsx",
         "packages/ui/src/components/metrics-layouts/metrics-tasks/workstreams_section.tsx"
       ],
-      "children": [
-        "components/metrics-layouts/metrics-tasks/data"
-      ],
+      "children": ["components/metrics-layouts/metrics-tasks/data"],
       "directFileCount": 23,
       "childCount": 1
     },
@@ -947,10 +932,7 @@
       "kind": "landing",
       "depth": 0,
       "directFiles": [],
-      "children": [
-        "components/metrics-core",
-        "components/metrics-layouts"
-      ],
+      "children": ["components/metrics-core", "components/metrics-layouts"],
       "directFileCount": 0,
       "childCount": 2
     },
@@ -1204,9 +1186,7 @@
       "parentId": null,
       "kind": "landing",
       "depth": 0,
-      "directFiles": [
-        "packages/ui/src/fonts/fonts.css"
-      ],
+      "directFiles": ["packages/ui/src/fonts/fonts.css"],
       "children": [
         "fonts/barlow",
         "fonts/fira-code",
@@ -2591,9 +2571,7 @@
         "packages/ui/src/icons/RebelIconsSvg/ZoomIn.svg",
         "packages/ui/src/icons/RebelIconsSvg/ZoomOut.svg"
       ],
-      "children": [
-        "icons/RebelIconsSvg/DirectionalSvg"
-      ],
+      "children": ["icons/RebelIconsSvg/DirectionalSvg"],
       "directFileCount": 257,
       "childCount": 1
     },
@@ -5798,11 +5776,7 @@
         "packages/ui/src/lib/transpile.ts",
         "packages/ui/src/lib/utils.ts"
       ],
-      "children": [
-        "lib/bigquery",
-        "lib/lookups",
-        "lib/mapping-tables"
-      ],
+      "children": ["lib/bigquery", "lib/lookups", "lib/mapping-tables"],
       "directFileCount": 35,
       "childCount": 3
     }

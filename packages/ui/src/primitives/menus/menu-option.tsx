@@ -1,9 +1,4 @@
-import {
-  Menu,
-  MenuCheckboxItem,
-  MenuPopup,
-  MenuTrigger,
-} from "./menu";
+import { Menu, MenuCheckboxItem, MenuPopup, MenuTrigger } from "./menu";
 
 export default function Particle() {
   return (

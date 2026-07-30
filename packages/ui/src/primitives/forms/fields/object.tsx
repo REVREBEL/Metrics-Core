@@ -1,20 +1,26 @@
 "use client";
 
+import { DEFAULT_ZOD_HANDLERS, INPUT_COMPONENTS } from "@forms/config";
+import { FormField } from "@forms/form";
+import {
+  beautifyObjectName,
+  getBaseSchema,
+  getBaseType,
+  sortFieldsByOrder,
+  zodToHtmlInputProps,
+} from "@forms/helpers";
+import type { Dependency, FieldConfig, FieldConfigItem } from "@forms/types";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger
+  AccordionTrigger,
 } from "@ui-core/accordion";
-import { FormField } from "@forms/form";
+import type * as React from "react";
 import { type useForm, useFormContext } from "react-hook-form";
-import * as React from "react";
 import * as z from "zod";
-import { beautifyObjectName, getBaseSchema, getBaseType, sortFieldsByOrder, zodToHtmlInputProps } from "@forms/helpers"
-import { FieldConfig, FieldConfigItem, Dependency } from "@forms/types"
-import { DEFAULT_ZOD_HANDLERS, INPUT_COMPONENTS } from "@forms/config";
-import AutoFormArray from "./array";
 import resolveDependencies from "../dependencies";
+import AutoFormArray from "./array";
 
 function DefaultParent({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
@@ -166,7 +172,8 @@ export default function AutoFormObject<
               isRequired = arrayFieldConfig.inputProps.required;
             }
             const CustomComponent = arrayFieldConfig.fieldType;
-            const ParentElement = arrayFieldConfig.renderParent ?? DefaultParent;
+            const ParentElement =
+              arrayFieldConfig.renderParent ?? DefaultParent;
             return (
               <FormField
                 control={form.control as any}
@@ -214,12 +221,13 @@ export default function AutoFormObject<
 
         const fieldConfigItem: FieldConfigItem = fieldConfig?.[name] ?? {};
         const zodInputProps = zodToHtmlInputProps(item);
-        
+
         // Determine required status:
         // 1. If dependency sets required, use that
         // 2. If fieldConfig explicitly sets required (true/false), use that
         // 3. Otherwise, use zodInputProps.required
-        let isRequired = isRequiredByDependency || zodInputProps.required || false;
+        let isRequired =
+          isRequiredByDependency || zodInputProps.required || false;
         if (fieldConfigItem.inputProps?.required !== undefined) {
           isRequired = fieldConfigItem.inputProps.required;
         }

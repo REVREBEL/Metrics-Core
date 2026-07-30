@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-
 import { IconCheck, IconCopy } from "@tabler/icons-react";
+import { useState } from "react";
 import { escapeHtml } from "@/lib/utils";
 
 type CopyCodeProps = {

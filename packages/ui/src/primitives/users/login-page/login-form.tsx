@@ -1,66 +1,75 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-
-import { IconEyeFilled, IconLockFilled } from "@tabler/icons-react"
-
-import { Button } from '@buttons/button'
-import { Checkbox } from '@ui-core/checkbox'
-import { Input } from '@forms/fields/input'
-import { Label } from '@ui-core/label'
+import { Button } from "@buttons/button";
+import { Input } from "@forms/fields/input";
+import { IconEyeFilled, IconLockFilled } from "@tabler/icons-react";
+import { Checkbox } from "@ui-core/checkbox";
+import { Label } from "@ui-core/label";
+import { useState } from "react";
 
 const LoginForm = () => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
   return (
-    <form className='space-y-4' onSubmit={e => e.preventDefault()}>
+    <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
       {/* Email */}
-      <div className='space-y-1'>
-        <Label htmlFor='userEmail' className='leading-5'>
+      <div className="space-y-1">
+        <Label htmlFor="userEmail" className="leading-5">
           Email address*
         </Label>
-        <Input type='email' id='userEmail' placeholder='Enter your email address' />
+        <Input
+          type="email"
+          id="userEmail"
+          placeholder="Enter your email address"
+        />
       </div>
 
       {/* Password */}
-      <div className='w-full space-y-1'>
-        <Label htmlFor='password' className='leading-5'>
+      <div className="w-full space-y-1">
+        <Label htmlFor="password" className="leading-5">
           Password*
         </Label>
-        <div className='relative'>
-          <Input id='password' type={isVisible ? 'text' : 'password'} placeholder='••••••••••••••••' className='pr-9' />
+        <div className="relative">
+          <Input
+            id="password"
+            type={isVisible ? "text" : "password"}
+            placeholder="••••••••••••••••"
+            className="pr-9"
+          />
           <Button
-            variant='ghost'
-            size='icon'
-            onClick={() => setIsVisible(prevState => !prevState)}
-            className='text-muted-foreground focus-visible:ring-ring/50 absolute inset-y-0 right-0 rounded-l-none hover:bg-transparent'
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsVisible((prevState) => !prevState)}
+            className="text-muted-foreground focus-visible:ring-ring/50 absolute inset-y-0 right-0 rounded-l-none hover:bg-transparent"
           >
-            {isVisible ? < IconLockFilled /> : < IconEyeFilled />}
-            <span className='sr-only'>{isVisible ? 'Hide password' : 'Show password'}</span>
+            {isVisible ? <IconLockFilled /> : <IconEyeFilled />}
+            <span className="sr-only">
+              {isVisible ? "Hide password" : "Show password"}
+            </span>
           </Button>
         </div>
       </div>
 
       {/* Remember Me and Forgot Password */}
-      <div className='flex items-center justify-between gap-y-2'>
-        <div className='flex items-center gap-3'>
-          <Checkbox id='rememberMe' className='size-6' />
-          <Label htmlFor='rememberMe' className='text-muted-foreground'>
-            {' '}
+      <div className="flex items-center justify-between gap-y-2">
+        <div className="flex items-center gap-3">
+          <Checkbox id="rememberMe" className="size-6" />
+          <Label htmlFor="rememberMe" className="text-muted-foreground">
+            {" "}
             Remember Me
           </Label>
         </div>
 
-        <a href='#' className='hover:underline'>
+        <a href="#" className="hover:underline">
           Forgot Password?
         </a>
       </div>
 
-      <Button className='w-full' type='submit'>
+      <Button className="w-full" type="submit">
         Sign in to Shadcn Studio
       </Button>
     </form>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

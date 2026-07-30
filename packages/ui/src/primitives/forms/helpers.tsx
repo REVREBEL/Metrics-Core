@@ -1,17 +1,17 @@
-import React from "react";
+import type React from "react";
 import type { DefaultValues } from "react-hook-form";
 import { z } from "zod";
 import type { AutoFormInputComponentProps, FieldConfig } from "./types";
 
 export const BUILTIN_FIELD_TYPES = [
-	"checkbox",
-	"date",
-	"select",
-	"radio",
-	"switch",
-	"textarea",
-	"number",
-	"fallback",
+  "checkbox",
+  "date",
+  "select",
+  "radio",
+  "switch",
+  "textarea",
+  "number",
+  "fallback",
 ] as const;
 
 /**
@@ -47,7 +47,7 @@ export function beautifyObjectName(string: string) {
  * This will unpack optionals, defaults, nullables, pipes, etc.
  */
 export function getBaseSchema<ChildType extends z.ZodType = z.ZodType>(
-  schema: ChildType
+  schema: ChildType,
 ): ChildType | null {
   if (!schema) return null;
 
@@ -75,7 +75,7 @@ export function getBaseSchema<ChildType extends z.ZodType = z.ZodType>(
 /**
  * Get the type name of the lowest level Zod type.
  * This will unpack optionals, defaults, etc.
- * 
+ *
  * Returns Zod v4 style type names (e.g., "enum", "boolean", "object")
  */
 export function getBaseType(schema: z.ZodType): string {
@@ -83,7 +83,7 @@ export function getBaseType(schema: z.ZodType): string {
   if (!baseSchema) return "";
 
   const typeName = getDefTypeName(baseSchema);
-  
+
   // Map to consistent type names (capitalize first letter for component lookup)
   const typeMap: Record<string, string> = {
     object: "ZodObject",
@@ -137,7 +137,7 @@ export function getDefaultValueInZodStack(schema: z.ZodType): any {
  */
 export function getDefaultValues<Schema extends z.ZodObject<any, any>>(
   schema: Schema,
-  fieldConfig?: FieldConfig<z.infer<Schema>>
+  fieldConfig?: FieldConfig<z.infer<Schema>>,
 ) {
   if (!schema) return null;
   const { shape } = schema;
@@ -151,7 +151,7 @@ export function getDefaultValues<Schema extends z.ZodObject<any, any>>(
     if (getBaseType(item) === "ZodObject") {
       const defaultItems = getDefaultValues(
         getBaseSchema(item) as unknown as z.ZodObject<any, any>,
-        fieldConfig?.[key] as FieldConfig<z.infer<Schema>>
+        fieldConfig?.[key] as FieldConfig<z.infer<Schema>>,
       );
 
       if (defaultItems !== null) {
@@ -164,7 +164,9 @@ export function getDefaultValues<Schema extends z.ZodObject<any, any>>(
       let defaultValue = getDefaultValueInZodStack(item);
       // Also check fieldConfig for default values (important for JSON schema derived forms)
       if (
-        (defaultValue === undefined || defaultValue === null || defaultValue === "") &&
+        (defaultValue === undefined ||
+          defaultValue === null ||
+          defaultValue === "") &&
         fieldConfig?.[key]?.inputProps
       ) {
         defaultValue = (fieldConfig?.[key]?.inputProps as unknown as any)
@@ -184,7 +186,7 @@ export function getDefaultValues<Schema extends z.ZodObject<any, any>>(
  * Handles pipes, defaults, optionals, etc.
  */
 export function getObjectFormSchema(
-  schema: ZodObjectOrWrapped
+  schema: ZodObjectOrWrapped,
 ): z.ZodObject<any, any> {
   if (!schema) return schema as z.ZodObject<any, any>;
 
@@ -228,7 +230,7 @@ export function getSchemaDescription(schema: z.ZodType): string | undefined {
  * Once submitted, the schema will be validated completely.
  */
 export function zodToHtmlInputProps(
-  schema: z.ZodType
+  schema: z.ZodType,
 ): React.InputHTMLAttributes<HTMLInputElement> {
   const def = (schema as any)._zod?.def;
   const defType = def?.type || "";
@@ -265,7 +267,7 @@ export function zodToHtmlInputProps(
   for (const check of checks) {
     // In Zod v4, checks have 'kind' property
     const checkKind = check.kind || check.type;
-    
+
     if (checkKind === "min" || checkKind === "min_length") {
       if (type === "ZodString") {
         inputProps.minLength = check.value ?? check.minimum;
@@ -291,7 +293,7 @@ export function zodToHtmlInputProps(
  */
 export function sortFieldsByOrder<SchemaType extends z.ZodObject<any, any>>(
   fieldConfig: FieldConfig<z.infer<SchemaType>> | undefined,
-  keys: string[]
+  keys: string[],
 ) {
   const sortedFields = keys.sort((a, b) => {
     const fieldA: number = (fieldConfig?.[a]?.order as number) ?? 0;
@@ -312,120 +314,132 @@ import type { JSONSchemaPropertyBase } from "./shared-form-types";
 type JsonSchemaProperty = JSONSchemaPropertyBase;
 
 export function buildFieldConfigFromJsonSchema(
-	jsonSchema: Record<string, unknown>,
-	fieldComponents?: Record<
-		string,
-		React.ComponentType<AutoFormInputComponentProps>
-	>,
+  jsonSchema: Record<string, unknown>,
+  fieldComponents?: Record<
+    string,
+    React.ComponentType<AutoFormInputComponentProps>
+  >,
 ): FieldConfig<Record<string, unknown>> {
-	const fieldConfig: FieldConfig<Record<string, unknown>> = {};
-	const properties = jsonSchema.properties as Record<string, JsonSchemaProperty>;
+  const fieldConfig: FieldConfig<Record<string, unknown>> = {};
+  const properties = jsonSchema.properties as Record<
+    string,
+    JsonSchemaProperty
+  >;
 
-	if (!properties) return fieldConfig;
+  if (!properties) return fieldConfig;
 
-	for (const [key, value] of Object.entries(properties)) {
-		const config: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(properties)) {
+    const config: Record<string, unknown> = {};
 
-		// Extract label from meta (support both 'label' and JSON Schema 'title')
-		if (value.label) {
-			config.label = value.label;
-		} else if (value.title) {
-			config.label = value.title;
-		}
+    // Extract label from meta (support both 'label' and JSON Schema 'title')
+    if (value.label) {
+      config.label = value.label;
+    } else if (value.title) {
+      config.label = value.title;
+    }
 
-		// Extract description from meta
-		if (value.description) {
-			config.description = value.description;
-		}
+    // Extract description from meta
+    if (value.description) {
+      config.description = value.description;
+    }
 
-		// Extract inputProps from meta (includes placeholder, type, etc.)
-		// Also merge in default value if present
-		const inputProps: Record<string, unknown> = value.inputProps ? { ...value.inputProps } : {};
-		
-		// Extract placeholder from JSON Schema
-		if (value.placeholder) {
-			inputProps.placeholder = value.placeholder;
-		}
-		
-		// Extract default value from JSON schema and pass it via inputProps
-		// Also mark field as not required if it has a default value
-		if (value.default !== undefined) {
-			inputProps.defaultValue = value.default;
-			inputProps.required = false;
-		}
-		
-		if (Object.keys(inputProps).length > 0) {
-			config.inputProps = inputProps;
-		}
+    // Extract inputProps from meta (includes placeholder, type, etc.)
+    // Also merge in default value if present
+    const inputProps: Record<string, unknown> = value.inputProps
+      ? { ...value.inputProps }
+      : {};
 
-		// Extract order from meta
-		if (value.order !== undefined) {
-			config.order = value.order;
-		}
+    // Extract placeholder from JSON Schema
+    if (value.placeholder) {
+      inputProps.placeholder = value.placeholder;
+    }
 
-		// Extract fieldType from JSON Schema meta
-		// Also detect date-time format from JSON Schema (from z.date() -> toJSONSchema with override)
-		let fieldType = value.fieldType;
-		
-		// Auto-detect date fields from JSON Schema format: "date-time"
-		// This handles the roundtrip: z.date() -> toJSONSchema (with override) -> { type: "string", format: "date-time" }
-		if (!fieldType && value.type === "string" && value.format === "date-time") {
-			fieldType = "date";
-		}
+    // Extract default value from JSON schema and pass it via inputProps
+    // Also mark field as not required if it has a default value
+    if (value.default !== undefined) {
+      inputProps.defaultValue = value.default;
+      inputProps.required = false;
+    }
 
-		if (fieldType) {
-			// 1. Check if there's a custom component in fieldComponents
-			const CustomComponent = fieldComponents?.[fieldType];
-			if (CustomComponent) {
-				config.fieldType = (props: AutoFormInputComponentProps) => (
-					<CustomComponent {...props} />
-				);
-			}
-			// 2. For built-in types, pass through to auto-form
-			else if (
-				BUILTIN_FIELD_TYPES.includes(
-					fieldType as (typeof BUILTIN_FIELD_TYPES)[number],
-				)
-			) {
-				config.fieldType = fieldType;
-			}
-			// 3. Unknown custom type without a component - log warning and skip
-			else {
-				console.warn(
-					`CMS: Unknown fieldType "${fieldType}" for field "${key}". ` +
-						`Provide a component via fieldComponents override or use a built-in type.`,
-				);
-			}
-		}
+    if (Object.keys(inputProps).length > 0) {
+      config.inputProps = inputProps;
+    }
 
-		// Handle nested object properties recursively
-		if (value.properties) {
-			const nestedConfig = buildFieldConfigFromJsonSchema(
-				{ properties: value.properties } as Record<string, unknown>,
-				fieldComponents,
-			);
-			// Reserved FieldConfigItem property names that should not be overwritten by nested field configs.
-			// If a nested field has the same name as a reserved property (e.g., a field named "description"),
-			// we skip it to prevent overwriting the parent's config (like its help text).
-			const reservedProps = new Set(['description', 'label', 'inputProps', 'fieldType', 'renderParent', 'order']);
-			
-			// Merge nested config, but skip keys that match reserved property names
-			for (const [nestedKey, nestedValue] of Object.entries(nestedConfig)) {
-				if (!reservedProps.has(nestedKey)) {
-					config[nestedKey] = nestedValue;
-				} else {
+    // Extract order from meta
+    if (value.order !== undefined) {
+      config.order = value.order;
+    }
+
+    // Extract fieldType from JSON Schema meta
+    // Also detect date-time format from JSON Schema (from z.date() -> toJSONSchema with override)
+    let fieldType = value.fieldType;
+
+    // Auto-detect date fields from JSON Schema format: "date-time"
+    // This handles the roundtrip: z.date() -> toJSONSchema (with override) -> { type: "string", format: "date-time" }
+    if (!fieldType && value.type === "string" && value.format === "date-time") {
+      fieldType = "date";
+    }
+
+    if (fieldType) {
+      // 1. Check if there's a custom component in fieldComponents
+      const CustomComponent = fieldComponents?.[fieldType];
+      if (CustomComponent) {
+        config.fieldType = (props: AutoFormInputComponentProps) => (
+          <CustomComponent {...props} />
+        );
+      }
+      // 2. For built-in types, pass through to auto-form
+      else if (
+        BUILTIN_FIELD_TYPES.includes(
+          fieldType as (typeof BUILTIN_FIELD_TYPES)[number],
+        )
+      ) {
+        config.fieldType = fieldType;
+      }
+      // 3. Unknown custom type without a component - log warning and skip
+      else {
+        console.warn(
+          `CMS: Unknown fieldType "${fieldType}" for field "${key}". ` +
+            `Provide a component via fieldComponents override or use a built-in type.`,
+        );
+      }
+    }
+
+    // Handle nested object properties recursively
+    if (value.properties) {
+      const nestedConfig = buildFieldConfigFromJsonSchema(
+        { properties: value.properties } as Record<string, unknown>,
+        fieldComponents,
+      );
+      // Reserved FieldConfigItem property names that should not be overwritten by nested field configs.
+      // If a nested field has the same name as a reserved property (e.g., a field named "description"),
+      // we skip it to prevent overwriting the parent's config (like its help text).
+      const reservedProps = new Set([
+        "description",
+        "label",
+        "inputProps",
+        "fieldType",
+        "renderParent",
+        "order",
+      ]);
+
+      // Merge nested config, but skip keys that match reserved property names
+      for (const [nestedKey, nestedValue] of Object.entries(nestedConfig)) {
+        if (!reservedProps.has(nestedKey)) {
+          config[nestedKey] = nestedValue;
+        } else {
           console.warn(
             `Field "${key}" has a nested field named "${nestedKey}" which conflicts with a reserved FieldConfigItem property. ` +
-            `The nested field's config will not be accessible at the parent level.`
+              `The nested field's config will not be accessible at the parent level.`,
           );
         }
-			}
-		}
+      }
+    }
 
-		if (Object.keys(config).length > 0) {
-			fieldConfig[key] = config;
-		}
-	}
+    if (Object.keys(config).length > 0) {
+      fieldConfig[key] = config;
+    }
+  }
 
-	return fieldConfig;
+  return fieldConfig;
 }

@@ -196,8 +196,4 @@ function MetricsButton({
   );
 }
 
-export {
-  MetricsButton,
-  metricsButtonVariants,
-  type MetricsButtonProps,
-};
+export { MetricsButton, type MetricsButtonProps, metricsButtonVariants };

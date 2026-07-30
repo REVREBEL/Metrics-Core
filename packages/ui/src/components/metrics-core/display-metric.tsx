@@ -1,14 +1,11 @@
-import * as React from "react";
+import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
 export type DisplayMetricFormat = "number" | "currency";
 
 export interface DisplayMetricProps
-  extends Omit<
-    React.ComponentProps<"span">,
-    "children" | "color" | "content"
-  > {
+  extends Omit<React.ComponentProps<"span">, "children" | "color" | "content"> {
   /**
    * Numeric value to display.
    * Null, undefined, NaN, and Infinity render `emptyValue`.
@@ -101,15 +98,13 @@ export function DisplayMetric({
   "aria-label": ariaLabel,
   ...props
 }: DisplayMetricProps) {
-  const isValidValue =
-    typeof value === "number" && Number.isFinite(value);
+  const isValidValue = typeof value === "number" && Number.isFinite(value);
 
   const numericValue = isValidValue ? value : null;
   const isNegative = numericValue !== null && numericValue < 0;
   const isPositive = numericValue !== null && numericValue > 0;
 
-  const fractionDigits =
-    decimals ?? (format === "currency" ? 2 : 0);
+  const fractionDigits = decimals ?? (format === "currency" ? 2 : 0);
 
   const formattedValue =
     numericValue === null
@@ -131,11 +126,7 @@ export function DisplayMetric({
   const rightGlyph = isNegative ? ")" : "";
 
   const resolvedColor =
-    isNegative && redIfNegative
-      ? varianceColor
-      : inherit
-        ? "inherit"
-        : color;
+    isNegative && redIfNegative ? varianceColor : inherit ? "inherit" : color;
 
   const resolvedAriaLabel =
     ariaLabel ??
@@ -189,10 +180,7 @@ export function DisplayMetric({
 
       <span
         aria-hidden="true"
-        className={cn(
-          "justify-self-center text-center",
-          valueClassName,
-        )}
+        className={cn("justify-self-center text-center", valueClassName)}
       >
         {formattedValue}
       </span>

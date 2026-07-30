@@ -9,7 +9,7 @@ import {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
-} from "./menubar"
+} from "./menubar";
 
 export function MenubarSubmenu() {
   return (
@@ -56,5 +56,5 @@ export function MenubarSubmenu() {
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
-  )
+  );
 }

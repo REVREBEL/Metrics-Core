@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
+import { Button } from "../buttons/button";
 import {
   Dialog,
   DialogContent,
@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./dialog";
-import { Button } from "../buttons/button";
 
 const meta: Meta<typeof Dialog> = {
   title: "Primitives/UI Core/Dialog",

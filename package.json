@@ -16,12 +16,15 @@
     "generate-registry": "--filter=@apps/registry/scripts/generate-registry.mjs",
     "storybook:stories:generate": "node apps/storybook/scripts/generate-stories.mjs",
     "storybook:stories:check": "node apps/storybook/scripts/generate-stories.mjs --check",
-    "storybook:stories:repair": "node apps/storybook/scripts/repair-generated-stories.mjs",   
+    "storybook:stories:repair": "node apps/storybook/scripts/repair-generated-stories.mjs",
     "dev:db": "turbo run dev --filer=@repo/db",
     "dev:ui": "turbo run dev --filer=@repo/ui",
     "clean": "rm -rf .turbo && pnpm -r exec sh -c 'rm -rf dist .next .turbo *.tsbuildinfo'",
     "clean:node_modules": "rm -rf node_modules apps/*/node_modules packages/*/node_modules",
     "lint": "turbo run lint",
+    "lint:fix:docs": "pnpm --filter '@apps/docs' exec biome check --write",
+    "lint:fix:ui": "pnpm --filter '@repo/ui' lint:fix",
+    "lint:show:issues":"pnpm --filter '@repo/ui' exec biome check src package.json --max-diagnostics=1000",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:generate": "turbo run db:generate",
@@ -32,9 +35,11 @@
     "@tailwindcss/postcss": "^4.3.0",
     "tailwindcss": "^4.3.0",
     "turbo": "^2.0.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "ultracite": "^7.9.4"
   },
   "dependencies": {
     "next": "^16.2.7"
   }
 }
+

@@ -7,7 +7,7 @@ import {
   MenubarSeparator,
   MenubarShortcut,
   MenubarTrigger,
-} from "./menubar"
+} from "./menubar";
 
 export function MenubarCheckbox() {
   return (
@@ -37,5 +37,5 @@ export function MenubarCheckbox() {
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
-  )
+  );
 }

@@ -1,5 +1,12 @@
-import { Checkbox } from "@ui-core/checkbox"
-import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet, FieldSeparator } from "@forms/fields/field"
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldSeparator,
+  FieldSet,
+} from "@forms/fields/field";
+import { Checkbox } from "@ui-core/checkbox";
 
 export default function FieldGroupExample() {
   return (
@@ -42,5 +49,5 @@ export default function FieldGroupExample() {
         </FieldGroup>
       </FieldSet>
     </FieldGroup>
-  )
+  );
 }

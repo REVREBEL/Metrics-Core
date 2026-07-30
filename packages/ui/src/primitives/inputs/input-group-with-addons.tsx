@@ -1,6 +1,11 @@
 "use client";
 
-import { Field, FieldDescription, FieldGroup, FieldLabel } from "@forms/fields/field";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from "@forms/fields/field";
 import {
   IconCopy,
   IconEyeOff,

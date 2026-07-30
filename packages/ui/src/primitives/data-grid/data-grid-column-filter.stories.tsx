@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { DataGridColumnFilter } from "./data-grid-column-filter";
 import { DataGridProvider } from "./data-grid";
-import React from "react";
+import { DataGridColumnFilter } from "./data-grid-column-filter";
 
 const meta = {
   title: "Primitives/Data Grid/Data Grid Column Filter",
@@ -35,7 +34,12 @@ export const Default: Story = {
       id: "status",
       getFilterValue: () => ["active"],
       setFilterValue: () => {},
-      getFacetedUniqueValues: () => new Map([["active", 12], ["inactive", 4], ["pending", 3]]),
+      getFacetedUniqueValues: () =>
+        new Map([
+          ["active", 12],
+          ["inactive", 4],
+          ["pending", 3],
+        ]),
     } as any,
     options: [
       { label: "Active", value: "active" },
@@ -44,4 +48,3 @@ export const Default: Story = {
     ],
   },
 };
-

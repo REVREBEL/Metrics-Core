@@ -2,8 +2,6 @@
 
 import { Check, ClipboardIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-
-import { AddToCursor } from "./add-to-cursor";
 import { Button } from "@/primitives/buttons/button";
 import {
   Tabs,
@@ -11,6 +9,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/primitives/tabs/tabs";
+import { AddToCursor } from "./add-to-cursor";
 
 export async function copyToClipboard(value: string) {
   await navigator.clipboard.writeText(value);

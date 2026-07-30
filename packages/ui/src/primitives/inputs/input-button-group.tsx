@@ -1,6 +1,6 @@
-import { Field, FieldLabel } from "@forms/fields/field";
 import { Button } from "@buttons/button";
 import { ButtonGroup } from "@buttons/button-group";
+import { Field, FieldLabel } from "@forms/fields/field";
 import { Input } from "./input";
 
 export function InputButtonGroup() {

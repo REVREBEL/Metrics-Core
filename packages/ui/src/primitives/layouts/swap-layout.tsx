@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, type ReactNode, useState, useRef } from "react";
-import { createSwapy } from "swapy";
 import { EditSwitch } from "@ui-core/edit-switch";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { createSwapy } from "swapy";
 
 // this is the initial order of the layout of the swap layout.
 const DEFAULT = {
@@ -33,7 +33,7 @@ export default function SwapLayout({
 }: SwapLayoutProps & React.HTMLProps<HTMLDivElement>) {
   // load the layout from local storage if it exists, otherwise use the default layout.
   const slotItems: Record<string, SectionKey> = JSON.parse(
-    localStorage.getItem("dashSlotItems") || JSON.stringify(DEFAULT)
+    localStorage.getItem("dashSlotItems") || JSON.stringify(DEFAULT),
   );
 
   // this is the function that is called when the layout items are swapped.
@@ -114,7 +114,7 @@ export const Container = ({
       onSwap(event.data.object);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [onSwap, id, enable, config]);
 
   useEffect(() => {
     swapy.current?.enable(enable);

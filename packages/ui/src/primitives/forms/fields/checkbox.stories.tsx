@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import AutoFormCheckbox from "./checkbox";
-import { Form } from "../form";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Form } from "../form";
+import AutoFormCheckbox from "./checkbox";
 
 const meta = {
   title: "Primitives/Forms/Fields/Auto Form Checkbox",

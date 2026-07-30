@@ -1,6 +1,5 @@
-import { ContentSection } from "@sections/content-section";
 import { ProfileForm } from "@metrics-layouts/metrics-settings/profile-form";
-
+import { ContentSection } from "@sections/content-section";
 
 export default function SettingsProfilePage() {
   return (
