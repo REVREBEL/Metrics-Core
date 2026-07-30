@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
+import { Card, CardContent } from "./card";
 import {
   Carousel,
   CarouselContent,
@@ -7,7 +7,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./carousel";
-import { Card, CardContent } from "./card";
 
 const meta: Meta<typeof Carousel> = {
   title: "Primitives/UI Core/Carousel",

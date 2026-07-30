@@ -1,5 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { AreaChartDemo, BarChartDemo, LineChartDemo, PieChartDemo } from "./chart-demos";
+import {
+  AreaChartDemo,
+  BarChartDemo,
+  LineChartDemo,
+  PieChartDemo,
+} from "./chart-demos";
 
 const meta = {
   title: "Primitives/Charts/Chart Demos",

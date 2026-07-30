@@ -1,20 +1,8 @@
 "use client";
 
-import { IconLayoutSidebarLeftExpandFilled } from "@tabler/icons-react";
-import { useState } from "react";
-import { Header } from "@/components/layout/header";
-import { Main } from "@/components/layout/main";
-import { ThemeSwitch } from "@/components/theme-switch";
 import { Button } from "@buttons/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Input } from "@forms/fields/input";
+import { IconLayoutSidebarLeftExpandFilled } from "@tabler/icons-react";
 import { Label } from "@ui-core/label";
 import {
   Select,
@@ -23,6 +11,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@ui-core/select";
+import { useState } from "react";
+import { Header } from "@/components/layout/header";
+import { Main } from "@/components/layout/main";
+import { ThemeSwitch } from "@/components/theme-switch";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { CalendarView } from "./components/calendar-view";
 import { ByDepartmentView, ByPersonView } from "./components/group-views";

@@ -1,2 +1,2 @@
-export * from "./content"
-export * from "./timeline-component-05"
+export * from "./content";
+export * from "./timeline-component-05";

@@ -1,4 +1,4 @@
-import Register from "@users/register-01/register-01";
+import Register from "@users/register/register";
 
 const RegisterPage = () => {
   return <Register />;

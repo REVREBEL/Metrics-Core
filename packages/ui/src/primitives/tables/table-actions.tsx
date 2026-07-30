@@ -1,7 +1,12 @@
-import { IconDots } from "@tabler/icons-react"
-
-import { Button } from "@buttons/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@dropdowns/dropdown-menu"
+import { Button } from "@buttons/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@dropdowns/dropdown-menu";
+import { IconDots } from "@tabler/icons-react";
 import {
   Table,
   TableBody,
@@ -9,7 +14,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./table"
+} from "./table";
 
 function ActionsMenu() {
   return (
@@ -27,7 +32,7 @@ function ActionsMenu() {
         <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
 
 export function TableActions() {
@@ -64,5 +69,5 @@ export function TableActions() {
         </TableRow>
       </TableBody>
     </Table>
-  )
+  );
 }

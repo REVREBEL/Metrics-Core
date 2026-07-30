@@ -5,6 +5,7 @@ import {
   IconSquareRoundedCheckFilled,
 } from "@tabler/icons-react";
 import { useState } from "react";
+import { getVisualPreview } from "@/lib/registry.visual-previews";
 import { Button } from "@/primitives/buttons/button";
 import {
   Card,
@@ -19,7 +20,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/primitives/ui-core/tooltip";
-import { getVisualPreview } from "@/lib/registry.visual-previews";
 import { OpenInV0Button } from "./open-in-v0";
 
 type Component = {

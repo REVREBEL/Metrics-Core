@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import ToolbarButton from "./toolbar-button";
 import { IconBold } from "@tabler/icons-react";
-import React from "react";
+import ToolbarButton from "./toolbar-button";
 
 const meta = {
   title: "Primitives/Buttons/Toolbar Button",

@@ -20,7 +20,9 @@
       "@/registry": ["./registry.json"],
 
       // NEW COMPONENT INSTALLS ONLY
-      "@staging_new-files/*": ["./packages/ui/src/primitives/staging_new-files/*"],
+      "@staging_new-files/*": [
+        "./packages/ui/src/primitives/staging_new-files/*"
+      ],
 
       // PRIMITIVES
       "@forms/*": ["./packages/ui/src/primitives/forms/*"],
@@ -36,7 +38,7 @@
       "@layouts/*": ["./packages/ui/src/primitives/layouts/*"],
       "@menus/*": ["./packages/ui/src/primitives/menus/*"],
       "@popovers/*": ["./packages/ui/src/primitives/popovers/*"],
-      "@registry/*": ["./packages/ui/src/primitives/registry/*"],      
+      "@registry/*": ["./packages/ui/src/primitives/registry/*"],
       "@skeleton/*": ["./packages/ui/src/primitives/skeleton/*"],
       "@sections/*": ["./packages/ui/src/primitives/sections/*"],
       "@tabs/*": ["./packages/ui/src/primitives/tabs/*"],
@@ -62,12 +64,20 @@
       "@metrics-charts/*": ["./packages/ui/src/components/metrics-charts/*"],
       "@metrics-core/*": ["./packages/ui/src/components/metrics-core/*"],
       "@metrics-errors/*": ["./packages/ui/src/components/metrics-errors/*"],
-      "@metrics-feedback/*": ["./packages/ui/src/components/metrics-feedback/*"],
-      "@metrics-layouts": ["./packages/ui/src/primitives/metrics-layouts/index.ts"],
+      "@metrics-feedback/*": [
+        "./packages/ui/src/components/metrics-feedback/*"
+      ],
+      "@metrics-layouts": [
+        "./packages/ui/src/primitives/metrics-layouts/index.ts"
+      ],
       "@metrics-layouts/*": ["./packages/ui/src/components/metrics-layouts/*"],
-      "@metrics-sections/*": ["./packages/ui/src/components/metrics-sections/*"],
+      "@metrics-sections/*": [
+        "./packages/ui/src/components/metrics-sections/*"
+      ],
       "@metrics-tables/*": ["./packages/ui/src/components/metrics-tables/*"],
-      "@metrics-timeline/*": ["./packages/ui/src/components/metrics-timeline/*"],
+      "@metrics-timeline/*": [
+        "./packages/ui/src/components/metrics-timeline/*"
+      ],
 
       // OTHER
       "@common/*": ["./packages/ui/src/common/*"],

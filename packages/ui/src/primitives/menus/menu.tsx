@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
-import { IconChevronRight, IconCaretRightFilled } from "@tabler/icons-react";
+import { IconCaretRightFilled } from "@tabler/icons-react";
 import type * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -291,37 +291,37 @@ function MenuSubPopup({
 }
 
 export {
-  MenuCreateHandle,
-  MenuCreateHandle as DropdownMenuCreateHandle,
   Menu,
   Menu as DropdownMenu,
-  MenuPortal,
-  MenuPortal as DropdownMenuPortal,
-  MenuTrigger,
-  MenuTrigger as DropdownMenuTrigger,
-  MenuPopup,
-  MenuPopup as DropdownMenuContent,
-  MenuGroup,
-  MenuGroup as DropdownMenuGroup,
-  MenuItem,
-  MenuItem as DropdownMenuItem,
   MenuCheckboxItem,
   MenuCheckboxItem as DropdownMenuCheckboxItem,
+  MenuCreateHandle,
+  MenuCreateHandle as DropdownMenuCreateHandle,
+  MenuGroup,
+  MenuGroup as DropdownMenuGroup,
+  MenuGroupLabel,
+  MenuGroupLabel as DropdownMenuLabel,
+  MenuItem,
+  MenuItem as DropdownMenuItem,
+  MenuPopup,
+  MenuPopup as DropdownMenuContent,
+  MenuPortal,
+  MenuPortal as DropdownMenuPortal,
+  MenuPrimitive,
   MenuRadioGroup,
   MenuRadioGroup as DropdownMenuRadioGroup,
   MenuRadioItem,
   MenuRadioItem as DropdownMenuRadioItem,
-  MenuGroupLabel,
-  MenuGroupLabel as DropdownMenuLabel,
   MenuSeparator,
   MenuSeparator as DropdownMenuSeparator,
   MenuShortcut,
   MenuShortcut as DropdownMenuShortcut,
   MenuSub,
   MenuSub as DropdownMenuSub,
-  MenuSubTrigger,
-  MenuSubTrigger as DropdownMenuSubTrigger,
   MenuSubPopup,
   MenuSubPopup as DropdownMenuSubContent,
-  MenuPrimitive,
+  MenuSubTrigger,
+  MenuSubTrigger as DropdownMenuSubTrigger,
+  MenuTrigger,
+  MenuTrigger as DropdownMenuTrigger,
 };

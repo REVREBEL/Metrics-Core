@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Button } from "@buttons/button"
+import { Button } from "@buttons/button";
+import * as React from "react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -9,12 +9,12 @@ import {
   DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "./dropdown-menu"
+} from "./dropdown-menu";
 
 export function DropdownMenuCheckboxes() {
-  const [showStatusBar, setShowStatusBar] = React.useState(true)
-  const [showActivityBar, setShowActivityBar] = React.useState(false)
-  const [showPanel, setShowPanel] = React.useState(false)
+  const [showStatusBar, setShowStatusBar] = React.useState(true);
+  const [showActivityBar, setShowActivityBar] = React.useState(false);
+  const [showPanel, setShowPanel] = React.useState(false);
 
   return (
     <DropdownMenu>
@@ -46,5 +46,5 @@ export function DropdownMenuCheckboxes() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

@@ -56,10 +56,7 @@ export const LinkPopoverBlock: React.FC<LinkPopoverBlockProps> = ({
           <LinkBreak2Icon />
         </ToolbarButton>
         <Separator orientation="vertical" />
-        <ToolbarButton
-          tooltip={copyTitle}
-          onClick={handleCopy}
-        >
+        <ToolbarButton tooltip={copyTitle} onClick={handleCopy}>
           <CopyIcon />
         </ToolbarButton>
       </div>

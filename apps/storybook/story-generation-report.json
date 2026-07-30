@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-06-29T15:44:29.465Z",
+  "generatedAt": "2026-07-30T12:13:16.442Z",
   "mode": "check",
   "totals": {
-    "components": 603,
+    "components": 608,
     "created": 0,
-    "skipped": 603,
-    "missing": 0
+    "skipped": 601,
+    "missing": 7
   },
   "items": [
     {
@@ -176,22 +176,22 @@
     {
       "component": "ChartContainer",
       "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "ChartTooltipContent",
-      "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
-      "status": "skipped-existing"
+      "status": "missing"
     },
     {
       "component": "ChartLegendContent",
       "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
-      "status": "skipped-existing"
+      "status": "missing"
     },
     {
       "component": "ChartStyle",
       "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
-      "status": "skipped-existing"
+      "status": "missing"
+    },
+    {
+      "component": "ChartTooltipContent",
+      "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
+      "status": "missing"
     },
     {
       "component": "LineChart",
@@ -314,17 +314,17 @@
       "status": "skipped-existing"
     },
     {
-      "component": "DataGridProvider",
-      "story": "packages/ui/src/primitives/data-grid/data-grid.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "DataGrid",
       "story": "packages/ui/src/primitives/data-grid/data-grid.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "DataGridContainer",
+      "story": "packages/ui/src/primitives/data-grid/data-grid.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DataGridProvider",
       "story": "packages/ui/src/primitives/data-grid/data-grid.stories.tsx",
       "status": "skipped-existing"
     },
@@ -384,12 +384,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "DropdownMenuPortal",
-      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "DropdownMenuTrigger",
+      "component": "DropdownMenuCheckboxItem",
       "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -404,17 +399,17 @@
       "status": "skipped-existing"
     },
     {
-      "component": "DropdownMenuLabel",
-      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "DropdownMenuItem",
       "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "DropdownMenuCheckboxItem",
+      "component": "DropdownMenuLabel",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DropdownMenuPortal",
       "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -444,12 +439,17 @@
       "status": "skipped-existing"
     },
     {
+      "component": "DropdownMenuSubContent",
+      "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "DropdownMenuSubTrigger",
       "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "DropdownMenuSubContent",
+      "component": "DropdownMenuTrigger",
       "story": "packages/ui/src/primitives/dropdowns/dropdown-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -494,7 +494,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "FieldLabel",
+      "component": "FieldContent",
       "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
       "status": "skipped-existing"
     },
@@ -514,6 +514,11 @@
       "status": "skipped-existing"
     },
     {
+      "component": "FieldLabel",
+      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "FieldLegend",
       "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
       "status": "skipped-existing"
@@ -529,23 +534,8 @@
       "status": "skipped-existing"
     },
     {
-      "component": "FieldContent",
-      "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "FieldTitle",
       "story": "packages/ui/src/primitives/forms/fields/field.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "FormItem",
-      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "FormLabel",
-      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
       "status": "skipped-existing"
     },
     {
@@ -559,18 +549,33 @@
       "status": "skipped-existing"
     },
     {
-      "component": "FormMessage",
-      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "FormField",
       "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
       "status": "skipped-existing"
     },
     {
+      "component": "FormItem",
+      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormLabel",
+      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormMessage",
+      "story": "packages/ui/src/primitives/forms/fields/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "AutoFormInput",
-      "story": "packages/ui/src/primitivesforms/fields/input.stories.tsx",
+      "story": "packages/ui/src/primitives/forms/fields/input.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "Input",
+      "story": "packages/ui/src/primitives/forms/fields/input.stories.tsx",
       "status": "skipped-existing"
     },
     {
@@ -599,16 +604,6 @@
       "status": "skipped-existing"
     },
     {
-      "component": "FormItem",
-      "story": "packages/ui/src/primitives/forms/form.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "FormLabel",
-      "story": "packages/ui/src/primitives/forms/form.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "FormControl",
       "story": "packages/ui/src/primitives/forms/form.stories.tsx",
       "status": "skipped-existing"
@@ -619,12 +614,22 @@
       "status": "skipped-existing"
     },
     {
-      "component": "FormMessage",
+      "component": "FormField",
       "story": "packages/ui/src/primitives/forms/form.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "FormField",
+      "component": "FormItem",
+      "story": "packages/ui/src/primitives/forms/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormLabel",
+      "story": "packages/ui/src/primitives/forms/form.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "FormMessage",
       "story": "packages/ui/src/primitives/forms/form.stories.tsx",
       "status": "skipped-existing"
     },
@@ -944,7 +949,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "NavigationMenuList",
+      "component": "NavigationMenuContent",
+      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuIndicator",
       "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -954,22 +964,17 @@
       "status": "skipped-existing"
     },
     {
-      "component": "NavigationMenuContent",
-      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "NavigationMenuTrigger",
-      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "NavigationMenuLink",
       "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "NavigationMenuIndicator",
+      "component": "NavigationMenuList",
+      "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuTrigger",
       "story": "packages/ui/src/primitives/layouts/navigation-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1174,12 +1179,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "MenuTrigger",
-      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "MenuPopup",
+      "component": "MenuCheckboxItem",
       "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1189,12 +1189,17 @@
       "status": "skipped-existing"
     },
     {
+      "component": "MenuGroupLabel",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "MenuItem",
       "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "MenuCheckboxItem",
+      "component": "MenuPopup",
       "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1205,11 +1210,6 @@
     },
     {
       "component": "MenuRadioItem",
-      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "MenuGroupLabel",
       "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1229,12 +1229,17 @@
       "status": "skipped-existing"
     },
     {
+      "component": "MenuSubPopup",
+      "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "MenuSubTrigger",
       "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "MenuSubPopup",
+      "component": "MenuTrigger",
       "story": "packages/ui/src/primitives/menus/menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1264,17 +1269,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "MenubarPortal",
-      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "MenubarMenu",
-      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "MenubarTrigger",
+      "component": "MenubarCheckboxItem",
       "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1289,7 +1284,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "MenubarSeparator",
+      "component": "MenubarItem",
       "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1299,17 +1294,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "MenubarItem",
+      "component": "MenubarMenu",
       "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "MenubarShortcut",
-      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "MenubarCheckboxItem",
+      "component": "MenubarPortal",
       "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1324,12 +1314,17 @@
       "status": "skipped-existing"
     },
     {
-      "component": "MenubarSub",
+      "component": "MenubarSeparator",
       "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "MenubarSubTrigger",
+      "component": "MenubarShortcut",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarSub",
       "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1339,17 +1334,17 @@
       "status": "skipped-existing"
     },
     {
+      "component": "MenubarSubTrigger",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "MenubarTrigger",
+      "story": "packages/ui/src/primitives/menus/menubar.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "NavigationMenu",
-      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "NavigationMenuList",
-      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "NavigationMenuItem",
       "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1359,7 +1354,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "NavigationMenuTrigger",
+      "component": "NavigationMenuIndicator",
+      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuItem",
       "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1369,7 +1369,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "NavigationMenuIndicator",
+      "component": "NavigationMenuList",
+      "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuTrigger",
       "story": "packages/ui/src/primitives/menus/navigation-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1394,22 +1399,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "PopoverTrigger",
-      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "PopoverPopup",
-      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "PopoverHeader",
-      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "PopoverTitle",
+      "component": "PopoverClose",
       "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1419,7 +1409,22 @@
       "status": "skipped-existing"
     },
     {
-      "component": "PopoverClose",
+      "component": "PopoverHeader",
+      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverPopup",
+      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverTitle",
+      "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "PopoverTrigger",
       "story": "packages/ui/src/primitives/popovers/popover.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1457,6 +1462,11 @@
       "component": "ModeToggle",
       "story": "packages/ui/src/primitives/registry/theme-toggle.stories.tsx",
       "status": "skipped-existing"
+    },
+    {
+      "component": "ContentSection",
+      "story": "packages/ui/src/primitives/sections/content-section.stories.tsx",
+      "status": "missing"
     },
     {
       "component": "SectionFive",
@@ -1544,12 +1554,17 @@
       "status": "skipped-existing"
     },
     {
-      "component": "TableHeader",
+      "component": "TableBody",
       "story": "packages/ui/src/primitives/tables/table.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "TableBody",
+      "component": "TableCaption",
+      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "TableCell",
       "story": "packages/ui/src/primitives/tables/table.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1564,17 +1579,12 @@
       "status": "skipped-existing"
     },
     {
+      "component": "TableHeader",
+      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "TableRow",
-      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "TableCell",
-      "story": "packages/ui/src/primitives/tables/table.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "TableCaption",
       "story": "packages/ui/src/primitives/tables/table.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1609,17 +1619,17 @@
       "status": "skipped-existing"
     },
     {
+      "component": "TabsContent",
+      "story": "packages/ui/src/primitives/tabs/tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "TabsList",
       "story": "packages/ui/src/primitives/tabs/tabs.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "TabsTrigger",
-      "story": "packages/ui/src/primitives/tabs/tabs.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "TabsContent",
       "story": "packages/ui/src/primitives/tabs/tabs.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1729,6 +1739,11 @@
       "status": "skipped-existing"
     },
     {
+      "component": "AccordionContent",
+      "story": "packages/ui/src/primitives/ui-core/accordion.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "AccordionItem",
       "story": "packages/ui/src/primitives/ui-core/accordion.stories.tsx",
       "status": "skipped-existing"
@@ -1739,52 +1754,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "AccordionContent",
-      "story": "packages/ui/src/primitives/ui-core/accordion.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "AlertDialog",
-      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "AlertDialogPortal",
-      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "AlertDialogOverlay",
-      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "AlertDialogTrigger",
-      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "AlertDialogContent",
-      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "AlertDialogHeader",
-      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "AlertDialogFooter",
-      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "AlertDialogTitle",
-      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "AlertDialogDescription",
       "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1799,17 +1769,57 @@
       "status": "skipped-existing"
     },
     {
+      "component": "AlertDialogContent",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogDescription",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogFooter",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogHeader",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogOverlay",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogPortal",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogTitle",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "AlertDialogTrigger",
+      "story": "packages/ui/src/primitives/ui-core/alert-dialog.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "Alert",
       "story": "packages/ui/src/primitives/ui-core/alert.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "AlertTitle",
+      "component": "AlertDescription",
       "story": "packages/ui/src/primitives/ui-core/alert.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "AlertDescription",
+      "component": "AlertTitle",
       "story": "packages/ui/src/primitives/ui-core/alert.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1824,12 +1834,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "AvatarImage",
+      "component": "AvatarFallback",
       "story": "packages/ui/src/primitives/ui-core/avatar.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "AvatarFallback",
+      "component": "AvatarImage",
       "story": "packages/ui/src/primitives/ui-core/avatar.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1844,12 +1854,17 @@
       "status": "skipped-existing"
     },
     {
-      "component": "BreadcrumbList",
+      "component": "BreadcrumbEllipsis",
       "story": "packages/ui/src/primitives/ui-core/breadcrumb.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "BreadcrumbItem",
+      "story": "packages/ui/src/primitives/ui-core/breadcrumb.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "BreadcrumbList",
       "story": "packages/ui/src/primitives/ui-core/breadcrumb.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1860,11 +1875,6 @@
     },
     {
       "component": "BreadcrumbSeparator",
-      "story": "packages/ui/src/primitives/ui-core/breadcrumb.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "BreadcrumbEllipsis",
       "story": "packages/ui/src/primitives/ui-core/breadcrumb.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1924,12 +1934,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "CarouselPrevious",
+      "component": "CarouselNext",
       "story": "packages/ui/src/primitives/ui-core/carousel.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "CarouselNext",
+      "component": "CarouselPrevious",
       "story": "packages/ui/src/primitives/ui-core/carousel.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1944,12 +1954,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "CollapsibleTrigger",
+      "component": "CollapsibleContent",
       "story": "packages/ui/src/primitives/ui-core/collapsible.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "CollapsibleContent",
+      "component": "CollapsibleTrigger",
       "story": "packages/ui/src/primitives/ui-core/collapsible.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1959,32 +1969,32 @@
       "status": "skipped-existing"
     },
     {
+      "component": "ComboboxChip",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxChips",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "ComboboxChipsInput",
       "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "ComboboxInput",
+      "component": "ComboboxClear",
       "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "ComboboxTrigger",
+      "component": "ComboboxCollection",
       "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "ComboboxPopup",
-      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "ComboboxItem",
-      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "ComboboxSeparator",
+      "component": "ComboboxEmpty",
       "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
       "status": "skipped-existing"
     },
@@ -1999,12 +2009,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "ComboboxEmpty",
+      "component": "ComboboxInput",
       "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "ComboboxValue",
+      "component": "ComboboxItem",
       "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2014,12 +2024,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "ComboboxClear",
-      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "ComboboxStatus",
+      "component": "ComboboxPopup",
       "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2029,17 +2034,22 @@
       "status": "skipped-existing"
     },
     {
-      "component": "ComboboxCollection",
+      "component": "ComboboxSeparator",
       "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "ComboboxChips",
+      "component": "ComboboxStatus",
       "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "ComboboxChip",
+      "component": "ComboboxTrigger",
+      "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ComboboxValue",
       "story": "packages/ui/src/primitives/ui-core/combobox.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2059,16 +2069,6 @@
       "status": "skipped-existing"
     },
     {
-      "component": "CommandInput",
-      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "CommandList",
-      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "CommandEmpty",
       "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
       "status": "skipped-existing"
@@ -2079,17 +2079,27 @@
       "status": "skipped-existing"
     },
     {
+      "component": "CommandInput",
+      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "CommandItem",
       "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "CommandShortcut",
+      "component": "CommandList",
       "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "CommandSeparator",
+      "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "CommandShortcut",
       "story": "packages/ui/src/primitives/ui-core/command.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2104,7 +2114,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "ContextMenuTrigger",
+      "component": "ContextMenuCheckboxItem",
       "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2114,22 +2124,32 @@
       "status": "skipped-existing"
     },
     {
+      "component": "ContextMenuGroup",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "ContextMenuItem",
       "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "ContextMenuCheckboxItem",
+      "component": "ContextMenuLabel",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuPortal",
+      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ContextMenuRadioGroup",
       "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "ContextMenuRadioItem",
-      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "ContextMenuLabel",
       "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2140,16 +2160,6 @@
     },
     {
       "component": "ContextMenuShortcut",
-      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "ContextMenuGroup",
-      "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "ContextMenuPortal",
       "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2169,7 +2179,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "ContextMenuRadioGroup",
+      "component": "ContextMenuTrigger",
       "story": "packages/ui/src/primitives/ui-core/context-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2249,21 +2259,6 @@
       "status": "skipped-existing"
     },
     {
-      "component": "DrawerPortal",
-      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "DrawerOverlay",
-      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "DrawerTrigger",
-      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "DrawerClose",
       "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
       "status": "skipped-existing"
@@ -2274,7 +2269,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "DrawerHeader",
+      "component": "DrawerDescription",
       "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2284,12 +2279,27 @@
       "status": "skipped-existing"
     },
     {
+      "component": "DrawerHeader",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DrawerOverlay",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "DrawerPortal",
+      "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "DrawerTitle",
       "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "DrawerDescription",
+      "component": "DrawerTrigger",
       "story": "packages/ui/src/primitives/ui-core/drawer.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2304,12 +2314,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "EmptyHeader",
-      "story": "packages/ui/src/primitives/ui-core/empty.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "EmptyTitle",
+      "component": "EmptyContent",
       "story": "packages/ui/src/primitives/ui-core/empty.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2319,12 +2324,17 @@
       "status": "skipped-existing"
     },
     {
-      "component": "EmptyContent",
+      "component": "EmptyHeader",
       "story": "packages/ui/src/primitives/ui-core/empty.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "EmptyMedia",
+      "story": "packages/ui/src/primitives/ui-core/empty.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "EmptyTitle",
       "story": "packages/ui/src/primitives/ui-core/empty.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2359,12 +2369,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "HoverCardTrigger",
+      "component": "HoverCardContent",
       "story": "packages/ui/src/primitives/ui-core/hover-card.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "HoverCardContent",
+      "component": "HoverCardTrigger",
       "story": "packages/ui/src/primitives/ui-core/hover-card.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2374,7 +2384,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "ItemMedia",
+      "component": "ItemActions",
       "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2384,12 +2394,27 @@
       "status": "skipped-existing"
     },
     {
-      "component": "ItemActions",
+      "component": "ItemDescription",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemFooter",
       "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "ItemGroup",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemHeader",
+      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "ItemMedia",
       "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2400,21 +2425,6 @@
     },
     {
       "component": "ItemTitle",
-      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "ItemDescription",
-      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "ItemHeader",
-      "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "ItemFooter",
       "story": "packages/ui/src/primitives/ui-core/item.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2459,7 +2469,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "NavigationMenuList",
+      "component": "NavigationMenuContent",
+      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuIndicator",
       "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2469,22 +2484,17 @@
       "status": "skipped-existing"
     },
     {
-      "component": "NavigationMenuContent",
-      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "NavigationMenuTrigger",
-      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "NavigationMenuLink",
       "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "NavigationMenuIndicator",
+      "component": "NavigationMenuList",
+      "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NavigationMenuTrigger",
       "story": "packages/ui/src/primitives/ui-core/navigation-menu.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2499,17 +2509,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "NumberFieldScrubArea",
-      "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "NumberFieldDecrement",
-      "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
-      "component": "NumberFieldIncrement",
       "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2519,7 +2519,17 @@
       "status": "skipped-existing"
     },
     {
+      "component": "NumberFieldIncrement",
+      "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "NumberFieldInput",
+      "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
+      "component": "NumberFieldScrubArea",
       "story": "packages/ui/src/primitives/ui-core/number-field.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2559,12 +2569,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "PreviewCardTrigger",
+      "component": "PreviewCardPopup",
       "story": "packages/ui/src/primitives/ui-core/preview-card.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "PreviewCardPopup",
+      "component": "PreviewCardTrigger",
       "story": "packages/ui/src/primitives/ui-core/preview-card.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2599,12 +2609,12 @@
       "status": "skipped-existing"
     },
     {
-      "component": "ResizablePanelGroup",
+      "component": "ResizableHandle",
       "story": "packages/ui/src/primitives/ui-core/resizable.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "ResizableHandle",
+      "component": "ResizablePanelGroup",
       "story": "packages/ui/src/primitives/ui-core/resizable.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2679,11 +2689,6 @@
       "status": "skipped-existing"
     },
     {
-      "component": "SheetTrigger",
-      "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "SheetClose",
       "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
       "status": "skipped-existing"
@@ -2694,7 +2699,7 @@
       "status": "skipped-existing"
     },
     {
-      "component": "SheetHeader",
+      "component": "SheetDescription",
       "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2704,12 +2709,17 @@
       "status": "skipped-existing"
     },
     {
+      "component": "SheetHeader",
+      "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "SheetTitle",
       "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "SheetDescription",
+      "component": "SheetTrigger",
       "story": "packages/ui/src/primitives/ui-core/sheet.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2749,6 +2759,11 @@
       "status": "skipped-existing"
     },
     {
+      "component": "TabsContent",
+      "story": "packages/ui/src/primitives/ui-core/tabs.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "TabsList",
       "story": "packages/ui/src/primitives/ui-core/tabs.stories.tsx",
       "status": "skipped-existing"
@@ -2759,22 +2774,17 @@
       "status": "skipped-existing"
     },
     {
-      "component": "TabsContent",
-      "story": "packages/ui/src/primitives/ui-core/tabs.stories.tsx",
-      "status": "skipped-existing"
-    },
-    {
       "component": "Textarea",
       "story": "packages/ui/src/primitives/ui-core/textarea.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "ToastProvider",
+      "component": "AnchoredToastProvider",
       "story": "packages/ui/src/primitives/ui-core/toast.stories.tsx",
       "status": "skipped-existing"
     },
     {
-      "component": "AnchoredToastProvider",
+      "component": "ToastProvider",
       "story": "packages/ui/src/primitives/ui-core/toast.stories.tsx",
       "status": "skipped-existing"
     },
@@ -2804,8 +2814,13 @@
       "status": "skipped-existing"
     },
     {
+      "component": "ConfirmDialog",
+      "story": "packages/ui/src/primitives/users/confirm-dialog.stories.tsx",
+      "status": "missing"
+    },
+    {
       "component": "Login",
-      "story": "packages/ui/src/primitives/users/login.stories.tsx",
+      "story": "packages/ui/src/primitives/users/login-page/login.stories.tsx",
       "status": "skipped-existing"
     },
     {
@@ -2824,204 +2839,214 @@
       "status": "skipped-existing"
     },
     {
+      "component": "DisplayMetric",
+      "story": "packages/ui/src/components/metrics-core/display-metric.stories.tsx",
+      "status": "skipped-existing"
+    },
+    {
       "component": "MetricsButton",
       "story": "packages/ui/src/components/metrics-core/metrics-button.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "HelpDeskDocumentationPage",
-      "story": "packages/ui/src/components/metrics-layouts/help-desk/documentation_page.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-help-desk/documentation_page.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "HelpDeskPage",
-      "story": "packages/ui/src/components/metrics-layouts/help-desk/helpdesk_layout.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-help-desk/helpdesk_layout.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "ContactRevrebelPage",
-      "story": "packages/ui/src/components/metrics-layouts/help-desk/helpdesk_page.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-help-desk/helpdesk_page.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "AccountForm",
-      "story": "packages/ui/src/components/metrics-layouts/settings/account_form.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/account_form.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "SettingsAccountPage",
-      "story": "packages/ui/src/components/metrics-layouts/settings/account_page.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/account_page.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "ContentSection",
-      "story": "packages/ui/src/components/metrics-layouts/settings/content-section_page.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/content-section_page.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "DisplayForm",
-      "story": "packages/ui/src/components/metrics-layouts/settings/display_form.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/display_form.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "SettingsDisplayPage",
-      "story": "packages/ui/src/components/metrics-layouts/settings/display_page.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/display_page.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "NotificationsForm",
-      "story": "packages/ui/src/components/metrics-layouts/settings/notifications_form.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/notifications_form.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "SettingsNotificationsPage",
-      "story": "packages/ui/src/components/metrics-layouts/settings/notifications_page.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/notifications_page.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "ProfileForm",
-      "story": "packages/ui/src/components/metrics-layouts/settings/profile_form.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/profile_form.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "SettingsProfilePage",
-      "story": "packages/ui/src/components/metrics-layouts/settings/profile_page.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/profile_page.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "SettingsPage",
-      "story": "packages/ui/src/components/metrics-layouts/settings/settings_layout.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/settings_layout.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "SidebarNav",
-      "story": "packages/ui/src/components/metrics-layouts/settings/settings_sidebar-nav.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/settings_sidebar-nav.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "UsersInviteDialog",
-      "story": "packages/ui/src/components/metrics-layouts/settings/users-invite_dialog.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-settings/users-invite_dialog.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "CalendarView",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/calendar-view_page.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/calendar-view_page.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "DataTableRowActions",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/data-actions_table-row.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/data-actions_table-row.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "DataTableBulkActions",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/data-bulk-actions_table.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/data-bulk-actions_table.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "ByPersonView",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/group-views.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/group-views.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "ByDepartmentView",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/group-views.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/group-views.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "GrowthPlanViewSwitcher",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan-view_switcher.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/growth-plan-view_switcher.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "GrowthPlanHeader",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan_header.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/growth-plan_header.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "GrowthPlanSidebar",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan_sidebar.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/growth-plan_sidebar.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "EmptyState",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan_states.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/growth-plan_states.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "LoadingState",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan_states.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/growth-plan_states.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "ErrorState",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/growth-plan_states.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/growth-plan_states.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "KanbanView",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/kanban_page.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/kanban_page.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "MeetingRecapView",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/meeting-recap_page.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/meeting-recap_page.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "OwnerRollupView",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/owner-rollup_page.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/owner-rollup_page.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "TasksImportDialog",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks-import_dialog.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks-import_dialog.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "TasksMultiDeleteDialog",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks-multi-delete_dialog.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks-multi-delete_dialog.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "TasksMutateDrawer",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks-mutate_drawer.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks-mutate_drawer.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "TasksPrimaryButtons",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks-primary-buttons.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks-primary-buttons.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "TasksDialogs",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks_dialogs.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks_dialogs.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "GrowthPlanPage",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks_layout.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks_layout.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "TasksProvider",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks_provider.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks_provider.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "TasksTable",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/tasks_table.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/tasks_table.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "WorkstreamMutateDrawer",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/workstream-mutate_drawer.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/workstream-mutate_drawer.stories.tsx",
       "status": "skipped-existing"
     },
     {
       "component": "WorkstreamsSection",
-      "story": "packages/ui/src/components/metrics-layouts/tasks/workstreams_section.stories.tsx",
+      "story": "packages/ui/src/components/metrics-layouts/metrics-tasks/workstreams_section.stories.tsx",
       "status": "skipped-existing"
+    },
+    {
+      "component": "WorkspaceShell",
+      "story": "packages/ui/src/components/metrics-layouts/workspace-shell.stories.tsx",
+      "status": "missing"
     }
   ]
 }

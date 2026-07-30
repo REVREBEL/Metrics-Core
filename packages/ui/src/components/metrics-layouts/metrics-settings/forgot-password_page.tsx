@@ -1,4 +1,4 @@
-import ForgotPassword from "@users/forgot-password-01/forgot-password-01";
+import ForgotPassword from "@users/forgot-password/forgot-password";
 
 const ForgotPasswordPage = () => {
   return <ForgotPassword />;

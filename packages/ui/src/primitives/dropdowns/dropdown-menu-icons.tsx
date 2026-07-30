@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { Button } from "@buttons/button"
+import { Button } from "@buttons/button";
+import {
+  IconCreditCardFilled,
+  IconSettingsFilled,
+  IconUserFilled,
+  IconWritingSignFilled,
+} from "@tabler/icons-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./dropdown-menu"
-import { 
-  IconCreditCardFilled, 
-  IconSettingsFilled, 
-  IconUserFilled, 
-  IconWritingSignFilled
-} from '@tabler/icons-react';
+} from "./dropdown-menu";
 
 export function DropdownMenuIcons() {
   return (
@@ -41,5 +41,5 @@ export function DropdownMenuIcons() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

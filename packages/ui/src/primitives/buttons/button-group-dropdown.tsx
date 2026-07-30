@@ -1,6 +1,13 @@
 "use client";
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@dropdowns/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@dropdowns/dropdown-menu";
 import {
   IconAlertSquareRoundedFilled,
   IconBellXFilled,

@@ -1,7 +1,7 @@
 "use client";
 
-import { type SetStateAction, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
+import { type SetStateAction, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const Calendar: React.FC<React.SVGProps<SVGSVGElement> & { size?: number }> = ({
@@ -116,7 +116,7 @@ function Button({
   isActive: boolean;
   setActiveButton: React.Dispatch<SetStateAction<string>>;
 }) {
-  const [showShine, setShowShine] = useState(false);
+  const [_showShine, setShowShine] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -132,7 +132,7 @@ function Button({
 
   return (
     <motion.div
-      layoutId={"button-id-" + title}
+      layoutId={`button-id-${title}`}
       transition={{
         layout: {
           type: "spring",
@@ -162,7 +162,7 @@ function Button({
         className={cn(
           "flex items-center font-mono uppercase gap-1.5 bg-secondary outline outline-2 outline-background overflow-hidden shadow-md transition-colors duration-75 ease-out  p-3 cursor-pointer",
           isActive && activeColor,
-          isActive ? "px-4" : "px-3"
+          isActive ? "px-4" : "px-3",
         )}
         style={{
           borderRadius: "25px",
@@ -173,7 +173,7 @@ function Button({
         }}
       >
         <motion.div
-          layoutId={"icon-id" + title}
+          layoutId={`icon-id${title}`}
           className="shrink-0"
           style={{ willChange: "transform" }}
         >
@@ -190,7 +190,7 @@ function Button({
             }}
           >
             <motion.span
-              layoutId={"text-id-" + title}
+              layoutId={`text-id-${title}`}
               className="text-sm font-medium font-mono uppercase whitespace-nowrap relative inline-block"
               style={{ willChange: "transform" }}
             >

@@ -1,18 +1,18 @@
 "use client";
 
+import { Button } from "@buttons/button";
+import { beautifyObjectName } from "@forms/helpers";
+import { PlusIcon } from "@radix-ui/react-icons";
+import { IconTrash } from "@tabler/icons-react";
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@ui-core/accordion";
-import { Button } from "@buttons/button";
 import { Separator } from "@ui-core/separator";
-import { IconTrash } from "@tabler/icons-react";
 import { useFieldArray, type useForm } from "react-hook-form";
 import type * as z from "zod";
-import { beautifyObjectName } from "@forms/helpers";
 import AutoFormObject from "./object";
-import { PlusIcon } from "@radix-ui/react-icons";
 
 /**
  * Get the def type from a Zod schema (Zod v4 compatible).
@@ -61,7 +61,7 @@ export default function AutoFormArray({
 }) {
   // The full path for useFieldArray - path already includes the array name
   const fieldPath = path.join(".");
-  
+
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: fieldPath,

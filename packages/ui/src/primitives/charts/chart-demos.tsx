@@ -1,6 +1,4 @@
 "use client";
-
-import * as React from "react";
 import {
   Area,
   AreaChart,
@@ -12,7 +10,6 @@ import {
   Pie,
   PieChart,
   XAxis,
-  YAxis,
 } from "recharts";
 import {
   type ChartConfig,

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ImageEditDialog } from "./image-edit-dialog";
 import { Button } from "../buttons/button";
-import React from "react";
+import { ImageEditDialog } from "./image-edit-dialog";
 
 const meta = {
   title: "Primitives/Image Blocks/Image Edit Dialog",

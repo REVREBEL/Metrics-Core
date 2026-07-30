@@ -1,4 +1,4 @@
-import { Tabs, TabsList, TabsTrigger } from "./tabs"
+import { Tabs, TabsList, TabsTrigger } from "./tabs";
 
 export function TabsLine() {
   return (
@@ -9,5 +9,5 @@ export function TabsLine() {
         <TabsTrigger value="reports">Reports</TabsTrigger>
       </TabsList>
     </Tabs>
-  )
+  );
 }

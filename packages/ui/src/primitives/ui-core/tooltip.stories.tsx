@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
+import { Button } from "../buttons/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "./tooltip";
-import { Button } from "../buttons/button";
 
 const meta: Meta<typeof Tooltip> = {
   title: "Primitives/UI Core/Tooltip",

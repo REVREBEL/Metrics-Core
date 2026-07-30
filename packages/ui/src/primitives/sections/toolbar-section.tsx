@@ -1,28 +1,28 @@
-import * as React from "react"
-import type { Editor } from "@tiptap/react"
-import type { FormatAction } from "../../types"
-import type { VariantProps } from "class-variance-authority"
-import { toggleVariants } from "../ui-core/toggle"
-import { cn } from "@/lib/utils"
-import { CaretDownIcon } from "@radix-ui/react-icons"
+import { CaretDownIcon } from "@radix-ui/react-icons";
+import type { Editor } from "@tiptap/react";
+import type { VariantProps } from "class-variance-authority";
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import type { FormatAction } from "../../types";
+import { ToolbarButton } from "../buttons/toolbar-button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../dropdowns/dropdown-menu"
-import { ToolbarButton } from "../buttons/toolbar-button"
-import { ShortcutKey } from "./shortcut-key"
-import { getShortcutKey } from "../utils"
+} from "../dropdowns/dropdown-menu";
+import type { toggleVariants } from "../ui-core/toggle";
+import { getShortcutKey } from "../utils";
+import { ShortcutKey } from "./shortcut-key";
 
 interface ToolbarSectionProps extends VariantProps<typeof toggleVariants> {
-  editor: Editor
-  actions: FormatAction[]
-  activeActions?: string[]
-  mainActionCount?: number
-  dropdownIcon?: React.ReactNode
-  dropdownTooltip?: string
-  dropdownClassName?: string
+  editor: Editor;
+  actions: FormatAction[];
+  activeActions?: string[];
+  mainActionCount?: number;
+  dropdownIcon?: React.ReactNode;
+  dropdownTooltip?: string;
+  dropdownClassName?: string;
 }
 
 export const ToolbarSection: React.FC<ToolbarSectionProps> = ({
@@ -41,14 +41,14 @@ export const ToolbarSection: React.FC<ToolbarSectionProps> = ({
       .filter((action) => activeActions.includes(action.value))
       .sort(
         (a, b) =>
-          activeActions.indexOf(a.value) - activeActions.indexOf(b.value)
-      )
+          activeActions.indexOf(a.value) - activeActions.indexOf(b.value),
+      );
 
     return {
       mainActions: sortedActions.slice(0, mainActionCount),
       dropdownActions: sortedActions.slice(mainActionCount),
-    }
-  }, [actions, activeActions, mainActionCount])
+    };
+  }, [actions, activeActions, mainActionCount]);
 
   const renderToolbarButton = React.useCallback(
     (action: FormatAction) => (
@@ -65,8 +65,8 @@ export const ToolbarSection: React.FC<ToolbarSectionProps> = ({
         {action.icon}
       </ToolbarButton>
     ),
-    [editor, size, variant]
-  )
+    [editor, size, variant],
+  );
 
   const renderDropdownMenuItem = React.useCallback(
     (action: FormatAction) => (
@@ -83,12 +83,12 @@ export const ToolbarSection: React.FC<ToolbarSectionProps> = ({
         <ShortcutKey keys={action.shortcuts} />
       </DropdownMenuItem>
     ),
-    [editor]
-  )
+    [editor],
+  );
 
   const isDropdownActive = dropdownActions.some((action) =>
-    action.isActive(editor)
-  )
+    action.isActive(editor),
+  );
 
   return (
     <>
@@ -113,7 +113,7 @@ export const ToolbarSection: React.FC<ToolbarSectionProps> = ({
         </DropdownMenu>
       )}
     </>
-  )
-}
+  );
+};
 
-export default ToolbarSection
+export default ToolbarSection;

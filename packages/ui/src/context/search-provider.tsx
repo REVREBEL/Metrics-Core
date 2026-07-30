@@ -29,7 +29,7 @@ export function SearchProvider({ children }: SearchProviderProps) {
   }, []);
 
   // Optimized: Memoize the contextValue object to prevent unnecessary re-renders of all consumer components
-  const contextValue = useMemo(() => ({ open, setOpen }), [open, setOpen]);
+  const contextValue = useMemo(() => ({ open, setOpen }), [open]);
 
   return (
     <SearchContext value={contextValue}>

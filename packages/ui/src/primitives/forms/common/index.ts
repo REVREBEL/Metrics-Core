@@ -1,2 +1,2 @@
-export { default as AutoFormLabel } from "./label"
-export { default as AutoFormTooltip } from "./tooltip"
+export { default as AutoFormLabel } from "./label";
+export { default as AutoFormTooltip } from "./tooltip";

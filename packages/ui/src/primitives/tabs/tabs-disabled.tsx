@@ -1,4 +1,4 @@
-import { Tabs, TabsList, TabsTrigger } from "./tabs"
+import { Tabs, TabsList, TabsTrigger } from "./tabs";
 
 export function TabsDisabled() {
   return (
@@ -10,5 +10,5 @@ export function TabsDisabled() {
         </TabsTrigger>
       </TabsList>
     </Tabs>
-  )
+  );
 }

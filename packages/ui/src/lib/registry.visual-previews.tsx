@@ -1,10 +1,14 @@
 "use client";
 
+import { Button } from "@buttons/button";
+import { SaveButton } from "@buttons/status-button";
+import { Input } from "@inputs/input";
+import { Skeleton } from "@skeleton/skeleton";
 import {
   IconArchive,
   IconChartBar,
-  IconDatabase,
   IconChevronDown,
+  IconDatabase,
   IconDots,
   IconLayoutDashboard,
   IconLayoutGrid,
@@ -13,22 +17,13 @@ import {
   IconStar,
   IconTable,
 } from "@tabler/icons-react";
-import type { ComponentType, ReactNode } from "react";
-
-import { Button } from "@buttons/button";
-import { SaveButton } from "@buttons/status-button";
-import { Input } from "@inputs/input";
-import { Skeleton } from "@skeleton/skeleton";
 import { Textarea } from "@textarea/textarea";
 import {
   TypographyH1,
   TypographyH2,
   TypographyH3,
   TypographyP,
-  TypographySmall,
-  TypographyTable,
 } from "@typography";
-
 import { Badge } from "@ui-core/badge";
 import {
   Card,
@@ -40,6 +35,7 @@ import {
 import { Label } from "@ui-core/label";
 import { Separator } from "@ui-core/separator";
 import { Switch } from "@ui-core/switch";
+import type { ComponentType, ReactNode } from "react";
 
 export type PreviewProps = {
   description?: string;
@@ -103,7 +99,7 @@ function GenericPrimitivePreview({ name, sourcePath }: PreviewProps) {
   );
 }
 
-function CompactPrimitivePreview({ name, sourcePath }: PreviewProps) {
+function _CompactPrimitivePreview({ name, sourcePath }: PreviewProps) {
   return (
     <div className="space-y-4 rounded-2xl border bg-card p-4">
       <div className="flex items-center justify-between gap-3">
@@ -141,7 +137,9 @@ function ButtonStatesPreview() {
           </div>
         </div>
         <div className="rounded-xl border bg-background p-4">
-          <div className="mb-3 text-muted-foreground text-xs">Sizes and states</div>
+          <div className="mb-3 text-muted-foreground text-xs">
+            Sizes and states
+          </div>
           <div className="flex flex-wrap items-center gap-2">
             <Button size="sm">Small</Button>
             <Button size="lg">Large</Button>
@@ -158,12 +156,16 @@ function TabsNavigationPreview() {
   return (
     <div className="space-y-4 rounded-2xl border bg-card p-4">
       <div className="rounded-xl border bg-background p-4">
-        <div className="mb-3 text-muted-foreground text-xs">Tabs and overflow</div>
+        <div className="mb-3 text-muted-foreground text-xs">
+          Tabs and overflow
+        </div>
         <div className="flex flex-wrap gap-2">
           <button className="rounded-full bg-foreground px-4 py-2 text-background text-sm">
             Overview
           </button>
-          <button className="rounded-full border px-4 py-2 text-sm">Segments</button>
+          <button className="rounded-full border px-4 py-2 text-sm">
+            Segments
+          </button>
           <button
             className="rounded-full border px-4 py-2 text-muted-foreground text-sm opacity-50"
             disabled
@@ -172,7 +174,9 @@ function TabsNavigationPreview() {
             Disabled
           </button>
         </div>
-        <div className="mt-3 rounded-lg border p-3 text-sm">Active tab content</div>
+        <div className="mt-3 rounded-lg border p-3 text-sm">
+          Active tab content
+        </div>
       </div>
     </div>
   );
@@ -192,10 +196,15 @@ function FormFieldPreview({ name }: PreviewProps) {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="preview-error">Validation state</Label>
-                <Input id="preview-error" aria-invalid defaultValue="Needs attention" />
+                <Input
+                  id="preview-error"
+                  aria-invalid
+                  defaultValue="Needs attention"
+                />
               </div>
               <div className="rounded-md border border-dashed p-3 text-sm text-muted-foreground">
-                Labels, field descriptions, and inline validation should read as one composed unit.
+                Labels, field descriptions, and inline validation should read as
+                one composed unit.
               </div>
             </div>
           </div>
@@ -214,7 +223,9 @@ function FormFieldPreview({ name }: PreviewProps) {
               <div className="space-y-2">
                 <Label htmlFor="payment-number">Card Number</Label>
                 <Input id="payment-number" defaultValue="1234 5678 9012 3456" />
-                <p className="text-muted-foreground text-xs">Enter your 16-digit card number</p>
+                <p className="text-muted-foreground text-xs">
+                  Enter your 16-digit card number
+                </p>
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div className="space-y-2">
@@ -262,24 +273,31 @@ function TypographySpecimenPreview() {
       <div className="space-y-6">
         <div className="max-w-3xl space-y-3">
           <TypographyP>
-            We do not ship any typography styles by default. This preview shows how hierarchy, spacing, paragraphs, lists, blockquotes, and tables work together.
+            We do not ship any typography styles by default. This preview shows
+            how hierarchy, spacing, paragraphs, lists, blockquotes, and tables
+            work together.
           </TypographyP>
         </div>
         <div className="rounded-xl border bg-background p-6">
           <div className="max-w-3xl space-y-6">
             <div className="space-y-3">
-              <TypographyH1>Taxing Laughter: The Joke Tax Chronicles</TypographyH1>
+              <TypographyH1>
+                Taxing Laughter: The Joke Tax Chronicles
+              </TypographyH1>
               <TypographyP className="text-muted-foreground">
-                Once upon a time, in a far-off land, there was a very lazy king who spent all day lounging on his throne.
+                Once upon a time, in a far-off land, there was a very lazy king
+                who spent all day lounging on his throne.
               </TypographyP>
             </div>
             <div className="space-y-3">
               <TypographyH2>The King's Plan</TypographyH2>
               <TypographyP>
-                The king thought long and hard, and finally came up with a brilliant plan: he would tax the jokes in the kingdom.
+                The king thought long and hard, and finally came up with a
+                brilliant plan: he would tax the jokes in the kingdom.
               </TypographyP>
               <blockquote className="border-l-2 pl-6 italic text-sm">
-                “After all,” he said, “everyone enjoys a good joke, so it's only fair that they should pay for the privilege.”
+                “After all,” he said, “everyone enjoys a good joke, so it's only
+                fair that they should pay for the privilege.”
               </blockquote>
             </div>
             <div className="space-y-3">
@@ -330,18 +348,25 @@ function IconAssetPreview({ name }: PreviewProps) {
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="font-medium">{name}</p>
-          <p className="text-muted-foreground text-xs">Asset preview at multiple sizes</p>
+          <p className="text-muted-foreground text-xs">
+            Asset preview at multiple sizes
+          </p>
         </div>
         <Badge variant="outline">Icon / Asset</Badge>
       </div>
       <div className="grid grid-cols-3 gap-3">
         {[16, 24, 40].map((size) => (
-          <div key={size} className="rounded-xl border bg-background p-4 text-center">
+          <div
+            key={size}
+            className="rounded-xl border bg-background p-4 text-center"
+          >
             <div
               className="mx-auto rounded bg-muted"
               style={{ height: size, width: size }}
             />
-            <div className="mt-2 text-[10px] text-muted-foreground">{size}px</div>
+            <div className="mt-2 text-[10px] text-muted-foreground">
+              {size}px
+            </div>
           </div>
         ))}
       </div>
@@ -371,7 +396,9 @@ function MetricsCardPreview({ name, sourcePath }: PreviewProps) {
           </div>
           <div>
             <p className="text-muted-foreground text-xs">Variance</p>
-            <p className="font-semibold text-2xl text-primary tabular-nums">+5.2</p>
+            <p className="font-semibold text-2xl text-primary tabular-nums">
+              +5.2
+            </p>
           </div>
         </div>
       </CardContent>
@@ -392,9 +419,17 @@ function ChartPreview({ name, sourcePath }: PreviewProps) {
       <CardContent>
         <div className="flex h-40 items-end gap-2 rounded-xl border bg-background p-4">
           {[42, 72, 55, 88, 64, 96, 70].map((height, index) => (
-            <div key={`${height}-${index}`} className="flex flex-1 flex-col justify-end gap-2">
-              <div className="rounded-t bg-primary/80" style={{ height: `${height}%` }} />
-              <div className="text-center text-[10px] text-muted-foreground">{index + 1}</div>
+            <div
+              key={`${height}-${index}`}
+              className="flex flex-1 flex-col justify-end gap-2"
+            >
+              <div
+                className="rounded-t bg-primary/80"
+                style={{ height: `${height}%` }}
+              />
+              <div className="text-center text-[10px] text-muted-foreground">
+                {index + 1}
+              </div>
             </div>
           ))}
         </div>
@@ -485,7 +520,8 @@ function FullCanvasPreview({ name, description }: PreviewProps) {
         <div>
           <h3 className="font-semibold">{name}</h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            {description || "This preview needs a wider canvas to render its layout correctly."}
+            {description ||
+              "This preview needs a wider canvas to render its layout correctly."}
           </p>
         </div>
         <IconLayoutGrid className="size-5 text-primary" />
@@ -506,7 +542,7 @@ function FullCanvasPreview({ name, description }: PreviewProps) {
   );
 }
 
-function DataPreview({ name, sourcePath }: PreviewProps) {
+function _DataPreview({ name, sourcePath }: PreviewProps) {
   return (
     <div className="rounded-2xl border bg-card p-4">
       <div className="flex items-center gap-2">
@@ -610,7 +646,12 @@ export function RegistryButtonFamilyPreview({
             <Button className="rounded-full" variant="secondary">
               Continue
             </Button>
-            <Button variant="outline" size="icon" className="rounded-full" aria-label="Open options">
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full"
+              aria-label="Open options"
+            >
               <IconChevronDown className="size-4" />
             </Button>
           </div>
@@ -667,7 +708,11 @@ export function RegistryButtonFamilyPreview({
             <div className="space-y-4">
               <div className="flex w-fit items-stretch">
                 <Button variant="outline">Follow</Button>
-                <Button variant="outline" className="pl-2" aria-label="Open follow menu">
+                <Button
+                  variant="outline"
+                  className="pl-2"
+                  aria-label="Open follow menu"
+                >
                   <IconChevronDown className="size-4" />
                 </Button>
               </div>
@@ -682,11 +727,16 @@ export function RegistryButtonFamilyPreview({
           </PreviewPane>
           <PreviewPane title="Attached menu surface">
             <div className="w-full max-w-56 rounded-xl border bg-card p-2 shadow-sm">
-              {["Mute Conversation", "Mark as Read", "Report Conversation"].map((label) => (
-                <div key={label} className="rounded-lg px-3 py-2 text-sm hover:bg-muted">
-                  {label}
-                </div>
-              ))}
+              {["Mute Conversation", "Mark as Read", "Report Conversation"].map(
+                (label) => (
+                  <div
+                    key={label}
+                    className="rounded-lg px-3 py-2 text-sm hover:bg-muted"
+                  >
+                    {label}
+                  </div>
+                ),
+              )}
               <div className="my-1 border-t" />
               <div className="rounded-lg px-3 py-2 text-sm text-destructive hover:bg-destructive/5">
                 Delete Conversation
@@ -775,7 +825,8 @@ const exactPreviews: Record<string, VisualPreview> = {
       <div className="rounded-xl border bg-background p-8">
         <div className="flex min-h-40 items-center">
           <TypographyP className="max-w-xl">
-            The king, seeing how much happier his subjects were, realized the error of his ways and repealed the joke tax.
+            The king, seeing how much happier his subjects were, realized the
+            error of his ways and repealed the joke tax.
           </TypographyP>
         </div>
       </div>
@@ -786,7 +837,8 @@ const exactPreviews: Record<string, VisualPreview> = {
       <div className="rounded-xl border bg-background p-8">
         <div className="flex min-h-40 items-center">
           <blockquote className="max-w-2xl border-l-2 pl-6 italic text-sm">
-            “After all,” he said, “everyone enjoys a good joke, so it's only fair that they should pay for the privilege.”
+            “After all,” he said, “everyone enjoys a good joke, so it's only
+            fair that they should pay for the privilege.”
           </blockquote>
         </div>
       </div>
@@ -879,7 +931,9 @@ function inferSourcePath(input: RegistryPreviewInput) {
  * 2. mapping source paths or explicit item metadata in `getRegistryPreviewSpec`,
  * 3. registering the renderer in `templateRenderers`.
  */
-export function getRegistryPreviewSpec(input: RegistryPreviewInput): RegistryPreviewSpec {
+export function getRegistryPreviewSpec(
+  input: RegistryPreviewInput,
+): RegistryPreviewSpec {
   const sourcePath = inferSourcePath(input);
 
   if (sourcePath.includes("/typography/")) {
@@ -914,7 +968,10 @@ export function getRegistryPreviewSpec(input: RegistryPreviewInput): RegistryPre
     return { template: "form-field", layout: "half" };
   }
 
-  if (sourcePath.includes("/metrics-charts/") || sourcePath.includes("/charts/")) {
+  if (
+    sourcePath.includes("/metrics-charts/") ||
+    sourcePath.includes("/charts/")
+  ) {
     return { template: "chart", layout: "full" };
   }
 
@@ -990,7 +1047,6 @@ export function getPreviewLayoutClasses(layout: RegistryPreviewLayout) {
       return "xl:col-span-2";
     case "half":
       return "xl:col-span-1";
-    case "compact":
     default:
       return "xl:col-span-1";
   }

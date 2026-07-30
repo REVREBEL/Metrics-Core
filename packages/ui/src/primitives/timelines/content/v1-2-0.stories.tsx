@@ -17,7 +17,8 @@ type Story = StoryObj<typeof V1_2_0_Content>;
 export const Default: Story = {
   args: {
     title: "Dashboard Live Preview & Deployment v1.2.0",
-    description: "Preview, test, and deploy your components dynamically with real-time feedback.",
+    description:
+      "Preview, test, and deploy your components dynamically with real-time feedback.",
     code: `const preview = createPreview({
   framework: "nextjs",
   components: ["Button", "Card"]

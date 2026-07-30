@@ -1,5 +1,5 @@
-import { type MouseEvent, useCallback } from "react";
 import type { ComponentProps } from "react";
+import { type MouseEvent, useCallback } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/primitives/buttons/button";

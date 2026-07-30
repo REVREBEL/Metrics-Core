@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import FieldGroupExample from "./field-group";
-import { Form } from "../form";
-import React from "react";
 import { useForm } from "react-hook-form";
+import { Form } from "../form";
+import FieldGroupExample from "./field-group";
 
 const meta = {
   title: "Primitives/Forms/Fields/Field Group",

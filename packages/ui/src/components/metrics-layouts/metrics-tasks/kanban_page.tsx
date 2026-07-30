@@ -304,11 +304,11 @@ const InitiativeCard = memo(
       label: "Uncategorized",
     };
 
-  // Calculate progress
-  const cardTasks = initiative.tasks || [];
-  const totalTasks = cardTasks.length;
-  const completedTasks = cardTasks.filter((t) => t.status === "done").length;
-  const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+    // Calculate progress
+    const cardTasks = initiative.tasks || [];
+    const totalTasks = cardTasks.length;
+    const completedTasks = cardTasks.filter((t) => t.status === "done").length;
+    const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
     return (
       // biome-ignore lint/a11y/useSemanticElements: complex card layout requires div with role="button"

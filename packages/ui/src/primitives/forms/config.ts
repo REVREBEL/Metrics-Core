@@ -21,7 +21,7 @@ export const INPUT_COMPONENTS = {
 /**
  * Define handlers for specific Zod types.
  * You can expand this object to support more types.
- * 
+ *
  * Supports both:
  * - Zod v3 style: "ZodBoolean", "ZodEnum", etc. (from _def.typeName)
  * - Zod v4 style: "boolean", "enum", etc. (from _def.type)
