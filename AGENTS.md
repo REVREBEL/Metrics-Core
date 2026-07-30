@@ -2,15 +2,42 @@
 
 This repository is `REVREBEL/Metrics-Core`. Do not implement Metrics-Core work in the older `REVREBEL/Metrics` repository.
 
+## Instruction hierarchy and authority
+
+Agents must use repository instructions in this order:
+
+1. **Root `AGENTS.md`**
+   - Mandatory repository-wide operating rules.
+   - Applies to every task and every subtree.
+   - Defines source ownership, monorepo placement, aliases, icons, documentation, validation, and reporting.
+2. **Nearest scoped `AGENTS.md`**
+   - Adds rules for the specific subtree being changed.
+   - May narrow the root rules for that subtree but must not silently contradict them.
+3. **`.agents/skills/metrics-core/*`**
+   - Task-specific execution playbooks.
+   - Explain how to perform a category of work after the root and scoped rules are understood.
+   - Skills do not override repository architecture, aliases, or source ownership.
+4. **`apps/docs/src/content`**
+   - Maintained long-form architecture and usage documentation.
+   - Use it for system explanation and durable reference.
+5. **`.agents/tasks-complete/*` and other historical agent records**
+   - Historical evidence only.
+   - Never treat completed task notes as current instructions or architecture truth.
+
+When instructions differ, stop and resolve the conflict against current Linear intent, repository implementation, Dataform, and maintained documentation. Do not choose whichever file is most convenient.
+
+The `.agents` directory is not a replacement for the root `AGENTS.md`. It stores supporting skills and agent work records. Repository-wide rules such as component placement, alias resolution, and icon resolution belong here in the root guide.
+
 ## Required context
 
 Before making changes:
 
-1. Read `apps/docs/src/content/internal/chatgpt/metrics-project-memory.md`.
-2. Read the nearest scoped `AGENTS.md` for every subtree you will modify.
-3. Read the relevant repository skill under `.agents/skills/metrics-core/`.
-4. Verify the current branch, package scripts, aliases, and implementation before assuming a path or command still exists.
-5. For data architecture work, verify Dataform definitions before describing a warehouse object as implemented.
+1. Read this root `AGENTS.md` completely.
+2. Read `apps/docs/src/content/internal/chatgpt/metrics-project-memory.md`.
+3. Read the nearest scoped `AGENTS.md` for every subtree you will modify.
+4. Read the relevant repository skill under `.agents/skills/metrics-core/`.
+5. Verify the current branch, package scripts, aliases, and implementation before assuming a path or command still exists.
+6. For data architecture work, verify Dataform definitions before describing a warehouse object as implemented.
 
 ## Source ownership
 
