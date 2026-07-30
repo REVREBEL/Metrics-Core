@@ -1,8 +1,8 @@
 "use client";
 import { IconCheck, IconSelector } from "@tabler/icons-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "motion/react";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 type options = "Daily" | "Weekly" | "Monthly" | "Yearly";
@@ -70,7 +70,7 @@ export default function TwentyThreeFour() {
                         }}
                         className={cn(
                           "px-2 cursor-pointer py-1 rounded-[24px] text-muted-foreground relative transition-colors duration-300",
-                          option === op && "text-foreground"
+                          option === op && "text-foreground",
                         )}
                       >
                         {option === op && (
@@ -110,7 +110,7 @@ export default function TwentyThreeFour() {
                   style={{ borderRadius: 24 }}
                   className="bg-primary px-[10px] justify-center text-primary-foreground flex h-full items-center cursor-pointer"
                 >
-                  <IconCheck size={16}  />
+                  <IconCheck size={16} />
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -130,7 +130,7 @@ export default function TwentyThreeFour() {
                 className="pl-3 py-0 relative cursor-default text-foreground"
                 layoutId={option}
               >
-                {option === "Weekly" ? option + ", " + days[day] : option}
+                {option === "Weekly" ? `${option}, ${days[day]}` : option}
               </motion.div>
               <AnimatePresence initial={false}>
                 <motion.div
@@ -138,9 +138,7 @@ export default function TwentyThreeFour() {
                   layoutId="button"
                   className="text-muted-foreground justify-center flex items-center w-fit h-fit px-3 pl-2 py-[10px]"
                 >
-                  <IconSelector size={14}
-                    className="-rotate-90"
-                   />
+                  <IconSelector size={14} className="-rotate-90" />
                 </motion.div>
               </AnimatePresence>
             </motion.div>
@@ -193,7 +191,7 @@ export default function TwentyThreeFour() {
                       "px-2 py-1 rounded-3xl relative transition-colors duration-300 cursor-pointer",
                       index === day
                         ? "text-foreground"
-                        : "text-muted-foreground"
+                        : "text-muted-foreground",
                     )}
                   >
                     <span className="relative z-10">{d}</span>

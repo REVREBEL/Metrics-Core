@@ -1,10 +1,5 @@
 import { Button } from "@buttons/button";
-import {
-  Menu,
-  MenuItem,
-  MenuPopup,
-  MenuTrigger,
-} from "./menu";
+import { Menu, MenuItem, MenuPopup, MenuTrigger } from "./menu";
 
 export default function Particle() {
   return (

@@ -1,6 +1,6 @@
-import { IconAppWindow, IconCode } from "@tabler/icons-react"
+import { IconAppWindow, IconCode } from "@tabler/icons-react";
 
-import { Tabs, TabsList, TabsTrigger } from "./tabs"
+import { Tabs, TabsList, TabsTrigger } from "./tabs";
 
 export function TabsIcons() {
   return (
@@ -16,5 +16,5 @@ export function TabsIcons() {
         </TabsTrigger>
       </TabsList>
     </Tabs>
-  )
+  );
 }

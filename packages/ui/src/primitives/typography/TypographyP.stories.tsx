@@ -16,6 +16,7 @@ type Story = StoryObj<typeof TypographyP>;
 
 export const Default: Story = {
   args: {
-    children: "The King, seeing how much happier his subjects were, realized the error of his ways and repealed the joke tax.",
+    children:
+      "The King, seeing how much happier his subjects were, realized the error of his ways and repealed the joke tax.",
   },
 };

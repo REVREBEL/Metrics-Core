@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IconChartBar } from "@tabler/icons-react";
-import React from "react";
 import StatisticsCard from "./statistics-card";
 
 const meta = {

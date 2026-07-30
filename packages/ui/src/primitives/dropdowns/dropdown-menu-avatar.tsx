@@ -1,7 +1,13 @@
-"use client"
+"use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@ui-core/avatar"
-import { Button } from "@buttons/button"
+import { Button } from "@buttons/button";
+import {
+  IconBell,
+  IconCreditCard,
+  IconJewishStarFilled,
+  IconWritingSignFilled,
+} from "@tabler/icons-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@ui-core/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,8 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./dropdown-menu"
-import { IconJewishStarFilled, IconBell, IconCreditCard, IconWritingSignFilled } from "@tabler/icons-react"
+} from "./dropdown-menu";
 
 export function DropdownMenuAvatar() {
   return (
@@ -45,5 +50,5 @@ export function DropdownMenuAvatar() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

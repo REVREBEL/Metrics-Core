@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader } from "@ui-core/card";
 import { Skeleton } from "@skeleton/skeleton";
+import { Card, CardContent, CardHeader } from "@ui-core/card";
 
 export function SkeletonCard() {
   return (

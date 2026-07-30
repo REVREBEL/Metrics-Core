@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
+import { Label } from "./label";
 import {
   NumberField,
   NumberFieldDecrement,
@@ -7,7 +7,6 @@ import {
   NumberFieldIncrement,
   NumberFieldInput,
 } from "./number-field";
-import { Label } from "./label";
 
 const meta: Meta<typeof NumberField> = {
   title: "Primitives/UI Core/NumberField",

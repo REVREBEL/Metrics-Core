@@ -1,24 +1,24 @@
 import type { ControllerRenderProps, FieldValues } from "react-hook-form";
 import type * as z from "zod";
-import { type INPUT_COMPONENTS } from "./config";
-import type { 
-  SerializableInputProps,
-  StringInputProps,
-  NumberInputProps,
+import type { INPUT_COMPONENTS } from "./config";
+import type {
   BooleanInputProps,
   DateInputProps,
   EnumInputProps,
+  NumberInputProps,
+  SerializableInputProps,
+  StringInputProps,
   TypedInputProps,
 } from "./shared-form-types";
 
 // Re-export discriminated input prop types for field components
 export type {
-  SerializableInputProps,
-  StringInputProps,
-  NumberInputProps,
   BooleanInputProps,
   DateInputProps,
   EnumInputProps,
+  NumberInputProps,
+  SerializableInputProps,
+  StringInputProps,
   TypedInputProps,
 };
 
@@ -30,7 +30,7 @@ export type AutoFormFieldType = keyof typeof INPUT_COMPONENTS;
 
 /**
  * Input props for form fields.
- * 
+ *
  * This is the runtime type that accepts any input props.
  * For type-safe props, use the discriminated types:
  * - StringInputProps for text inputs
@@ -39,13 +39,19 @@ export type AutoFormFieldType = keyof typeof INPUT_COMPONENTS;
  * - DateInputProps for date pickers
  * - EnumInputProps for selects/radios
  */
-export type FieldInputProps = SerializableInputProps & 
-  Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof SerializableInputProps> &
-  Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, keyof SerializableInputProps>;
+export type FieldInputProps = SerializableInputProps &
+  Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    keyof SerializableInputProps
+  > &
+  Omit<
+    React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+    keyof SerializableInputProps
+  >;
 
 /**
  * Configuration for a single field in AutoForm.
- * 
+ *
  * Note: This type is designed to align with form-builder's FormBuilderFieldProps
  * so that JSON Schema properties can be easily converted to field configs.
  */

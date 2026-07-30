@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IconSelector } from "@tabler/icons-react";
-
+import { Button } from "../buttons/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./collapsible";
-import { Button } from "../buttons/button";
 
 const meta: Meta<typeof Collapsible> = {
   title: "Primitives/UI Core/Collapsible",

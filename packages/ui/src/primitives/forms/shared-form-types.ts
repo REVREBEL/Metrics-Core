@@ -87,7 +87,7 @@ export interface EnumInputProps extends BaseInputProps {
 /**
  * Union type of all input props by backing type.
  */
-export type TypedInputProps = 
+export type TypedInputProps =
   | StringInputProps
   | NumberInputProps
   | BooleanInputProps
@@ -97,7 +97,7 @@ export type TypedInputProps =
 /**
  * Generic input props that accept any field type.
  * Use this when the backing type is not known at compile time.
- * 
+ *
  * This is the catch-all type used for runtime flexibility.
  */
 export interface SerializableInputProps extends BaseInputProps {
@@ -133,7 +133,8 @@ export interface InputPropsByBackingType {
 /**
  * Get the correct input props type for a backing type.
  */
-export type InputPropsFor<T extends keyof InputPropsByBackingType> = InputPropsByBackingType[T];
+export type InputPropsFor<T extends keyof InputPropsByBackingType> =
+  InputPropsByBackingType[T];
 
 /**
  * Built-in field types supported by auto-form.
@@ -144,13 +145,11 @@ export type AutoFormBuiltinFieldType = keyof typeof INPUT_COMPONENTS;
  * Field types that can be specified in JSON Schema.
  * Either a built-in type name or a custom component.
  */
-export type FieldType = 
-  | AutoFormBuiltinFieldType
-  | (string & {});  // allow any string for extensibility
+export type FieldType = AutoFormBuiltinFieldType | (string & {}); // allow any string for extensibility
 
 /**
  * JSON Schema property with form-builder and auto-form metadata.
- * 
+ *
  * This is the intermediate format used when:
  * - form-builder serializes field configurations
  * - auto-form parses JSON Schema to build field configs
@@ -160,7 +159,14 @@ export interface JSONSchemaPropertyBase {
   // Standard JSON Schema
   // ========================
   /** JSON Schema type */
-  type?: "string" | "number" | "integer" | "boolean" | "object" | "array" | "null";
+  type?:
+    | "string"
+    | "number"
+    | "integer"
+    | "boolean"
+    | "object"
+    | "array"
+    | "null";
   /** Human-readable title (JSON Schema standard) */
   title?: string;
   /** Description text */
@@ -187,7 +193,7 @@ export interface JSONSchemaPropertyBase {
   format?: string;
   /** Multiple of constraint for numbers */
   multipleOf?: number;
-  
+
   // ========================
   // Nested structures
   // ========================
@@ -215,7 +221,7 @@ export interface JSONSchemaPropertyBase {
   inputProps?: SerializableInputProps;
   /** Display order */
   order?: number;
-  
+
   // ========================
   // Date constraints (from zodToFormSchema)
   // ========================
@@ -228,7 +234,7 @@ export interface JSONSchemaPropertyBase {
 /**
  * Field configuration item that auto-form uses to customize field rendering.
  * This is the target type when converting from JSON Schema.
- * 
+ *
  * Note: This is kept in sync with auto-form/types.ts FieldConfigItem
  */
 export interface FieldConfigItemBase {
@@ -241,7 +247,9 @@ export interface FieldConfigItemBase {
   /** Field type override */
   fieldType?: FieldType | React.ComponentType<unknown>;
   /** Wrapper component */
-  renderParent?: (props: { children: React.ReactNode }) => React.ReactElement | null;
+  renderParent?: (props: {
+    children: React.ReactNode;
+  }) => React.ReactElement | null;
   /** Display order */
   order?: number;
 }
@@ -262,4 +270,3 @@ export const JSON_SCHEMA_TO_FIELD_CONFIG_MAP = {
   inputType: "inputProps.type",
   default: "inputProps.defaultValue",
 } as const;
-

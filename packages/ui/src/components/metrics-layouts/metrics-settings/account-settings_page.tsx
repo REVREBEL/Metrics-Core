@@ -1,5 +1,5 @@
-import UserGeneral from "@users/account-settings-01/account-settings-01";
 import { Tabs, TabsList, TabsTrigger } from "@tabs/tabs";
+import UserGeneral from "@users/account-settings/account-settings";
 
 const tabs = [
   { name: "General", value: "general" },

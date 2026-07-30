@@ -1,7 +1,5 @@
-type SubNavProps = React.HTMLAttributes<HTMLDivElement>
+type SubNavProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function SubNav({ className, ...props }: SubNavProps) {
-    return (
-        <div className={className} {...props} />
-    )
+  return <div className={className} {...props} />;
 }

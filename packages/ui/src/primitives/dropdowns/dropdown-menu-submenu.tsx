@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Button } from "@buttons/button"
+import { Button } from "@buttons/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +13,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "./dropdown-menu"
+} from "./dropdown-menu";
 
 export function DropdownMenuSubmenu() {
   return (
@@ -53,5 +53,5 @@ export function DropdownMenuSubmenu() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

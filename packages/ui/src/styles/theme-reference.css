@@ -8,10 +8,10 @@
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
-  
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: oklch(1.0000 0 0);
+  --color-card: oklch(1 0 0);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
@@ -33,7 +33,7 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  
+
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
 
@@ -68,7 +68,7 @@
   --color-dark-blue-inverse: var(--base-color-4-d100);
   --color-dark-blue-inverse-fade: var(--base-color-4-l200);
 
-  --color-dark-blue-100: var(--primary-l400); 
+  --color-dark-blue-100: var(--primary-l400);
   --color-dark-blue-200: var(--primary-l300);
   --color-dark-blue-300: var(--primary-l200);
   --color-dark-blue-400: var(--primary-l100);
@@ -88,8 +88,8 @@
   --color-dark-blue-800-inverse: var(--base-color-4-l300);
   --color-dark-blue-900-inverse: var(--base-color-4-l400);
 
-  --color-blue-50:  var(--primary-l500);
-  --color-blue-100: var(--primary-l400); 
+  --color-blue-50: var(--primary-l500);
+  --color-blue-100: var(--primary-l400);
   --color-blue-200: var(--primary-l300);
   --color-blue-300: var(--primary-l200);
   --color-blue-400: var(--primary-l100);
@@ -117,7 +117,7 @@
   --color-dark-green-800: var(--base-color-1-d300);
   --color-dark-green-900: var(--base-color-1-d400);
 
-  --color-emerald-50:  var(--base-color-1-l400);
+  --color-emerald-50: var(--base-color-1-l400);
   --color-emerald-100: var(--base-color-1-l400);
   --color-emerald-200: var(--base-color-1-l300);
   --color-emerald-300: var(--base-color-1-l200);
@@ -139,7 +139,6 @@
   --color-dark-green-800-inverse: var(--base-color-9-l300);
   --color-dark-green-900-inverse: var(--base-color-9-l400);
 
-
   /* {Green} */
   --color-green: var(--base-color-2);
   --color-green-fade: var(--base-color-2-fade);
@@ -156,7 +155,7 @@
   --color-green-800: var(--base-color-2-d300);
   --color-green-900: var(--base-color-2-d400);
 
-  --color-teal-50:  var(--base-color-2-l500);
+  --color-teal-50: var(--base-color-2-l500);
   --color-teal-100: var(--base-color-2-l400);
   --color-teal-200: var(--base-color-2-l300);
   --color-teal-300: var(--base-color-2-l200);
@@ -194,7 +193,7 @@
   --color-light-green-800: var(--base-color-3-d300);
   --color-light-green-900: var(--base-color-3-d400);
 
-  --color-lime-50:  var(--base-color-3-l400);
+  --color-lime-50: var(--base-color-3-l400);
   --color-lime-100: var(--base-color-3-l400);
   --color-lime-200: var(--base-color-3-l300);
   --color-lime-300: var(--base-color-3-l200);
@@ -232,7 +231,7 @@
   --color-light-blue-800: var(--base-color-4-d300);
   --color-light-blue-900: var(--base-color-4-d400);
 
-  --color-cyan-50:  var(--base-color-4-l400);
+  --color-cyan-50: var(--base-color-4-l400);
   --color-cyan-100: var(--base-color-4-l400);
   --color-cyan-200: var(--base-color-4-l300);
   --color-cyan-300: var(--base-color-4-l200);
@@ -242,7 +241,7 @@
   --color-cyan-700: var(--base-color-4-d200);
   --color-cyan-800: var(--base-color-4-d300);
   --color-cyan-900: var(--base-color-4-d400);
-  --color-cyan-950: var(--base-color-4-d400); 
+  --color-cyan-950: var(--base-color-4-d400);
 
   --color-light-blue-100-inverse: var(--primary-d400);
   --color-light-blue-200-inverse: var(--primary-d300);
@@ -286,7 +285,7 @@
   --color-orange-inverse: var(--base-color-6-inverse);
   --color-orange-inverse-fade: var(--base-color-6-inverse-fade);
 
-  --color-orange-50:  var(--base-color-6-l500);
+  --color-orange-50: var(--base-color-6-l500);
   --color-orange-100: var(--base-color-6-l400);
   --color-orange-200: var(--base-color-6-l300);
   --color-orange-300: var(--base-color-6-l200);
@@ -314,7 +313,7 @@
   --color-red-inverse: var(--base-color-7-inverse);
   --color-red-inverse-fade: var(--base-color-7-inverse-fade);
 
-  --color-red-50:  var(--base-color-7-l500);
+  --color-red-50: var(--base-color-7-l500);
   --color-red-100: var(--base-color-7-l400);
   --color-red-200: var(--base-color-7-l300);
   --color-red-300: var(--base-color-7-l200);
@@ -366,7 +365,7 @@
 
   /* {Smoke} */
   --color-smoke: var(--base-color-9);
-  --color-smoke-fade:  var(--base-color-9-fade);
+  --color-smoke-fade: var(--base-color-9-fade);
   --color-smoke-inverse: var(--base-color-9-inverse);
   --color-smoke-inverse-fade: var(--base-color-9-inverse-fade);
 
@@ -380,7 +379,7 @@
   --color-smoke-800: var(--base-color-9-d300);
   --color-smoke-900: var(--base-color-9-d400);
 
-  --color-slate-50 : var(--base-color-9-b000);
+  --color-slate-50: var(--base-color-9-b000);
   --color-slate-100: var(--base-color-9-l400);
   --color-slate-200: var(--base-color-9-l300);
   --color-slate-300: var(--base-color-9-l200);
@@ -418,7 +417,7 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  
+
   /* Computed Shadow Variants */
   --shadow-2xs: var(--shadow-2xs);
   --shadow-xs: var(--shadow-xs);
@@ -430,7 +429,7 @@
   --shadow-2xl: var(--shadow-2xl);
 
   /* Radius */
-  --radius-xs: .25rem;
+  --radius-xs: 0.25rem;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -450,7 +449,7 @@
   --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
   --animate-heartbeat: heartbeat 2s infinite ease-in-out;
 
-  --spacing-xxs: .5rem;
+  --spacing-xxs: 0.5rem;
   --spacing-xs: 1rem;
   --spacing-sm: 2rem;
   --spacing-md: 3rem;
@@ -463,25 +462,44 @@
   --color-opacity-75: color-mix(in oklch, var(--dark-blue), transparent 25%);
 
   @keyframes heartbeat {
-    0%, 19%, 38%, 100% {
+    0%,
+    19%,
+    38%,
+    100% {
       transform: scale(1);
     }
-    9%, 28% {
+    9%,
+    28% {
       transform: scale(1.05);
     }
   }
 
   @keyframes rainbow {
-    0% { color: var(--color-red); }
-    14% { color: var(--color-orange); }
-    28% { color: var(--color-yellow); }
-    42% { color: var(--color-green); }
-    57% { color: var(--color-light-blue); }
-    71% { color: var(--color-dark-blue); }
-    85% { color: var(--color-purple); }
-    100% { color: var(--color-red); }
+    0% {
+      color: var(--color-red);
+    }
+    14% {
+      color: var(--color-orange);
+    }
+    28% {
+      color: var(--color-yellow);
+    }
+    42% {
+      color: var(--color-green);
+    }
+    57% {
+      color: var(--color-light-blue);
+    }
+    71% {
+      color: var(--color-dark-blue);
+    }
+    85% {
+      color: var(--color-purple);
+    }
+    100% {
+      color: var(--color-red);
+    }
   }
-
 }
 
 :root {
@@ -586,7 +604,7 @@
   /* {Yellow} */
   --base-color-5: oklch(84% 0.14 85.21);
   --base-color-5-fade: oklch(94.00% 0.05 85.21);
-  --base-color-5-inverse:  oklch(55% 0.21 32);
+  --base-color-5-inverse: oklch(55% 0.21 32);
   --base-color-5-inverse-fade: oklch(68.73% 0.144 25.6);
 
   /* {Orange} */
@@ -1004,33 +1022,33 @@
   }
 
   .jsx-text {
-    color: var(--color-primary) !important;
+    color: var(--color-primary);
   }
   .jsx-tag-angle-bracket {
-    color: var(--color-green) !important;
+    color: var(--color-green);
   }
   .jsx-tag-name {
-    color: var(--base-color-7) !important;
+    color: var(--base-color-7);
   }
   .jsx-tag-attribute-key {
-    color: var(--color-yellow) !important;
+    color: var(--color-yellow);
   }
   .jsx-expression-braces {
-    color: var(--color-purple-200) !important;
+    color: var(--color-purple-200);
   }
   .dark .jsx-text {
-    color: var(--color-purple) !important;
+    color: var(--color-purple);
   }
   .dark .jsx-tag-angle-bracket {
-    color: var(--base-grey-l200) !important;
+    color: var(--base-grey-l200);
   }
   .dark .jsx-tag-name {
-    color: var(--color-red-700) !important;
+    color: var(--color-red-700);
   }
   .dark .jsx-tag-attribute-key {
-    color: var(--color-red-700) !important;
+    color: var(--color-red-700);
   }
   .dark .jsx-expression-braces {
-    color: var(--color-red-900) !important;
+    color: var(--color-red-900);
   }
 }

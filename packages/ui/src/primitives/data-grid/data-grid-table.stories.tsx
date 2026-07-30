@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { DataGridTable } from "./data-grid-table";
 import { DataGridProvider } from "./data-grid";
-import React from "react";
+import { DataGridTable } from "./data-grid-table";
 
 const meta = {
   title: "Primitives/Data Grid/Data Grid Table",

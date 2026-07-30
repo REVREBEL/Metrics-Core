@@ -63,10 +63,7 @@ export const LinkBubbleMenu: React.FC<LinkBubbleMenuProps> = ({ editor }) => {
 
   const onSetLink = React.useCallback(
     (url: string, text?: string, openInNewTab?: boolean) => {
-      (editor
-        .chain()
-        .focus()
-        .extendMarkRange("link") as any)
+      (editor.chain().focus().extendMarkRange("link") as any)
         .insertContent({
           type: "text",
           text: text || url,

@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Button } from "@buttons/button"
+import { Button } from "@buttons/button";
+import { IconBell, IconMail, IconMessage } from "@tabler/icons-react";
+import * as React from "react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -9,15 +10,14 @@ import {
   DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "./dropdown-menu"
-import { IconBell, IconMail, IconMessage } from "@tabler/icons-react"
+} from "./dropdown-menu";
 
 export function DropdownMenuCheckboxesIcons() {
   const [notifications, setNotifications] = React.useState({
     email: true,
     sms: false,
     push: true,
-  })
+  });
 
   return (
     <DropdownMenu>
@@ -57,5 +57,5 @@ export function DropdownMenuCheckboxesIcons() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

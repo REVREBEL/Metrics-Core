@@ -10,10 +10,7 @@
       "id": "theme",
       "title": "Core Theme",
       "description": "Standard shadcn and app-level surface, content, state, chart, and sidebar tokens.",
-      "patterns": [
-        {},
-        {}
-      ],
+      "patterns": [{}, {}],
       "tokens": [
         {
           "name": "accent",
@@ -441,9 +438,7 @@
       "id": "brand-colors",
       "title": "Brand Palette",
       "description": "Metrics brand palette and inverse color scales exposed to Tailwind.",
-      "patterns": [
-        {}
-      ],
+      "patterns": [{}],
       "tokens": [
         {
           "name": "color-blue-100",
@@ -2167,9 +2162,7 @@
       "id": "fonts",
       "title": "Typography",
       "description": "Font family design tokens.",
-      "patterns": [
-        {}
-      ],
+      "patterns": [{}],
       "tokens": [
         {
           "name": "font-brand",
@@ -2225,9 +2218,7 @@
       "id": "effects",
       "title": "Effects",
       "description": "Shadow, tracking, and spacing tokens.",
-      "patterns": [
-        {}
-      ],
+      "patterns": [{}],
       "tokens": [
         {
           "name": "shadow",

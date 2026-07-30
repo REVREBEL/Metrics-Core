@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@buttons/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@ui-core/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,33 +11,30 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@dropdowns/dropdown-menu";
-import Link from "next/link";
-<<<<<<< Updated upstream
-import { Avatar, AvatarImage, AvatarFallback } from "@ui-core/avatar";
-=======
->>>>>>> Stashed changes
+import { Avatar, AvatarFallback, AvatarImage } from "@ui-core/avatar";
 import { SignOutDialog } from "@users/sign-out-dialog";
+import Link from "next/link";
 import useDialogState from "@/hooks/use-dialog-state";
 
 export function ProfileDropdown() {
-  const [open, setOpen] = useDialogState()
+  const [open, setOpen] = useDialogState();
 
   return (
     <>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
-            <Avatar className='h-8 w-8'>
-              <AvatarImage src='/avatars/01.png' alt='@shadcn' />
+          <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="/avatars/01.png" alt="@shadcn" />
               <AvatarFallback>SN</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className='w-56' align='end' forceMount>
-          <DropdownMenuLabel className='font-normal'>
-            <div className='flex flex-col gap-1.5'>
-              <p className='text-sm leading-none font-medium'>satnaing</p>
-              <p className='text-xs leading-none text-muted-foreground'>
+        <DropdownMenuContent className="w-56" align="end" forceMount>
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col gap-1.5">
+              <p className="text-sm leading-none font-medium">satnaing</p>
+              <p className="text-xs leading-none text-muted-foreground">
                 satnaingdev@gmail.com
               </p>
             </div>
@@ -46,19 +42,19 @@ export function ProfileDropdown() {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
-              <Link href='/settings'>
+              <Link href="/settings">
                 Profile
                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href='/settings'>
+              <Link href="/settings">
                 Billing
                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href='/settings'>
+              <Link href="/settings">
                 Settings
                 <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
               </Link>
@@ -66,9 +62,9 @@ export function ProfileDropdown() {
             <DropdownMenuItem>New Team</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant='destructive' onClick={() => setOpen(true)}>
+          <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
             Sign out
-            <DropdownMenuShortcut className='text-current'>
+            <DropdownMenuShortcut className="text-current">
               ⇧⌘Q
             </DropdownMenuShortcut>
           </DropdownMenuItem>
@@ -77,5 +73,5 @@ export function ProfileDropdown() {
 
       <SignOutDialog open={!!open} onOpenChange={setOpen} />
     </>
-  )
+  );
 }

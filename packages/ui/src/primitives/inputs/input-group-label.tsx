@@ -1,5 +1,10 @@
 import { IconInfoCircle } from "@tabler/icons-react";
-import { Label, Tooltip, TooltipContent, TooltipTrigger } from "@ui-core/tooltip";
+import {
+  Label,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@ui-core/tooltip";
 import {
   InputGroup,
   InputGroupAddon,

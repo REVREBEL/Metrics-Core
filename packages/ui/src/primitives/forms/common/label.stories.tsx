@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import AutoFormLabel from "./label";
-import { Form } from "../form";
-import React from "react";
 import { useForm } from "react-hook-form";
+import { Form } from "../form";
+import AutoFormLabel from "./label";
 
 const meta = {
   title: "Primitives/Forms/Common/Auto Form Label",

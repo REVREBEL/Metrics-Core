@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
-import { Button } from "@buttons/button"
+import { Button } from "@buttons/button";
+import { IconEdit, IconShare, IconTrash } from "@tabler/icons-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,8 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./dropdown-menu"
-import { IconEdit, IconShare, IconTrash } from "@tabler/icons-react"
+} from "./dropdown-menu";
 
 export function DropdownMenuDestructive() {
   return (
@@ -37,5 +37,5 @@ export function DropdownMenuDestructive() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

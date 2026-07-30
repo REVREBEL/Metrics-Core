@@ -1,10 +1,10 @@
-import * as React from "react"
 import { FormControl, FormItem, FormMessage } from "@forms/form";
-import { Input as BaseInput } from "@inputs/input"; 
+import { Input as BaseInput } from "@inputs/input";
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 import AutoFormLabel from "../common/label";
 import AutoFormTooltip from "../common/tooltip";
 import type { AutoFormInputComponentProps } from "../types";
-import { cn } from "@/lib/utils"; 
 
 export default function AutoFormInput({
   label,
@@ -36,7 +36,6 @@ export default function AutoFormInput({
   );
 }
 
-
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     // 3. Render 'BaseInput' here to break the infinite rendering loop
@@ -45,12 +44,12 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
       data-slot="input"
       className={cn(
         "cn-input w-full min-w-0 outline-none file:inline-flex file:border-0 file:bg-transparent file:text-foreground placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 // 4. Safely export your custom Input component
-export { Input }
+export { Input };

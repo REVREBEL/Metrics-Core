@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import { ToastProvider, toastManager } from "./toast";
 import { Button } from "../buttons/button";
+import { ToastProvider, toastManager } from "./toast";
 
 const meta: Meta<typeof ToastProvider> = {
   title: "Primitives/UI Core/Toast",

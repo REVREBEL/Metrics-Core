@@ -8,7 +8,7 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
-} from "@ui-core";
+} from "@ui-core/select";
 import * as React from "react";
 import { Button } from "./button";
 import { ButtonGroup } from "./button-group";

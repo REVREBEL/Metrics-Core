@@ -1,9 +1,9 @@
-import { DatePicker } from "@ui-core/date-picker";
 import { FormControl, FormItem, FormMessage } from "@forms/form";
+import { DatePicker } from "@ui-core/date-picker";
 import AutoFormLabel from "../common/label";
 import AutoFormTooltip from "../common/tooltip";
-import type { AutoFormInputComponentProps } from "../types";
 import { getBaseType } from "../helpers";
+import type { AutoFormInputComponentProps } from "../types";
 
 /**
  * Convert a value to a Date object if needed.
@@ -14,7 +14,7 @@ function toDate(value: unknown): Date | undefined {
   if (value instanceof Date) return value;
   if (typeof value === "string") {
     const date = new Date(value);
-    return isNaN(date.getTime()) ? undefined : date;
+    return Number.isNaN(date.getTime()) ? undefined : date;
   }
   return undefined;
 }
@@ -31,7 +31,7 @@ export default function AutoFormDate({
   // z.date() has base type "ZodDate", while z.fromJSONSchema with format: date-time creates a ZodString
   const baseType = getBaseType(zodItem);
   const expectsDateObject = baseType === "ZodDate";
-  
+
   const handleChange = (date: Date | undefined) => {
     if (!date) {
       field.onChange(undefined);

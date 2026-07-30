@@ -17,6 +17,7 @@ type Story = StoryObj<typeof V1_1_0_Content>;
 export const Default: Story = {
   args: {
     title: "Global Theme Rebuild v1.1.0",
-    description: "Hierarchical, semantic, and type-safe design token scaling system.",
+    description:
+      "Hierarchical, semantic, and type-safe design token scaling system.",
   },
 };

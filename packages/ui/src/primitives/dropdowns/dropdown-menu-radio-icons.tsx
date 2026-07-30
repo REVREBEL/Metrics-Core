@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Button } from "@buttons/button"
+import { Button } from "@buttons/button";
+import { IconBuilding, IconCreditCard, IconWallet } from "@tabler/icons-react";
+import * as React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,11 +11,10 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from "./dropdown-menu"
-import { IconBuilding, IconCreditCard, IconWallet } from "@tabler/icons-react"
+} from "./dropdown-menu";
 
 export function DropdownMenuRadioIcons() {
-  const [paymentMethod, setPaymentMethod] = React.useState("card")
+  const [paymentMethod, setPaymentMethod] = React.useState("card");
 
   return (
     <DropdownMenu>
@@ -44,5 +44,5 @@ export function DropdownMenuRadioIcons() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

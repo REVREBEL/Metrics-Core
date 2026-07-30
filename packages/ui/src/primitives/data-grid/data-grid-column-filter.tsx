@@ -1,25 +1,23 @@
-"use client"
+"use client";
 
-import { useMemo, useState } from "react"
-import { type Column } from "@tanstack/react-table"
-
-import { cn } from "@/lib/utils"
-import { Badge } from "@ui-core/badge"
-import { Button } from "@buttons/button"
-import { Input } from "@inputs/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@popovers/popover"
-import { Separator } from "@ui-core/separator"
-
-import { IconCheck, IconPlus } from "@tabler/icons-react"
+import { Button } from "@buttons/button";
+import { Input } from "@inputs/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@popovers/popover";
+import { IconCheck, IconPlus } from "@tabler/icons-react";
+import type { Column } from "@tanstack/react-table";
+import { Badge } from "@ui-core/badge";
+import { Separator } from "@ui-core/separator";
+import { useMemo, useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface DataGridColumnFilterProps<TData, TValue> {
-  column?: Column<TData, TValue>
-  title?: string
+  column?: Column<TData, TValue>;
+  title?: string;
   options: {
-    label: string
-    value: string
-    icon?: React.ComponentType<{ className?: string }>
-  }[]
+    label: string;
+    value: string;
+    icon?: React.ComponentType<{ className?: string }>;
+  }[];
 }
 
 function DataGridColumnFilter<TData, TValue>({
@@ -27,16 +25,16 @@ function DataGridColumnFilter<TData, TValue>({
   title,
   options,
 }: DataGridColumnFilterProps<TData, TValue>) {
-  const facets = column?.getFacetedUniqueValues()
-  const selectedValues = new Set(column?.getFilterValue() as string[])
-  const [searchQuery, setSearchQuery] = useState("")
+  const facets = column?.getFacetedUniqueValues();
+  const selectedValues = new Set(column?.getFilterValue() as string[]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredOptions = useMemo(() => {
-    if (!searchQuery) return options
+    if (!searchQuery) return options;
     return options.filter((option) =>
-      option.label.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  }, [options, searchQuery])
+      option.label.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+  }, [options, searchQuery]);
 
   return (
     <Popover>
@@ -96,24 +94,24 @@ function DataGridColumnFilter<TData, TValue>({
           ) : (
             <div className="p-1">
               {filteredOptions.map((option) => {
-                const isSelected = selectedValues.has(option.value)
+                const isSelected = selectedValues.has(option.value);
                 return (
                   <div
                     key={option.value}
                     onClick={() => {
                       if (isSelected) {
-                        selectedValues.delete(option.value)
+                        selectedValues.delete(option.value);
                       } else {
-                        selectedValues.add(option.value)
+                        selectedValues.add(option.value);
                       }
-                      const filterValues = Array.from(selectedValues)
+                      const filterValues = Array.from(selectedValues);
                       column?.setFilterValue(
-                        filterValues.length ? filterValues : undefined
-                      )
+                        filterValues.length ? filterValues : undefined,
+                      );
                     }}
                     className={cn(
                       "relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none",
-                      "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
                     )}
                   >
                     <div
@@ -121,7 +119,7 @@ function DataGridColumnFilter<TData, TValue>({
                         "border-primary me-2 flex h-4 w-4 items-center justify-center rounded-sm border",
                         isSelected
                           ? "bg-primary text-primary-foreground"
-                          : "opacity-50 [&_svg]:invisible"
+                          : "opacity-50 [&_svg]:invisible",
                       )}
                     >
                       <IconCheck strokeWidth={2} className="size-4" />
@@ -136,7 +134,7 @@ function DataGridColumnFilter<TData, TValue>({
                       </span>
                     )}
                   </div>
-                )
+                );
               })}
             </div>
           )}
@@ -156,7 +154,7 @@ function DataGridColumnFilter<TData, TValue>({
         </div>
       </PopoverContent>
     </Popover>
-  )
+  );
 }
 
-export { DataGridColumnFilter, type DataGridColumnFilterProps }
+export { DataGridColumnFilter, type DataGridColumnFilterProps };

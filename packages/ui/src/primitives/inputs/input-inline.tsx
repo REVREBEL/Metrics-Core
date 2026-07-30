@@ -1,5 +1,5 @@
-import { Field } from "@forms/fields/field";
 import { Button } from "@buttons/button";
+import { Field } from "@forms/fields/field";
 import { Input } from "./input";
 
 export function InputInline() {

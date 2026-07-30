@@ -1,5 +1,5 @@
-import type { CSSProperties, ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { CSSProperties, ReactNode } from "react";
 
 import { DisplayMetric } from "./display-metric";
 
@@ -103,10 +103,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
   render: (args) => (
-    <div
-      className="font-medium text-[#047C97]"
-      style={{ fontSize: "42px" }}
-    >
+    <div className="font-medium text-[#047C97]" style={{ fontSize: "42px" }}>
       <DisplayMetric {...args} />
     </div>
   ),
@@ -117,10 +114,7 @@ export const PositiveNumber: Story = {
     value: 16,
   },
   render: (args) => (
-    <div
-      className="font-medium text-[#047C97]"
-      style={{ fontSize: "42px" }}
-    >
+    <div className="font-medium text-[#047C97]" style={{ fontSize: "42px" }}>
       <DisplayMetric {...args} />
     </div>
   ),
@@ -144,10 +138,7 @@ export const PositiveCurrency: Story = {
     decimals: 2,
   },
   render: (args) => (
-    <div
-      className="font-medium text-[#047C97]"
-      style={{ fontSize: "42px" }}
-    >
+    <div className="font-medium text-[#047C97]" style={{ fontSize: "42px" }}>
       <DisplayMetric {...args} />
     </div>
   ),
@@ -327,11 +318,7 @@ export const DesignReference: Story = {
         <ParentExample title="Parent Container Example 1">
           <div className="flex min-h-56 items-center justify-center rounded-lg border">
             <MetricExample>
-              <DisplayMetric
-                value={16}
-                format="currency"
-                decimals={0}
-              />
+              <DisplayMetric value={16} format="currency" decimals={0} />
             </MetricExample>
           </div>
         </ParentExample>
@@ -386,9 +373,7 @@ function MetricFrame({
 
 function MetricExample({ children }: { children: ReactNode }) {
   return (
-    <div className="text-[42px] font-medium text-[#047C97]">
-      {children}
-    </div>
+    <div className="text-[42px] font-medium text-[#047C97]">{children}</div>
   );
 }
 

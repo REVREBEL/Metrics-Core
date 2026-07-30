@@ -1,5 +1,5 @@
-import { IconArrowRight } from "@tabler/icons-react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { IconArrowRight } from "@tabler/icons-react";
 
 import { MetricsButton } from "./metrics-button";
 
@@ -97,29 +97,17 @@ export const Variants: Story = {
     <div className="flex flex-wrap items-center gap-3">
       <MetricsButton>Default</MetricsButton>
 
-      <MetricsButton variant="secondary">
-        Secondary
-      </MetricsButton>
+      <MetricsButton variant="secondary">Secondary</MetricsButton>
 
-      <MetricsButton variant="monocolor">
-        MonoColor
-      </MetricsButton>
+      <MetricsButton variant="monocolor">MonoColor</MetricsButton>
 
-      <MetricsButton variant="outline">
-        Outline
-      </MetricsButton>
+      <MetricsButton variant="outline">Outline</MetricsButton>
 
-      <MetricsButton variant="ghost">
-        Ghost
-      </MetricsButton>
+      <MetricsButton variant="ghost">Ghost</MetricsButton>
 
-      <MetricsButton variant="destructive">
-        Destructive
-      </MetricsButton>
+      <MetricsButton variant="destructive">Destructive</MetricsButton>
 
-      <MetricsButton variant="link">
-        Link
-      </MetricsButton>
+      <MetricsButton variant="link">Link</MetricsButton>
     </div>
   ),
 };
@@ -150,11 +138,7 @@ export const MonoColors: Story = {
   render: () => (
     <div className="flex max-w-3xl flex-wrap items-center gap-3">
       {colorOptions.map((color) => (
-        <MetricsButton
-          key={color}
-          variant="monocolor"
-          color={color}
-        >
+        <MetricsButton key={color} variant="monocolor" color={color}>
           {color}
         </MetricsButton>
       ))}
@@ -171,11 +155,7 @@ export const OutlineColors: Story = {
   render: () => (
     <div className="flex max-w-3xl flex-wrap items-center gap-3">
       {colorOptions.map((color) => (
-        <MetricsButton
-          key={color}
-          variant="outline"
-          color={color}
-        >
+        <MetricsButton key={color} variant="outline" color={color}>
           {color}
         </MetricsButton>
       ))}
@@ -191,21 +171,13 @@ export const Sizes: Story = {
   },
   render: () => (
     <div className="flex flex-wrap items-center gap-3">
-      <MetricsButton size="xs">
-        Extra Small
-      </MetricsButton>
+      <MetricsButton size="xs">Extra Small</MetricsButton>
 
-      <MetricsButton size="sm">
-        Small
-      </MetricsButton>
+      <MetricsButton size="sm">Small</MetricsButton>
 
-      <MetricsButton size="default">
-        Default
-      </MetricsButton>
+      <MetricsButton size="default">Default</MetricsButton>
 
-      <MetricsButton size="lg">
-        Large
-      </MetricsButton>
+      <MetricsButton size="lg">Large</MetricsButton>
     </div>
   ),
 };
@@ -218,31 +190,19 @@ export const IconSizes: Story = {
   },
   render: () => (
     <div className="flex flex-wrap items-center gap-3">
-      <MetricsButton
-        size="icon-xs"
-        aria-label="Continue"
-      >
+      <MetricsButton size="icon-xs" aria-label="Continue">
         <IconArrowRight aria-hidden="true" />
       </MetricsButton>
 
-      <MetricsButton
-        size="icon-sm"
-        aria-label="Continue"
-      >
+      <MetricsButton size="icon-sm" aria-label="Continue">
         <IconArrowRight aria-hidden="true" />
       </MetricsButton>
 
-      <MetricsButton
-        size="icon"
-        aria-label="Continue"
-      >
+      <MetricsButton size="icon" aria-label="Continue">
         <IconArrowRight aria-hidden="true" />
       </MetricsButton>
 
-      <MetricsButton
-        size="icon-lg"
-        aria-label="Continue"
-      >
+      <MetricsButton size="icon-lg" aria-label="Continue">
         <IconArrowRight aria-hidden="true" />
       </MetricsButton>
     </div>
@@ -258,4 +218,3 @@ export const Disabled: Story = {
     disabled: true,
   },
 };
-

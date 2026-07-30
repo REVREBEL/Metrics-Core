@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { DataGridPagination } from "./data-grid-pagination";
 import { DataGridProvider } from "./data-grid";
-import React from "react";
+import { DataGridPagination } from "./data-grid-pagination";
 
 const meta = {
   title: "Primitives/Data Grid/Data Grid Pagination",

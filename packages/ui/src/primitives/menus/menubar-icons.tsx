@@ -1,4 +1,12 @@
 import {
+  IconDeviceFloppyFilled,
+  IconFileFilled,
+  IconFolderFilled,
+  IconInfoSquareRoundedFilled,
+  IconSettingsFilled,
+  IconTrashFilled,
+} from "@tabler/icons-react";
+import {
   Menubar,
   MenubarContent,
   MenubarGroup,
@@ -7,8 +15,7 @@ import {
   MenubarSeparator,
   MenubarShortcut,
   MenubarTrigger,
-} from "./menubar"
-import { IconFileFilled, IconFolderFilled, IconInfoSquareRoundedFilled, IconDeviceFloppyFilled, IconSettingsFilled, IconTrashFilled } from "@tabler/icons-react"
+} from "./menubar";
 
 export function MenubarIcons() {
   return (
@@ -52,5 +59,5 @@ export function MenubarIcons() {
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
-  )
+  );
 }

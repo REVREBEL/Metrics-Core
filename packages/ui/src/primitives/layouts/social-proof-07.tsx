@@ -1,33 +1,38 @@
-import type { ComponentType } from 'react'
-
-import { Card, CardContent, CardDescription, CardTitle } from "@ui-core/card"
+import { Card, CardContent, CardDescription } from "@ui-core/card";
+import type { ComponentType } from "react";
 
 type MetricItem = {
-  icon: ComponentType
-  value: string
-  label: string
-}
+  icon: ComponentType;
+  value: string;
+  label: string;
+};
 
 const SocialProof = ({ metrics }: { metrics: MetricItem[] }) => {
   return (
-    <section className='py-8 sm:py-16 lg:py-24'>
-      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        <div className='bg-muted rounded-md px-4 py-10 sm:px-6 lg:px-8'>
-          <div className='mb-12 space-y-4 sm:mb-16 lg:mb-24'>
-            <h2 className='text-2xl font-display font-bold uppercase tracking-widest md:text-3xl lg:text-4xl'>Key Performance Metrics</h2>
-            <p className='text-muted-foreground max-w-4xl text-xl'>
-              Unlock your business potential with our expert guidance. Discover innovative strategies to elevate your
-              success.
+    <section className="py-8 sm:py-16 lg:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="bg-muted rounded-md px-4 py-10 sm:px-6 lg:px-8">
+          <div className="mb-12 space-y-4 sm:mb-16 lg:mb-24">
+            <h2 className="text-2xl font-display font-bold uppercase tracking-widest md:text-3xl lg:text-4xl">
+              Key Performance Metrics
+            </h2>
+            <p className="text-muted-foreground max-w-4xl text-xl">
+              Unlock your business potential with our expert guidance. Discover
+              innovative strategies to elevate your success.
             </p>
           </div>
 
-          <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             {metrics.map((metric, index) => (
               <Card key={index}>
-                <CardContent className='[&>svg]:text-muted-foreground flex flex-col items-center [&>svg]:size-7'>
+                <CardContent className="[&>svg]:text-muted-foreground flex flex-col items-center [&>svg]:size-7">
                   <metric.icon />
-                  <h2 className='text-2xl font-display font-bold uppercase tracking-widest md:text-3xl lg:text-4xl'>{metric.value}</h2>
-                  <CardDescription className='text-sm font-display font-bold uppercase tracking-widest text-dark-blue'>{metric.label}</CardDescription>
+                  <h2 className="text-2xl font-display font-bold uppercase tracking-widest md:text-3xl lg:text-4xl">
+                    {metric.value}
+                  </h2>
+                  <CardDescription className="text-sm font-display font-bold uppercase tracking-widest text-dark-blue">
+                    {metric.label}
+                  </CardDescription>
                 </CardContent>
               </Card>
             ))}
@@ -35,7 +40,7 @@ const SocialProof = ({ metrics }: { metrics: MetricItem[] }) => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default SocialProof
+export default SocialProof;

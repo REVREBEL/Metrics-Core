@@ -7,10 +7,10 @@ import {
   IconTool,
   IconUserCog,
 } from "@tabler/icons-react";
+import { Separator } from "@ui-core/separator";
 import { Header } from "@/components/layout/header";
 import { Main } from "@/components/layout/main";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { Separator } from "@ui-core/separator";
 import { ContentSection } from "./components/content-section";
 import { SidebarNav } from "./components/sidebar-nav";
 import { ProfileForm } from "./profile/profile-form";

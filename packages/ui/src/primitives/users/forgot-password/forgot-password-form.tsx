@@ -1,25 +1,29 @@
-'use client'
+"use client";
 
-import { Button } from '@buttons/button'
-import { Input } from '@forms/fields/input'
-import { Label } from '@ui-core/label'
+import { Button } from "@buttons/button";
+import { Input } from "@forms/fields/input";
+import { Label } from "@ui-core/label";
 
 const ForgotPasswordForm = () => {
   return (
-    <form className='space-y-4' onSubmit={e => e.preventDefault()}>
+    <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
       {/* Email */}
-      <div className='space-y-1'>
-        <Label className='leading-5' htmlFor='userEmail'>
+      <div className="space-y-1">
+        <Label className="leading-5" htmlFor="userEmail">
           Email address*
         </Label>
-        <Input type='email' id='userEmail' placeholder='Enter your email address' />
+        <Input
+          type="email"
+          id="userEmail"
+          placeholder="Enter your email address"
+        />
       </div>
 
-      <Button className='w-full' type='submit'>
+      <Button className="w-full" type="submit">
         Send Reset Link
       </Button>
     </form>
-  )
-}
+  );
+};
 
-export default ForgotPasswordForm
+export default ForgotPasswordForm;
