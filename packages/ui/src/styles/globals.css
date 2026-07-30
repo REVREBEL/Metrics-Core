@@ -8,11 +8,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@layer components {
-}
-
 @layer base {
-
   * {
     @apply border-border outline-ring/50;
   }
@@ -24,7 +20,6 @@
   }
 
   body {
-
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     -webkit-font-smoothing: subpixel-antialiased;
