@@ -1,20 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { fetchFeatureDataLibraryRows } from "../../../../features/data-library/service";
+import { getCurrentWorkspaceSession } from "../../../../features/data-library/session";
 
 export const dynamic = "force-dynamic";
 
-function getWorkspaceAuthContext(_request: NextRequest) {
-  return {
-    isAuthenticated: true,
-    permissions: [
-      "data_library.lookup_tables.view",
-      "data_library.mapping_tables.view",
-    ],
-  };
-}
-
 export async function GET(request: NextRequest) {
-  const authContext = getWorkspaceAuthContext(request);
+  const authContext = await getCurrentWorkspaceSession();
   if (!authContext.isAuthenticated) {
     return NextResponse.json(
       {
