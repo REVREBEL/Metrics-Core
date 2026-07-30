@@ -24,7 +24,9 @@ export default function FieldGroupExample() {
         <FieldLabel>Tasks</FieldLabel>
         <FieldDescription>
           Get notified when tasks you&apos;ve created have updates.{" "}
-          <a href="#">Manage tasks</a>
+          <button type="button" className="underline underline-offset-4">
+            Manage tasks
+          </button>
         </FieldDescription>
         <FieldGroup data-slot="checkbox-group">
           <Field orientation="horizontal">
