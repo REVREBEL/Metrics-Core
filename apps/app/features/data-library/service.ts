@@ -27,10 +27,16 @@ export type DataLibraryOverlayRow = Record<string, unknown> & {
   };
 };
 
+export type RowFetcher = (
+  readDef: ReturnType<typeof toReadDefinition>,
+  options: DataLibraryQueryOptions,
+) => Promise<DataLibraryResponse>;
+
 export async function fetchFeatureDataLibraryRows(
   options: DataLibraryQueryOptions,
   authContext?: FeatureAuthContext,
   draftRepo?: DraftRepository,
+  rowFetcher?: RowFetcher,
 ): Promise<DataLibraryResponse> {
   // 1. Authenticated workspace check
   if (authContext && !authContext.isAuthenticated) {
@@ -76,12 +82,17 @@ export async function fetchFeatureDataLibraryRows(
     }
   }
 
-  // 4. Execute row reading via @repo/data
+  // 4. Execute row reading via @repo/data or rowFetcher
   const readDef = toReadDefinition(tableDef);
-  const { executeDataLibraryRowRead } = await import(
-    "@repo/data/server/data-library"
-  );
-  const result = await executeDataLibraryRowRead(readDef, options);
+  let result: DataLibraryResponse;
+  if (rowFetcher) {
+    result = await rowFetcher(readDef, options);
+  } else {
+    const { executeDataLibraryRowRead } = await import(
+      "@repo/data/server/data-library"
+    );
+    result = await executeDataLibraryRowRead(readDef, options);
+  }
 
   if (!result.success) {
     return result;

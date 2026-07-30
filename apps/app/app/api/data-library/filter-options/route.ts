@@ -1,38 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { fetchFeatureDataLibraryFilterOptions } from "../../../../features/data-library/service";
+import { getCurrentWorkspaceSession } from "../../../../features/data-library/session";
 
 export const dynamic = "force-dynamic";
 
-function getWorkspaceAuthContext(request: NextRequest) {
-  const userId =
-    request.headers.get("x-user-id") ||
-    request.headers.get("x-workspace-user-id");
-  const isAuthenticated = request.headers.get("x-authenticated") === "true";
-  const permissionsHeader = request.headers.get("x-user-permissions");
-  const permissions = permissionsHeader
-    ? permissionsHeader
-        .split(",")
-        .map((p) => p.trim())
-        .filter(Boolean)
-    : [];
-
-  if (!isAuthenticated || !userId) {
-    return {
-      userId: "",
-      isAuthenticated: false,
-      permissions: [],
-    };
-  }
-
-  return {
-    userId,
-    isAuthenticated: true,
-    permissions,
-  };
-}
-
 export async function GET(request: NextRequest) {
-  const authContext = getWorkspaceAuthContext(request);
+  const authContext = await getCurrentWorkspaceSession();
   if (!authContext.isAuthenticated) {
     return NextResponse.json(
       {

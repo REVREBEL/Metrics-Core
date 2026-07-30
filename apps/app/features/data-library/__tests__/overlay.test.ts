@@ -4,9 +4,10 @@ import { InMemoryDraftRepository } from "@repo/db";
 import { canonicalizeRowKey } from "../canonicalizer";
 import { saveFeatureDraftEdits } from "../draft-service";
 import { getDataLibraryTableDefinition } from "../registry";
-import type { DataLibraryOverlayRow } from "../service";
+import type { DataLibraryOverlayRow, RowFetcher } from "../service";
+import { fetchFeatureDataLibraryRows } from "../service";
 
-test("Three-layer overlay model constructs sourceValues, draftValues, effectiveValues, dirtyColumns, and rowKey", async () => {
+test("fetchFeatureDataLibraryRows constructs real three-layer overlay with sourceValues, draftValues, effectiveValues, dirtyColumns, and rowKey", async () => {
   const repo = new InMemoryDraftRepository();
   const authContext = {
     userId: "user-123",
@@ -48,38 +49,45 @@ test("Three-layer overlay model constructs sourceValues, draftValues, effectiveV
 
   assert.equal(saveRes.success, true);
 
-  // 2. Fetch saved drafts from repository
-  const drafts = await repo.listDrafts("metrics_core.lkp_segment", "user-123");
-  assert.equal(drafts.length, 1);
+  // 2. Mock rowFetcher supplying sourceRow
+  const mockRowFetcher: RowFetcher = async () => ({
+    success: true,
+    data: {
+      rows: [sourceRow],
+      totalRows: 1,
+      page: 1,
+      pageSize: 25,
+      totalPages: 1,
+    },
+  });
 
-  const activeDraft = drafts.find((d) => d.rowKey === expectedRowKey);
-  assert.ok(activeDraft);
-
-  // 3. Verify overlay properties matching DataLibraryOverlayRow structure
-  const draftValues = activeDraft.draftPayload;
-  const effectiveValues = { ...sourceRow, ...draftValues };
-  const dirtyColumns = Object.keys(draftValues).filter(
-    (k) => sourceRow[k as keyof typeof sourceRow] !== draftValues[k],
+  // 3. Call fetchFeatureDataLibraryRows directly
+  const res = await fetchFeatureDataLibraryRows(
+    {
+      tableKey: "metrics_core.lkp_segment",
+      page: 1,
+      pageSize: 25,
+    },
+    authContext,
+    repo,
+    mockRowFetcher,
   );
 
-  const overlayRow: DataLibraryOverlayRow = {
-    ...effectiveValues,
-    _overlay: {
-      rowKey: expectedRowKey,
-      sourceValues: sourceRow,
-      draftValues,
-      effectiveValues,
-      draftId: activeDraft.id,
-      draftUpdatedAt: activeDraft.updatedAt.toISOString(),
-      dirtyColumns,
-    },
-  };
+  assert.equal(res.success, true);
 
-  assert.ok(overlayRow._overlay, "_overlay property must be attached");
-  assert.equal(overlayRow._overlay.rowKey, expectedRowKey);
-  assert.equal(overlayRow._overlay.sourceValues.name, "Corporate");
-  assert.equal(overlayRow._overlay.draftValues?.name, "Corporate Travel");
-  assert.equal(overlayRow._overlay.effectiveValues.name, "Corporate Travel");
-  assert.equal(overlayRow._overlay.effectiveValues.sort, 15);
-  assert.deepEqual(overlayRow._overlay.dirtyColumns.sort(), ["name", "sort"]);
+  if (res.success) {
+    const row = res.data.rows[0] as DataLibraryOverlayRow;
+    assert.ok(row, "Row should be returned");
+    assert.ok(
+      row._overlay,
+      "_overlay property must be constructed by fetchFeatureDataLibraryRows",
+    );
+
+    assert.equal(row._overlay.rowKey, expectedRowKey);
+    assert.equal(row._overlay.sourceValues.name, "Corporate");
+    assert.equal(row._overlay.draftValues?.name, "Corporate Travel");
+    assert.equal(row._overlay.effectiveValues.name, "Corporate Travel");
+    assert.equal(row._overlay.effectiveValues.sort, 15);
+    assert.deepEqual(row._overlay.dirtyColumns.sort(), ["name", "sort"]);
+  }
 });
