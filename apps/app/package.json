@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome check .",
-    "test": "echo \"No tests configured\"",
+    "test": "tsx --test features/data-library/__tests__/*.test.ts",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "dependencies": {
@@ -31,7 +31,8 @@
     "eslint-config-next": "16.2.9",
     "glob": "^10.4.2",
     "postcss": "^8.4.39",
-    "turbopack": "^0.0.1"
+    "turbopack": "^0.0.1",
+    "tsx": "^4.19.0"
   },
   "pnpm": {
     "overrides": {
