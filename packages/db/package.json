@@ -7,7 +7,8 @@
   "scripts": {
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "test": "tsx --test __tests__/**/*.test.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.0",
@@ -16,7 +17,9 @@
     "zod": "^4.0.0"
   },
   "devDependencies": {
+    "@types/node": "^24.0.0",
     "drizzle-kit": "^0.31.0",
+    "tsx": "^4.19.2",
     "typescript": "^6.0.0"
   }
 }

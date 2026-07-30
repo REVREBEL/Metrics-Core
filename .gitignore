@@ -39,4 +39,6 @@ storybook-static/
 
 # UI package generated output
 packages/ui/public/r/
-node_modules
+
+# Docs generated search index
+apps/docs/public/_pagefind/

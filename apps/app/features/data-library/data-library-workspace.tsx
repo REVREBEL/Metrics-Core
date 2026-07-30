@@ -14,13 +14,22 @@ import {
   ArrowUpDown,
   CheckCircle2,
   Database,
+  Edit3,
   GitPullRequest,
   LockKeyhole,
   RefreshCw,
+  Save,
   Search,
+  Trash2,
   X,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  discardAllDraftEditsAction,
+  discardDraftEditsAction,
+  saveDraftEditsAction,
+} from "./actions";
+import { canonicalizeRowKey } from "./canonicalizer";
 import { fetchFilterOptionsClient, fetchRowsClient } from "./client";
 import type { DataLibraryTableDefinition } from "./registry";
 
@@ -62,6 +71,16 @@ export function DataLibraryWorkspace({
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [actionFeedback, setActionFeedback] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Unsaved local edits state (key: rowKey -> record of changed fields)
+  const [localEdits, setLocalEdits] = useState<
+    Record<string, Record<string, unknown>>
+  >({});
 
   // Row inspection
   const [selectedRow, setSelectedRow] = useState<Record<
@@ -69,12 +88,29 @@ export function DataLibraryWorkspace({
     unknown
   > | null>(null);
 
+  // Computed unsaved edit count
+  const unsavedEditCount = Object.keys(localEdits).length;
+
+  // Unsaved local edits navigation warning
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (unsavedEditCount > 0) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [unsavedEditCount]);
+
   // Reset page and filters when switching selected table
   useEffect(() => {
     setPage(1);
     setSearch("");
     setFilters({});
     setSelectedRow(null);
+    setLocalEdits({});
+    setActionFeedback(null);
     if (selectedTable) {
       setSortColumn(selectedTable.defaultSort.column);
       setSortDirection(selectedTable.defaultSort.direction);
@@ -123,7 +159,15 @@ export function DataLibraryWorkspace({
     }
 
     return () => controller.abort();
-  }, [selectedTable, page, pageSize, search, sortColumn, sortDirection, filters]);
+  }, [
+    selectedTable,
+    page,
+    pageSize,
+    search,
+    sortColumn,
+    sortDirection,
+    filters,
+  ]);
 
   useEffect(() => {
     loadRows();
@@ -148,6 +192,117 @@ export function DataLibraryWorkspace({
       });
     }
   }, [selectedTable]);
+
+  // Local edit handler
+  const handleCellEdit = useCallback(
+    (rowKey: string, colKey: string, newValue: unknown) => {
+      setLocalEdits((prev) => {
+        const rowEdits = { ...(prev[rowKey] ?? {}), [colKey]: newValue };
+        return { ...prev, [rowKey]: rowEdits };
+      });
+    },
+    [],
+  );
+
+  // Save Drafts Action
+  const handleSaveDrafts = async () => {
+    if (!selectedTable || unsavedEditCount === 0) return;
+    setIsSaving(true);
+    setActionFeedback(null);
+
+    const changes = Object.entries(localEdits).map(([rowKey, draftPayload]) => {
+      const targetRow = rows.find((r) => {
+        const overlay = (r as Record<string, unknown>)._overlay as
+          | Record<string, unknown>
+          | undefined;
+        return (
+          overlay?.rowKey === rowKey ||
+          canonicalizeRowKey(selectedTable.primaryKey, r) === rowKey
+        );
+      });
+      const overlay = targetRow?._overlay as
+        | Record<string, unknown>
+        | undefined;
+      const originalPayload = (overlay?.sourceValues ??
+        targetRow ??
+        null) as Record<string, unknown> | null;
+
+      return {
+        originalPayload,
+        draftPayload,
+      };
+    });
+
+    const res = await saveDraftEditsAction({
+      tableKey: selectedTable.key,
+      changes,
+    });
+
+    setIsSaving(false);
+    if (res.success) {
+      setLocalEdits({});
+      setActionFeedback({
+        type: "success",
+        message: res.message || "Draft changes persisted successfully.",
+      });
+      loadRows();
+    } else {
+      setActionFeedback({
+        type: "error",
+        message: res.message || "Failed to save draft changes.",
+      });
+    }
+  };
+
+  // Discard Single Row Action
+  const handleDiscardRow = async (rowKey: string) => {
+    if (!selectedTable) return;
+    setActionFeedback(null);
+
+    // If there are unsaved local edits for this row, remove them
+    if (localEdits[rowKey]) {
+      setLocalEdits((prev) => {
+        const copy = { ...prev };
+        delete copy[rowKey];
+        return copy;
+      });
+    }
+
+    const res = await discardDraftEditsAction(selectedTable.key, [rowKey]);
+    if (res.success) {
+      setActionFeedback({
+        type: "success",
+        message: res.message || "Row draft discarded.",
+      });
+      loadRows();
+    } else {
+      setActionFeedback({
+        type: "error",
+        message: res.message || "Failed to discard row draft.",
+      });
+    }
+  };
+
+  // Discard All Table Drafts Action
+  const handleDiscardAll = async () => {
+    if (!selectedTable) return;
+    setActionFeedback(null);
+    setLocalEdits({});
+
+    const res = await discardAllDraftEditsAction(selectedTable.key);
+    if (res.success) {
+      setActionFeedback({
+        type: "success",
+        message: res.message || "All table drafts discarded.",
+      });
+      loadRows();
+    } else {
+      setActionFeedback({
+        type: "error",
+        message: res.message || "Failed to discard table drafts.",
+      });
+    }
+  };
 
   // Filter handlers
   const handleFilterChange = (key: string, value: string) => {
@@ -202,7 +357,7 @@ export function DataLibraryWorkspace({
     [selectedTable, sortColumn, sortDirection],
   );
 
-  // Generate TanStack Column Definitions
+  // Generate TanStack Column Definitions with Editable Inputs
   const columns = useMemo<ColumnDef<Record<string, unknown>>[]>(() => {
     if (!selectedTable) return [];
 
@@ -226,6 +381,9 @@ export function DataLibraryWorkspace({
               }`}
             >
               <span>{col.label}</span>
+              {col.editable && (
+                <Edit3 className="size-2.5 text-primary/70 ml-0.5" />
+              )}
               {col.sortable !== false && (
                 <span className="text-muted-foreground">
                   {isSorted ? (
@@ -243,43 +401,157 @@ export function DataLibraryWorkspace({
           );
         },
         cell: ({ row }) => {
-          const val = row.original[col.key];
+          const rowData = row.original;
+          const overlay = rowData._overlay as
+            | Record<string, unknown>
+            | undefined;
+          const rowKey =
+            (overlay?.rowKey as string) ??
+            canonicalizeRowKey(selectedTable.primaryKey, rowData);
 
-          if (col.type === "boolean") {
-            const boolVal = Boolean(val);
+          const hasSavedDraft =
+            overlay?.draftValues !== null && overlay?.draftValues !== undefined;
+          const localRowEdits = localEdits[rowKey];
+          const hasLocalEdit = localRowEdits && col.key in localRowEdits;
+
+          const currentValue = hasLocalEdit
+            ? localRowEdits[col.key]
+            : rowData[col.key];
+
+          if (!col.editable) {
+            if (col.type === "boolean") {
+              const boolVal = Boolean(currentValue);
+              return (
+                <span
+                  className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                    boolVal
+                      ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  {boolVal ? "Active" : "Inactive"}
+                </span>
+              );
+            }
+
+            if (
+              currentValue === null ||
+              currentValue === undefined ||
+              currentValue === ""
+            ) {
+              return <span className="text-muted-foreground italic">—</span>;
+            }
+
             return (
-              <span
-                className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                  boolVal
-                    ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                    : "bg-muted text-muted-foreground"
-                }`}
-              >
-                {boolVal ? "Active" : "Inactive"}
+              <span className="font-mono text-xs text-muted-foreground">
+                {String(currentValue)}
               </span>
             );
           }
 
-          if (val === null || val === undefined || val === "") {
-            return <span className="text-muted-foreground italic">—</span>;
+          // Editable Field Controls
+          if (col.type === "boolean") {
+            const boolVal = Boolean(currentValue);
+            return (
+              <div className="flex items-center gap-2">
+                <select
+                  value={boolVal ? "true" : "false"}
+                  onChange={(e) =>
+                    handleCellEdit(rowKey, col.key, e.target.value === "true")
+                  }
+                  className={`h-7 rounded border px-2 text-xs outline-none ${
+                    hasLocalEdit
+                      ? "border-amber-500 bg-amber-500/10 font-bold"
+                      : hasSavedDraft
+                        ? "border-blue-500/50 bg-blue-500/5"
+                        : "border-border/40 bg-background"
+                  }`}
+                >
+                  <option value="true">Active</option>
+                  <option value="false">Inactive</option>
+                </select>
+                {hasLocalEdit && (
+                  <span className="rounded bg-amber-500/20 px-1 py-0.5 text-[9px] font-bold text-amber-600">
+                    Unsaved
+                  </span>
+                )}
+                {!hasLocalEdit && hasSavedDraft && (
+                  <span className="rounded bg-blue-500/20 px-1 py-0.5 text-[9px] font-bold text-blue-600">
+                    Draft
+                  </span>
+                )}
+              </div>
+            );
+          }
+
+          // Lookup Reference Dropdown or Text Input
+          const filterOpts = filterOptionsMap[col.key] ?? [];
+          if (col.lookupDependency && filterOpts.length > 0) {
+            return (
+              <div className="flex items-center gap-1.5 min-w-[140px]">
+                <select
+                  value={String(currentValue ?? "")}
+                  onChange={(e) =>
+                    handleCellEdit(rowKey, col.key, e.target.value)
+                  }
+                  className={`h-7 w-full rounded border px-2 text-xs truncate outline-none ${
+                    hasLocalEdit
+                      ? "border-amber-500 bg-amber-500/10 font-bold"
+                      : hasSavedDraft
+                        ? "border-blue-500/50 bg-blue-500/5"
+                        : "border-border/40 bg-background"
+                  }`}
+                >
+                  <option value="">-- Select --</option>
+                  {filterOpts.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label} ({opt.value})
+                    </option>
+                  ))}
+                </select>
+                {hasLocalEdit && (
+                  <span className="rounded bg-amber-500/20 px-1 py-0.5 text-[9px] font-bold text-amber-600 shrink-0">
+                    Unsaved
+                  </span>
+                )}
+              </div>
+            );
           }
 
           return (
-            <div className="flex items-center gap-1.5 truncate">
-              <span className="font-mono text-xs">{String(val)}</span>
-              {col.lookupDependency && (
-                <span
-                  title={`Lookup: ${col.lookupDependency}`}
-                  className="rounded bg-primary/10 px-1 py-0.5 text-[9px] font-medium text-primary"
-                >
-                  ref
+            <div className="flex items-center gap-1.5">
+              <input
+                type={col.type === "integer" ? "number" : "text"}
+                value={String(currentValue ?? "")}
+                onChange={(e) =>
+                  handleCellEdit(rowKey, col.key, e.target.value)
+                }
+                className={`h-7 w-full min-w-[120px] rounded border px-2 font-mono text-xs outline-none focus-visible:ring-1 focus-visible:ring-primary ${
+                  hasLocalEdit
+                    ? "border-amber-500 bg-amber-500/10 font-bold"
+                    : hasSavedDraft
+                      ? "border-blue-500/50 bg-blue-500/5"
+                      : "border-border/40 bg-background"
+                }`}
+              />
+              {hasLocalEdit && (
+                <span className="rounded bg-amber-500/20 px-1 py-0.5 text-[9px] font-bold text-amber-600 shrink-0">
+                  Unsaved
                 </span>
               )}
             </div>
           );
         },
       }));
-  }, [selectedTable, sortColumn, sortDirection, handleSortToggle]);
+  }, [
+    selectedTable,
+    sortColumn,
+    sortDirection,
+    localEdits,
+    filterOptionsMap,
+    handleSortToggle,
+    handleCellEdit,
+  ]);
 
   // TanStack Table Instance
   const table = useReactTable({
@@ -301,6 +573,9 @@ export function DataLibraryWorkspace({
 
   // Row Primary Key string for Inspector
   const getRowPrimaryKeyValue = (row: Record<string, unknown>) => {
+    const overlay = row._overlay as Record<string, unknown> | undefined;
+    if (overlay?.rowKey) return String(overlay.rowKey);
+
     return selectedTable.primaryKey
       .map((pk) => String(row[pk] ?? ""))
       .join(" | ");
@@ -316,15 +591,57 @@ export function DataLibraryWorkspace({
           </div>
           <h2 className="text-2xl font-bold tracking-tight">Metrics Library</h2>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-            Server-governed live BigQuery lookup and mapping table management.
+            Server-governed live BigQuery row reads with Postgres application
+            draft editing.
           </p>
         </div>
-        <div className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-          Live Warehouse Data
+        <div className="flex items-center gap-2">
+          {unsavedEditCount > 0 && (
+            <button
+              type="button"
+              onClick={handleSaveDrafts}
+              disabled={isSaving}
+              className="flex items-center gap-1.5 rounded-md bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white shadow hover:bg-amber-700 disabled:opacity-50"
+            >
+              <Save className="size-3.5" /> Save {unsavedEditCount} Draft
+              {unsavedEditCount === 1 ? "" : "s"}
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={handleDiscardAll}
+            className="flex items-center gap-1 rounded-md border border-border/40 px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-red-500/10 hover:text-red-600"
+          >
+            <Trash2 className="size-3.5" /> Discard All Drafts
+          </button>
+
+          <div className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            Live Warehouse + Draft Overlay
+          </div>
         </div>
       </header>
 
-      <div className="grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)_260px]">
+      {actionFeedback && (
+        <div
+          className={`flex items-center justify-between rounded-md border p-3 text-xs font-medium ${
+            actionFeedback.type === "success"
+              ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+              : "border-red-500/30 bg-red-500/10 text-red-600 dark:text-red-400"
+          }`}
+        >
+          <span>{actionFeedback.message}</span>
+          <button
+            type="button"
+            onClick={() => setActionFeedback(null)}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <X className="size-3.5" />
+          </button>
+        </div>
+      )}
+
+      <div className="grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)_280px]">
         {/* Left Sidebar: Table Selector */}
         <aside className="rounded-xl border border-border/40 bg-muted/10 p-3">
           <div className="relative mb-3">
@@ -402,7 +719,7 @@ export function DataLibraryWorkspace({
                 <option value="false">Inactive</option>
               </select>
 
-              {/* Dynamic Property / Source App / Segment Group Dropdowns */}
+              {/* Dynamic Dropdowns */}
               {selectedTable.columns
                 .filter(
                   (c) =>
@@ -548,7 +865,7 @@ export function DataLibraryWorkspace({
             <div className="space-y-3">
               <div className="flex items-center justify-between border-b border-border/30 pb-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
-                  Row Inspector
+                  Three-Panel Row Inspector
                 </span>
                 <button
                   type="button"
@@ -561,60 +878,107 @@ export function DataLibraryWorkspace({
 
               <div>
                 <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                  Logical Primary Key
+                  Canonical Row Identity
                 </span>
-                <p className="mt-0.5 rounded bg-muted/50 px-2 py-1 font-mono text-xs font-bold text-foreground">
+                <p className="mt-0.5 truncate rounded bg-muted/50 px-2 py-1 font-mono text-[10px] font-bold text-foreground">
                   {getRowPrimaryKeyValue(selectedRow)}
                 </p>
               </div>
 
               <div className="space-y-2 border-t border-border/30 pt-3 text-xs">
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                  Attribute Values
-                </span>
-                <div className="space-y-1.5 max-h-[360px] overflow-y-auto pr-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    Source vs Proposed Draft
+                  </span>
+                  {selectedRow._overlay && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const overlay = selectedRow._overlay as Record<
+                          string,
+                          unknown
+                        >;
+                        handleDiscardRow(String(overlay.rowKey));
+                      }}
+                      className="text-[10px] font-semibold text-red-600 hover:underline"
+                    >
+                      Discard Row
+                    </button>
+                  )}
+                </div>
+
+                <div className="space-y-1.5 max-h-[380px] overflow-y-auto pr-1">
                   {selectedTable.columns.map((col) => {
-                    const val = selectedRow[col.key];
+                    const overlay = selectedRow._overlay as
+                      | Record<string, unknown>
+                      | undefined;
+                    const sourceVal = overlay?.sourceValues
+                      ? (overlay.sourceValues as Record<string, unknown>)[
+                          col.key
+                        ]
+                      : selectedRow[col.key];
+
+                    const rowKey =
+                      (overlay?.rowKey as string) ??
+                      canonicalizeRowKey(selectedTable.primaryKey, selectedRow);
+                    const localRowEdits = localEdits[rowKey];
+                    const hasLocalEdit =
+                      localRowEdits && col.key in localRowEdits;
+
+                    const draftVal = hasLocalEdit
+                      ? localRowEdits[col.key]
+                      : overlay?.draftValues
+                        ? (overlay.draftValues as Record<string, unknown>)[
+                            col.key
+                          ]
+                        : undefined;
+
+                    const isChanged =
+                      draftVal !== undefined && draftVal !== sourceVal;
+
                     return (
                       <div
                         key={col.key}
-                        className="rounded border border-border/20 bg-background/60 p-2"
+                        className={`rounded border p-2 ${
+                          isChanged
+                            ? "border-amber-500/40 bg-amber-500/10"
+                            : "border-border/20 bg-background/60"
+                        }`}
                       >
                         <div className="flex items-center justify-between text-[10px] text-muted-foreground">
                           <span className="font-semibold">{col.label}</span>
                           <span className="font-mono text-[9px] opacity-70">
-                            {col.key}
+                            {col.key}{" "}
+                            {col.editable ? "(Editable)" : "(Read-only)"}
                           </span>
                         </div>
-                        <div className="mt-1 font-mono text-xs">
-                          {col.type === "boolean" ? (
-                            <span
-                              className={`font-semibold ${
-                                val
-                                  ? "text-emerald-600"
-                                  : "text-muted-foreground"
-                              }`}
-                            >
-                              {val ? "TRUE" : "FALSE"}
+
+                        <div className="mt-1 grid grid-cols-2 gap-2 text-xs font-mono">
+                          <div>
+                            <span className="block text-[9px] uppercase tracking-wider text-muted-foreground">
+                              Source
                             </span>
-                          ) : val === null ||
-                            val === undefined ||
-                            val === "" ? (
-                            <span className="text-muted-foreground italic">
-                              NULL
-                            </span>
-                          ) : (
-                            String(val)
-                          )}
-                        </div>
-                        {col.lookupDependency && (
-                          <div className="mt-1 text-[9px] text-muted-foreground">
-                            Dependency:{" "}
-                            <span className="font-mono text-primary">
-                              {col.lookupDependency}
+                            <span className="text-muted-foreground">
+                              {sourceVal === null || sourceVal === undefined
+                                ? "NULL"
+                                : String(sourceVal)}
                             </span>
                           </div>
-                        )}
+                          <div>
+                            <span className="block text-[9px] uppercase tracking-wider text-amber-600 font-bold">
+                              Proposed
+                            </span>
+                            <span
+                              className={
+                                isChanged ? "font-bold text-amber-600" : ""
+                              }
+                            >
+                              {draftVal === undefined
+                                ? String(sourceVal ?? "NULL")
+                                : String(draftVal ?? "NULL")}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     );
                   })}
@@ -639,7 +1003,7 @@ export function DataLibraryWorkspace({
               <dl className="space-y-3 border-t border-border/30 pt-3 text-xs">
                 <div>
                   <dt className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                    Logical Key
+                    Logical Primary Key
                   </dt>
                   <dd className="mt-1 font-mono text-[10px] font-semibold text-foreground">
                     {selectedTable.primaryKey.join(" + ")}
