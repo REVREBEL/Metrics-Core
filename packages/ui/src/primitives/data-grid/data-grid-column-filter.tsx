@@ -98,7 +98,8 @@ function DataGridColumnFilter<TData, TValue>({
               {filteredOptions.map((option) => {
                 const isSelected = selectedValues.has(option.value)
                 return (
-                  <div
+                  <button
+                    type="button"
                     key={option.value}
                     onClick={() => {
                       if (isSelected) {
@@ -112,11 +113,11 @@ function DataGridColumnFilter<TData, TValue>({
                       )
                     }}
                     className={cn(
-                      "relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none",
+                      "relative flex w-full cursor-default items-center gap-2 rounded-sm bg-transparent px-2 py-1.5 text-left text-sm outline-hidden select-none",
                       "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                     )}
                   >
-                    <div
+                    <span
                       className={cn(
                         "border-primary me-2 flex h-4 w-4 items-center justify-center rounded-sm border",
                         isSelected
@@ -125,7 +126,7 @@ function DataGridColumnFilter<TData, TValue>({
                       )}
                     >
                       <IconCheck strokeWidth={2} className="size-4" />
-                    </div>
+                    </span>
                     {option.icon && (
                       <option.icon className="text-muted-foreground mr-2 h-4 w-4" />
                     )}
@@ -135,7 +136,7 @@ function DataGridColumnFilter<TData, TValue>({
                         {facets.get(option.value)}
                       </span>
                     )}
-                  </div>
+                  </button>
                 )
               })}
             </div>
@@ -144,12 +145,13 @@ function DataGridColumnFilter<TData, TValue>({
             <>
               <div className="bg-border -mx-1 my-1 h-px" />
               <div className="p-1">
-                <div
+                <button
+                  type="button"
                   onClick={() => column?.setFilterValue(undefined)}
-                  className="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center justify-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none"
+                  className="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground relative flex w-full cursor-default items-center justify-center rounded-sm bg-transparent px-2 py-1.5 text-sm outline-hidden select-none"
                 >
                   Clear filters
-                </div>
+                </button>
               </div>
             </>
           )}
