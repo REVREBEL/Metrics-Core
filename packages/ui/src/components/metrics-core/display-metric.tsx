@@ -148,12 +148,7 @@ export function DisplayMetric({
       data-slot="display-metric"
       data-negative={isNegative || undefined}
       data-positive={isPositive || undefined}
-      aria-label={resolvedAriaLabel}
       className={cn(
-        /*
-         * Fixed sign lanes scale with the inherited font size.
-         * The center track expands to fit the formatted value.
-         */
         "inline-grid grid-cols-[0.62em_max-content_0.62em]",
         "items-center justify-center",
         "whitespace-nowrap bg-transparent align-middle",
@@ -172,14 +167,11 @@ export function DisplayMetric({
       }}
       {...props}
     >
+      <span className="sr-only">{resolvedAriaLabel}</span>
       <span
         aria-hidden="true"
         className={cn(
           "select-none justify-self-center",
-          /*
-           * Moves the glyph slightly toward the center value.
-           * Because this uses em, it scales with the font size.
-           */
           "translate-x-[0.08em]",
           signClassName,
         )}
