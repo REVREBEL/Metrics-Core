@@ -2,15 +2,20 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { appUsers, eq, getDb, userRoles } from "@repo/db";
 import { cookies } from "next/headers";
 
-const DEFAULT_SESSION_SECRET =
-  process.env.SESSION_SECRET ||
-  process.env.NEXTAUTH_SECRET ||
-  "metrics-core-secure-session-secret-key-v1";
-
 export interface VerifiedWorkspaceSession {
   userId: string;
   isAuthenticated: boolean;
   permissions: string[];
+}
+
+export function getSessionSecret(): string {
+  const secret = process.env.SESSION_SECRET ?? process.env.NEXTAUTH_SECRET;
+
+  if (!secret) {
+    throw new Error("Session secret is not configured.");
+  }
+
+  return secret;
 }
 
 /**
@@ -19,9 +24,16 @@ export interface VerifiedWorkspaceSession {
  */
 export function verifySessionToken(
   token: string,
-  secret = DEFAULT_SESSION_SECRET,
+  secret?: string,
 ): { userId: string } | null {
   if (!token || typeof token !== "string") return null;
+
+  let activeSecret: string;
+  try {
+    activeSecret = secret ?? getSessionSecret();
+  } catch {
+    return null;
+  }
 
   const parts = token.split(".");
   if (parts.length !== 3) return null;
@@ -31,14 +43,15 @@ export function verifySessionToken(
 
   if (!userId || Number.isNaN(timestamp)) return null;
 
-  // Enforce session TTL (7 days = 604,800,000 ms)
+  // Enforce session TTL (7 days) and reject future timestamps
   const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
-  if (Date.now() - timestamp > SESSION_TTL_MS) {
+  const age = Date.now() - timestamp;
+  if (age < 0 || age > SESSION_TTL_MS) {
     return null;
   }
 
   // Compute expected HMAC signature
-  const expectedSig = createHmac("sha256", secret)
+  const expectedSig = createHmac("sha256", activeSecret)
     .update(`${userId}.${timestampStr}`)
     .digest("hex");
 
@@ -57,10 +70,11 @@ export function verifySessionToken(
 
 export function createSignedSessionToken(
   userId: string,
-  secret = DEFAULT_SESSION_SECRET,
+  secret?: string,
 ): string {
+  const activeSecret = secret ?? getSessionSecret();
   const timestampStr = Date.now().toString();
-  const signature = createHmac("sha256", secret)
+  const signature = createHmac("sha256", activeSecret)
     .update(`${userId}.${timestampStr}`)
     .digest("hex");
   return `${userId}.${timestampStr}.${signature}`;
@@ -74,6 +88,13 @@ export async function getCurrentWorkspaceSession(): Promise<VerifiedWorkspaceSes
   };
 
   try {
+    let secret: string;
+    try {
+      secret = getSessionSecret();
+    } catch {
+      return unauthenticated;
+    }
+
     const cookieStore = await cookies();
     const token =
       cookieStore.get("metrics_session")?.value ||
@@ -84,7 +105,7 @@ export async function getCurrentWorkspaceSession(): Promise<VerifiedWorkspaceSes
     }
 
     // Verify cryptographic signature and TTL
-    const verified = verifySessionToken(token);
+    const verified = verifySessionToken(token, secret);
     if (!verified?.userId) {
       return unauthenticated;
     }
