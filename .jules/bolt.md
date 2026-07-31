@@ -32,3 +32,7 @@
 ## 2026-07-27 - [Broken Memoization via Unstable Date Dependencies]
 **Learning:** Passing newly instantiated Date objects or non-primitives created directly in the render body into a `useMemo` dependency array completely breaks memoization. Since React does strict reference equality checks (`===`), the new references on every render trigger re-computation of the memoized block (e.g. running 5 separate `.filter()` traversals over thousands of items). Furthermore, implicit `toLocaleDateString` calls recreate the expensive `Intl.DateTimeFormat` object.
 **Action:** Always group and memoize unstable variables (like dynamic dates) in a single `useMemo` block first, or extract them, before passing them as dependencies. Also, hoist `Intl.DateTimeFormat` formatters to package level to avoid implicit creation costs.
+
+## 2026-07-28 - [Local Promise Cache for Batch Validations]
+**Learning:** Sequentially validating lookup dependencies across a batch of row changes can trigger highly redundant database/API network roundtrips ($O(N)$), leading to massive performance degradation or timeouts. Scoping a simple promise-based Map cache strictly to the lifetime of the batch validation function completely deduplicates concurrent or sequential fetches ($O(U)$ where $U$ is unique lookup values) without introducing global cache stale-data issues.
+**Action:** Always wrap async external dependency verifiers with a local Promise-based cache during batch loops to maximize performance and avoid redundant network/DB roundtrips.

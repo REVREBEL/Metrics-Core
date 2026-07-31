@@ -321,3 +321,74 @@ test("PostgresDraftRepository throws DatabaseConfigurationError when DATABASE_UR
     }
   }
 });
+
+test("saveFeatureDraftEdits local promise cache deduplicates redundant lookup queries during batch save", async () => {
+  const repo = new InMemoryDraftRepository();
+  const authContext = {
+    userId: "user-123",
+    isAuthenticated: true,
+    permissions: ["data_library.mapping_tables.edit"],
+  };
+
+  let fetchCount = 0;
+  const mockLookupFetcher = async (_tableKey: string, search: string) => {
+    fetchCount++;
+    if (search === "GOVN") {
+      return [{ code: "GOVN", is_active: true }];
+    }
+    return [];
+  };
+
+  // Save 3 rows in a single batch, all changing segment_code to "GOVN"
+  const res = await saveFeatureDraftEdits(
+    {
+      tableKey: "metrics_core.map_segment",
+      changes: [
+        {
+          originalPayload: {
+            property_code: "PROP1",
+            source_application_code: "STNT",
+            code: "SRC1",
+            segment_code: "OLD",
+          },
+          draftPayload: { segment_code: "GOVN" },
+        },
+        {
+          originalPayload: {
+            property_code: "PROP1",
+            source_application_code: "STNT",
+            code: "SRC2",
+            segment_code: "OLD",
+          },
+          draftPayload: { segment_code: "GOVN" },
+        },
+        {
+          originalPayload: {
+            property_code: "PROP1",
+            source_application_code: "STNT",
+            code: "SRC3",
+            segment_code: "OLD",
+          },
+          draftPayload: { segment_code: "GOVN" },
+        },
+      ],
+    },
+    authContext,
+    { draftRepo: repo, lookupFetcher: mockLookupFetcher },
+  );
+
+  assert.equal(
+    res.success,
+    true,
+    `Save should succeed, errors: ${JSON.stringify(res.errors)}`,
+  );
+  assert.equal(res.savedCount, 3);
+
+  // ⚡ Crucial Assertion: The fetchCount must be exactly 1, proving that the cache successfully
+  // intercepted the 2nd and 3rd sequential checks and deduplicated them.
+  assert.equal(
+    fetchCount,
+    1,
+    "The lookup fetcher should only be called once due to local caching",
+  );
+});

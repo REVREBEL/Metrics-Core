@@ -100,6 +100,27 @@ export async function saveFeatureDraftEdits(
   const draftRepo = options?.draftRepo ?? getDefaultDraftRepository();
   const lookupFetcher = options?.lookupFetcher ?? defaultLiveLookupFetcher;
 
+  // ⚡ Bolt Optimization: Create a local cache Map for the lookup value fetcher.
+  // This is scoped strictly to the lifetime of this single batch save/validation request.
+  // If multiple rows reference the same target table and search value, we will reuse the exact same Promise,
+  // reducing the redundant sequential BigQuery roundtrips from O(N) to O(U) where U is unique lookup values.
+  const lookupCache = new Map<
+    string,
+    Promise<
+      Array<{ code?: string; segment_code?: string; is_active?: boolean }>
+    >
+  >();
+
+  const cachedLookupFetcher: LookupValueFetcher = (tableKey, search) => {
+    const cacheKey = `${tableKey}:${search}`;
+    let cachedPromise = lookupCache.get(cacheKey);
+    if (!cachedPromise) {
+      cachedPromise = lookupFetcher(tableKey, search);
+      lookupCache.set(cacheKey, cachedPromise);
+    }
+    return cachedPromise;
+  };
+
   // 1. Auth check
   if (!authContext.isAuthenticated) {
     return {
@@ -168,12 +189,12 @@ export async function saveFeatureDraftEdits(
       continue;
     }
 
-    // Validate lookup dependencies
+    // Validate lookup dependencies using cachedLookupFetcher to prevent redundant queries
     const lookupRes = await validateLookupDependencies(
       valRes.normalizedChanges,
       orig,
       tableDef.columns,
-      lookupFetcher,
+      cachedLookupFetcher,
     );
     if (!lookupRes.valid) {
       Object.assign(fieldErrors, lookupRes.errors);
