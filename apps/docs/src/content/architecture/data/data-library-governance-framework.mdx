@@ -84,11 +84,13 @@ reliable concurrency contract is approved.
 - metadata-driven validation & live lookup dependency validation;
 - 3-layer overlay model (sourceValues, draftValues, effectiveValues);
 - application audit events (`app_audit_log`);
-- server-only publication adapter boundary.
+- server-only publication adapter boundary;
+- change-request submission and review workflow (including submitter-prohibited review, rejected draft-restoring lifecycle, immutable validation snapshots, and multi-role permission aggregation) [REV-77].
 
-**DEFERRED**
+**DEFERRED TO REV-78**
 
-- change-request submission and review;
-- role-backed RBAC review and publish enforcement;
+- role-backed RBAC publication/execution enforcement;
 - optimistic conflict enforcement;
-- BigQuery publication.
+- BigQuery database publication and execution;
+- conflict handling.
+
