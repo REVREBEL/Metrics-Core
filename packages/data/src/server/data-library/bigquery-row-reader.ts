@@ -8,11 +8,23 @@ import type {
   DataLibraryFilterOptionsResponse,
   DataLibraryQueryOptions,
   DataLibraryReadDefinition,
-  DataLibraryRowsResponse,
   DataLibraryResponse,
+  DataLibraryRowsResponse,
 } from "../../data-library/query-contract";
 
 let _bqClient: BigQuery | null = null;
+
+interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+}
+
+// Global in-memory cache for BigQuery filter options to avoid redundant queries/scans
+const filterOptionsCache = new Map<
+  string,
+  CacheEntry<DataLibraryFilterOptionsResponse>
+>();
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes TTL
 
 function getBigQueryClient(): BigQuery {
   if (_bqClient) return _bqClient;
@@ -27,7 +39,9 @@ function getBigQueryClient(): BigQuery {
       _bqClient = new BigQuery({ projectId, credentials, location });
       return _bqClient;
     } catch {
-      throw new Error("GOOGLE_APPLICATION_CREDENTIALS_JSON set but could not be parsed as valid JSON.");
+      throw new Error(
+        "GOOGLE_APPLICATION_CREDENTIALS_JSON set but could not be parsed as valid JSON.",
+      );
     }
   }
 
@@ -92,7 +106,9 @@ export async function executeDataLibraryRowRead(
     const total =
       countRows.length > 0 && countRows[0].total_count !== undefined
         ? Number(
-            typeof countRows[0].total_count === "object" && countRows[0].total_count !== null && "value" in countRows[0].total_count
+            typeof countRows[0].total_count === "object" &&
+              countRows[0].total_count !== null &&
+              "value" in countRows[0].total_count
               ? (countRows[0].total_count as { value: unknown }).value
               : countRows[0].total_count,
           )
@@ -102,7 +118,10 @@ export async function executeDataLibraryRowRead(
       const row: Record<string, unknown> = {};
       for (const colDef of definition.columns) {
         if (colDef.visible !== false) {
-          row[colDef.key] = normalizeBigQueryValue(rawRow[colDef.key], colDef.type);
+          row[colDef.key] = normalizeBigQueryValue(
+            rawRow[colDef.key],
+            colDef.type,
+          );
         }
       }
       return row;
@@ -126,7 +145,8 @@ export async function executeDataLibraryRowRead(
     return response;
   } catch (error: any) {
     const errorMessage = error?.message || "BigQuery query execution failed.";
-    const isTimeout = errorMessage.toLowerCase().includes("timeout") || error?.code === 504;
+    const isTimeout =
+      errorMessage.toLowerCase().includes("timeout") || error?.code === 504;
 
     return {
       success: false,
@@ -145,8 +165,19 @@ export async function executeDataLibraryFilterOptionsRead(
   definition: DataLibraryReadDefinition,
   columnKey: string,
 ): Promise<DataLibraryFilterOptionsResponse | { success: false; error: any }> {
+  const cacheKey = `${definition.key}:${columnKey}`;
+  const cached = filterOptionsCache.get(cacheKey);
+
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
+    // Return cached filter options to optimize latency (0ms vs 1-2s) and prevent BigQuery scan costs
+    return cached.data;
+  }
+
   try {
-    const { sql, columnKey: key } = buildDataLibraryFilterOptionsQuery(definition, columnKey);
+    const { sql, columnKey: key } = buildDataLibraryFilterOptionsQuery(
+      definition,
+      columnKey,
+    );
     const bq = getBigQueryClient();
     const location = process.env.BQ_DATA_LOCATION ?? "us-central1";
 
@@ -164,13 +195,21 @@ export async function executeDataLibraryFilterOptionsRead(
       };
     });
 
-    return {
+    const response: DataLibraryFilterOptionsResponse = {
       success: true,
       data: {
         columnKey: key,
         options,
       },
     };
+
+    // Cache the result to prevent redundant BigQuery executions
+    filterOptionsCache.set(cacheKey, {
+      data: response,
+      timestamp: Date.now(),
+    });
+
+    return response;
   } catch (error: any) {
     return {
       success: false,

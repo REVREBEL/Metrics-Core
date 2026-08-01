@@ -31,9 +31,13 @@ export function buildDataLibraryQuery(
   const tableRef = `\`${definition.dataset}\`.\`${definition.table}\``;
 
   // Selected columns (visible columns only)
-  const visibleColumns = definition.columns.filter((col) => col.visible !== false);
+  const visibleColumns = definition.columns.filter(
+    (col) => col.visible !== false,
+  );
   if (visibleColumns.length === 0) {
-    throw new Error(`Table '${definition.key}' has no visible columns defined.`);
+    throw new Error(
+      `Table '${definition.key}' has no visible columns defined.`,
+    );
   }
   const selectClause = visibleColumns.map((col) => `\`${col.key}\``).join(", ");
 
@@ -59,7 +63,11 @@ export function buildDataLibraryQuery(
   // 2. Parameterized Filters
   if (options.filters) {
     for (const [filterKey, filterValue] of Object.entries(options.filters)) {
-      if (filterValue === undefined || filterValue === null || filterValue === "") {
+      if (
+        filterValue === undefined ||
+        filterValue === null ||
+        filterValue === ""
+      ) {
         continue;
       }
 
@@ -101,7 +109,9 @@ export function buildDataLibraryQuery(
     options.sort?.direction?.toLowerCase() === "desc" ? "DESC" : "ASC";
 
   const primarySortColDef = requestedSortCol
-    ? visibleColumns.find((col) => col.key === requestedSortCol && col.sortable !== false)
+    ? visibleColumns.find(
+        (col) => col.key === requestedSortCol && col.sortable !== false,
+      )
     : undefined;
 
   const activeSortCol = primarySortColDef
@@ -111,11 +121,16 @@ export function buildDataLibraryQuery(
     ? requestedSortDir
     : definition.defaultSort.direction.toUpperCase();
 
-  const sortParts: string[] = [`\`${activeSortCol}\` ${activeSortDir} NULLS LAST`];
+  const sortParts: string[] = [
+    `\`${activeSortCol}\` ${activeSortDir} NULLS LAST`,
+  ];
 
   // Secondary sort: append primaryKey columns not already matching activeSortCol
   for (const pkCol of definition.primaryKey) {
-    if (pkCol !== activeSortCol && visibleColumns.some((col) => col.key === pkCol)) {
+    if (
+      pkCol !== activeSortCol &&
+      visibleColumns.some((col) => col.key === pkCol)
+    ) {
       sortParts.push(`\`${pkCol}\` ASC NULLS LAST`);
     }
   }

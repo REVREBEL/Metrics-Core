@@ -32,3 +32,7 @@
 ## 2026-07-27 - [Broken Memoization via Unstable Date Dependencies]
 **Learning:** Passing newly instantiated Date objects or non-primitives created directly in the render body into a `useMemo` dependency array completely breaks memoization. Since React does strict reference equality checks (`===`), the new references on every render trigger re-computation of the memoized block (e.g. running 5 separate `.filter()` traversals over thousands of items). Furthermore, implicit `toLocaleDateString` calls recreate the expensive `Intl.DateTimeFormat` object.
 **Action:** Always group and memoize unstable variables (like dynamic dates) in a single `useMemo` block first, or extract them, before passing them as dependencies. Also, hoist `Intl.DateTimeFormat` formatters to package level to avoid implicit creation costs.
+
+## 2026-07-28 - [BigQuery Filter Option Caching]
+**Learning:** Querying distinct filter options directly from BigQuery on every table view or dropdown open results in multiple parallel, redundant BigQuery scans with 1-2s latency. Since lookup values and categories are highly static in the application workspace context, server-side in-memory caching of these distinct values eliminates warehouse scan overhead completely.
+**Action:** Always implement a lightweight TTL cache on distinct dropdown query readers connected to external data warehouses.
