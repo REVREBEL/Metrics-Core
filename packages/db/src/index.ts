@@ -346,6 +346,18 @@ export class InMemoryDraftRepository implements DraftRepository {
   private drafts: Map<string, DraftEditRecord> = new Map();
   public auditLogs: AuditLogRecord[] = [];
 
+  public async transitionDrafts(
+    draftIds: string[],
+    from: string,
+    to: string,
+  ): Promise<void> {
+    for (const [key, draft] of this.drafts.entries()) {
+      if (draftIds.includes(draft.id) && draft.status === from) {
+        this.drafts.set(key, { ...draft, status: to, updatedAt: new Date() });
+      }
+    }
+  }
+
   private getKey(tableKey: string, userId: string, rowKey: string): string {
     return `${userId}:${tableKey}:${rowKey}`;
   }
@@ -489,6 +501,11 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
     const trimmedTitle = params.title.trim();
     if (!trimmedTitle || trimmedTitle.length < 3 || trimmedTitle.length > 100) {
       throw new Error("Title is required and must be between 3 and 100 characters.");
+    }
+
+    const trimmedDesc = params.description?.trim() || null;
+    if (trimmedDesc && trimmedDesc.length > 500) {
+      throw new Error("Description cannot exceed 500 characters.");
     }
 
     return this.db.transaction(async (tx) => {
@@ -681,6 +698,9 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
     if (params.decision === "reject" && (!trimmedNotes || trimmedNotes.length < 3)) {
       throw new Error("Rejection notes are required and must be at least 3 characters.");
     }
+    if (trimmedNotes && trimmedNotes.length > 2000) {
+      throw new Error("Review notes cannot exceed 2000 characters.");
+    }
 
     return this.db.transaction(async (tx) => {
       const [req] = await tx
@@ -858,6 +878,11 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
   public requests: Map<string, ChangeRequestRecord> = new Map();
   public items: Map<string, ChangeRequestItemRecord[]> = new Map();
   public auditLogs: AuditLogRecord[] = [];
+  private draftRepo?: InMemoryDraftRepository;
+
+  constructor(draftRepo?: InMemoryDraftRepository) {
+    this.draftRepo = draftRepo;
+  }
 
   async createChangeRequestWithAudit(
     params: CreateChangeRequestParams,
@@ -871,6 +896,11 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
       throw new Error("Title is required and must be between 3 and 100 characters.");
     }
 
+    const trimmedDesc = params.description?.trim() || null;
+    if (trimmedDesc && trimmedDesc.length > 500) {
+      throw new Error("Description cannot exceed 500 characters.");
+    }
+
     const reqId = `req-${Math.random().toString(36).substring(2, 9)}`;
     const now = new Date();
 
@@ -878,7 +908,7 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
       id: reqId,
       tableKey: params.tableKey,
       title: trimmedTitle,
-      description: params.description?.trim() || null,
+      description: trimmedDesc,
       submitterId: params.submitterId,
       reviewerId: null,
       status: "submitted",
@@ -900,6 +930,12 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
       validationSnapshot: d.validationSnapshot ?? null,
       createdAt: now,
     }));
+
+    // Transition drafts in memory
+    if (this.draftRepo) {
+      const draftEditIds = params.drafts.map((d) => d.draftEditId);
+      await this.draftRepo.transitionDrafts(draftEditIds, "draft", "submitted");
+    }
 
     this.requests.set(reqId, requestRecord);
     this.items.set(reqId, itemRecords);
@@ -966,9 +1002,13 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
     if (params.decision === "reject" && (!trimmedNotes || trimmedNotes.length < 3)) {
       throw new Error("Rejection notes are required and must be at least 3 characters.");
     }
+    if (trimmedNotes && trimmedNotes.length > 2000) {
+      throw new Error("Review notes cannot exceed 2000 characters.");
+    }
 
     const now = new Date();
     const newReqStatus = params.decision === "approve" ? "approved" : "rejected";
+    const targetDraftStatus = params.decision === "approve" ? "approved" : "draft";
 
     const updated: ChangeRequestRecord = {
       ...req,
@@ -978,6 +1018,13 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
       reviewedAt: now,
       updatedAt: now,
     };
+
+    // Transition drafts in memory
+    if (this.draftRepo) {
+      const items = this.items.get(req.id) ?? [];
+      const draftEditIds = items.map((i) => i.draftEditId);
+      await this.draftRepo.transitionDrafts(draftEditIds, "submitted", targetDraftStatus);
+    }
 
     this.requests.set(req.id, updated);
 
@@ -1023,6 +1070,13 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
       withdrawnAt: now,
       updatedAt: now,
     };
+
+    // Transition drafts back to draft state
+    if (this.draftRepo) {
+      const items = this.items.get(req.id) ?? [];
+      const draftEditIds = items.map((i) => i.draftEditId);
+      await this.draftRepo.transitionDrafts(draftEditIds, "submitted", "draft");
+    }
 
     this.requests.set(req.id, updated);
 

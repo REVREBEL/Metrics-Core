@@ -1,5 +1,6 @@
 "use server";
 
+import { isChangeRequestStatus } from "@repo/db";
 import type {
   CreateChangeRequestInput,
   ReviewChangeRequestInput,
@@ -24,16 +25,21 @@ export async function listChangeRequestsAction(
   tableKey?: string,
   status?: string,
 ) {
+  if (status !== undefined && !isChangeRequestStatus(status)) {
+    return {
+      success: false,
+      error: {
+        code: "INVALID_REQUEST",
+        message: "Unsupported change-request status.",
+      },
+    };
+  }
+
   const authContext = await getCurrentWorkspaceSession();
   return listFeatureChangeRequests(
     {
       tableKey,
-      status: status as
-        | "submitted"
-        | "approved"
-        | "rejected"
-        | "withdrawn"
-        | undefined,
+      status,
     },
     authContext,
   );

@@ -6,7 +6,7 @@ import type {
   DraftRepository,
 } from "@repo/db";
 import {
-  InMemoryChangeRequestRepository,
+  DatabaseConfigurationError,
   PostgresChangeRequestRepository,
 } from "@repo/db";
 import { getDataLibraryTableDefinition } from "./registry";
@@ -48,9 +48,34 @@ function resolveChangeReqRepository(
 ): ChangeRequestRepository {
   if (injected) return injected;
   if (!process.env.DATABASE_URL) {
-    return new InMemoryChangeRequestRepository();
+    throw new DatabaseConfigurationError(
+      "DATABASE_URL is required for change-request persistence.",
+    );
   }
   return new PostgresChangeRequestRepository();
+}
+
+function mapChangeRequestError(
+  err: unknown,
+  fallbackMessage: string,
+): { success: false; error: ChangeRequestServiceError } {
+  if (err instanceof DatabaseConfigurationError) {
+    return {
+      success: false,
+      error: {
+        code: "INTERNAL_ERROR",
+        message: err.message || "Database configuration is missing.",
+        retryable: false,
+      },
+    };
+  }
+  return {
+    success: false,
+    error: {
+      code: "INTERNAL_ERROR",
+      message: err instanceof Error ? err.message : fallbackMessage,
+    },
+  };
 }
 
 export async function createFeatureChangeRequest(
@@ -88,19 +113,19 @@ export async function createFeatureChangeRequest(
     };
   }
 
-  // 3. Input string validation
-  const trimmedTitle = input.title?.trim() ?? "";
+  // 3. Title & Description length bounds validations
+  const trimmedTitle = input.title.trim();
   if (trimmedTitle.length < 3 || trimmedTitle.length > 100) {
     return {
       success: false,
       error: {
         code: "INVALID_REQUEST",
-        message: "Title is required and must be between 3 and 100 characters.",
+        message: "Title must be between 3 and 100 characters.",
       },
     };
   }
 
-  const trimmedDescription = input.description?.trim() || undefined;
+  const trimmedDescription = input.description?.trim();
   if (trimmedDescription && trimmedDescription.length > 500) {
     return {
       success: false,
@@ -136,20 +161,25 @@ export async function createFeatureChangeRequest(
   // 5. Fetch submitter's saved drafts and re-validate every draft
   const draftRepo = deps?.draftRepo;
   let savedDrafts = [];
-  if (draftRepo) {
-    savedDrafts = await draftRepo.listDrafts(
-      input.tableKey,
-      authContext.userId,
-    );
-  } else {
-    const { PostgresDraftRepository } = await import("@repo/db");
-    const repo = new PostgresDraftRepository();
-    savedDrafts = await repo.listDrafts(input.tableKey, authContext.userId);
+  try {
+    if (draftRepo) {
+      savedDrafts = await draftRepo.listDrafts(
+        input.tableKey,
+        authContext.userId,
+      );
+    } else {
+      const { PostgresDraftRepository } = await import("@repo/db");
+      const repo = new PostgresDraftRepository();
+      savedDrafts = await repo.listDrafts(input.tableKey, authContext.userId);
+    }
+  } catch (err: unknown) {
+    return mapChangeRequestError(err, "Failed to retrieve draft edits.");
   }
 
   const selectedDrafts = savedDrafts.filter((d) =>
     input.draftIds.includes(d.id),
   );
+
   if (selectedDrafts.length !== input.draftIds.length) {
     return {
       success: false,
@@ -200,9 +230,9 @@ export async function createFeatureChangeRequest(
     };
   }
 
-  // 6. Create change request via repository
-  const changeReqRepo = resolveChangeReqRepository(deps?.changeReqRepo);
+  // 6. Create change request via repository resolved within try context
   try {
+    const changeReqRepo = resolveChangeReqRepository(deps?.changeReqRepo);
     const record = await changeReqRepo.createChangeRequestWithAudit({
       tableKey: input.tableKey,
       title: trimmedTitle,
@@ -213,16 +243,7 @@ export async function createFeatureChangeRequest(
 
     return { success: true, data: record };
   } catch (err: unknown) {
-    return {
-      success: false,
-      error: {
-        code: "INTERNAL_ERROR",
-        message:
-          err instanceof Error
-            ? err.message
-            : "Failed to create change request.",
-      },
-    };
+    return mapChangeRequestError(err, "Failed to create change request.");
   }
 }
 
@@ -267,21 +288,12 @@ export async function listFeatureChangeRequests(
     effectiveFilters.submitterId = authContext.userId;
   }
 
-  const repo = resolveChangeReqRepository(deps?.changeReqRepo);
   try {
+    const repo = resolveChangeReqRepository(deps?.changeReqRepo);
     const list = await repo.listChangeRequests(effectiveFilters);
     return { success: true, data: list };
   } catch (err: unknown) {
-    return {
-      success: false,
-      error: {
-        code: "INTERNAL_ERROR",
-        message:
-          err instanceof Error
-            ? err.message
-            : "Failed to list change requests.",
-      },
-    };
+    return mapChangeRequestError(err, "Failed to list change requests.");
   }
 }
 
@@ -300,8 +312,8 @@ export async function getFeatureChangeRequest(
     };
   }
 
-  const repo = resolveChangeReqRepository(deps?.changeReqRepo);
   try {
+    const repo = resolveChangeReqRepository(deps?.changeReqRepo);
     const req = await repo.getChangeRequest(id);
     if (!req) {
       return {
@@ -314,12 +326,25 @@ export async function getFeatureChangeRequest(
     }
 
     const permissions = authContext.permissions ?? [];
-    const isAdmin = permissions.includes("data_library.change_requests.admin");
+    const canViewOwn =
+      permissions.includes("data_library.change_requests.view_own") ||
+      permissions.includes("data_library.change_requests.submit");
     const canReview =
       permissions.includes("data_library.change_requests.review") ||
       permissions.includes("data_library.change_requests.decide");
+    const isAdmin = permissions.includes("data_library.change_requests.admin");
 
-    // Enforce direct get scoping
+    // Explicit permission enforcement before ownership checks
+    if (!isAdmin && !canReview && !canViewOwn) {
+      return {
+        success: false,
+        error: {
+          code: "FORBIDDEN",
+          message: "You do not have permission to view change requests.",
+        },
+      };
+    }
+
     if (!isAdmin && !canReview && req.submitterId !== authContext.userId) {
       return {
         success: false,
@@ -332,14 +357,7 @@ export async function getFeatureChangeRequest(
 
     return { success: true, data: req };
   } catch (err: unknown) {
-    return {
-      success: false,
-      error: {
-        code: "INTERNAL_ERROR",
-        message:
-          err instanceof Error ? err.message : "Failed to get change request.",
-      },
-    };
+    return mapChangeRequestError(err, "Failed to get change request.");
   }
 }
 
@@ -386,8 +404,18 @@ export async function reviewFeatureChangeRequest(
     };
   }
 
-  const repo = resolveChangeReqRepository(deps?.changeReqRepo);
+  if (trimmedNotes.length > 2000) {
+    return {
+      success: false,
+      error: {
+        code: "INVALID_REQUEST",
+        message: "Review notes cannot exceed 2,000 characters.",
+      },
+    };
+  }
+
   try {
+    const repo = resolveChangeReqRepository(deps?.changeReqRepo);
     const record = await repo.reviewChangeRequestWithAudit({
       changeRequestId: input.changeRequestId,
       reviewerId: authContext.userId,
@@ -400,6 +428,9 @@ export async function reviewFeatureChangeRequest(
     const msg =
       err instanceof Error ? err.message : "Failed to review change request.";
     const isForbidden = msg.includes("Self-review prohibited");
+    if (err instanceof DatabaseConfigurationError) {
+      return mapChangeRequestError(err, "Database error during review.");
+    }
     return {
       success: false,
       error: {
@@ -425,8 +456,8 @@ export async function withdrawFeatureChangeRequest(
     };
   }
 
-  const repo = resolveChangeReqRepository(deps?.changeReqRepo);
   try {
+    const repo = resolveChangeReqRepository(deps?.changeReqRepo);
     const existing = await repo.getChangeRequest(changeRequestId);
     if (!existing) {
       return {
@@ -440,6 +471,20 @@ export async function withdrawFeatureChangeRequest(
 
     const permissions = authContext.permissions ?? [];
     const isAdmin = permissions.includes("data_library.change_requests.admin");
+    const canWithdrawOwn =
+      permissions.includes("data_library.change_requests.submit") ||
+      permissions.includes("data_library.change_requests.view_own");
+
+    // Verify workflow permission capability prior to scoping check
+    if (!isAdmin && !canWithdrawOwn) {
+      return {
+        success: false,
+        error: {
+          code: "FORBIDDEN",
+          message: "You do not have permission to withdraw change requests.",
+        },
+      };
+    }
 
     if (!isAdmin && existing.submitterId !== authContext.userId) {
       return {
@@ -458,15 +503,6 @@ export async function withdrawFeatureChangeRequest(
 
     return { success: true, data: record };
   } catch (err: unknown) {
-    return {
-      success: false,
-      error: {
-        code: "INVALID_REQUEST",
-        message:
-          err instanceof Error
-            ? err.message
-            : "Failed to withdraw change request.",
-      },
-    };
+    return mapChangeRequestError(err, "Failed to withdraw change request.");
   }
 }

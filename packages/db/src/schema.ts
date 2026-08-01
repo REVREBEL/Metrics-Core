@@ -75,8 +75,11 @@ export const lookupTableChangeRequests = pgTable("lookup_table_change_requests",
   tableKey: varchar("table_key", { length: 255 }).notNull(),
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
-  submitterId: uuid("submitter_id").notNull(),
-  reviewerId: uuid("reviewer_id"),
+  submitterId: uuid("submitter_id")
+    .notNull()
+    .references(() => appUsers.id),
+  reviewerId: uuid("reviewer_id")
+    .references(() => appUsers.id),
   status: varchar("status", { length: 50 }).notNull(),
   reviewNotes: text("review_notes"),
   submittedAt: timestamp("submitted_at", { withTimezone: true }).defaultNow().notNull(),

@@ -14,7 +14,7 @@ import {
 
 test("createFeatureChangeRequest validates title, description, permissions, and creates request with validation snapshot", async () => {
   const draftRepo = new InMemoryDraftRepository();
-  const changeReqRepo = new InMemoryChangeRequestRepository();
+  const changeReqRepo = new InMemoryChangeRequestRepository(draftRepo);
 
   const submitterContext = {
     userId: "user-editor-1",
@@ -69,7 +69,7 @@ test("createFeatureChangeRequest validates title, description, permissions, and 
 
 test("reviewFeatureChangeRequest enforces self-review prohibition and rejection notes requirement", async () => {
   const draftRepo = new InMemoryDraftRepository();
-  const changeReqRepo = new InMemoryChangeRequestRepository();
+  const changeReqRepo = new InMemoryChangeRequestRepository(draftRepo);
 
   const editorContext = {
     userId: "user-editor-1",
@@ -267,5 +267,320 @@ test("withdrawFeatureChangeRequest allows submitter to withdraw pending request"
   assert.equal(withdrawRes.success, true);
   if (withdrawRes.success) {
     assert.equal(withdrawRes.data.status, "withdrawn");
+  }
+});
+
+test("change-request full lifecycle transitions draft status back and forth correctly in-memory", async () => {
+  const draftRepo = new InMemoryDraftRepository();
+  const changeReqRepo = new InMemoryChangeRequestRepository(draftRepo);
+
+  const editorContext = {
+    userId: "user-editor-1",
+    isAuthenticated: true,
+    permissions: ["data_library.change_requests.submit"],
+  };
+
+  const reviewerContext = {
+    userId: "user-reviewer-1",
+    isAuthenticated: true,
+    permissions: ["data_library.change_requests.decide"],
+  };
+
+  // 1. Save valid draft
+  const draft = await draftRepo.saveDraft({
+    tableKey: "metrics_core.lkp_segment",
+    userId: "user-editor-1",
+    rowKey: "code=T1",
+    originalPayload: { code: "T1", name: "Original" },
+    draftPayload: { code: "T1", name: "New Name" },
+  });
+  assert.equal(draft.status, "draft");
+
+  // 2. Submit draft
+  const submitRes = await createFeatureChangeRequest(
+    {
+      tableKey: "metrics_core.lkp_segment",
+      draftIds: [draft.id],
+      title: "Testing Lifecycle Transitions",
+    },
+    editorContext,
+    { changeReqRepo, draftRepo },
+  );
+  assert.equal(submitRes.success, true);
+
+  // 3. Assert draft status is submitted
+  const listDraftsAfterSubmit = await draftRepo.listDrafts(
+    "metrics_core.lkp_segment",
+    "user-editor-1",
+  );
+  // listDrafts only returns drafts in status "draft"
+  assert.equal(listDraftsAfterSubmit.length, 0);
+
+  // 4. Attempt second active submission on the same draft (draft is already submitted)
+  const duplicateSubmitRes = await createFeatureChangeRequest(
+    {
+      tableKey: "metrics_core.lkp_segment",
+      draftIds: [draft.id],
+      title: "Duplicate submission",
+    },
+    editorContext,
+    { changeReqRepo, draftRepo },
+  );
+  // 5. Assert duplicate submission fails
+  assert.equal(duplicateSubmitRes.success, false);
+
+  if (submitRes.success) {
+    const reqId = submitRes.data.id;
+
+    // 6. Reject request
+    const rejectRes = await reviewFeatureChangeRequest(
+      {
+        changeRequestId: reqId,
+        decision: "reject",
+        notes: "Please revise title.",
+      },
+      reviewerContext,
+      { changeReqRepo },
+    );
+    assert.equal(rejectRes.success, true);
+
+    // 7. Assert draft status returns to draft
+    const listDraftsAfterReject = await draftRepo.listDrafts(
+      "metrics_core.lkp_segment",
+      "user-editor-1",
+    );
+    assert.equal(listDraftsAfterReject.length, 1);
+    assert.equal(listDraftsAfterReject[0].status, "draft");
+
+    // 8. Resubmit draft
+    const resubmitRes = await createFeatureChangeRequest(
+      {
+        tableKey: "metrics_core.lkp_segment",
+        draftIds: [draft.id],
+        title: "Testing Lifecycle Transitions - Resubmitted",
+      },
+      editorContext,
+      { changeReqRepo, draftRepo },
+    );
+    assert.equal(resubmitRes.success, true);
+
+    if (resubmitRes.success) {
+      const newReqId = resubmitRes.data.id;
+
+      // 9. Approve request
+      const approveRes = await reviewFeatureChangeRequest(
+        { changeRequestId: newReqId, decision: "approve" },
+        reviewerContext,
+        { changeReqRepo },
+      );
+      assert.equal(approveRes.success, true);
+
+      // 10. Assert draft status is approved
+      const listDraftsAfterApprove = await draftRepo.listDrafts(
+        "metrics_core.lkp_segment",
+        "user-editor-1",
+      );
+      assert.equal(listDraftsAfterApprove.length, 0);
+
+      // 11. Assert approved draft cannot be submitted again
+      const approvedSubmitRes = await createFeatureChangeRequest(
+        {
+          tableKey: "metrics_core.lkp_segment",
+          draftIds: [draft.id],
+          title: "Submit approved draft",
+        },
+        editorContext,
+        { changeReqRepo, draftRepo },
+      );
+      assert.equal(approvedSubmitRes.success, false);
+    }
+  }
+});
+
+test("withdrawing change request resets draft status to draft so it can be resubmitted", async () => {
+  const draftRepo = new InMemoryDraftRepository();
+  const changeReqRepo = new InMemoryChangeRequestRepository(draftRepo);
+
+  const editorContext = {
+    userId: "user-editor-1",
+    isAuthenticated: true,
+    permissions: ["data_library.change_requests.submit"],
+  };
+
+  const draft = await draftRepo.saveDraft({
+    tableKey: "metrics_core.lkp_segment",
+    userId: "user-editor-1",
+    rowKey: "code=T2",
+    originalPayload: { code: "T2", name: "Org" },
+    draftPayload: { code: "T2", name: "Draft Name" },
+  });
+
+  // Submit
+  const submitRes = await createFeatureChangeRequest(
+    {
+      tableKey: "metrics_core.lkp_segment",
+      draftIds: [draft.id],
+      title: "Title for withdrawal testing",
+    },
+    editorContext,
+    { changeReqRepo, draftRepo },
+  );
+  assert.equal(submitRes.success, true);
+
+  if (submitRes.success) {
+    const reqId = submitRes.data.id;
+
+    // Withdraw
+    const withdrawRes = await withdrawFeatureChangeRequest(
+      reqId,
+      editorContext,
+      { changeReqRepo },
+    );
+    assert.equal(withdrawRes.success, true);
+
+    // Draft should return to draft status
+    const listDrafts = await draftRepo.listDrafts(
+      "metrics_core.lkp_segment",
+      "user-editor-1",
+    );
+    assert.equal(listDrafts.length, 1);
+    assert.equal(listDrafts[0].status, "draft");
+
+    // Can be resubmitted
+    const resubmitRes = await createFeatureChangeRequest(
+      {
+        tableKey: "metrics_core.lkp_segment",
+        draftIds: [draft.id],
+        title: "Title for withdrawal testing - Resubmitted",
+      },
+      editorContext,
+      { changeReqRepo, draftRepo },
+    );
+    assert.equal(resubmitRes.success, true);
+  }
+});
+
+test("withdrawFeatureChangeRequest and getFeatureChangeRequest strictly verify permissions before ownership", async () => {
+  const draftRepo = new InMemoryDraftRepository();
+  const changeReqRepo = new InMemoryChangeRequestRepository(draftRepo);
+
+  // Draft and Request created by user-1
+  const draft = await draftRepo.saveDraft({
+    tableKey: "metrics_core.lkp_segment",
+    userId: "user-1",
+    rowKey: "code=T3",
+    originalPayload: null,
+    draftPayload: { code: "T3" },
+  });
+
+  const user1Context = {
+    userId: "user-1",
+    isAuthenticated: true,
+    permissions: ["data_library.change_requests.submit"],
+  };
+
+  const submitRes = await createFeatureChangeRequest(
+    {
+      tableKey: "metrics_core.lkp_segment",
+      draftIds: [draft.id],
+      title: "User 1 Request for Permission Checks",
+    },
+    user1Context,
+    { changeReqRepo, draftRepo },
+  );
+  assert.equal(submitRes.success, true);
+
+  if (submitRes.success) {
+    const reqId = submitRes.data.id;
+
+    // Revoked user (missing all data_library.change_requests permissions)
+    const revokedContext = {
+      userId: "user-1",
+      isAuthenticated: true,
+      permissions: [] as string[],
+    };
+
+    // Direct Get must FAIL with FORBIDDEN for the revoked user even though they are the original submitter
+    const getRes = await getFeatureChangeRequest(reqId, revokedContext, {
+      changeReqRepo,
+    });
+    assert.equal(getRes.success, false);
+    if (!getRes.success) {
+      assert.equal(getRes.error.code, "FORBIDDEN");
+    }
+
+    // Direct Withdraw must FAIL with FORBIDDEN for the revoked user even though they are the original submitter
+    const withdrawRes = await withdrawFeatureChangeRequest(
+      reqId,
+      revokedContext,
+      {
+        changeReqRepo,
+      },
+    );
+    assert.equal(withdrawRes.success, false);
+    if (!withdrawRes.success) {
+      assert.equal(withdrawRes.error.code, "FORBIDDEN");
+    }
+  }
+});
+
+test("DatabaseConfigurationError is mapped to structured INTERNAL_ERROR response when DATABASE_URL is missing", async () => {
+  const originalEnv = process.env.DATABASE_URL;
+  delete process.env.DATABASE_URL;
+
+  const authContext = {
+    userId: "user-editor-1",
+    isAuthenticated: true,
+    permissions: [
+      "data_library.change_requests.submit",
+      "data_library.change_requests.view_own",
+      "data_library.change_requests.review",
+    ],
+  };
+
+  try {
+    // Calling createFeatureChangeRequest without injected repo fallback
+    const createRes = await createFeatureChangeRequest(
+      {
+        tableKey: "metrics_core.lkp_segment",
+        draftIds: ["some-draft"],
+        title: "Testing Missing DB URL",
+      },
+      authContext,
+    );
+    assert.equal(createRes.success, false);
+    if (!createRes.success) {
+      assert.equal(createRes.error.code, "INTERNAL_ERROR");
+      assert.match(createRes.error.message, /DATABASE_URL/i);
+    }
+
+    // Calling listFeatureChangeRequests
+    const listRes = await listFeatureChangeRequests({}, authContext);
+    assert.equal(listRes.success, false);
+    if (!listRes.success) {
+      assert.equal(listRes.error.code, "INTERNAL_ERROR");
+      assert.match(listRes.error.message, /DATABASE_URL/i);
+    }
+
+    // Calling getFeatureChangeRequest
+    const getRes = await getFeatureChangeRequest("some-id", authContext);
+    assert.equal(getRes.success, false);
+    if (!getRes.success) {
+      assert.equal(getRes.error.code, "INTERNAL_ERROR");
+      assert.match(getRes.error.message, /DATABASE_URL/i);
+    }
+
+    // Calling withdrawFeatureChangeRequest
+    const withdrawRes = await withdrawFeatureChangeRequest(
+      "some-id",
+      authContext,
+    );
+    assert.equal(withdrawRes.success, false);
+    if (!withdrawRes.success) {
+      assert.equal(withdrawRes.error.code, "INTERNAL_ERROR");
+      assert.match(withdrawRes.error.message, /DATABASE_URL/i);
+    }
+  } finally {
+    process.env.DATABASE_URL = originalEnv;
   }
 });
