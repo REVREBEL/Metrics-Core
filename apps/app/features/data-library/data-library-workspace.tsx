@@ -48,6 +48,14 @@ export function DataLibraryWorkspace({
     [definitions, selectedKey],
   );
 
+  // Memoized dynamic filter columns to avoid re-filtering selectedTable.columns on every render
+  const dynamicFilterCols = useMemo(() => {
+    if (!selectedTable) return [];
+    return selectedTable.columns.filter(
+      (c) => c.filterable && c.type === "string" && c.key !== "code",
+    );
+  }, [selectedTable]);
+
   // Grid Query State
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
@@ -752,31 +760,26 @@ export function DataLibraryWorkspace({
               </select>
 
               {/* Dynamic Dropdowns */}
-              {selectedTable.columns
-                .filter(
-                  (c) =>
-                    c.filterable && c.type === "string" && c.key !== "code",
-                )
-                .map((col) => {
-                  const options = filterOptionsMap[col.key] ?? [];
-                  return (
-                    <select
-                      key={col.key}
-                      value={filters[col.key] ?? ""}
-                      onChange={(e) =>
-                        handleFilterChange(col.key, e.target.value)
-                      }
-                      className="h-8 max-w-[160px] rounded-md border border-border/40 bg-background px-2.5 text-xs text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary truncate"
-                    >
-                      <option value="">{col.label}: All</option>
-                      {options.map((opt) => (
-                        <option key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
-                  );
-                })}
+              {dynamicFilterCols.map((col) => {
+                const options = filterOptionsMap[col.key] ?? [];
+                return (
+                  <select
+                    key={col.key}
+                    value={filters[col.key] ?? ""}
+                    onChange={(e) =>
+                      handleFilterChange(col.key, e.target.value)
+                    }
+                    className="h-8 max-w-[160px] rounded-md border border-border/40 bg-background px-2.5 text-xs text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary truncate"
+                  >
+                    <option value="">{col.label}: All</option>
+                    {options.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                );
+              })}
 
               {/* Clear Filters button */}
               {activeFilterCount > 0 && (
