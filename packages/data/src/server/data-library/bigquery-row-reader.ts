@@ -141,10 +141,27 @@ export async function executeDataLibraryRowRead(
   }
 }
 
+// Thread-safe in-memory cache for filter options with 5-minute TTL to avoid redundant expensive BigQuery queries.
+interface CacheEntry<T> {
+  data: T;
+  expiry: number;
+}
+
+const filterOptionsCache = new Map<string, CacheEntry<DataLibraryFilterOptionsResponse>>();
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes cache TTL
+
 export async function executeDataLibraryFilterOptionsRead(
   definition: DataLibraryReadDefinition,
   columnKey: string,
 ): Promise<DataLibraryFilterOptionsResponse | { success: false; error: any }> {
+  const cacheKey = `${definition.key}:${columnKey}`;
+  const now = Date.now();
+  const cached = filterOptionsCache.get(cacheKey);
+
+  if (cached && cached.expiry > now) {
+    return cached.data;
+  }
+
   try {
     const { sql, columnKey: key } = buildDataLibraryFilterOptionsQuery(definition, columnKey);
     const bq = getBigQueryClient();
@@ -164,13 +181,20 @@ export async function executeDataLibraryFilterOptionsRead(
       };
     });
 
-    return {
+    const response: DataLibraryFilterOptionsResponse = {
       success: true,
       data: {
         columnKey: key,
         options,
       },
     };
+
+    filterOptionsCache.set(cacheKey, {
+      data: response,
+      expiry: Date.now() + CACHE_TTL_MS,
+    });
+
+    return response;
   } catch (error: any) {
     return {
       success: false,

@@ -5,8 +5,22 @@ import { DataGridTable } from "@data-grid/data-grid-table";
 import {
   type ColumnDef,
   getCoreRowModel,
+  type RowData,
   useReactTable,
 } from "@tanstack/react-table";
+
+declare module "@tanstack/react-table" {
+  interface TableMeta<TData extends RowData> {
+    localEdits?: Record<string, Record<string, unknown>>;
+    handleCellEdit?: (
+      rowKey: string,
+      colKey: string,
+      newValue: unknown,
+    ) => void;
+    filterOptionsMap?: Record<string, Array<{ label: string; value: string }>>;
+  }
+}
+
 import {
   AlertTriangle,
   ArrowDown,
@@ -432,7 +446,7 @@ export function DataLibraryWorkspace({
             </button>
           );
         },
-        cell: ({ row }) => {
+        cell: ({ row, table }) => {
           const rowData = row.original;
           const overlay = rowData._overlay as
             | Record<string, unknown>
@@ -443,6 +457,12 @@ export function DataLibraryWorkspace({
 
           const hasSavedDraft =
             overlay?.draftValues !== null && overlay?.draftValues !== undefined;
+
+          const meta = table.options.meta;
+          const localEdits = meta?.localEdits ?? {};
+          const handleCellEdit = meta?.handleCellEdit;
+          const filterOptionsMap = meta?.filterOptionsMap ?? {};
+
           const localRowEdits = localEdits[rowKey];
           const hasLocalEdit = localRowEdits && col.key in localRowEdits;
 
@@ -489,7 +509,7 @@ export function DataLibraryWorkspace({
                 <select
                   value={boolVal ? "true" : "false"}
                   onChange={(e) =>
-                    handleCellEdit(rowKey, col.key, e.target.value === "true")
+                    handleCellEdit?.(rowKey, col.key, e.target.value === "true")
                   }
                   className={`h-7 rounded border px-2 text-xs outline-none ${
                     hasLocalEdit
@@ -524,7 +544,7 @@ export function DataLibraryWorkspace({
                 <select
                   value={String(currentValue ?? "")}
                   onChange={(e) =>
-                    handleCellEdit(rowKey, col.key, e.target.value)
+                    handleCellEdit?.(rowKey, col.key, e.target.value)
                   }
                   className={`h-7 w-full rounded border px-2 text-xs truncate outline-none ${
                     hasLocalEdit
@@ -556,7 +576,7 @@ export function DataLibraryWorkspace({
                 type={col.type === "integer" ? "number" : "text"}
                 value={String(currentValue ?? "")}
                 onChange={(e) =>
-                  handleCellEdit(rowKey, col.key, e.target.value)
+                  handleCellEdit?.(rowKey, col.key, e.target.value)
                 }
                 className={`h-7 w-full min-w-[120px] rounded border px-2 font-mono text-xs outline-none focus-visible:ring-1 focus-visible:ring-primary ${
                   hasLocalEdit
@@ -575,15 +595,7 @@ export function DataLibraryWorkspace({
           );
         },
       }));
-  }, [
-    selectedTable,
-    sortColumn,
-    sortDirection,
-    localEdits,
-    filterOptionsMap,
-    handleSortToggle,
-    handleCellEdit,
-  ]);
+  }, [selectedTable, sortColumn, sortDirection, handleSortToggle]);
 
   // TanStack Table Instance
   const table = useReactTable({
@@ -593,6 +605,11 @@ export function DataLibraryWorkspace({
     manualPagination: true,
     manualSorting: true,
     pageCount: totalPages,
+    meta: {
+      localEdits,
+      handleCellEdit,
+      filterOptionsMap,
+    },
   });
 
   if (!selectedTable) {
