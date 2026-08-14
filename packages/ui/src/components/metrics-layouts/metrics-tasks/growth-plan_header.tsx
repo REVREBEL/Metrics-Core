@@ -9,7 +9,7 @@ import {
   IconTable,
 } from "@tabler/icons-react";
 import { Label } from "@ui-core/label";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Dialog,
@@ -65,17 +65,25 @@ export function GrowthPlanHeader({
   const [addMemberOpen, setAddMemberOpen] = useState(false);
   const [memberEmail, setMemberEmail] = useState("");
 
-  // Calculate overall progress
-  const totalTasks = initiatives.reduce(
-    (acc, i) => acc + (i.tasks?.length || 0),
-    0,
-  );
-  const completedTasks = initiatives.reduce(
-    (acc, i) => acc + (i.tasks?.filter((t) => t.status === "done").length || 0),
-    0,
-  );
-  const progress =
-    totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+  // BOLT OPTIMIZATION: Calculate overall progress in a single pass with useMemo.
+  // Avoids double array traversal and intermediate array allocations from i.tasks?.filter() on every render.
+  const progress = useMemo(() => {
+    let total = 0;
+    let completed = 0;
+
+    for (const initiative of initiatives) {
+      const tasks = initiative.tasks;
+      if (!tasks) continue;
+      for (const task of tasks) {
+        total++;
+        if (task.status === "done") {
+          completed++;
+        }
+      }
+    }
+
+    return total > 0 ? Math.round((completed / total) * 100) : 0;
+  }, [initiatives]);
 
   const handleTabClick = (tab: HeaderTab) => {
     if (onTabChange) {
