@@ -34,30 +34,32 @@ function getOwnerStatus(initiative: Initiative): RollupStatus {
   return "on_track";
 }
 
-function StatusBadge({ status }: { status: RollupStatus }) {
-  const config = {
-    on_track: {
-      label: "On Track",
-      className:
-        "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300",
-    },
-    watch: {
-      label: "Watch",
-      className:
-        "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300",
-    },
-    at_risk: {
-      label: "At Risk",
-      className: "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300",
-    },
-    complete: {
-      label: "Complete",
-      className:
-        "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
-    },
-  };
+const STATUS_CONFIG: Record<
+  RollupStatus,
+  { label: string; className: string }
+> = {
+  on_track: {
+    label: "On Track",
+    className:
+      "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300",
+  },
+  watch: {
+    label: "Watch",
+    className:
+      "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300",
+  },
+  at_risk: {
+    label: "At Risk",
+    className: "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300",
+  },
+  complete: {
+    label: "Complete",
+    className: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+  },
+};
 
-  const { label, className } = config[status];
+function StatusBadge({ status }: { status: RollupStatus }) {
+  const { label, className } = STATUS_CONFIG[status];
 
   return (
     <Badge className={cn("text-xs font-medium", className)}>{label}</Badge>
@@ -72,44 +74,45 @@ const ROLLUP_PRIORITY_MAP: Record<RollupStatus, number> = {
 };
 
 export function OwnerRollupView({ initiatives }: OwnerRollupViewProps) {
-  const rollupData = useMemo(() => {
-    return initiatives
-      .filter((i) => i.status !== "canceled" && i.status !== "archived")
-      .map((initiative) => ({
-        initiative,
-        ownerStatus: getOwnerStatus(initiative),
-      }))
-      .sort((a, b) => {
-        // Sort by status priority: at_risk, watch, on_track, complete
-        return (
-          ROLLUP_PRIORITY_MAP[a.ownerStatus] -
-          ROLLUP_PRIORITY_MAP[b.ownerStatus]
-        );
-      });
-  }, [initiatives]);
-
-  const stats = useMemo(() => {
-    const total = rollupData.length;
+  // ⚡ Bolt: Single pass O(N) filtering, mapping and stats gathering combined in a single useMemo hook.
+  const { rollupData, stats } = useMemo(() => {
+    const data: { initiative: Initiative; ownerStatus: RollupStatus }[] = [];
     let onTrack = 0;
     let watch = 0;
     let atRisk = 0;
     let complete = 0;
 
-    for (const r of rollupData) {
-      const status = r.ownerStatus;
-      if (status === "on_track") {
+    for (const initiative of initiatives) {
+      if (
+        initiative.status === "canceled" ||
+        initiative.status === "archived"
+      ) {
+        continue;
+      }
+      const ownerStatus = getOwnerStatus(initiative);
+      data.push({ initiative, ownerStatus });
+
+      if (ownerStatus === "on_track") {
         onTrack++;
-      } else if (status === "watch") {
+      } else if (ownerStatus === "watch") {
         watch++;
-      } else if (status === "at_risk") {
+      } else if (ownerStatus === "at_risk") {
         atRisk++;
-      } else if (status === "complete") {
+      } else if (ownerStatus === "complete") {
         complete++;
       }
     }
 
-    return { total, onTrack, watch, atRisk, complete };
-  }, [rollupData]);
+    data.sort(
+      (a, b) =>
+        ROLLUP_PRIORITY_MAP[a.ownerStatus] - ROLLUP_PRIORITY_MAP[b.ownerStatus],
+    );
+
+    return {
+      rollupData: data,
+      stats: { total: data.length, onTrack, watch, atRisk, complete },
+    };
+  }, [initiatives]);
 
   return (
     <div className="flex flex-col gap-6">
