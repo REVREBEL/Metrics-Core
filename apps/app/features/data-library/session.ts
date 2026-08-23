@@ -80,6 +80,22 @@ export function createSignedSessionToken(
   return `${userId}.${timestampStr}.${signature}`;
 }
 
+export function aggregateUserPermissions(
+  roleRecords: Array<{ permissions: unknown }>,
+): string[] {
+  const permSet = new Set<string>();
+  for (const record of roleRecords) {
+    if (Array.isArray(record.permissions)) {
+      for (const item of record.permissions) {
+        if (typeof item === "string" && item.trim().length > 0) {
+          permSet.add(item.trim());
+        }
+      }
+    }
+  }
+  return Array.from(permSet);
+}
+
 export async function getCurrentWorkspaceSession(): Promise<VerifiedWorkspaceSession> {
   const unauthenticated: VerifiedWorkspaceSession = {
     userId: "",
@@ -110,10 +126,10 @@ export async function getCurrentWorkspaceSession(): Promise<VerifiedWorkspaceSes
       return unauthenticated;
     }
 
-    // Lookup active user and roles in database if DATABASE_URL is set
+    // Lookup active user and aggregate permissions across all role rows
     try {
       const db = getDb();
-      const [user] = await db
+      const userRows = await db
         .select({
           id: appUsers.id,
           isActive: appUsers.isActive,
@@ -121,19 +137,21 @@ export async function getCurrentWorkspaceSession(): Promise<VerifiedWorkspaceSes
         })
         .from(appUsers)
         .leftJoin(userRoles, eq(userRoles.userId, appUsers.id))
-        .where(eq(appUsers.id, verified.userId))
-        .limit(1);
+        .where(eq(appUsers.id, verified.userId));
 
-      if (!user?.isActive) {
+      if (userRows.length === 0) {
         return unauthenticated;
       }
 
-      const permissions = Array.isArray(user.permissions)
-        ? (user.permissions as string[])
-        : [];
+      const activeUser = userRows[0];
+      if (!activeUser?.isActive) {
+        return unauthenticated;
+      }
+
+      const permissions = aggregateUserPermissions(userRows);
 
       return {
-        userId: user.id,
+        userId: activeUser.id,
         isAuthenticated: true,
         permissions,
       };

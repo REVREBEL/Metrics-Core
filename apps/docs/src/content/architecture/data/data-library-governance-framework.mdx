@@ -84,11 +84,60 @@ reliable concurrency contract is approved.
 - metadata-driven validation & live lookup dependency validation;
 - 3-layer overlay model (sourceValues, draftValues, effectiveValues);
 - application audit events (`app_audit_log`);
-- server-only publication adapter boundary.
+- server-only publication adapter boundary;
+- change-request submission and review workflow (including submitter-prohibited review, rejected draft-restoring lifecycle, immutable validation snapshots, and multi-role permission aggregation) [REV-77].
 
-**DEFERRED**
+## Workflow Security & Lifecycle Governance [REV-77]
 
-- change-request submission and review;
-- role-backed RBAC review and publish enforcement;
+The change-request governance framework implements a secure, state-machine-controlled review and audit workflow designed to prevent self-review and enforce separation of duties.
+
+### 1. State-Machine Lifecycle Transitions
+Change requests and associated draft edits transition through a deterministic lifecycle:
+* **Draft to Submitted**: Submitting selected draft edits transitions their state to `"submitted"`. Attempts to submit edits that are already submitted, approved, or belong to another user will fail closed.
+* **Review Approval**: Approving a request transitions its state to `"approved"` and locks down the draft edits to prevent further modification.
+* **Review Rejection**: Rejecting a request transitions its state to `"rejected"` and returns the draft edits back to `"draft"`, enabling the submitter to refine and resubmit them.
+* **Withdrawal**: Withdrawing a request transitions its state to `"withdrawn"` and returns the draft edits back to `"draft"`.
+
+### 2. Multi-Role Authorization & Capability Mapping
+Access control is enforced at every layer of the workflow:
+* **Submit Change Request**: Requires `data_library.change_requests.submit` or `data_library.change_requests.admin`. Title (3-100 characters) and Description (up to 500 characters) length bounds are strictly enforced.
+* **View Queue**: Submitter/Viewer roles (`data_library.change_requests.submit` or `view_own`) are strictly scoped to only view requests they submitted. Reviewer/Admin roles can view the entire queue.
+* **Direct Get Details**: Requires verification of explicit permissions (`view_own`, `submit`, `review/decide`, `admin`) **before** checking ownership. A revoked user with zero permissions cannot fetch their request details even if they are the original submitter.
+* **Review Approval/Rejection**: Requires `data_library.change_requests.decide` or `admin`. Rejection notes must be at least 3 characters and up to 2,000 characters. **Self-review is strictly prohibited**: if `submitterId === reviewerId`, the action fails closed with a `FORBIDDEN` error.
+* **Withdrawal**: 
+  * Administrators can withdraw any submitted request.
+  * Submitters with `submit` or `view_own` permissions can withdraw only their own requests.
+  * Reviewers without admin status cannot withdraw requests submitted by others.
+
+### 3. Fail-Closed Database Failures
+To ensure production environments fail closed if dependencies are misconfigured:
+* Resolving database-backed repositories outside active database connections throws a `DatabaseConfigurationError`.
+* All change-request service methods resolve the repository inside isolated `try/catch` blocks.
+* Missing database configurations (`DATABASE_URL` is undefined) are safely captured and returned as structured, non-retryable `INTERNAL_ERROR` service responses with a clear message, ensuring the application blocks unauthorized access gracefully.
+
+## Implemented versus deferred
+
+**IMPLEMENTED**
+
+- authenticated workspace route composition;
+- registry-driven lookup and mapping navigation and column capabilities;
+- verified definitions for `lkp_segment` and `map_segment`;
+- server-only BigQuery row-read adapter in `@repo/data/server/data-library`;
+- parameterized search, sorting, filtering, and pagination over live warehouse rows;
+- dynamic filter-option endpoint (`/api/data-library/filter-options`);
+- interactive DataGrid and three-panel Table/Row Inspector;
+- empty-state, loading-skeleton, and retryable error-state UI handling;
+- application-database-backed draft persistence (`@repo/db`, `lookup_table_draft_edits` via migration `0000_lookup_table_draft_edits.sql` mirroring deployed PostgreSQL schema);
+- metadata-driven validation & live lookup dependency validation;
+- 3-layer overlay model (sourceValues, draftValues, effectiveValues);
+- application audit events (`app_audit_log`);
+- server-only publication adapter boundary;
+- change-request submission and review state machine, self-review block, withdrawal governance, bounds verification, and fail-closed structured error handling [REV-77].
+
+**DEFERRED TO REV-78**
+
+- role-backed RBAC publication/execution enforcement;
 - optimistic conflict enforcement;
-- BigQuery publication.
+- BigQuery database publication and execution;
+- conflict handling.
+

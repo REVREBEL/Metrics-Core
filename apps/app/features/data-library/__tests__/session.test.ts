@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
 import { test } from "node:test";
 import {
+  aggregateUserPermissions,
   createSignedSessionToken,
   getSessionSecret,
   verifySessionToken,
@@ -74,4 +75,32 @@ test("getSessionSecret throws Error when SESSION_SECRET and NEXTAUTH_SECRET are 
     if (origSessionSecret) process.env.SESSION_SECRET = origSessionSecret;
     if (origNextAuthSecret) process.env.NEXTAUTH_SECRET = origNextAuthSecret;
   }
+});
+
+test("aggregateUserPermissions aggregates, flattens, deduplicates, and ignores malformed role records", () => {
+  const roleRecords = [
+    {
+      permissions: [
+        "data_library.lookup_tables.view",
+        "data_library.change_requests.submit",
+      ],
+    },
+    {
+      permissions: [
+        "data_library.change_requests.submit",
+        "data_library.change_requests.review",
+      ],
+    },
+    { permissions: null },
+    { permissions: "not-an-array" },
+    { permissions: ["  data_library.change_requests.decide  ", ""] },
+  ];
+
+  const aggregated = aggregateUserPermissions(roleRecords);
+  assert.deepEqual(aggregated.sort(), [
+    "data_library.change_requests.decide",
+    "data_library.change_requests.review",
+    "data_library.change_requests.submit",
+    "data_library.lookup_tables.view",
+  ]);
 });
