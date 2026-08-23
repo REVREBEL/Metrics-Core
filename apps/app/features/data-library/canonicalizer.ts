@@ -8,9 +8,10 @@ export function canonicalizeRowKey(
   primaryKeyFields: string[],
   row: Record<string, unknown>,
 ): string {
-  const entries = primaryKeyFields.map((key) => [
-    key,
-    normalizeKeyValue(row[key]),
-  ]);
-  return JSON.stringify(Object.fromEntries(entries));
+  const obj: Record<string, string> = {};
+  for (let i = 0; i < primaryKeyFields.length; i++) {
+    const key = primaryKeyFields[i];
+    obj[key] = normalizeKeyValue(row[key]);
+  }
+  return JSON.stringify(obj);
 }
