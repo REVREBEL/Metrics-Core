@@ -22,7 +22,7 @@
     "clean": "rm -rf .turbo && pnpm -r exec sh -c 'rm -rf dist .next .turbo *.tsbuildinfo'",
     "clean:node_modules": "rm -rf node_modules apps/*/node_modules packages/*/node_modules",
     "lint": "turbo run lint",
-    "lint:fix:docs": "pnpm --filter '@apps/docs' exec biome check --write",
+    "lint:fix:docs": "pnpm --filter '@apps/docs' exec biome check --write .",
     "lint:fix:ui": "pnpm --filter '@repo/ui' lint:fix",
     "lint:show:issues":"pnpm --filter '@repo/ui' exec biome check src package.json --max-diagnostics=1000",
     "test": "turbo run test",

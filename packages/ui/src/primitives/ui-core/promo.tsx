@@ -15,7 +15,11 @@ export function Promo({
   backgroundImage: string;
 }) {
   return (
-    <div className="relative h-[300px] w-full bg-foreground/10">
+    <div
+      className="relative h-[300px] w-full bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
+      <div className="absolute inset-0 bg-foreground/10" aria-hidden="true" />
       <div className="relative z-10 flex h-full flex-col justify-center gap-3 px-8 py-3">
         <h1 className="font-bold text-3xl tracking-tight md:text-4xl">
           {title}

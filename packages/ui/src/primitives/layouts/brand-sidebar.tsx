@@ -46,11 +46,7 @@ interface SidebarProps {
   className?: string;
 }
 
-export function BrandSidebar({
-  collapsed = false,
-  onToggle,
-  className,
-}: SidebarProps) {
+export function BrandSidebar({ className }: SidebarProps) {
   const pathname = usePathname();
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
@@ -113,7 +109,11 @@ export function BrandSidebar({
   ];
 
   return (
-    <Sidebar variant="sidebar" collapsible="icon" className="mt-16">
+    <Sidebar
+      variant="sidebar"
+      collapsible="icon"
+      className={cn("mt-16", className)}
+    >
       <SidebarHeader>
         <div className={cn(isCollapsed ? "py-2" : "p-2")}>
           <Button className={cn(isCollapsed ? "h-8 w-8 p-0" : "w-full")}>
