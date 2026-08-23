@@ -30,9 +30,18 @@ function formatDateKey(date: Date): string {
   return date.toISOString().split("T")[0];
 }
 
+// ⚡ Bolt: Precompute static DateTimeFormat to avoid expensive repeated implicit instantiation.
+const calendarMonthYearFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  year: "numeric",
+});
+
 function getMonthDays(year: number, month: number): CalendarDay[] {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  // ⚡ Bolt: Precompute today's key to prevent ~42 redundant split & toISOString calls in loops.
+  const todayKey = formatDateKey(today);
 
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
@@ -46,7 +55,7 @@ function getMonthDays(year: number, month: number): CalendarDay[] {
     days.push({
       date,
       isCurrentMonth: false,
-      isToday: formatDateKey(date) === formatDateKey(today),
+      isToday: formatDateKey(date) === todayKey,
       tasks: [],
     });
   }
@@ -57,7 +66,7 @@ function getMonthDays(year: number, month: number): CalendarDay[] {
     days.push({
       date,
       isCurrentMonth: true,
-      isToday: formatDateKey(date) === formatDateKey(today),
+      isToday: formatDateKey(date) === todayKey,
       tasks: [],
     });
   }
@@ -70,7 +79,7 @@ function getMonthDays(year: number, month: number): CalendarDay[] {
       days.push({
         date,
         isCurrentMonth: false,
-        isToday: formatDateKey(date) === formatDateKey(today),
+        isToday: formatDateKey(date) === todayKey,
         tasks: [],
       });
     }
@@ -135,10 +144,7 @@ export function CalendarView({ tasks, onTaskClick }: CalendarViewProps) {
 
     return {
       days: calendarDays,
-      monthYear: currentDate.toLocaleDateString("en-US", {
-        month: "long",
-        year: "numeric",
-      }),
+      monthYear: calendarMonthYearFormatter.format(currentDate),
     };
   }, [currentDate, tasks]);
 

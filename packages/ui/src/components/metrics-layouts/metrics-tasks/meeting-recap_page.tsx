@@ -99,12 +99,7 @@ export function MeetingRecapView({
   // ⚡ Bolt: Memoize formatted date to prevent re-calculation of Intl formatting on every render.
   const formattedDate = useMemo(() => {
     const recapDate = meetingDate ? new Date(meetingDate) : new Date();
-    return recapDate.toLocaleDateString("en-US", {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
+    return _meetingRecapDateFormatter.format(recapDate);
   }, [meetingDate]);
 
   // ⚡ Bolt: Single pass O(N + M) grouping and filtering inside useMemo.
