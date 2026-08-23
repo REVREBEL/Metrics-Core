@@ -1,5 +1,5 @@
-import { Spinner } from "@ui-core";
-import { Button } from "./button";
+import { Button } from "@buttons/button";
+import { Spinner } from "@ui-core/spinner";
 
 export default function ButtonLoading() {
   return (

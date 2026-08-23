@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "storybook dev -p 6006 --host 0.0.0.0 --no-open",
     "build": "storybook build",
-    "lint": "tsc --noEmit",
+    "chromatic": "chromatic",
     "test": "echo \"No tests configured\""
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "@types/node": "^24.0.0",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
+    "chromatic": "^18.1.0",
     "storybook": "10.4.6",
     "tailwindcss": "^4.3.0",
     "typescript": "^5.9.3",

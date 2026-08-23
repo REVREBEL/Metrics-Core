@@ -2,9 +2,20 @@ import { and, eq, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
+import type {
+  ChangeRequestFilters,
+  ChangeRequestItemRecord,
+  ChangeRequestRecord,
+  ChangeRequestRepository,
+  ChangeRequestWithItems,
+  CreateChangeRequestParams,
+  ReviewChangeRequestParams,
+  WithdrawChangeRequestParams,
+} from "./repository-types";
 
 export { and, eq, inArray } from "drizzle-orm";
 
+export * from "./repository-types";
 export * from "./schema";
 
 export class DatabaseConfigurationError extends Error {
@@ -335,6 +346,18 @@ export class InMemoryDraftRepository implements DraftRepository {
   private drafts: Map<string, DraftEditRecord> = new Map();
   public auditLogs: AuditLogRecord[] = [];
 
+  public async transitionDrafts(
+    draftIds: string[],
+    from: string,
+    to: string,
+  ): Promise<void> {
+    for (const [key, draft] of this.drafts.entries()) {
+      if (draftIds.includes(draft.id) && draft.status === from) {
+        this.drafts.set(key, { ...draft, status: to, updatedAt: new Date() });
+      }
+    }
+  }
+
   private getKey(tableKey: string, userId: string, rowKey: string): string {
     return `${userId}:${tableKey}:${rowKey}`;
   }
@@ -458,5 +481,622 @@ export class InMemoryDraftRepository implements DraftRepository {
 
   async recordAuditLog(audit: AuditLogRecord): Promise<void> {
     this.auditLogs.push({ ...audit });
+  }
+}
+
+export class PostgresChangeRequestRepository implements ChangeRequestRepository {
+  private db: ReturnType<typeof getDb>;
+
+  constructor() {
+    this.db = getDb();
+  }
+
+  async createChangeRequestWithAudit(
+    params: CreateChangeRequestParams,
+  ): Promise<ChangeRequestWithItems> {
+    if (!params.drafts || params.drafts.length === 0) {
+      throw new Error("Cannot create a change request with zero drafts.");
+    }
+
+    const trimmedTitle = params.title.trim();
+    if (!trimmedTitle || trimmedTitle.length < 3 || trimmedTitle.length > 100) {
+      throw new Error("Title is required and must be between 3 and 100 characters.");
+    }
+
+    const trimmedDesc = params.description?.trim() || null;
+    if (trimmedDesc && trimmedDesc.length > 500) {
+      throw new Error("Description cannot exceed 500 characters.");
+    }
+
+    return this.db.transaction(async (tx) => {
+      const draftIds = params.drafts.map((d) => d.draftEditId);
+
+      const selectedDrafts = await tx
+        .select()
+        .from(schema.lookupTableDraftEdits)
+        .where(
+          and(
+            eq(schema.lookupTableDraftEdits.userId, params.submitterId),
+            eq(schema.lookupTableDraftEdits.tableKey, params.tableKey),
+            inArray(schema.lookupTableDraftEdits.id, draftIds),
+          ),
+        )
+        .for("update");
+
+      if (selectedDrafts.length !== draftIds.length) {
+        throw new Error(
+          "One or more selected drafts do not exist, belong to another table/user, or were deleted.",
+        );
+      }
+
+      for (const draft of selectedDrafts) {
+        if (draft.status !== "draft") {
+          throw new Error(
+            `Draft for row '${draft.rowKey}' is already in status '${draft.status}' and cannot be submitted.`,
+          );
+        }
+      }
+
+      const [req] = await tx
+        .insert(schema.lookupTableChangeRequests)
+        .values({
+          tableKey: params.tableKey,
+          title: trimmedTitle,
+          description: params.description?.trim() || null,
+          submitterId: params.submitterId,
+          status: "submitted",
+          submittedAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .returning();
+
+      const itemsToInsert = params.drafts.map((d) => ({
+        changeRequestId: req.id,
+        draftEditId: d.draftEditId,
+        rowKey: d.rowKey,
+        originalPayload: d.originalPayload ?? null,
+        submittedPayload: d.draftPayload,
+        validationSnapshot: d.validationSnapshot ?? null,
+      }));
+
+      const insertedItems = await tx
+        .insert(schema.lookupTableChangeRequestItems)
+        .values(itemsToInsert)
+        .returning();
+
+      await tx
+        .update(schema.lookupTableDraftEdits)
+        .set({ status: "submitted", updatedAt: new Date() })
+        .where(inArray(schema.lookupTableDraftEdits.id, draftIds));
+
+      await tx.insert(schema.appAuditLog).values({
+        actorId: params.submitterId,
+        entityType: "lookup_table_change_requests",
+        entityId: req.id,
+        action: "CHANGE_REQUEST_SUBMITTED",
+        metadata: {
+          tableKey: params.tableKey,
+          title: req.title,
+          itemCount: insertedItems.length,
+          draftIds,
+        },
+        afterState: { id: req.id, title: req.title, status: "submitted" },
+      });
+
+      const items: ChangeRequestItemRecord[] = insertedItems.map((item) => ({
+        id: item.id,
+        changeRequestId: item.changeRequestId,
+        draftEditId: item.draftEditId,
+        rowKey: item.rowKey,
+        originalPayload: item.originalPayload as Record<string, unknown> | null,
+        submittedPayload: item.submittedPayload as Record<string, unknown>,
+        validationSnapshot: item.validationSnapshot as Record<string, unknown> | null,
+        createdAt: item.createdAt,
+      }));
+
+      return {
+        id: req.id,
+        tableKey: req.tableKey,
+        title: req.title,
+        description: req.description,
+        submitterId: req.submitterId,
+        reviewerId: req.reviewerId,
+        status: req.status as "submitted",
+        reviewNotes: req.reviewNotes,
+        submittedAt: req.submittedAt,
+        reviewedAt: req.reviewedAt,
+        withdrawnAt: req.withdrawnAt,
+        createdAt: req.createdAt,
+        updatedAt: req.updatedAt,
+        items,
+      };
+    });
+  }
+
+  async listChangeRequests(
+    filters?: ChangeRequestFilters,
+  ): Promise<ChangeRequestRecord[]> {
+    const conditions = [];
+
+    if (filters?.status) {
+      conditions.push(eq(schema.lookupTableChangeRequests.status, filters.status));
+    }
+    if (filters?.tableKey) {
+      conditions.push(eq(schema.lookupTableChangeRequests.tableKey, filters.tableKey));
+    }
+    if (filters?.submitterId) {
+      conditions.push(eq(schema.lookupTableChangeRequests.submitterId, filters.submitterId));
+    }
+
+    const rows = await this.db
+      .select()
+      .from(schema.lookupTableChangeRequests)
+      .where(conditions.length > 0 ? and(...conditions) : undefined);
+
+    return rows.map((r) => ({
+      id: r.id,
+      tableKey: r.tableKey,
+      title: r.title,
+      description: r.description,
+      submitterId: r.submitterId,
+      reviewerId: r.reviewerId,
+      status: r.status as ChangeRequestRecord["status"],
+      reviewNotes: r.reviewNotes,
+      submittedAt: r.submittedAt,
+      reviewedAt: r.reviewedAt,
+      withdrawnAt: r.withdrawnAt,
+      createdAt: r.createdAt,
+      updatedAt: r.updatedAt,
+    }));
+  }
+
+  async getChangeRequest(id: string): Promise<ChangeRequestWithItems | null> {
+    const [req] = await this.db
+      .select()
+      .from(schema.lookupTableChangeRequests)
+      .where(eq(schema.lookupTableChangeRequests.id, id))
+      .limit(1);
+
+    if (!req) return null;
+
+    const items = await this.db
+      .select()
+      .from(schema.lookupTableChangeRequestItems)
+      .where(eq(schema.lookupTableChangeRequestItems.changeRequestId, id));
+
+    return {
+      id: req.id,
+      tableKey: req.tableKey,
+      title: req.title,
+      description: req.description,
+      submitterId: req.submitterId,
+      reviewerId: req.reviewerId,
+      status: req.status as ChangeRequestRecord["status"],
+      reviewNotes: req.reviewNotes,
+      submittedAt: req.submittedAt,
+      reviewedAt: req.reviewedAt,
+      withdrawnAt: req.withdrawnAt,
+      createdAt: req.createdAt,
+      updatedAt: req.updatedAt,
+      items: items.map((i) => ({
+        id: i.id,
+        changeRequestId: i.changeRequestId,
+        draftEditId: i.draftEditId,
+        rowKey: i.rowKey,
+        originalPayload: i.originalPayload as Record<string, unknown> | null,
+        submittedPayload: i.submittedPayload as Record<string, unknown>,
+        validationSnapshot: i.validationSnapshot as Record<string, unknown> | null,
+        createdAt: i.createdAt,
+      })),
+    };
+  }
+
+  async reviewChangeRequestWithAudit(
+    params: ReviewChangeRequestParams,
+  ): Promise<ChangeRequestWithItems> {
+    const trimmedNotes = params.reviewNotes?.trim() ?? null;
+    if (params.decision === "reject" && (!trimmedNotes || trimmedNotes.length < 3)) {
+      throw new Error("Rejection notes are required and must be at least 3 characters.");
+    }
+    if (trimmedNotes && trimmedNotes.length > 2000) {
+      throw new Error("Review notes cannot exceed 2000 characters.");
+    }
+
+    return this.db.transaction(async (tx) => {
+      const [req] = await tx
+        .select()
+        .from(schema.lookupTableChangeRequests)
+        .where(eq(schema.lookupTableChangeRequests.id, params.changeRequestId))
+        .for("update");
+
+      if (!req) {
+        throw new Error("Change request not found.");
+      }
+
+      if (req.status !== "submitted") {
+        throw new Error(`Change request '${req.id}' is in status '${req.status}' and cannot be reviewed.`);
+      }
+
+      if (req.submitterId === params.reviewerId) {
+        throw new Error("Self-review prohibited. Submitter cannot approve or reject their own request.");
+      }
+
+      const newReqStatus = params.decision === "approve" ? "approved" : "rejected";
+      const newDraftStatus = params.decision === "approve" ? "approved" : "draft";
+
+      const [updatedReq] = await tx
+        .update(schema.lookupTableChangeRequests)
+        .set({
+          status: newReqStatus,
+          reviewerId: params.reviewerId,
+          reviewNotes: trimmedNotes,
+          reviewedAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .where(eq(schema.lookupTableChangeRequests.id, params.changeRequestId))
+        .returning();
+
+      const items = await tx
+        .select()
+        .from(schema.lookupTableChangeRequestItems)
+        .where(eq(schema.lookupTableChangeRequestItems.changeRequestId, params.changeRequestId));
+
+      const draftEditIds = items.map((i) => i.draftEditId);
+
+      await tx
+        .update(schema.lookupTableDraftEdits)
+        .set({ status: newDraftStatus, updatedAt: new Date() })
+        .where(inArray(schema.lookupTableDraftEdits.id, draftEditIds));
+
+      const action = params.decision === "approve" ? "CHANGE_REQUEST_APPROVED" : "CHANGE_REQUEST_REJECTED";
+
+      await tx.insert(schema.appAuditLog).values({
+        actorId: params.reviewerId,
+        entityType: "lookup_table_change_requests",
+        entityId: updatedReq.id,
+        action,
+        metadata: {
+          tableKey: updatedReq.tableKey,
+          reviewerId: params.reviewerId,
+          reviewNotes: trimmedNotes,
+        },
+        beforeState: { status: "submitted" },
+        afterState: { status: newReqStatus },
+      });
+
+      return {
+        id: updatedReq.id,
+        tableKey: updatedReq.tableKey,
+        title: updatedReq.title,
+        description: updatedReq.description,
+        submitterId: updatedReq.submitterId,
+        reviewerId: updatedReq.reviewerId,
+        status: updatedReq.status as ChangeRequestRecord["status"],
+        reviewNotes: updatedReq.reviewNotes,
+        submittedAt: updatedReq.submittedAt,
+        reviewedAt: updatedReq.reviewedAt,
+        withdrawnAt: updatedReq.withdrawnAt,
+        createdAt: updatedReq.createdAt,
+        updatedAt: updatedReq.updatedAt,
+        items: items.map((i) => ({
+          id: i.id,
+          changeRequestId: i.changeRequestId,
+          draftEditId: i.draftEditId,
+          rowKey: i.rowKey,
+          originalPayload: i.originalPayload as Record<string, unknown> | null,
+          submittedPayload: i.submittedPayload as Record<string, unknown>,
+          validationSnapshot: i.validationSnapshot as Record<string, unknown> | null,
+          createdAt: i.createdAt,
+        })),
+      };
+    });
+  }
+
+  async withdrawChangeRequestWithAudit(
+    params: WithdrawChangeRequestParams,
+  ): Promise<ChangeRequestWithItems> {
+    return this.db.transaction(async (tx) => {
+      const [req] = await tx
+        .select()
+        .from(schema.lookupTableChangeRequests)
+        .where(eq(schema.lookupTableChangeRequests.id, params.changeRequestId))
+        .for("update");
+
+      if (!req) {
+        throw new Error("Change request not found.");
+      }
+
+      if (req.status !== "submitted") {
+        throw new Error(`Change request '${req.id}' is in status '${req.status}' and cannot be withdrawn.`);
+      }
+
+      const [updatedReq] = await tx
+        .update(schema.lookupTableChangeRequests)
+        .set({
+          status: "withdrawn",
+          withdrawnAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .where(eq(schema.lookupTableChangeRequests.id, params.changeRequestId))
+        .returning();
+
+      const items = await tx
+        .select()
+        .from(schema.lookupTableChangeRequestItems)
+        .where(eq(schema.lookupTableChangeRequestItems.changeRequestId, params.changeRequestId));
+
+      const draftEditIds = items.map((i) => i.draftEditId);
+
+      await tx
+        .update(schema.lookupTableDraftEdits)
+        .set({ status: "draft", updatedAt: new Date() })
+        .where(inArray(schema.lookupTableDraftEdits.id, draftEditIds));
+
+      await tx.insert(schema.appAuditLog).values({
+        actorId: params.actorId,
+        entityType: "lookup_table_change_requests",
+        entityId: updatedReq.id,
+        action: "CHANGE_REQUEST_WITHDRAWN",
+        metadata: {
+          tableKey: updatedReq.tableKey,
+          actorId: params.actorId,
+        },
+        beforeState: { status: "submitted" },
+        afterState: { status: "withdrawn" },
+      });
+
+      return {
+        id: updatedReq.id,
+        tableKey: updatedReq.tableKey,
+        title: updatedReq.title,
+        description: updatedReq.description,
+        submitterId: updatedReq.submitterId,
+        reviewerId: updatedReq.reviewerId,
+        status: updatedReq.status as ChangeRequestRecord["status"],
+        reviewNotes: updatedReq.reviewNotes,
+        submittedAt: updatedReq.submittedAt,
+        reviewedAt: updatedReq.reviewedAt,
+        withdrawnAt: updatedReq.withdrawnAt,
+        createdAt: updatedReq.createdAt,
+        updatedAt: updatedReq.updatedAt,
+        items: items.map((i) => ({
+          id: i.id,
+          changeRequestId: i.changeRequestId,
+          draftEditId: i.draftEditId,
+          rowKey: i.rowKey,
+          originalPayload: i.originalPayload as Record<string, unknown> | null,
+          submittedPayload: i.submittedPayload as Record<string, unknown>,
+          validationSnapshot: i.validationSnapshot as Record<string, unknown> | null,
+          createdAt: i.createdAt,
+        })),
+      };
+    });
+  }
+}
+
+export class InMemoryChangeRequestRepository implements ChangeRequestRepository {
+  public requests: Map<string, ChangeRequestRecord> = new Map();
+  public items: Map<string, ChangeRequestItemRecord[]> = new Map();
+  public auditLogs: AuditLogRecord[] = [];
+  private draftRepo?: InMemoryDraftRepository;
+
+  constructor(draftRepo?: InMemoryDraftRepository) {
+    this.draftRepo = draftRepo;
+  }
+
+  async createChangeRequestWithAudit(
+    params: CreateChangeRequestParams,
+  ): Promise<ChangeRequestWithItems> {
+    if (!params.drafts || params.drafts.length === 0) {
+      throw new Error("Cannot create a change request with zero drafts.");
+    }
+
+    const trimmedTitle = params.title.trim();
+    if (!trimmedTitle || trimmedTitle.length < 3 || trimmedTitle.length > 100) {
+      throw new Error("Title is required and must be between 3 and 100 characters.");
+    }
+
+    const trimmedDesc = params.description?.trim() || null;
+    if (trimmedDesc && trimmedDesc.length > 500) {
+      throw new Error("Description cannot exceed 500 characters.");
+    }
+
+    const reqId = `req-${Math.random().toString(36).substring(2, 9)}`;
+    const now = new Date();
+
+    const requestRecord: ChangeRequestRecord = {
+      id: reqId,
+      tableKey: params.tableKey,
+      title: trimmedTitle,
+      description: trimmedDesc,
+      submitterId: params.submitterId,
+      reviewerId: null,
+      status: "submitted",
+      reviewNotes: null,
+      submittedAt: now,
+      reviewedAt: null,
+      withdrawnAt: null,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const itemRecords: ChangeRequestItemRecord[] = params.drafts.map((d) => ({
+      id: `item-${Math.random().toString(36).substring(2, 9)}`,
+      changeRequestId: reqId,
+      draftEditId: d.draftEditId,
+      rowKey: d.rowKey,
+      originalPayload: d.originalPayload ?? null,
+      submittedPayload: d.draftPayload,
+      validationSnapshot: d.validationSnapshot ?? null,
+      createdAt: now,
+    }));
+
+    // Transition drafts in memory
+    if (this.draftRepo) {
+      const draftEditIds = params.drafts.map((d) => d.draftEditId);
+      await this.draftRepo.transitionDrafts(draftEditIds, "draft", "submitted");
+    }
+
+    this.requests.set(reqId, requestRecord);
+    this.items.set(reqId, itemRecords);
+
+    this.auditLogs.push({
+      actorId: params.submitterId,
+      entityType: "lookup_table_change_requests",
+      entityId: reqId,
+      action: "CHANGE_REQUEST_SUBMITTED",
+      metadata: {
+        tableKey: params.tableKey,
+        title: trimmedTitle,
+        itemCount: itemRecords.length,
+      },
+      afterState: { id: reqId, title: trimmedTitle, status: "submitted" },
+    });
+
+    return {
+      ...requestRecord,
+      items: itemRecords,
+    };
+  }
+
+  async listChangeRequests(
+    filters?: ChangeRequestFilters,
+  ): Promise<ChangeRequestRecord[]> {
+    const results: ChangeRequestRecord[] = [];
+    for (const req of this.requests.values()) {
+      if (filters?.status && req.status !== filters.status) continue;
+      if (filters?.tableKey && req.tableKey !== filters.tableKey) continue;
+      if (filters?.submitterId && req.submitterId !== filters.submitterId) continue;
+      results.push({ ...req });
+    }
+    return results;
+  }
+
+  async getChangeRequest(id: string): Promise<ChangeRequestWithItems | null> {
+    const req = this.requests.get(id);
+    if (!req) return null;
+    const items = this.items.get(id) ?? [];
+    return {
+      ...req,
+      items: items.map((i) => ({ ...i })),
+    };
+  }
+
+  async reviewChangeRequestWithAudit(
+    params: ReviewChangeRequestParams,
+  ): Promise<ChangeRequestWithItems> {
+    const req = this.requests.get(params.changeRequestId);
+    if (!req) {
+      throw new Error("Change request not found.");
+    }
+
+    if (req.status !== "submitted") {
+      throw new Error(`Change request '${req.id}' is in status '${req.status}' and cannot be reviewed.`);
+    }
+
+    if (req.submitterId === params.reviewerId) {
+      throw new Error("Self-review prohibited. Submitter cannot approve or reject their own request.");
+    }
+
+    const trimmedNotes = params.reviewNotes?.trim() ?? null;
+    if (params.decision === "reject" && (!trimmedNotes || trimmedNotes.length < 3)) {
+      throw new Error("Rejection notes are required and must be at least 3 characters.");
+    }
+    if (trimmedNotes && trimmedNotes.length > 2000) {
+      throw new Error("Review notes cannot exceed 2000 characters.");
+    }
+
+    const now = new Date();
+    const newReqStatus = params.decision === "approve" ? "approved" : "rejected";
+    const targetDraftStatus = params.decision === "approve" ? "approved" : "draft";
+
+    const updated: ChangeRequestRecord = {
+      ...req,
+      status: newReqStatus,
+      reviewerId: params.reviewerId,
+      reviewNotes: trimmedNotes,
+      reviewedAt: now,
+      updatedAt: now,
+    };
+
+    // Transition drafts in memory
+    if (this.draftRepo) {
+      const items = this.items.get(req.id) ?? [];
+      const draftEditIds = items.map((i) => i.draftEditId);
+      await this.draftRepo.transitionDrafts(draftEditIds, "submitted", targetDraftStatus);
+    }
+
+    this.requests.set(req.id, updated);
+
+    const action = params.decision === "approve" ? "CHANGE_REQUEST_APPROVED" : "CHANGE_REQUEST_REJECTED";
+
+    this.auditLogs.push({
+      actorId: params.reviewerId,
+      entityType: "lookup_table_change_requests",
+      entityId: req.id,
+      action,
+      metadata: {
+        tableKey: req.tableKey,
+        reviewerId: params.reviewerId,
+        reviewNotes: trimmedNotes,
+      },
+      beforeState: { status: "submitted" },
+      afterState: { status: newReqStatus },
+    });
+
+    const items = this.items.get(req.id) ?? [];
+    return {
+      ...updated,
+      items: items.map((i) => ({ ...i })),
+    };
+  }
+
+  async withdrawChangeRequestWithAudit(
+    params: WithdrawChangeRequestParams,
+  ): Promise<ChangeRequestWithItems> {
+    const req = this.requests.get(params.changeRequestId);
+    if (!req) {
+      throw new Error("Change request not found.");
+    }
+
+    if (req.status !== "submitted") {
+      throw new Error(`Change request '${req.id}' is in status '${req.status}' and cannot be withdrawn.`);
+    }
+
+    const now = new Date();
+    const updated: ChangeRequestRecord = {
+      ...req,
+      status: "withdrawn",
+      withdrawnAt: now,
+      updatedAt: now,
+    };
+
+    // Transition drafts back to draft state
+    if (this.draftRepo) {
+      const items = this.items.get(req.id) ?? [];
+      const draftEditIds = items.map((i) => i.draftEditId);
+      await this.draftRepo.transitionDrafts(draftEditIds, "submitted", "draft");
+    }
+
+    this.requests.set(req.id, updated);
+
+    this.auditLogs.push({
+      actorId: params.actorId,
+      entityType: "lookup_table_change_requests",
+      entityId: req.id,
+      action: "CHANGE_REQUEST_WITHDRAWN",
+      metadata: {
+        tableKey: req.tableKey,
+        actorId: params.actorId,
+      },
+      beforeState: { status: "submitted" },
+      afterState: { status: "withdrawn" },
+    });
+
+    const items = this.items.get(req.id) ?? [];
+    return {
+      ...updated,
+      items: items.map((i) => ({ ...i })),
+    };
   }
 }

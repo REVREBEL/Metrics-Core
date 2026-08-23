@@ -174,6 +174,9 @@ export function DataLibraryWorkspace({
   }, [loadRows]);
 
   // Load Filter Options for filterable columns
+  // Optimized by Bolt: Use Promise.all to fetch all filterable column options concurrently,
+  // preventing multiple incremental state updates and re-renders. Also handles race conditions
+  // and stale state by utilizing an AbortController and resetting filterOptionsMap immediately.
   useEffect(() => {
     if (!selectedTable) return;
 
@@ -181,16 +184,45 @@ export function DataLibraryWorkspace({
       (c) => c.filterable && c.type === "string",
     );
 
-    for (const col of filterableCols) {
-      fetchFilterOptionsClient(selectedTable.key, col.key).then((res) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    // Reset filter options from previous table immediately to avoid stale memory leaking
+    setFilterOptionsMap({});
+
+    const promises = filterableCols.map(async (col) => {
+      try {
+        const res = await fetchFilterOptionsClient(
+          selectedTable.key,
+          col.key,
+          signal,
+        );
         if (res.success) {
-          setFilterOptionsMap((prev) => ({
-            ...prev,
-            [col.key]: res.data.options,
-          }));
+          return { key: col.key, options: res.data.options };
         }
-      });
-    }
+      } catch (_err) {
+        // Silently catch aborts/network errors
+      }
+      return null;
+    });
+
+    Promise.all(promises).then((results) => {
+      if (signal.aborted) return;
+      const nextMap: Record<
+        string,
+        Array<{ label: string; value: string }>
+      > = {};
+      for (const r of results) {
+        if (r) {
+          nextMap[r.key] = r.options;
+        }
+      }
+      setFilterOptionsMap(nextMap);
+    });
+
+    return () => {
+      controller.abort();
+    };
   }, [selectedTable]);
 
   // Local edit handler

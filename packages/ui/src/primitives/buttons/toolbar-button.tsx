@@ -1,9 +1,5 @@
-import {
-  Toggle,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@ui-core/tooltip";
+import { Toggle } from "@ui-core/toggle";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@ui-core/tooltip";
 import type * as React from "react";
 import { cn } from "@/lib/utils";
 

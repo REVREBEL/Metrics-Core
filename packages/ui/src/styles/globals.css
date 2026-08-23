@@ -8,9 +8,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@layer components {
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -69,3 +69,46 @@ export const userRoles = pgTable("user_roles", {
   permissions: jsonb("permissions"),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
+
+export const lookupTableChangeRequests = pgTable("lookup_table_change_requests", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  tableKey: varchar("table_key", { length: 255 }).notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  submitterId: uuid("submitter_id")
+    .notNull()
+    .references(() => appUsers.id),
+  reviewerId: uuid("reviewer_id")
+    .references(() => appUsers.id),
+  status: varchar("status", { length: 50 }).notNull(),
+  reviewNotes: text("review_notes"),
+  submittedAt: timestamp("submitted_at", { withTimezone: true }).defaultNow().notNull(),
+  reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+  withdrawnAt: timestamp("withdrawn_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const lookupTableChangeRequestItems = pgTable(
+  "lookup_table_change_request_items",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    changeRequestId: uuid("change_request_id")
+      .notNull()
+      .references(() => lookupTableChangeRequests.id, { onDelete: "cascade" }),
+    draftEditId: uuid("draft_edit_id")
+      .notNull()
+      .references(() => lookupTableDraftEdits.id),
+    rowKey: text("row_key").notNull(),
+    originalPayload: jsonb("original_payload"),
+    submittedPayload: jsonb("submitted_payload").notNull(),
+    validationSnapshot: jsonb("validation_snapshot"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex("change_request_items_req_draft_idx").on(
+      table.changeRequestId,
+      table.draftEditId,
+    ),
+  ],
+);
