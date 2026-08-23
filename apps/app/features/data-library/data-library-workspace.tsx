@@ -59,6 +59,7 @@ export function DataLibraryWorkspace({
   // Grid Query State
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
+  const [searchTerm, setSearchTerm] = useState("");
   const [search, setSearch] = useState("");
   const [sortColumn, setSortColumn] = useState<string>(
     selectedTable?.defaultSort.column ?? "",
@@ -114,6 +115,7 @@ export function DataLibraryWorkspace({
   // Reset page and filters when switching selected table
   useEffect(() => {
     setPage(1);
+    setSearchTerm("");
     setSearch("");
     setFilters({});
     setSelectedRow(null);
@@ -124,6 +126,20 @@ export function DataLibraryWorkspace({
       setSortDirection(selectedTable.defaultSort.direction);
     }
   }, [selectedTable]);
+
+  // Debounce search query input to avoid redundant warehouse queries
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setSearch("");
+      return;
+    }
+
+    const delayDebounceFn = setTimeout(() => {
+      setSearch(searchTerm);
+    }, 400);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
 
   // Fetch Rows function
   const loadRows = useCallback(async () => {
@@ -181,10 +197,19 @@ export function DataLibraryWorkspace({
     loadRows();
   }, [loadRows]);
 
+  // Module-level client-side cache for filter options
+  // key: `${tableKey}:${columnKey}` -> value: Array<{ label: string, value: string }>
+  // Optimized by Bolt: Utilizing a Map-based cache avoids repeated, redundant BigQuery / API network
+  // requests when toggling between tables or after re-mounts.
+  const [filterCache] = useState(
+    () => new Map<string, Array<{ label: string; value: string }>>(),
+  );
+
   // Load Filter Options for filterable columns
   // Optimized by Bolt: Use Promise.all to fetch all filterable column options concurrently,
   // preventing multiple incremental state updates and re-renders. Also handles race conditions
   // and stale state by utilizing an AbortController and resetting filterOptionsMap immediately.
+  // Reads and writes to filterCache to completely eliminate redundant BigQuery query overhead.
   useEffect(() => {
     if (!selectedTable) return;
 
@@ -199,6 +224,12 @@ export function DataLibraryWorkspace({
     setFilterOptionsMap({});
 
     const promises = filterableCols.map(async (col) => {
+      const cacheKey = `${selectedTable.key}:${col.key}`;
+      const cached = filterCache.get(cacheKey);
+      if (cached) {
+        return { key: col.key, options: cached };
+      }
+
       try {
         const res = await fetchFilterOptionsClient(
           selectedTable.key,
@@ -206,6 +237,7 @@ export function DataLibraryWorkspace({
           signal,
         );
         if (res.success) {
+          filterCache.set(cacheKey, res.data.options);
           return { key: col.key, options: res.data.options };
         }
       } catch (_err) {
@@ -231,7 +263,7 @@ export function DataLibraryWorkspace({
     return () => {
       controller.abort();
     };
-  }, [selectedTable]);
+  }, [selectedTable, filterCache]);
 
   // Local edit handler
   const handleCellEdit = useCallback(
@@ -360,12 +392,13 @@ export function DataLibraryWorkspace({
 
   const handleClearFilters = () => {
     setPage(1);
+    setSearchTerm("");
     setSearch("");
     setFilters({});
   };
 
   const activeFilterCount =
-    (search.trim() ? 1 : 0) + Object.keys(filters).length;
+    (searchTerm.trim() ? 1 : 0) + Object.keys(filters).length;
 
   // Visible tables filter
   const visibleDefinitions = useMemo(() => {
@@ -736,10 +769,10 @@ export function DataLibraryWorkspace({
               <div className="relative flex-1 min-w-[180px]">
                 <Search className="absolute left-2.5 top-2.5 size-3.5 text-muted-foreground" />
                 <input
-                  value={search}
+                  value={searchTerm}
                   onChange={(e) => {
                     setPage(1);
-                    setSearch(e.target.value);
+                    setSearchTerm(e.target.value);
                   }}
                   placeholder={`Search ${selectedTable.title}...`}
                   className="h-8 w-full rounded-md border border-border/40 bg-background pl-8 pr-3 text-xs outline-none focus-visible:ring-1 focus-visible:ring-primary"
