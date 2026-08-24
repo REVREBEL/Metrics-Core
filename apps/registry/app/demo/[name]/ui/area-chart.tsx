@@ -3,13 +3,7 @@
 import * as React from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@ui";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui";
 import {
   type ChartConfig,
   ChartContainer,
@@ -141,11 +135,18 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+// ⚡ Bolt: Hoist static Intl.DateTimeFormat to avoid re-instantiating on every tick / tooltip frame
+const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+});
+
 export function AreaChartComponent() {
   const [timeRange, setTimeRange] = React.useState("90d");
 
-  const filteredData = chartData.filter((item) => {
-    const date = new Date(item.date);
+  // ⚡ Bolt: Memoize filtered data and compute loop invariants (reference date / start timestamp) outside loop.
+  // Prevents ~270 redundant Date object instantiations and date operations per render.
+  const filteredData = React.useMemo(() => {
     const referenceDate = new Date("2024-06-30");
     let daysToSubtract = 90;
     if (timeRange === "30d") {
@@ -155,8 +156,12 @@ export function AreaChartComponent() {
     }
     const startDate = new Date(referenceDate);
     startDate.setDate(startDate.getDate() - daysToSubtract);
-    return date >= startDate;
-  });
+    const startTimestamp = startDate.getTime();
+
+    return chartData.filter(
+      (item) => new Date(item.date).getTime() >= startTimestamp,
+    );
+  }, [timeRange]);
 
   return (
     <Card>
@@ -226,25 +231,18 @@ export function AreaChartComponent() {
               axisLine={false}
               tickMargin={8}
               minTickGap={32}
-              tickFormatter={(value) => {
-                const date = new Date(value);
-                return date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                });
-              }}
+              tickFormatter={(value) =>
+                shortDateFormatter.format(new Date(value))
+              }
             />
             <ChartTooltip
               cursor={false}
               content={(props: Record<string, unknown>) => (
                 <DemoChartTooltipContent
                   {...props}
-                  labelFormatter={(value: string | number | Date) => {
-                    return new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                    });
-                  }}
+                  labelFormatter={(value: string | number | Date) =>
+                    shortDateFormatter.format(new Date(value))
+                  }
                   indicator="dot"
                 />
               )}
