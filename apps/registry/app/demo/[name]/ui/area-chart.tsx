@@ -145,7 +145,7 @@ export function AreaChartComponent() {
   const [timeRange, setTimeRange] = React.useState("90d");
 
   // ⚡ Bolt: Memoize filtered data and compute loop invariants (reference date / start timestamp) outside loop.
-  // Prevents ~270 redundant Date object instantiations and date operations per render.
+  // Avoids ~180 redundant Date object instantiations per render by moving two date allocations per item outside the loop.
   const filteredData = React.useMemo(() => {
     const referenceDate = new Date("2024-06-30");
     let daysToSubtract = 90;
