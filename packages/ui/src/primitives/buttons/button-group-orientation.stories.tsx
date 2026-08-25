@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import ButtonGroupOrientation from "./button-group-orientation";
+import ButtonGroupOrientation from "@buttons/button-group-orientation";
 
 const meta = {
   title: "Primitives/Buttons/Button Group Orientation",

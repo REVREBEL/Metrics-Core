@@ -1,7 +1,7 @@
 import { Input } from "@inputs/input";
 import { IconSearch as SearchIcon } from "@tabler/icons-react";
-import { Button } from "./button";
-import { ButtonGroup } from "./button-group";
+import { Button } from "@buttons/button";
+import { ButtonGroup } from "@buttons/button-group";
 
 export default function ButtonGroupInput() {
   return (

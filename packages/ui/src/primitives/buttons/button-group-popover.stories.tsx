@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import ButtonGroupPopover from "./button-group-popover";
+import ButtonGroupPopover from "@buttons/button-group-popover";
 
 const meta = {
   title: "Primitives/Buttons/Button Group Popover",
