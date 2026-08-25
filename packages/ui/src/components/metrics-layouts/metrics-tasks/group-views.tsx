@@ -69,18 +69,24 @@ function getInitials(name: string): string {
     .slice(0, 2);
 }
 
-function TaskMiniCard({ task, onClick }: { task: Task; onClick?: () => void }) {
-  const statusInfo = taskStatuses.find((s) => s.value === task.status);
-  const StatusIcon = statusInfo?.icon;
+// ⚡ Bolt: Pre-computed static Maps for O(1) lookup to eliminate array traversals (.find) inside render loops.
+const taskStatusMap = new Map(taskStatuses.map((s) => [s.value, s]));
+const assigneeTypeMap = new Map(assigneeTypes.map((t) => [t.value, t.label]));
+const departmentMap = new Map(departments.map((d) => [d.value, d.label]));
 
-  const statusColor = {
-    not_started: "text-slate-500",
-    in_progress: "text-blue-500",
-    waiting: "text-yellow-500",
-    blocked: "text-red-500",
-    complete: "text-green-500",
-    canceled: "text-gray-400",
-  };
+// ⚡ Bolt: Hoisted static status color mapping outside of component render scope.
+const statusColor: Record<string, string> = {
+  not_started: "text-slate-500",
+  in_progress: "text-blue-500",
+  waiting: "text-yellow-500",
+  blocked: "text-red-500",
+  complete: "text-green-500",
+  canceled: "text-gray-400",
+};
+
+function TaskMiniCard({ task, onClick }: { task: Task; onClick?: () => void }) {
+  const statusInfo = taskStatusMap.get(task.status);
+  const StatusIcon = statusInfo?.icon;
 
   return (
     // biome-ignore lint/a11y/useSemanticElements: complex card layout requires div with role="button"
@@ -128,9 +134,10 @@ function PersonCard({
   person: PersonGroup;
   onTaskClick?: (task: Task) => void;
 }) {
-  // ⚡ Bolt: Calculate stats in a single pass O(N) loop and memoize results. Hoist `new Date()`.
+  // ⚡ Bolt: Calculate stats in a single pass O(N) loop and memoize results.
+  // Use Date.parse to compare timestamps avoiding Date object instantiation in loop.
   const cardStats = useMemo(() => {
-    const now = new Date();
+    const nowTs = Date.now();
     let completedCount = 0;
     let overdueCount = 0;
     const openTasksList: Task[] = [];
@@ -141,8 +148,8 @@ function PersonCard({
       } else if (t.status !== "canceled") {
         openTasksList.push(t);
         if (t.dueDate) {
-          const taskDueDate = new Date(t.dueDate);
-          if (taskDueDate < now) {
+          const dueTs = Date.parse(t.dueDate);
+          if (!Number.isNaN(dueTs) && dueTs < nowTs) {
             overdueCount++;
           }
         }
@@ -161,8 +168,7 @@ function PersonCard({
       ? Math.round((cardStats.completedCount / person.tasks.length) * 100)
       : 0;
 
-  const typeLabel =
-    assigneeTypes.find((t) => t.value === person.type)?.label || person.type;
+  const typeLabel = assigneeTypeMap.get(person.type) || person.type;
 
   return (
     <Collapsible defaultOpen={cardStats.openTasks.length > 0}>
@@ -188,8 +194,7 @@ function PersonCard({
                 </div>
                 {person.department && (
                   <p className="text-sm text-muted-foreground truncate">
-                    {departments.find((d) => d.value === person.department)
-                      ?.label || person.department}
+                    {departmentMap.get(person.department) || person.department}
                   </p>
                 )}
               </div>
@@ -427,13 +432,14 @@ export function ByDepartmentView({
 
     // Single pass to group and pre-calculate open tasks count
     // This avoids O(N log N * M) complexity during sorting
+    // ⚡ Bolt: Uses departmentMap for O(1) label lookup instead of O(M) .find()
     for (const task of tasks) {
       const key = task.assignedDepartment || "unassigned";
       if (!groups[key]) {
-        const deptInfo = departments.find((d) => d.value === key);
+        const deptLabel = departmentMap.get(key);
         groups[key] = {
           name: key,
-          label: deptInfo?.label || (key === "unassigned" ? "Unassigned" : key),
+          label: deptLabel || (key === "unassigned" ? "Unassigned" : key),
           tasks: [],
           openTasksCount: 0,
         };
