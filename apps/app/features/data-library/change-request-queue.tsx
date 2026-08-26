@@ -8,6 +8,7 @@ import {
   Filter,
   RefreshCw,
   RotateCcw,
+  Send,
   XCircle,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -37,6 +38,8 @@ export function ChangeRequestQueue() {
   const [selectedTable, setSelectedTable] = useState<string>("");
   const [submitterFilter, setSubmitterFilter] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isPublishing, setIsPublishing] = useState<boolean>(false);
+  const [publicationResult, setPublicationResult] = useState<any | null>(null);
   // biome-ignore lint/suspicious/noExplicitAny: Details have dynamically resolved nested properties.
   const [selectedReqDetail, setSelectedReqDetail] = useState<any | null>(null);
 
@@ -72,9 +75,40 @@ export function ChangeRequestQueue() {
   // biome-ignore lint/correctness/useExhaustiveDependencies: Only fetch when explicit status or table selection changes.
   useEffect(() => {
     loadQueue();
+  }
+
+  async function handlePublish(id: string) {
+    setIsPublishing(true);
+    setPublicationResult(null);
+    setActionError(null);
+
+    try {
+      const response = await fetch("/api/data-library/publish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ changeRequestId: id }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Publication failed");
+      }
+
+      setPublicationResult(result);
+      // Refresh the queue to show the new status
+      loadQueue();
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "An unknown error occurred.";
+      setActionError(message);
+    } finally {
+      setIsPublishing(false);
+    }
   }, [selectedStatus, selectedTable]);
 
   async function handleInspect(id: string) {
+    setPublicationResult(null);
     const res = await getChangeRequestAction(id);
     if (res.success) {
       setSelectedReqDetail(res.data);
@@ -161,6 +195,8 @@ export function ChangeRequestQueue() {
           >
             <option value="submitted">Submitted (Pending)</option>
             <option value="approved">Approved</option>
+            <option value="published">Published</option>
+            <option value="conflict">Conflict</option>
             <option value="rejected">Rejected</option>
             <option value="withdrawn">Withdrawn</option>
             <option value="">All Statuses</option>
@@ -341,6 +377,47 @@ export function ChangeRequestQueue() {
               </div>
             ))}
           </div>
+
+          {selectedReqDetail.status === "approved" && (
+            <div className="mt-6 flex items-center justify-end space-x-3 pt-4 border-t dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => handlePublish(selectedReqDetail.id)}
+                disabled={isPublishing}
+                className="inline-flex items-center space-x-2 rounded bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 disabled:bg-blue-300 dark:disabled:bg-blue-900"
+              >
+                <Send className="h-3.5 w-3.5" />
+                <span>{isPublishing ? "Publishing..." : "Publish to Warehouse"}</span>
+              </button>
+            </div>
+          )}
+
+          {publicationResult && (
+            <div className="mt-4 p-4 rounded-lg border bg-white dark:bg-slate-950 dark:border-slate-800">
+              <h4 className="text-sm font-semibold mb-2">Publication Result</h4>
+              {publicationResult.success ? (
+                <div className="text-sm text-emerald-600 dark:text-emerald-400 space-y-2">
+                  <p>{publicationResult.message}</p>
+                </div>
+              ) : (
+                <div className="text-sm text-rose-600 dark:text-rose-400 space-y-2">
+                  <p>{publicationResult.message}</p>
+                  {publicationResult.conflicts?.length > 0 && (
+                    <div>
+                      <h5 className="font-semibold">Conflicts:</h5>
+                      <ul className="list-disc list-inside space-y-1 mt-1">
+                        {publicationResult.conflicts.map((c: any) => (
+                          <li key={c.rowKey}>
+                            <strong>Row {c.rowKey}:</strong> {c.message}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
           {selectedReqDetail.status === "submitted" && (
             <div className="mt-6 flex items-center justify-end space-x-3 pt-4 border-t dark:border-slate-800">
