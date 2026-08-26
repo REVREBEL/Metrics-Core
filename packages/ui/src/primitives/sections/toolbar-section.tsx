@@ -37,11 +37,20 @@ export const ToolbarSection: React.FC<ToolbarSectionProps> = ({
   variant,
 }) => {
   const { mainActions, dropdownActions } = React.useMemo(() => {
+    // ⚡ Bolt: Build a Set for O(1) filter membership checks and a Map for O(1) sort index lookups.
+    // This avoids O(N * M) linear scans inside array filter & sort operations.
+    const activeSet = new Set(activeActions);
+    const orderMap = new Map<string, number>();
+    for (let i = 0; i < activeActions.length; i++) {
+      orderMap.set(activeActions[i], i);
+    }
+
     const sortedActions = actions
-      .filter((action) => activeActions.includes(action.value))
+      .filter((action) => activeSet.has(action.value))
       .sort(
         (a, b) =>
-          activeActions.indexOf(a.value) - activeActions.indexOf(b.value),
+          (orderMap.get(a.value) ?? Number.POSITIVE_INFINITY) -
+          (orderMap.get(b.value) ?? Number.POSITIVE_INFINITY),
       );
 
     return {
