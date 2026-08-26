@@ -134,10 +134,17 @@ To ensure production environments fail closed if dependencies are misconfigured:
 - server-only publication adapter boundary;
 - change-request submission and review state machine, self-review block, withdrawal governance, bounds verification, and fail-closed structured error handling [REV-77].
 
-**DEFERRED TO REV-78**
+## Implemented versus deferred
 
-- role-backed RBAC publication/execution enforcement;
-- optimistic conflict enforcement;
-- BigQuery database publication and execution;
-- conflict handling.
+**IMPLEMENTED**
+
+- ...
+- role-backed RBAC publication/execution enforcement for `map_segment`;
+- optimistic conflict enforcement for `map_segment`;
+- BigQuery database publication and execution for `map_segment`;
+- conflict handling and retry for `map_segment`;
+
+**DEFERRED**
+
+- Publication for `lkp_segment` and other table types.
 
