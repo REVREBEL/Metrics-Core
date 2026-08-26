@@ -1,24 +1,32 @@
 import { NextResponse } from "next/server";
-import { publishChangeRequest } from "@repo/data/publication-adapter";
-import { getCurrentUser } from "@/lib/session"; // Assuming a session utility exists
+import { publishChangeRequest } from "@repo/data/server/data-library";
+import { getCurrentWorkspaceSession } from "@features/data-library/session";
 
 export async function POST(req: Request) {
-  try {
-    const user = await getCurrentUser();
-
-    // 1. Authorization
-    // TODO: Replace with actual permission check from a permission service
-    const hasPermission = user?.permissions?.includes(
-      "data_library.mapping_tables.publish"
+  const authContext = await getCurrentWorkspaceSession();
+  if (!authContext.isAuthenticated) {
+    return new NextResponse(
+      JSON.stringify({ message: "Authentication required." }),
+      {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      }
     );
+  }
 
-    if (!hasPermission) {
-      return new NextResponse(null, {
-        status: 403,
-        statusText: "Forbidden: You do not have permission to publish changes.",
-      });
-    }
+  // Check for specific publish permission
+  const canPublish = authContext.permissions.some((p) =>
+    p.startsWith("data_library.mapping_tables.publish")
+  );
 
+  if (!canPublish) {
+    return new NextResponse(null, {
+      status: 403,
+      statusText: "Forbidden: You do not have permission to publish changes.",
+    });
+  }
+
+  try {
     const { changeRequestId } = await req.json();
 
     if (!changeRequestId) {
@@ -31,10 +39,11 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2. Call the publication adapter
-    const result = await publishChangeRequest(changeRequestId, user.id);
+    const result = await publishChangeRequest(
+      changeRequestId,
+      authContext.user.id
+    );
 
-    // 3. Return the result
     return new NextResponse(JSON.stringify(result), {
       status: result.success ? 200 : 500,
       headers: { "Content-Type": "application/json" },

@@ -19,6 +19,7 @@
       "@repo/data/*": ["./packages/data/src/*"],
       "@repo/db": ["./packages/db/src/index.ts"],
       "@repo/db/*": ["./packages/db/src/*"],
+      "@features/data-library/*": ["./apps/app/features/data-library/*"],
       "@/*": ["./packages/ui/src/*"],
 
       "@/registry": ["./registry.json"],
