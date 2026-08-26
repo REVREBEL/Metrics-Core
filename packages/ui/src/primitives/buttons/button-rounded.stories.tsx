@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import ButtonRounded from "./button-rounded";
+import ButtonRounded from "@buttons/button-rounded";
 
 const meta = {
   title: "Primitives/Buttons/Button Rounded",

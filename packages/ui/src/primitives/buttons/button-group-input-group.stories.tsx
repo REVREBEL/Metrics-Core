@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import ButtonGroupInputGroup from "./button-group-input-group";
+import ButtonGroupInputGroup from "@buttons/button-group-input-group";
 
 const meta = {
   title: "Primitives/Buttons/Button Group Input Group",

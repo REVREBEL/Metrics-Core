@@ -1,6 +1,6 @@
 "use client";
 
-import { buttonVariants } from "./button";
+import { buttonVariants } from "@buttons/button";
 
 export default function ButtonRender() {
   return (

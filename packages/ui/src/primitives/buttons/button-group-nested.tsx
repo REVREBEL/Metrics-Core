@@ -6,8 +6,8 @@ import {
 } from "@inputs/input-group";
 import { IconPlus } from "@tabler/icons-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@ui-core/tooltip";
-import { Button } from "./button";
-import { ButtonGroup } from "./button-group";
+import { Button } from "@buttons/button";
+import { ButtonGroup } from "@buttons/button-group";
 
 export function ButtonGroupNested() {
   return (

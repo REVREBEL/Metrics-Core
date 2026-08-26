@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import ButtonSize from "./button-size";
+import ButtonSize from "@buttons/button-size";
 
 const meta = {
   title: "Primitives/Buttons/Button Size",

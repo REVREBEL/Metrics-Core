@@ -1,4 +1,4 @@
-import { Button } from "./button";
+import { Button } from "@buttons/button";
 
 export default function ButtonLink() {
   return <Button variant="link">Link</Button>;

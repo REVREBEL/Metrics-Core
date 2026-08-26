@@ -10,8 +10,8 @@ import {
   SelectTrigger,
 } from "@ui-core/select";
 import * as React from "react";
-import { Button } from "./button";
-import { ButtonGroup } from "./button-group";
+import { Button } from "@buttons/button";
+import { ButtonGroup } from "@buttons/button-group";
 
 const CURRENCIES = [
   { label: "US Dollar", value: "$" },
