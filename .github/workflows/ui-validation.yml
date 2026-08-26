@@ -1,0 +1,50 @@
+name: UI Validation
+
+on:
+  pull_request:
+    branches:
+      - dev
+    paths:
+      - 'apps/storybook/**'
+      - 'apps/registry/**'
+      - 'packages/ui/**'
+      - '.github/workflows/ui-validation.yml'
+
+jobs:
+  validate:
+    name: Validate UI, Storybook & Registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Validate UI Package
+        run: |
+          pnpm --filter @repo/ui lint
+          pnpm --filter @repo/ui barrels:check
+          pnpm --filter @repo/ui icons:sync:check
+          pnpm --filter @repo/ui icons:barrels:check
+
+      - name: Validate Storybook
+        run: |
+          pnpm storybook:stories:check
+          pnpm --filter @apps/storybook build
+
+      - name: Validate Registry
+        run: |
+          pnpm --filter @apps/registry registry:validate
+          pnpm --filter @apps/registry build
