@@ -95,7 +95,7 @@ export { default as Bus } from "./Bus";
 export { default as BusinessmanV1 } from "./BusinessmanV1";
 export { default as BusinessmanV2 } from "./BusinessmanV2";
 export { default as Butterfly } from "./Butterfly";
-export { default as Button } from "./Button";
+export { default as Button } from "@buttons/Button";
 export { default as Buy } from "./Buy";
 export { default as Cafe } from "./Cafe";
 export { default as Calculator } from "./Calculator";

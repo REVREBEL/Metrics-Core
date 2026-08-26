@@ -12,8 +12,8 @@ import {
   IconSquareRoundedChevronDownFilled,
 } from "@tabler/icons-react";
 import { Textarea } from "@textarea/textarea";
-import { Button } from "./button";
-import { ButtonGroup } from "./button-group";
+import { Button } from "@buttons/button";
+import { ButtonGroup } from "@buttons/button-group";
 
 export default function ButtonGroupPopover() {
   return (

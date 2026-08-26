@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import ButtonGroupSplit from "./button-group-split";
+import ButtonGroupSplit from "@buttons/button-group-split";
 
 const meta = {
   title: "Primitives/Buttons/Button Group Split",

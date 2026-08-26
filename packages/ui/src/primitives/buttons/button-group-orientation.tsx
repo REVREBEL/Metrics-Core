@@ -2,8 +2,8 @@ import {
   IconMinus as MinusIcon,
   IconPlus as PlusIcon,
 } from "@tabler/icons-react";
-import { Button } from "./button";
-import { ButtonGroup } from "./button-group";
+import { Button } from "@buttons/button";
+import { ButtonGroup } from "@buttons/button-group";
 
 export default function ButtonGroupOrientation() {
   return (

@@ -4,7 +4,7 @@ import { IconCheck } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "./button";
+import { Button } from "@buttons/button";
 
 export function SaveButton() {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");

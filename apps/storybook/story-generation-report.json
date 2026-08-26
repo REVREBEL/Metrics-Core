@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-08-24T23:54:20.654Z",
+  "generatedAt": "2026-08-25T00:39:34.294Z",
   "mode": "check",
   "totals": {
     "components": 608,
     "created": 0,
-    "skipped": 601,
-    "missing": 7
+    "skipped": 606,
+    "missing": 2
   },
   "items": [
     {
@@ -176,22 +176,22 @@
     {
       "component": "ChartContainer",
       "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
-      "status": "missing"
+      "status": "skipped-existing"
     },
     {
       "component": "ChartLegendContent",
       "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
-      "status": "missing"
+      "status": "skipped-existing"
     },
     {
       "component": "ChartStyle",
       "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
-      "status": "missing"
+      "status": "skipped-existing"
     },
     {
       "component": "ChartTooltipContent",
       "story": "packages/ui/src/primitives/charts/chart.stories.tsx",
-      "status": "missing"
+      "status": "skipped-existing"
     },
     {
       "component": "LineChart",
@@ -1466,7 +1466,7 @@
     {
       "component": "ContentSection",
       "story": "packages/ui/src/primitives/sections/content-section.stories.tsx",
-      "status": "missing"
+      "status": "skipped-existing"
     },
     {
       "component": "SectionFive",

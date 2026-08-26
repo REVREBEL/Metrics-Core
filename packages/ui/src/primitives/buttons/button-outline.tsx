@@ -1,4 +1,4 @@
-import { Button } from "./button";
+import { Button } from "@buttons/button";
 
 export default function ButtonOutline() {
   return <Button variant="outline">Outline</Button>;

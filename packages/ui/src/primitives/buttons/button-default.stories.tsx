@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import ButtonDefault from "./button-default";
+import ButtonDefault from "@buttons/button-default";
 
 const meta = {
   title: "Primitives/Buttons/Button Default",
