@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "tsx --test src/**/*.test.ts"
+    "test": "vitest run src/**/*.test.ts"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^8.3.1",

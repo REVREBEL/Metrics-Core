@@ -15,3 +15,12 @@ export function canonicalizeRowKey(
   }
   return JSON.stringify(obj);
 }
+
+export function decanonicalizeRowKey(key: string): Record<string, string> {
+  try {
+    return JSON.parse(key);
+  } catch (e) {
+    console.error("Failed to decanonicalize row key:", key);
+    return {};
+  }
+}

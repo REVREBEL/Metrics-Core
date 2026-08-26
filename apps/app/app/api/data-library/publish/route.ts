@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { publishChangeRequest } from "@repo/data/server/data-library";
 import { getCurrentWorkspaceSession } from "@features/data-library/session";
+import { getDb } from "@repo/db";
+import { lookupTableChangeRequests } from "@repo/db/schema";
+import { eq } from "drizzle-orm";
+import { getDataLibraryTableDefinition } from "@features/data-library/registry";
 
 export async function POST(req: Request) {
   const authContext = await getCurrentWorkspaceSession();
@@ -14,34 +18,41 @@ export async function POST(req: Request) {
     );
   }
 
-  // Check for specific publish permission
-  const canPublish = authContext.permissions.some((p) =>
-    p.startsWith("data_library.mapping_tables.publish")
-  );
+  const { changeRequestId } = await req.json();
+  if (!changeRequestId) {
+    return new NextResponse(
+      JSON.stringify({ message: "changeRequestId is required." }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
+  const db = await getDb();
+  const request = await db.query.lookupTableChangeRequests.findFirst({
+    where: eq(lookupTableChangeRequests.id, changeRequestId),
+  });
+
+  if (!request) {
+    return new NextResponse(null, { status: 404, statusText: "Not Found" });
+  }
+
+  const definition = getDataLibraryTableDefinition(request.tableKey);
+  if (!definition || !definition.permissions.publish) {
+      return new NextResponse(null, { status: 403, statusText: "Forbidden: Publication not configured for this table." });
+  }
+
+  const canPublish = authContext.permissions.includes(definition.permissions.publish);
 
   if (!canPublish) {
     return new NextResponse(null, {
       status: 403,
-      statusText: "Forbidden: You do not have permission to publish changes.",
+      statusText: "Forbidden: You do not have permission to publish changes for this table.",
     });
   }
 
   try {
-    const { changeRequestId } = await req.json();
-
-    if (!changeRequestId) {
-      return new NextResponse(
-        JSON.stringify({ message: "changeRequestId is required." }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-    }
-
     const result = await publishChangeRequest(
       changeRequestId,
-      authContext.user.id
+      authContext.userId
     );
 
     return new NextResponse(JSON.stringify(result), {
