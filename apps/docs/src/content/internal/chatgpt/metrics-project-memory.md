@@ -35,7 +35,7 @@ Before reaching a conclusion, review sources in this order:
    - Confirm the active branch and current files rather than relying on historical issue text.
 3. **Current Dataform definitions**
    - Treat `packages/dataform` as the canonical repository-owned Dataform source when present.
-   - Use `REVREBEL/Metrics-Dataform` as the synchronized standalone mirror, not as a competing source of truth.
+   - Use `REVREBEL/Metrics-Dataform` as the synchronized standalone mirror when `packages/dataform` is absent, not as a competing source of truth.
 4. **Documentation under `apps/docs/src/content`**
    - Documentation explains the architecture but may lag implementation.
    - Verify schema claims against Dataform before repeating them.
@@ -62,6 +62,7 @@ Current Metrics initiative projects include:
 08 — Threads & Collaboration
 09 — Help Desk
 10 — Mission Control, Auth & Permissions
+11 — Data Architecture Documentation
 ```
 
 ### Repository
@@ -164,21 +165,21 @@ Source of truth for:
 
 ### App database
 
-Expected source of truth for application workflow state, subject to current implementation decisions:
+Repository implementation status is **IMPLEMENTED** for the application-persistence contracts currently owned by `packages/db`.
 
-- users and roles;
-- workspace configuration;
-- engagements;
-- planning drafts;
-- initiatives and tasks;
-- campaigns;
-- notes and approvals;
-- draft mapping changes;
-- application preferences.
+`packages/db` contains repository-owned PostgreSQL/Drizzle schema, migrations, repositories, and persistence contracts. The current implemented schema includes:
 
-No canonical production application-database package, schema, or migration directory was confirmed during REV-71. Treat application persistence as planned until repository implementation establishes it.
+- Data Library table metadata;
+- draft mapping edits;
+- application audit logging;
+- application users and roles;
+- lookup-table change requests and submitted change-request items.
 
-Approved plans and mappings require a controlled publication service before they become warehouse records. Browser components must not write directly to BigQuery.
+Broader application persistence for areas such as engagements, commercial-plan records, initiatives/tasks, campaigns, notes, approvals outside the current Data Library workflow, and application preferences remains **PLANNED** or **UNRESOLVED** unless current repository schema establishes it.
+
+Do not treat repository implementation alone as proof that a production database is provisioned or deployed for every environment. Verify current deployment and environment configuration before making operational claims.
+
+Approved plans and mappings require controlled server-side publication before they become warehouse records. Browser components must not write directly to BigQuery.
 
 ### DuckDB
 
@@ -193,8 +194,8 @@ packages/ui
 packages/data
   Data clients, adapters, validation, query contracts, analytical runtimes
 
-packages/metrics
-  Metric definitions, formulas, dimensions, aggregation and formatting rules
+packages/db
+  Application database schema, repositories, migrations, and persistence contracts
 
 apps/app/features
   Product workflows and domain-specific application UI
@@ -202,6 +203,8 @@ apps/app/features
 apps/app/app
   Routes, layouts, boundaries, and composition
 ```
+
+There is currently no dedicated `packages/metrics` package. Do not assign metric definitions, formulas, or aggregation ownership to a nonexistent package without first verifying a current repository location or an approved Linear decision.
 
 Do not place warehouse queries, DuckDB initialization, or business calculations in `packages/ui`.
 
