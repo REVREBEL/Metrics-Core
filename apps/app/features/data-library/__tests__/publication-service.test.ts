@@ -5,7 +5,7 @@ import {
   getPublicationCapability,
   type PublicationDependencies,
   publishFeatureChangeRequest,
-} from "../publication-service";
+} from "../publication";
 
 function makeRequest(
   status: ChangeRequestWithItems["status"] = "approved",
