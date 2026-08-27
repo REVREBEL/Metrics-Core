@@ -9,18 +9,15 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "vitest run src/**/*.test.ts"
+    "test": "tsx --test src/**/*.test.ts"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^8.3.1",
-    "drizzle-orm": "^0.33.0",
-    "dotenv": "^16.4.5",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.9.3",
-    "vitest": "^2.0.4"
+    "typescript": "^5.9.3"
   }
 }
