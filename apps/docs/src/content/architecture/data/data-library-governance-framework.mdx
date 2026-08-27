@@ -6,138 +6,224 @@ has_toc: true
 
 # Data Library Governance Framework
 
-## Current implementation
+The Data Library separates warehouse truth from application workflow state. BigQuery and Dataform own the current governed lookup and mapping values. The Metrics application database owns drafts, change requests, review state, publication state, and audit history.
 
-The authenticated Metrics workspace route at `/metrics-library` now reads its
-lookup and mapping navigation, capability metadata, and column behavior from
-the application-owned registry:
+Browser components never write directly to BigQuery.
+
+## Source ownership
+
+Linear defines the product workflow and governance intent. Dataform defines the physical warehouse schema. The application registry defines which warehouse objects and columns the Data Library may expose or publish. Repository code defines the current workflow implementation.
+
+The application-owned registry is:
 
 ```text
 apps/app/features/data-library/registry.ts
 ```
 
-The registry is the authoritative warehouse security allowlist. Linear defines the
-live read requirement, while Dataform implements physical tables and columns. A future
-`data_library_tables` database record may supplement operational display metadata,
-but it must not expose an arbitrary warehouse table that is absent from the code-owned
-registry.
+It is a code-owned security allowlist. Client input cannot choose arbitrary datasets, tables, columns, or SQL.
 
-The first registered definitions are:
+## Registered segment tables
 
-| Category | Physical table | Grain | Logical key |
-|---|---|---|---|
-| Lookup | `metrics_core.lkp_segment` | One row per standard commercial segment code | `code` |
-| Mapping | `metrics_core.map_segment` | One row per property, source application, and source segment code | `property_code`, `source_application_code`, `code` |
+Current Dataform implements these segment objects, among others:
 
-Live rows are queried through the server-only warehouse data adapter in `@repo/data/server/data-library`.
-Browser components do not receive warehouse credentials, construct raw SQL queries, or access BigQuery directly.
+| Category | Physical table | Grain | Logical key | Publication |
+|---|---|---|---|---|
+| Lookup | `metrics_core.lkp_segment` | One row per governed segment code | `code` | Deferred |
+| Mapping | `metrics_core.map_segment` | One row per property, source application, and source segment code | `property_code`, `source_application_code`, `code` | Supported |
 
-## Repository schema gap
+For `map_segment`, Dataform currently implements these physical columns:
 
-REV-74 and REV-75 acknowledge these deployed application database tables:
+```text
+property_code
+source_application_code
+code
+name
+description
+segment_code
+finance_segment_code
+gl_code
+is_active
+insert_date
+updated_date
+```
+
+The Data Library registry must remain aligned to Dataform before additional tables are enabled for publication.
+
+## Application workflow persistence
+
+`packages/db` currently owns the application database schema and repository implementation for the Data Library workflow, including:
 
 ```text
 app_audit_log
 app_users
 data_library_tables
 lookup_table_change_requests
+lookup_table_change_request_items
 lookup_table_draft_edits
 user_roles
 ```
 
-The current `Metrics-Core` `dev` branch declares a Drizzle/Postgres package at
-`packages/db/package.json`, but it contains no repository-owned schema source,
-migrations, database client, auth helpers, permission service, or audit
-service. No application database environment variable is declared in the
-repository `.env.example`.
+BigQuery remains the source of truth for published warehouse values. PostgreSQL remains the source of truth for workflow state and governance history.
 
-The application database does not introduce warehouse identifiers. Durable draft,
-change-request, role-backed permission assignment, and audit behavior remain
-blocked until the existing deployed schema and repository-owned service contracts
-are restored or supplied.
+## Draft and review lifecycle
 
-## Validation and conflicts
+The implemented change-request lifecycle includes:
 
-Registry metadata identifies required, editable, read-only, filterable, sortable,
-searchable, and lookup-dependent fields. Full validation runs at the server
-boundary before queries are built and executed.
+```text
+draft
+→ submitted
+→ approved
+→ published
+```
 
-Current Dataform defines `updated_date DATE` on both registered tables. The
-segment seed initializes it as null, and no non-null row version or timestamp
-constraint is implemented. Optimistic conflict detection is therefore
-**UNRESOLVED**. The UI and service must not claim conflict safety until a
-reliable concurrency contract is approved.
+Alternative terminal or recovery states are:
 
-## Implemented versus deferred
+```text
+rejected
+withdrawn
+conflict
+```
+
+Approval and publication are separate permissions. Approval does not grant publication authority.
+
+Review governance continues to enforce the REV-77 contracts, including self-review prohibition, review permissions, withdrawal rules, validation snapshots, and fail-closed database behavior.
+
+## Governed publication path
+
+REV-78 implements controlled publication for `metrics_core.map_segment` only.
+
+The flow is:
+
+```text
+Approved change request
+→ authenticated publication request
+→ exact registry publish-permission check
+→ registry table-support check
+→ current BigQuery row re-read
+→ field-level snapshot comparison
+→ atomic BigQuery transaction and MERGE
+→ application status transition
+→ durable audit event
+```
+
+The API boundary is:
+
+```text
+POST /api/data-library/publish
+```
+
+The canonical feature publication entry point is:
+
+```text
+apps/app/features/data-library/publication.ts
+```
+
+It exposes the governed orchestration implemented in:
+
+```text
+apps/app/features/data-library/publication-service.ts
+```
+
+The server-only BigQuery adapter is:
+
+```text
+packages/data/src/server/data-library/publication-adapter.ts
+```
+
+### Authorization
+
+Publication is allowed only when all of the following are true:
+
+1. the workspace session is authenticated;
+2. the change request exists;
+3. the registry marks the table publication path as `supported`;
+4. the user holds one of the exact registry publication permissions for that table family;
+5. the request is in `approved` state, unless it is already `published` and is being safely retried.
+
+The current supported mapping permission is:
+
+```text
+data_library.mapping_tables.publish
+```
+
+The API also exposes a read-only publication-capability check for UI gating. Server authorization remains authoritative even if a client bypasses the UI.
+
+## Conflict detection
+
+`map_segment.updated_date` is a nullable `DATE` in the current Dataform schema, so it is not used as a row-version token.
+
+REV-78 instead implements optimistic concurrency from the immutable change-request snapshot:
+
+1. the server re-reads the current warehouse row;
+2. each field actually being published is compared with the original approved value;
+3. if the current value is neither the original value nor the already-requested value, publication stops as a conflict;
+4. immediately before mutation, a BigQuery transaction performs the same field-level snapshot assertion;
+5. the MERGE executes only if every affected field still matches the approved snapshot.
+
+This closes the race between preflight conflict detection and mutation without overwriting unrelated fields on the same row.
+
+New-row insertion is not part of the current `map_segment` publication contract. A request without an existing original row fails explicitly instead of creating a warehouse row implicitly.
+
+## Atomicity and compensation
+
+The warehouse write for a request is executed through a BigQuery multi-statement transaction. Snapshot assertion and MERGE are therefore one warehouse transaction, preventing silent partial publication inside BigQuery.
+
+PostgreSQL workflow state and BigQuery cannot participate in one cross-system transaction. The compensation strategy is retry reconciliation:
+
+- if BigQuery fails, the request remains `approved` and is retryable;
+- if BigQuery succeeds but the application status update fails, a retry re-reads the warehouse values;
+- when the requested field values are already present, the warehouse adapter treats them as already applied and performs no duplicate warehouse mutation;
+- the application can then reconcile the request and draft statuses to `published`.
+
+Change-request item rows are retained after publication so the immutable governance record is not destroyed.
+
+## Conflict recovery
+
+When a stale-data conflict is detected:
+
+- the change request transitions to `conflict`;
+- its associated draft edits return to editable `draft` state;
+- the conflict event records the affected row keys and conflicting fields;
+- the user should refresh current warehouse values, revise the restored drafts, and submit a new change request.
+
+The conflicted request remains available as historical review evidence.
+
+## Audit and observability
+
+Publication uses the existing `app_audit_log` table. REV-78 records the publication lifecycle events:
+
+```text
+publication_started
+publication_succeeded
+publication_failed
+publication_conflict
+```
+
+Publication audit metadata includes the request ID, actor, table key, logical row keys, correlation ID, result details, and BigQuery job ID when a warehouse job executes.
+
+Operational failures remain retryable and do not silently advance the request to `published`.
+
+## Supported and deferred behavior
 
 **IMPLEMENTED**
 
-- authenticated workspace route composition;
-- registry-driven lookup and mapping navigation and column capabilities;
-- verified definitions for `lkp_segment` and `map_segment`;
-- server-only BigQuery row-read adapter in `@repo/data/server/data-library`;
-- parameterized search, sorting, filtering, and pagination over live warehouse rows;
-- dynamic filter-option endpoint (`/api/data-library/filter-options`);
-- interactive DataGrid and three-panel Table/Row Inspector;
-- empty-state, loading-skeleton, and retryable error-state UI handling;
-- application-database-backed draft persistence (`@repo/db`, `lookup_table_draft_edits` via migration `0000_lookup_table_draft_edits.sql` mirroring deployed PostgreSQL schema);
-- metadata-driven validation & live lookup dependency validation;
-- 3-layer overlay model (sourceValues, draftValues, effectiveValues);
-- application audit events (`app_audit_log`);
-- server-only publication adapter boundary;
-- change-request submission and review workflow (including submitter-prohibited review, rejected draft-restoring lifecycle, immutable validation snapshots, and multi-role permission aggregation) [REV-77].
+- authenticated Data Library reads;
+- registry-driven table and column capabilities;
+- application-database-backed drafts;
+- change-request submission and review governance;
+- server-only BigQuery publication for existing `metrics_core.map_segment` rows;
+- exact publish-permission enforcement;
+- preflight and transaction-time optimistic conflict enforcement;
+- atomic warehouse updates for all rows in the publication operation;
+- durable `published` and `conflict` request outcomes;
+- draft lifecycle synchronization;
+- retry reconciliation and idempotent already-applied detection;
+- publication lifecycle audit events with correlation metadata.
 
-## Workflow Security & Lifecycle Governance [REV-77]
+**DEFERRED**
 
-The change-request governance framework implements a secure, state-machine-controlled review and audit workflow designed to prevent self-review and enforce separation of duties.
-
-### 1. State-Machine Lifecycle Transitions
-Change requests and associated draft edits transition through a deterministic lifecycle:
-* **Draft to Submitted**: Submitting selected draft edits transitions their state to `"submitted"`. Attempts to submit edits that are already submitted, approved, or belong to another user will fail closed.
-* **Review Approval**: Approving a request transitions its state to `"approved"` and locks down the draft edits to prevent further modification.
-* **Review Rejection**: Rejecting a request transitions its state to `"rejected"` and returns the draft edits back to `"draft"`, enabling the submitter to refine and resubmit them.
-* **Withdrawal**: Withdrawing a request transitions its state to `"withdrawn"` and returns the draft edits back to `"draft"`.
-
-### 2. Multi-Role Authorization & Capability Mapping
-Access control is enforced at every layer of the workflow:
-* **Submit Change Request**: Requires `data_library.change_requests.submit` or `data_library.change_requests.admin`. Title (3-100 characters) and Description (up to 500 characters) length bounds are strictly enforced.
-* **View Queue**: Submitter/Viewer roles (`data_library.change_requests.submit` or `view_own`) are strictly scoped to only view requests they submitted. Reviewer/Admin roles can view the entire queue.
-* **Direct Get Details**: Requires verification of explicit permissions (`view_own`, `submit`, `review/decide`, `admin`) **before** checking ownership. A revoked user with zero permissions cannot fetch their request details even if they are the original submitter.
-* **Review Approval/Rejection**: Requires `data_library.change_requests.decide` or `admin`. Rejection notes must be at least 3 characters and up to 2,000 characters. **Self-review is strictly prohibited**: if `submitterId === reviewerId`, the action fails closed with a `FORBIDDEN` error.
-* **Withdrawal**: 
-  * Administrators can withdraw any submitted request.
-  * Submitters with `submit` or `view_own` permissions can withdraw only their own requests.
-  * Reviewers without admin status cannot withdraw requests submitted by others.
-
-### 3. Fail-Closed Database Failures
-To ensure production environments fail closed if dependencies are misconfigured:
-* Resolving database-backed repositories outside active database connections throws a `DatabaseConfigurationError`.
-* All change-request service methods resolve the repository inside isolated `try/catch` blocks.
-* Missing database configurations (`DATABASE_URL` is undefined) are safely captured and returned as structured, non-retryable `INTERNAL_ERROR` service responses with a clear message, ensuring the application blocks unauthorized access gracefully.
-
-## Implemented versus deferred
-
-**IMPLEMENTED**
-
-- authenticated workspace route composition;
-- registry-driven lookup and mapping navigation and column capabilities;
-- verified definitions for `lkp_segment` and `map_segment`;
-- server-only BigQuery row-read adapter in `@repo/data/server/data-library`;
-- parameterized search, sorting, filtering, and pagination over live warehouse rows;
-- dynamic filter-option endpoint (`/api/data-library/filter-options`);
-- interactive DataGrid and three-panel Table/Row Inspector;
-- empty-state, loading-skeleton, and retryable error-state UI handling;
-- application-database-backed draft persistence (`@repo/db`, `lookup_table_draft_edits` via migration `0000_lookup_table_draft_edits.sql` mirroring deployed PostgreSQL schema);
-- metadata-driven validation & live lookup dependency validation;
-- 3-layer overlay model (sourceValues, draftValues, effectiveValues);
-- application audit events (`app_audit_log`);
-- server-only publication adapter boundary;
-- change-request submission and review state machine, self-review block, withdrawal governance, bounds verification, and fail-closed structured error handling [REV-77].
-
-**DEFERRED TO REV-78**
-
-- role-backed RBAC publication/execution enforcement;
-- optimistic conflict enforcement;
-- BigQuery database publication and execution;
-- conflict handling.
-
+- publication for `metrics_core.lkp_segment`;
+- publication for other lookup and mapping families until their Dataform schema and registry contracts are verified;
+- new-row insertion through the publication path;
+- bulk CSV import/export;
+- unmapped-values workflow, which belongs to REV-79.

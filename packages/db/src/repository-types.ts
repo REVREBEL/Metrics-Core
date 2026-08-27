@@ -3,17 +3,14 @@ export const CHANGE_REQUEST_STATUSES = [
   "approved",
   "rejected",
   "withdrawn",
+  "published",
+  "conflict",
 ] as const;
 
 export type ChangeRequestStatus = (typeof CHANGE_REQUEST_STATUSES)[number];
 
-export function isChangeRequestStatus(
-  value: unknown,
-): value is ChangeRequestStatus {
-  return (
-    typeof value === "string" &&
-    CHANGE_REQUEST_STATUSES.includes(value as ChangeRequestStatus)
-  );
+export function isChangeRequestStatus(value: unknown): value is ChangeRequestStatus {
+  return CHANGE_REQUEST_STATUSES.includes(value as ChangeRequestStatus);
 }
 
 export interface ChangeRequestItemRecord {

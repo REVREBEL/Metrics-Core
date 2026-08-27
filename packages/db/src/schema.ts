@@ -80,7 +80,7 @@ export const lookupTableChangeRequests = pgTable("lookup_table_change_requests",
     .references(() => appUsers.id),
   reviewerId: uuid("reviewer_id")
     .references(() => appUsers.id),
-  status: varchar("status", { length: 50 }).notNull(),
+  status: varchar("status", { length: 50, enum: ["submitted", "approved", "rejected", "withdrawn", "published", "conflict"] }).notNull(),
   reviewNotes: text("review_notes"),
   submittedAt: timestamp("submitted_at", { withTimezone: true }).defaultNow().notNull(),
   reviewedAt: timestamp("reviewed_at", { withTimezone: true }),

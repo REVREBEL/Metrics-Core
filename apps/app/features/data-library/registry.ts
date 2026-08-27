@@ -341,11 +341,11 @@ export const dataLibraryTableRegistry: readonly DataLibraryTableDefinition[] = [
     ],
     permissions: mappingPermissions,
     currentValueOwner: "bigquery-dataform",
-    publication: "deferred",
+    publication: "supported",
     concurrency: {
-      status: "unresolved",
+      status: "implemented",
       reason:
-        "The current warehouse DDL has no non-null version or timestamp suitable for optimistic locking.",
+        "Publication uses a MERGE statement with snapshot validation to prevent race conditions.",
     },
   },
 ];
