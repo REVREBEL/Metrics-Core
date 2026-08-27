@@ -74,13 +74,16 @@ function makeDependencies(request: ChangeRequestWithItems) {
     warehouseRowsWritten: 1,
     jobId: "job-1",
   });
+  let auditRecorder: PublicationDependencies["recordAudit"] = async (input) => {
+    audits.push({ action: input.action });
+  };
 
   const deps: PublicationDependencies = {
     async loadRequest() {
       return request;
     },
     async recordAudit(input) {
-      audits.push({ action: input.action });
+      return auditRecorder(input);
     },
     async transitionOutcome(input) {
       transitions.push({
@@ -111,6 +114,9 @@ function makeDependencies(request: ChangeRequestWithItems) {
     },
     setPublisher(next: PublicationDependencies["publishWarehouse"]) {
       publisher = next;
+    },
+    setAuditRecorder(next: PublicationDependencies["recordAudit"]) {
+      auditRecorder = next;
     },
   };
 }
@@ -149,6 +155,24 @@ test("publication rejects unauthorized and non-approved requests before warehous
     harness.deps,
   );
   assert.equal(invalidState.outcome, "invalid_state");
+  assert.equal(harness.warehouseCalls, 0);
+});
+
+test("publication fails closed before warehouse execution when audit initialization fails", async () => {
+  const request = makeRequest("approved");
+  const harness = makeDependencies(request);
+  harness.setAuditRecorder(async () => {
+    throw new Error("audit unavailable");
+  });
+
+  const result = await publishFeatureChangeRequest(
+    request.id,
+    makeSession(["data_library.mapping_tables.publish"]),
+    harness.deps,
+  );
+
+  assert.equal(result.outcome, "failed");
+  assert.equal(result.retryable, true);
   assert.equal(harness.warehouseCalls, 0);
 });
 
