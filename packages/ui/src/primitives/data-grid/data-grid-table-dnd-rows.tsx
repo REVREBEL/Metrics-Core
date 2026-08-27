@@ -124,9 +124,9 @@ function DataGridTableDndRow<TData>({ row }: { row: Row<TData> }) {
         dndStyle={style}
         key={row.id}
       >
-        {row.getVisibleCells().map((cell: Cell<TData, unknown>, colIndex) => {
+        {row.getVisibleCells().map((cell: Cell<TData, unknown>) => {
           return (
-            <DataGridTableBodyRowCell cell={cell} key={colIndex}>
+            <DataGridTableBodyRowCell cell={cell} key={cell.id}>
               {flexRender(cell.column.columnDef.cell, cell.getContext())}
             </DataGridTableBodyRowCell>
           );
@@ -134,6 +134,23 @@ function DataGridTableDndRow<TData>({ row }: { row: Row<TData> }) {
       </DataGridTableBodyRow>
     </SortableRowContext.Provider>
   );
+}
+
+interface ModifierArguments {
+  transform: {
+    x: number;
+    y: number;
+    scaleX: number;
+    scaleY: number;
+  };
+  draggingNodeRect: {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+    width: number;
+    height: number;
+  } | null;
 }
 
 function DataGridTableDndRows<TData>({
@@ -157,7 +174,7 @@ function DataGridTableDndRows<TData>({
     const restrictToTableContainer: Modifier = ({
       transform,
       draggingNodeRect,
-    }: any) => {
+    }: ModifierArguments) => {
       if (!tableContainerRef.current || !draggingNodeRect) {
         return transform;
       }
@@ -191,32 +208,33 @@ function DataGridTableDndRows<TData>({
       <div ref={tableContainerRef} className="relative">
         <DataGridTableBase>
           <DataGridTableHead>
-            {table
-              .getHeaderGroups()
-              .map((headerGroup: HeaderGroup<TData>, index) => {
-                return (
-                  <DataGridTableHeadRow headerGroup={headerGroup} key={index}>
-                    {headerGroup.headers.map((header, index) => {
-                      const { column } = header;
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<TData>) => {
+              return (
+                <DataGridTableHeadRow
+                  headerGroup={headerGroup}
+                  key={headerGroup.id}
+                >
+                  {headerGroup.headers.map((header) => {
+                    const { column } = header;
 
-                      return (
-                        <DataGridTableHeadRowCell header={header} key={index}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
-                              )}
-                          {props.tableLayout?.columnsResizable &&
-                            column.getCanResize() && (
-                              <DataGridTableHeadRowCellResize header={header} />
+                    return (
+                      <DataGridTableHeadRowCell header={header} key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
                             )}
-                        </DataGridTableHeadRowCell>
-                      );
-                    })}
-                  </DataGridTableHeadRow>
-                );
-              })}
+                        {props.tableLayout?.columnsResizable &&
+                          column.getCanResize() && (
+                            <DataGridTableHeadRowCellResize header={header} />
+                          )}
+                      </DataGridTableHeadRowCell>
+                    );
+                  })}
+                </DataGridTableHeadRow>
+              );
+            })}
           </DataGridTableHead>
 
           {(props.tableLayout?.stripped || !props.tableLayout?.rowBorder) && (
@@ -228,12 +246,13 @@ function DataGridTableDndRows<TData>({
             isLoading &&
             pagination?.pageSize ? (
               Array.from({ length: pagination.pageSize }).map((_, rowIndex) => (
-                <DataGridTableBodyRowSkeleton key={rowIndex}>
-                  {table.getVisibleFlatColumns().map((column, colIndex) => {
+                // biome-ignore lint/suspicious/noArrayIndexKey: The order of the items is static
+                <DataGridTableBodyRowSkeleton key={`skeleton-row-${rowIndex}`}>
+                  {table.getVisibleFlatColumns().map((column) => {
                     return (
                       <DataGridTableBodyRowSkeletonCell
                         column={column}
-                        key={colIndex}
+                        key={column.id}
                       >
                         {column.columnDef.meta?.skeleton}
                       </DataGridTableBodyRowSkeletonCell>

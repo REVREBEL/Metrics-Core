@@ -25,6 +25,8 @@ const requirements = [
   },
 ];
 
+const strengthBars = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
+
 const EmailPass = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -153,9 +155,9 @@ const EmailPass = () => {
             </div>
 
             <div className="mb-4 flex h-1 w-full gap-1">
-              {Array.from({ length: 5 }).map((_, index) => (
+              {strengthBars.map((bar, index) => (
                 <span
-                  key={index}
+                  key={bar.id}
                   className={cn(
                     "h-full flex-1 rounded-full transition-all duration-500 ease-out",
                     index < strengthScore
@@ -171,10 +173,10 @@ const EmailPass = () => {
             </p>
 
             <ul className="mb-4 space-y-1.5">
-              {strength.map((req, index) => (
-                <li key={index} className="flex items-center gap-2">
+              {strength.map((req) => (
+                <li key={req.text} className="flex items-center gap-2">
                   {req.met ? (
-                    <IconSquareRoundedCheckFilled className="size-4 text-color-dark-green dark:light-text-green" />
+                    <IconSquareRoundedCheckFilled className="size-4 text-green-600 dark:text-green-400" />
                   ) : (
                     <IconSquareRoundedXFilled className="text-muted-foreground size-4" />
                   )}
@@ -182,7 +184,7 @@ const EmailPass = () => {
                     className={cn(
                       "text-xs",
                       req.met
-                        ? "text-color-dark-green dark:light-text-green"
+                        ? "text-dark-green dark:text-light-green"
                         : "text-muted-foreground",
                     )}
                   >

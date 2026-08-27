@@ -1,6 +1,5 @@
 import { Button } from "@buttons/button";
 import AuthBackgroundShape from "@icons/AuthBackgroundShape";
-
 import Logo from "@icons/revrebel.png";
 import {
   Card,
@@ -9,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@ui-core/card";
+import Image from "next/image";
 
 const VerifyEmail = () => {
   return (
@@ -19,7 +19,7 @@ const VerifyEmail = () => {
 
       <Card className="z-1 w-full border-none shadow-md sm:max-w-md">
         <CardHeader className="gap-6">
-          <img src={Logo.src} alt="RevRebel Logo" className="h-10 w-auto" />
+          <Image src={Logo} alt="RevRebel Logo" className="h-10 w-auto" />
 
           <div>
             <CardTitle className="mb-1.5 text-2xl">Verify your email</CardTitle>
@@ -34,12 +34,12 @@ const VerifyEmail = () => {
         <CardContent>
           <div className="space-y-4">
             <Button className="w-full" asChild>
-              <a href="#">Skip for now</a>
+              <a href="#!">Skip for now</a>
             </Button>
 
             <p className="text-muted-foreground text-center">
               Didn&apos;t get the mail?{" "}
-              <a href="#" className="text-card-foreground hover:underline">
+              <a href="#!" className="text-card-foreground hover:underline">
                 Resend
               </a>
             </p>

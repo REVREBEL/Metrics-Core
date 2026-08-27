@@ -1,7 +1,6 @@
+import { Button } from "@buttons/button";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IconArrowRight } from "@tabler/icons-react";
-
-import { Button } from "@buttons/button";
 
 const meta = {
   title: "Primitives/Button",

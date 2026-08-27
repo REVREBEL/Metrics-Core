@@ -1,10 +1,10 @@
 "use client";
 
+import { Button } from "@buttons/button";
 import { IconCheck } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "@buttons/button";
 
 export function SaveButton() {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
@@ -30,6 +30,15 @@ export function SaveButton() {
     }
   }, [status]);
 
+  const textChars = useMemo(
+    () =>
+      text.split("").map((char, i) => ({
+        id: `${status}-${char}-${i}`,
+        char,
+      })),
+    [text, status],
+  );
+
   return (
     <div className="relative inline-flex group font-sans">
       <Button
@@ -45,9 +54,9 @@ export function SaveButton() {
       >
         <span className="flex items-center justify-center">
           <AnimatePresence mode="popLayout" initial={false}>
-            {text.split("").map((char, i) => (
+            {textChars.map(({ id, char }) => (
               <motion.span
-                key={`${char}-${i}`}
+                key={id}
                 layout
                 initial={{ opacity: 0, scale: 0, filter: "blur(4px)" }}
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
@@ -99,6 +108,7 @@ export function SaveButton() {
                       height="24"
                       viewBox="0 0 24 24"
                     >
+                      <title>Loading</title>
                       <path
                         fill="currentColor"
                         d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z"

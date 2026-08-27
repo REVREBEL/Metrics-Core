@@ -1,4 +1,4 @@
-import AuthBackgroundShape from "@icons/RebelIconsReact/AuthBackgroundShape";
+import AuthBackgroundShape from "@icons/AuthBackgroundShape";
 import Logo from "@icons/revrebel.png";
 import { IconSquareRoundedChevronLeftFilled } from "@tabler/icons-react";
 import {
@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@ui-core/card";
 import ForgotPasswordForm from "@users/forgot-password/forgot-password-form";
+import Image from "next/image";
 
 const ForgotPassword = () => {
   return (
@@ -19,7 +20,7 @@ const ForgotPassword = () => {
 
       <Card className="z-1 w-full border-none shadow-md sm:max-w-md">
         <CardHeader className="gap-6">
-          <img src={Logo.src} alt="RevRebel Logo" className="h-10 w-auto" />
+          <Image src={Logo} alt="RevRebel Logo" className="h-10 w-auto" />
 
           <div>
             <CardTitle className="mb-1.5 text-2xl">Forgot Password?</CardTitle>
@@ -34,7 +35,7 @@ const ForgotPassword = () => {
           {/* ForgotPassword Form */}
           <ForgotPasswordForm />
 
-          <a href="#" className="group mx-auto flex w-fit items-center gap-2">
+          <a href="#!" className="group mx-auto flex w-fit items-center gap-2">
             <IconSquareRoundedChevronLeftFilled className="size-5 transition-transform duration-200 group-hover:-translate-x-0.5" />
             <span>Back to login</span>
           </a>

@@ -631,16 +631,6 @@
   --base-color-9-inverse: oklch(27% 0.09 254.4);
   --base-color-9-inverse-fade: oklch(61.56% 0.0494 258.73);
 
-  /* Sidebar */
-  --sidebar: oklch(96% 0 0);
-  --sidebar-foreground: oklch(27% 0.09 254.4);
-  --sidebar-primary: oklch(27% 0.09 254.4);
-  --sidebar-primary-foreground: oklch(83% 0.04 220);
-  --sidebar-accent: oklch(65% 0.12 219.43);
-  --sidebar-accent-foreground: oklch(84% 0.14 85);
-  --sidebar-border: oklch(96% 0 0);
-  --sidebar-ring: oklch(78% 0.11 195.12);
-
   /* {Dark-Blue-Color-Range */
   /* prettier-ignore */
   --primary-l500: oklch(68.50% 0.0399 258.4); /* #8b9bb3 */
@@ -910,7 +900,6 @@
 
   .tag-primary {
     background-color: var(--primary-inverse);
-    border-color: var(--primary);
     border: 4px solid var(--primary);
   }
   .tag.bg-primary.is-outline {

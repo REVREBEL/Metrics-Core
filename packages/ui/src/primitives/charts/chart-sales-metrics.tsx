@@ -1,5 +1,3 @@
-"use client";
-
 import { Avatar, AvatarFallback } from "@ui-core/avatar";
 import {
   Card,
@@ -16,6 +14,7 @@ import {
   ShoppingBagIcon,
   TrendingUpIcon,
 } from "lucide-react";
+import Image from "next/image";
 import { useMemo } from "react";
 import { Bar, BarChart, Label, Pie, PieChart } from "recharts";
 import {
@@ -132,8 +131,10 @@ const SalesMetricsCard = ({
           <div className="flex flex-col gap-7 lg:col-span-3">
             <span className="text-lg font-semibold">Sales metrics</span>
             <div className="flex items-center gap-3">
-              <img
+              <Image
                 src={companyLogo}
+                width={42}
+                height={42}
                 className="size-10.5 rounded-lg"
                 alt="logo"
               />
@@ -146,9 +147,9 @@ const SalesMetricsCard = ({
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              {metricsData.map((metric, index) => (
+              {metricsData.map((metric) => (
                 <div
-                  key={index}
+                  key={metric.title}
                   className="flex items-center gap-3 rounded-md border px-4 py-2"
                 >
                   <Avatar className="size-8.5 rounded-sm">

@@ -38,9 +38,8 @@ export function Rating({
   const [hoverValue, setHoverValue] = useState<number | null>(null);
   const currentValue = value ?? uncontrolledValue;
   const displayValue = hoverValue ?? currentValue;
-  const step = Math.max(precision, 0.1);
+  const _step = Math.max(precision, 0.1);
   const isInteractive = !readOnly && !disabled;
-  const activeValue = Math.max(1, Math.ceil(currentValue));
 
   const values = useMemo(
     () => Array.from({ length: max }, (_, index) => index + 1),
@@ -57,44 +56,16 @@ export function Rating({
     onValueChange?.(normalized);
   }
 
-  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
-    onKeyDown?.(event);
-
-    if (!isInteractive || event.defaultPrevented) return;
-
-    if (event.key === "ArrowRight" || event.key === "ArrowUp") {
-      event.preventDefault();
-      commitValue(currentValue + step);
-    }
-
-    if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
-      event.preventDefault();
-      commitValue(currentValue - step);
-    }
-
-    if (event.key === "Home") {
-      event.preventDefault();
-      commitValue(0);
-    }
-
-    if (event.key === "End") {
-      event.preventDefault();
-      commitValue(max);
-    }
-  }
-
-  function handleMouseLeave(event: React.MouseEvent<HTMLDivElement>) {
+  function handleMouseLeave(event: React.MouseEvent<HTMLFieldSetElement>) {
     setHoverValue(null);
     onMouseLeave?.(event);
   }
 
   return (
-    <div
-      role="radiogroup"
+    <fieldset
       aria-label={ariaLabel}
       aria-disabled={disabled || undefined}
       className={cn("flex items-center gap-0.5", className)}
-      onKeyDown={handleKeyDown}
       onMouseLeave={handleMouseLeave}
       {...props}
     >
@@ -104,18 +75,8 @@ export function Rating({
         const starId = `${id}-${ratingValue}`;
 
         return (
-          <button
+          <div
             key={starId}
-            type="button"
-            role="radio"
-            aria-checked={checked}
-            aria-label={`${ratingValue} of ${max}`}
-            disabled={disabled || readOnly}
-            tabIndex={
-              isInteractive ? (ratingValue === activeValue ? 0 : -1) : -1
-            }
-            onClick={() => commitValue(ratingValue)}
-            onMouseEnter={() => isInteractive && setHoverValue(ratingValue)}
             className={cn(
               "relative inline-flex shrink-0 rounded-sm text-muted-foreground outline-none transition-colors",
               isInteractive &&
@@ -123,19 +84,36 @@ export function Rating({
               (disabled || readOnly) && "cursor-default",
             )}
           >
-            <IconStar
-              size={size}
-              className="fill-muted text-muted-foreground"
+            <input
+              type="radio"
+              id={starId}
+              name={`${id}-rating`}
+              value={ratingValue}
+              checked={checked}
+              disabled={disabled || readOnly}
+              onChange={() => commitValue(ratingValue)}
+              className="sr-only"
             />
-            <span
-              className="pointer-events-none absolute inset-0 overflow-hidden text-primary"
-              style={{ width: `${fillAmount * 100}%` }}
+            <label
+              htmlFor={starId}
+              aria-label={`${ratingValue} of ${max}`}
+              className="cursor-pointer"
+              onMouseEnter={() => isInteractive && setHoverValue(ratingValue)}
             >
-              <IconStar size={size} className="fill-current" />
-            </span>
-          </button>
+              <IconStar
+                size={size}
+                className="fill-muted text-muted-foreground"
+              />
+              <span
+                className="pointer-events-none absolute inset-0 overflow-hidden text-primary"
+                style={{ width: `${fillAmount * 100}%` }}
+              >
+                <IconStar size={size} className="fill-current" />
+              </span>
+            </label>
+          </div>
         );
       })}
-    </div>
+    </fieldset>
   );
 }

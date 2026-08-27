@@ -10,6 +10,7 @@ import {
 } from "@ui-core/card";
 import { Separator } from "@ui-core/separator";
 import RegisterForm from "@users/register/register-form";
+import Image from "next/image";
 
 const Register = () => {
   return (
@@ -20,7 +21,7 @@ const Register = () => {
 
       <Card className="z-1 w-full border-none shadow-md sm:max-w-lg">
         <CardHeader className="gap-6">
-          <img src={Logo.src} alt="RevRebel Logo" className="h-10 w-auto" />
+          <Image src={Logo} alt="RevRebel Logo" className="h-10 w-auto" />
 
           <div>
             <CardTitle className="mb-1.5 text-2xl">
@@ -39,7 +40,7 @@ const Register = () => {
 
             <p className="text-muted-foreground text-center">
               Already have an account?{" "}
-              <a href="#" className="text-card-foreground hover:underline">
+              <a href="#!" className="text-card-foreground hover:underline">
                 Sign in instead
               </a>
             </p>
@@ -51,7 +52,7 @@ const Register = () => {
             </div>
 
             <Button variant="ghost" className="w-full" asChild>
-              <a href="#">Sign in with google</a>
+              <a href="#!">Sign in with google</a>
             </Button>
           </div>
         </CardContent>
