@@ -58,6 +58,16 @@ export async function POST(req: Request) {
     );
   }
 
-  const result = await publishFeatureChangeRequest(changeRequestId, authContext);
-  return NextResponse.json(result, { status: statusForOutcome(result.outcome) });
+  try {
+    const result = await publishFeatureChangeRequest(changeRequestId, authContext);
+    return NextResponse.json(result, { status: statusForOutcome(result.outcome) });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Publication service failed.";
+    console.error("Publication API error:", error);
+    return NextResponse.json(
+      { message, outcome: "failed", retryable: true },
+      { status: 500 },
+    );
+  }
 }
