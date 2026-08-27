@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import {
   getPublicationCapability,
   publishFeatureChangeRequest,
-} from "../../../../features/data-library/publication-service";
+} from "../../../../features/data-library/publication";
 import { getCurrentWorkspaceSession } from "../../../../features/data-library/session";
 
 function statusForOutcome(outcome: string): number {
