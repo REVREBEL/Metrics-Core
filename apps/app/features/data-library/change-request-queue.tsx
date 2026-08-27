@@ -39,6 +39,7 @@ export function ChangeRequestQueue() {
   const [submitterFilter, setSubmitterFilter] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isPublishing, setIsPublishing] = useState<boolean>(false);
+  const [canPublishSelected, setCanPublishSelected] = useState(false);
   const [publicationResult, setPublicationResult] = useState<any | null>(null);
   // biome-ignore lint/suspicious/noExplicitAny: Details have dynamically resolved nested properties.
   const [selectedReqDetail, setSelectedReqDetail] = useState<any | null>(null);
@@ -75,9 +76,23 @@ export function ChangeRequestQueue() {
 
   async function handleInspect(id: string) {
     setPublicationResult(null);
+    setCanPublishSelected(false);
     const res = await getChangeRequestAction(id);
     if (res.success) {
       setSelectedReqDetail(res.data);
+      if (res.data.status === 'approved') {
+        try {
+          const capabilityResponse = await fetch(
+            `/api/data-library/publish?tableKey=${encodeURIComponent(res.data.tableKey)}`,
+          );
+          if (capabilityResponse.ok) {
+            const capability = await capabilityResponse.json();
+            setCanPublishSelected(Boolean(capability.canPublish));
+          }
+        } catch {
+          setCanPublishSelected(false);
+        }
+      }
     }
   }
 
@@ -100,6 +115,7 @@ export function ChangeRequestQueue() {
     setReviewModalOpen(false);
     setReviewNotes('');
     setSelectedReqDetail(null);
+    setCanPublishSelected(false);
     loadQueue();
   }
 
@@ -111,6 +127,7 @@ export function ChangeRequestQueue() {
       return;
     }
     setSelectedReqDetail(null);
+    setCanPublishSelected(false);
     loadQueue();
   }
 
@@ -127,13 +144,25 @@ export function ChangeRequestQueue() {
       });
 
       const result = await response.json();
+      setPublicationResult(result);
+
+      if (response.status === 409 && result.outcome === 'conflict') {
+        setSelectedReqDetail((current: any) =>
+          current ? { ...current, status: 'conflict' } : current,
+        );
+        setCanPublishSelected(false);
+        loadQueue();
+        return;
+      }
 
       if (!response.ok) {
         throw new Error(result.message || 'Publication failed');
       }
 
-      setPublicationResult(result);
-      // Refresh the queue to show the new status
+      setSelectedReqDetail((current: any) =>
+        current ? { ...current, status: 'published' } : current,
+      );
+      setCanPublishSelected(false);
       loadQueue();
     } catch (error) {
       const message = error instanceof Error ? error.message : 'An unknown error occurred.';
@@ -151,7 +180,7 @@ export function ChangeRequestQueue() {
             Change Requests Queue
           </h2>
           <p className='text-sm text-slate-500 dark:text-slate-400'>
-            Review, approve, reject, or withdraw governed Data Library edit requests.
+            Review, approve, reject, withdraw, or publish governed Data Library edit requests.
           </p>
         </div>
         <button
@@ -312,7 +341,10 @@ export function ChangeRequestQueue() {
             </div>
             <button
               type='button'
-              onClick={() => setSelectedReqDetail(null)}
+              onClick={() => {
+                setSelectedReqDetail(null);
+                setCanPublishSelected(false);
+              }}
               className='text-slate-400 hover:text-slate-600'
             >
               Close
@@ -381,12 +413,17 @@ export function ChangeRequestQueue() {
                       </ul>
                     </div>
                   )}
+                  {publicationResult.nextAction && (
+                    <p className='text-slate-600 dark:text-slate-300'>
+                      Next action: {publicationResult.nextAction}
+                    </p>
+                  )}
                 </div>
               )}
             </div>
           )}
 
-          {selectedReqDetail.status === 'approved' && (
+          {selectedReqDetail.status === 'approved' && canPublishSelected && (
             <div className='mt-6 flex items-center justify-end space-x-3 pt-4 border-t dark:border-slate-800'>
               <button
                 type='button'
@@ -397,6 +434,18 @@ export function ChangeRequestQueue() {
                 <Send className='h-3.5 w-3.5' />
                 <span>{isPublishing ? 'Publishing...' : 'Publish to Warehouse'}</span>
               </button>
+            </div>
+          )}
+
+          {selectedReqDetail.status === 'approved' && !canPublishSelected && (
+            <div className='mt-6 border-t pt-4 text-right text-xs text-slate-500 dark:border-slate-800'>
+              Publication requires the table-specific publish permission.
+            </div>
+          )}
+
+          {selectedReqDetail.status === 'conflict' && (
+            <div className='mt-6 border-t pt-4 text-xs text-orange-700 dark:border-slate-800 dark:text-orange-400'>
+              Refresh current warehouse values, revise the restored drafts, and submit a new change request.
             </div>
           )}
 
@@ -446,7 +495,7 @@ export function ChangeRequestQueue() {
             </h3>
             <p className='text-xs text-slate-500 mt-1'>
               {reviewDecision === 'approve'
-                ? 'Approval confirms governance review. Note: warehouse publication remains explicitly deferred.'
+                ? 'Approval confirms governance review. Publication remains a separate permissioned action.'
                 : 'Rejection will transition the request to rejected and restore drafts to editable draft state.'}
             </p>
 
