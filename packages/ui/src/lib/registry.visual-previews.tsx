@@ -160,10 +160,16 @@ function TabsNavigationPreview() {
           Tabs and overflow
         </div>
         <div className="flex flex-wrap gap-2">
-          <button className="rounded-full bg-foreground px-4 py-2 text-background text-sm">
+          <button
+            type="button"
+            className="rounded-full bg-foreground px-4 py-2 text-background text-sm"
+          >
             Overview
           </button>
-          <button className="rounded-full border px-4 py-2 text-sm">
+          <button
+            type="button"
+            className="rounded-full border px-4 py-2 text-sm"
+          >
             Segments
           </button>
           <button
@@ -418,9 +424,9 @@ function ChartPreview({ name, sourcePath }: PreviewProps) {
       </CardHeader>
       <CardContent>
         <div className="flex h-40 items-end gap-2 rounded-xl border bg-background p-4">
-          {[42, 72, 55, 88, 64, 96, 70].map((height, index) => (
+          {[42, 72, 55, 88, 64, 96, 70].map((height) => (
             <div
-              key={`${height}-${index}`}
+              key={height}
               className="flex flex-1 flex-col justify-end gap-2"
             >
               <div
@@ -428,7 +434,7 @@ function ChartPreview({ name, sourcePath }: PreviewProps) {
                 style={{ height: `${height}%` }}
               />
               <div className="text-center text-[10px] text-muted-foreground">
-                {index + 1}
+                {height}
               </div>
             </div>
           ))}

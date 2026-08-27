@@ -21,7 +21,7 @@ const DangerZone = () => {
           Delete your account permanently. This action will remove all your data
           and cannot be undone{" "}
           <a
-            href="#"
+            href="#!"
             className="text-card-foreground font-medium hover:underline"
           >
             Learn more

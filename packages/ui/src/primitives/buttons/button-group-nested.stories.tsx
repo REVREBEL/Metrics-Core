@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ButtonGroupNested } from "@buttons/button-group-nested";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
   title: "Primitives/Buttons/Button Group Nested",

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
 import ButtonOutline from "@buttons/button-outline";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
   title: "Primitives/Buttons/Button Outline",

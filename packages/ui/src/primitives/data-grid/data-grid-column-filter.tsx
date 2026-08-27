@@ -112,7 +112,7 @@ function DataGridColumnFilter<TData, TValue>({
                     }}
                     className={cn(
                       "relative flex w-full cursor-default items-center gap-2 rounded-sm bg-transparent px-2 py-1.5 text-left text-sm outline-hidden select-none",
-                      "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
                     )}
                   >
                     <span
@@ -135,7 +135,7 @@ function DataGridColumnFilter<TData, TValue>({
                       </span>
                     )}
                   </button>
-                )
+                );
               })}
             </div>
           )}
@@ -159,4 +159,4 @@ function DataGridColumnFilter<TData, TValue>({
   );
 }
 
-export { DataGridColumnFilter, type DataGridColumnFilterProps }
+export { DataGridColumnFilter, type DataGridColumnFilterProps };

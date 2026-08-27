@@ -10,6 +10,7 @@ import {
 } from "@ui-core/card";
 import { Separator } from "@ui-core/separator";
 import LoginForm from "@users/login-form";
+import Image from "next/image";
 
 const Login = () => {
   return (
@@ -20,7 +21,7 @@ const Login = () => {
 
       <Card className="z-1 w-full border-none shadow-md sm:max-w-lg">
         <CardHeader className="gap-6">
-          <img src={Logo.src} alt="RevRebel Logo" className="h-10 w-auto" />
+          <Image src={Logo} alt="RevRebel Logo" className="h-10 w-auto" />
 
           <div>
             <CardTitle className="mb-1.5 text-2xl">
@@ -35,7 +36,7 @@ const Login = () => {
         <CardContent>
           <p className="text-muted-foreground mb-6">
             Login with{" "}
-            <a href="#" className="text-card-foreground hover:underline">
+            <a href="#!" className="text-card-foreground hover:underline">
               Magic Link
             </a>
           </p>
@@ -56,7 +57,7 @@ const Login = () => {
 
             <p className="text-muted-foreground text-center">
               New on our platform?{" "}
-              <a href="#" className="text-card-foreground hover:underline">
+              <a href="#!" className="text-card-foreground hover:underline">
                 Create an account
               </a>
             </p>
@@ -68,7 +69,7 @@ const Login = () => {
             </div>
 
             <Button variant="ghost" className="w-full" asChild>
-              <a href="#">Sign in with google</a>
+              <a href="#!">Sign in with google</a>
             </Button>
           </div>
         </CardContent>

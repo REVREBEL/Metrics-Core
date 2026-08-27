@@ -4,7 +4,7 @@ import type { Dependency, EnumValues } from "./types";
 import { DependencyType } from "./types";
 
 export default function resolveDependencies<
-  SchemaType extends z.infer<z.ZodObject<any, any>>,
+  SchemaType extends z.infer<z.ZodObject<z.ZodRawShape, "strip", z.ZodTypeAny>>,
 >(
   dependencies: Dependency<SchemaType>[],
   currentFieldName: keyof SchemaType,

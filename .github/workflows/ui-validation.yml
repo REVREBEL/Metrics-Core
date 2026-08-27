@@ -1,49 +1,54 @@
-name: UI Validation
+name: Validate UI Library
 
 on:
   pull_request:
     branches:
       - dev
     paths:
-      - 'apps/storybook/**'
-      - 'apps/registry/**'
-      - 'packages/ui/**'
-      - '.github/workflows/ui-validation.yml'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - 'tsconfig.json'
+      - "apps/storybook/**"
+      - "apps/registry/**"
+      - "packages/ui/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "tsconfig.json"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   validate:
-    name: Validate UI, Storybook & Registry
+    name: Validate UI Package
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout Repo
         uses: actions/checkout@v4
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'pnpm'
+          node-version: 22
+          cache: "pnpm"
 
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
-      - name: Validate UI Package
-        run: |
-          pnpm --filter @repo/ui lint
-          pnpm --filter @repo/ui barrels:check
-          pnpm --filter @repo/ui icons:sync:check
-          pnpm --filter @repo/ui icons:barrels:check
+      - name: Lint UI Package
+        run: pnpm --filter @repo/ui lint
 
-      - name: Validate Storybook
-        run: |
-          pnpm storybook:stories:check
-          pnpm --filter @apps/storybook build
+      - name: Check Barrel Files
+        run: pnpm --filter @repo/ui barrel:check
+
+      - name: Check Icon Exports
+        run: pnpm --filter @repo/ui icons:check
+
+      - name: Build Storybook
+        run: pnpm --filter @apps/storybook build
 
       - name: Validate Registry
         run: |

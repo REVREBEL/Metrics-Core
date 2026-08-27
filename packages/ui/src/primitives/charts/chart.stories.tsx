@@ -1,7 +1,11 @@
-
-import * as React from "react";
-import { Meta, StoryObj } from "@storybook/react";
-import { CartesianGrid, Line, LineChart as RechartsLineChart, XAxis, YAxis } from "recharts";
+import type { Meta, StoryObj } from "@storybook/react";
+import {
+  CartesianGrid,
+  Line,
+  LineChart as RechartsLineChart,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 import {
   ChartContainer,
@@ -44,124 +48,111 @@ export default meta;
 type Story = StoryObj<typeof ChartContainer>;
 
 export const Default: Story = {
-    args: {
-        config: chartConfig,
-        className: "w-[720px] max-w-full h-[400px]",
-    },
-    render: (args) => (
-        <ChartContainer {...args}>
-        <RechartsLineChart data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-            dataKey="month"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={8}
-            />
-            <YAxis
-            tickLine={false}
-            axisLine={false}
-            tickMargin={8}
-            />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <ChartLegend content={<ChartLegendContent />} />
-            <Line
-            dataKey="desktop"
-            type="monotone"
-            stroke="var(--color-desktop)"
-            strokeWidth={2}
-            dot={false}
-            />
-            <Line
-            dataKey="mobile"
-            type="monotone"
-            stroke="var(--color-mobile)"
-            strokeWidth={2}
-            dot={false}
-            />
-        </RechartsLineChart>
-        </ChartContainer>
-    ),
+  args: {
+    config: chartConfig,
+    className: "w-[720px] max-w-full h-[400px]",
+  },
+  render: (args) => (
+    <ChartContainer {...args}>
+      <RechartsLineChart data={chartData}>
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+        />
+        <YAxis tickLine={false} axisLine={false} tickMargin={8} />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <ChartLegend content={<ChartLegendContent />} />
+        <Line
+          dataKey="desktop"
+          type="monotone"
+          stroke="var(--color-desktop)"
+          strokeWidth={2}
+          dot={false}
+        />
+        <Line
+          dataKey="mobile"
+          type="monotone"
+          stroke="var(--color-mobile)"
+          strokeWidth={2}
+          dot={false}
+        />
+      </RechartsLineChart>
+    </ChartContainer>
+  ),
 };
 
 export const Legend: Story = {
-    args: {
-        config: chartConfig,
-        className: "w-[720px] max-w-full h-[400px]",
-    },
-    render: (args) => (
-        <ChartContainer {...args}>
-        <RechartsLineChart data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-            dataKey="month"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={8}
-            />
-            <YAxis
-            tickLine={false}
-            axisLine={false}
-            tickMargin={8}
-            />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <ChartLegend content={<ChartLegendContent />} />
-            <Line
-            dataKey="desktop"
-            type="monotone"
-            stroke="var(--color-desktop)"
-            strokeWidth={2}
-            dot={false}
-            />
-            <Line
-            dataKey="mobile"
-            type="monotone"
-            stroke="var(--color-mobile)"
-            strokeWidth={2}
-            dot={false}
-            />
-        </RechartsLineChart>
-        </ChartContainer>
-    ),
+  args: {
+    config: chartConfig,
+    className: "w-[720px] max-w-full h-[400px]",
+  },
+  render: (args) => (
+    <ChartContainer {...args}>
+      <RechartsLineChart data={chartData}>
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+        />
+        <YAxis tickLine={false} axisLine={false} tickMargin={8} />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <ChartLegend content={<ChartLegendContent />} />
+        <Line
+          dataKey="desktop"
+          type="monotone"
+          stroke="var(--color-desktop)"
+          strokeWidth={2}
+          dot={false}
+        />
+        <Line
+          dataKey="mobile"
+          type="monotone"
+          stroke="var(--color-mobile)"
+          strokeWidth={2}
+          dot={false}
+        />
+      </RechartsLineChart>
+    </ChartContainer>
+  ),
 };
 
-
 export const Tooltip: Story = {
-    args: {
-        config: chartConfig,
-        className: "w-[720px] max-w-full h-[400px]",
-    },
-    render: (args) => (
-        <ChartContainer {...args}>
-        <RechartsLineChart data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-            dataKey="month"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={8}
-            />
-            <YAxis
-            tickLine={false}
-            axisLine={false}
-            tickMargin={8}
-            />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <Line
-            dataKey="desktop"
-            type="monotone"
-            stroke="var(--color-desktop)"
-            strokeWidth={2}
-            dot={false}
-            />
-            <Line
-            dataKey="mobile"
-            type="monotone"
-            stroke="var(--color-mobile)"
-            strokeWidth={2}
-            dot={false}
-            />
-        </RechartsLineChart>
-        </ChartContainer>
-    ),
+  args: {
+    config: chartConfig,
+    className: "w-[720px] max-w-full h-[400px]",
+  },
+  render: (args) => (
+    <ChartContainer {...args}>
+      <RechartsLineChart data={chartData}>
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+        />
+        <YAxis tickLine={false} axisLine={false} tickMargin={8} />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <Line
+          dataKey="desktop"
+          type="monotone"
+          stroke="var(--color-desktop)"
+          strokeWidth={2}
+          dot={false}
+        />
+        <Line
+          dataKey="mobile"
+          type="monotone"
+          stroke="var(--color-mobile)"
+          strokeWidth={2}
+          dot={false}
+        />
+      </RechartsLineChart>
+    </ChartContainer>
+  ),
 };

@@ -5,13 +5,27 @@ import { Input } from "@inputs/input";
 import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 
+// Helper to generate a unique ID
+let nextId = 0;
+const generateId = () => {
+  nextId += 1;
+  return nextId;
+};
+
 const SocialUrl = () => {
-  const [urls, setUrls] = useState<string[]>(["", "", ""]);
+  const [urls, setUrls] = useState([
+    { id: generateId(), value: "" },
+    { id: generateId(), value: "" },
+    { id: generateId(), value: "" },
+  ]);
 
-  const addUrl = () => setUrls((prev) => [...prev, ""]);
+  const addUrl = () =>
+    setUrls((prev) => [...prev, { id: generateId(), value: "" }]);
 
-  const updateUrl = (index: number, value: string) =>
-    setUrls((prev) => prev.map((u, i) => (i === index ? value : u)));
+  const updateUrl = (id: number, value: string) =>
+    setUrls((prev) =>
+      prev.map((url) => (url.id === id ? { ...url, value } : url)),
+    );
 
   return (
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
@@ -26,13 +40,13 @@ const SocialUrl = () => {
       {/* Content */}
       <div className="space-y-6 lg:col-span-2">
         <div className="space-y-4">
-          {urls.map((url, idx) => (
+          {urls.map((url) => (
             <Input
-              key={idx}
+              key={url.id}
               type="text"
               placeholder="Link to social profile"
-              value={url}
-              onChange={(e) => updateUrl(idx, e.target.value)}
+              value={url.value}
+              onChange={(e) => updateUrl(url.id, e.target.value)}
             />
           ))}
         </div>

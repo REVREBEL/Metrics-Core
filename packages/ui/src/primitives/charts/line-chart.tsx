@@ -13,7 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 
 interface LineChartProps extends React.HTMLAttributes<HTMLDivElement> {
-  data: Record<string, any>[];
+  data: Record<string, unknown>[];
   index: string;
   categories: string[];
   strokeColors?: string[];
@@ -95,8 +95,11 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                             {label}
                           </span>
                         </div>
-                        {payload.map((entry, index) => (
-                          <div key={index} className="flex flex-col">
+                        {payload.map((entry) => (
+                          <div
+                            key={entry.dataKey as string}
+                            className="flex flex-col"
+                          >
                             <span className="text-[0.70rem] uppercase text-muted-foreground">
                               {entry.dataKey ? String(entry.dataKey) : ""}
                             </span>

@@ -16,6 +16,7 @@ import {
   DialogTrigger,
 } from "@ui-core/dialog";
 import { Label } from "@ui-core/label";
+import Image from "next/image";
 import { useState } from "react";
 
 interface ConnectedAccount {
@@ -98,9 +99,11 @@ const ConnectedAccount = () => {
               className="flex w-fit items-center gap-3 rounded-md border p-2"
             >
               {account.iconUrl ? (
-                <img
+                <Image
                   src={account.iconUrl}
                   alt={account.name}
+                  width={16}
+                  height={16}
                   className="size-4 rounded"
                 />
               ) : (

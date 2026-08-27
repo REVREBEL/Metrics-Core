@@ -135,6 +135,23 @@ function DataGridTableDndCell<TData>({ cell }: { cell: Cell<TData, unknown> }) {
   );
 }
 
+interface ModifierArguments {
+  transform: {
+    x: number;
+    y: number;
+    scaleX: number;
+    scaleY: number;
+  };
+  draggingNodeRect: {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+    width: number;
+    height: number;
+  } | null;
+}
+
 function DataGridTableDnd<TData>({
   handleDragEnd,
 }: {
@@ -154,7 +171,7 @@ function DataGridTableDnd<TData>({
   const restrictToTableBounds: Modifier = ({
     draggingNodeRect,
     transform,
-  }: any) => {
+  }: ModifierArguments) => {
     if (!draggingNodeRect || !containerRef.current) {
       return { ...transform, y: 0 };
     }
@@ -187,25 +204,23 @@ function DataGridTableDnd<TData>({
       <div ref={containerRef}>
         <DataGridTableBase>
           <DataGridTableHead>
-            {table
-              .getHeaderGroups()
-              .map((headerGroup: HeaderGroup<TData>, index) => {
-                return (
-                  <DataGridTableHeadRow headerGroup={headerGroup} key={index}>
-                    <SortableContext
-                      items={table.getState().columnOrder}
-                      strategy={horizontalListSortingStrategy}
-                    >
-                      {headerGroup.headers.map((header) => (
-                        <DataGridTableDndHeader
-                          header={header}
-                          key={header.id}
-                        />
-                      ))}
-                    </SortableContext>
-                  </DataGridTableHeadRow>
-                );
-              })}
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<TData>) => {
+              return (
+                <DataGridTableHeadRow
+                  headerGroup={headerGroup}
+                  key={headerGroup.id}
+                >
+                  <SortableContext
+                    items={table.getState().columnOrder}
+                    strategy={horizontalListSortingStrategy}
+                  >
+                    {headerGroup.headers.map((header) => (
+                      <DataGridTableDndHeader header={header} key={header.id} />
+                    ))}
+                  </SortableContext>
+                </DataGridTableHeadRow>
+              );
+            })}
           </DataGridTableHead>
 
           {(props.tableLayout?.stripped || !props.tableLayout?.rowBorder) && (
@@ -217,12 +232,13 @@ function DataGridTableDnd<TData>({
             isLoading &&
             pagination?.pageSize ? (
               Array.from({ length: pagination.pageSize }).map((_, rowIndex) => (
-                <DataGridTableBodyRowSkeleton key={rowIndex}>
-                  {table.getVisibleFlatColumns().map((column, colIndex) => {
+                // biome-ignore lint/suspicious/noArrayIndexKey: The order of the items is static
+                <DataGridTableBodyRowSkeleton key={`skeleton-row-${rowIndex}`}>
+                  {table.getVisibleFlatColumns().map((column) => {
                     return (
                       <DataGridTableBodyRowSkeletonCell
                         column={column}
-                        key={colIndex}
+                        key={column.id}
                       >
                         {column.columnDef.meta?.skeleton}
                       </DataGridTableBodyRowSkeletonCell>

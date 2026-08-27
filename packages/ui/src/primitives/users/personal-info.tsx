@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@ui-core/select";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const countries = [
@@ -134,29 +135,23 @@ const PersonalInfo = () => {
           <div className="mb-6 w-full space-y-2">
             <Label>Your Avatar</Label>
             <div className="flex items-center gap-4">
-              <div
-                role="button"
-                tabIndex={0}
+              <button
+                type="button"
                 aria-label="Upload your avatar"
                 onClick={openPicker}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    openPicker();
-                  }
-                }}
-                className="flex h-20 w-20 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-dashed hover:opacity-95"
+                className="relative flex h-20 w-20 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-dashed hover:opacity-95"
               >
                 {preview ? (
-                  <img
+                  <Image
                     src={preview}
                     alt="avatar preview"
-                    className="h-full w-full object-cover"
+                    layout="fill"
+                    objectFit="cover"
                   />
                 ) : (
                   <IconPolaroid />
                 )}
-              </div>
+              </button>
 
               <div className="flex items-center gap-2">
                 <input
@@ -229,9 +224,11 @@ const PersonalInfo = () => {
                 <SelectContent className="[&_*[role=option]>span>svg]:text-muted-foreground/80 max-h-100 [&_*[role=option]]:pr-8 [&_*[role=option]]:pl-2 [&_*[role=option]>span]:right-2 [&_*[role=option]>span]:left-auto [&_*[role=option]>span]:flex [&_*[role=option]>span]:items-center [&_*[role=option]>span]:gap-2 [&_*[role=option]>span>svg]:shrink-0">
                   {countries.map((country) => (
                     <SelectItem key={country.value} value={country.value}>
-                      <img
+                      <Image
                         src={country.flag}
                         alt={`${country.label} flag`}
+                        width={20}
+                        height={16}
                         className="h-4 w-5"
                       />{" "}
                       <span className="truncate">{country.label}</span>

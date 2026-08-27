@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader } from "@ui-core/card";
 import { Separator } from "@ui-core/separator";
+import Image from "next/image";
 import { Bar, BarChart } from "recharts";
 import { cn } from "@/lib/utils";
 import { type ChartConfig, ChartContainer } from "./chart";
@@ -69,7 +70,13 @@ const ProductInsightsCard = ({
           <span className="text-lg font-semibold">{title}</span>
           <span className="text-muted-foreground text-sm">{publishedDate}</span>
         </div>
-        <img src={productImage} alt={title} className="w-20.5 rounded-md" />
+        <Image
+          src={productImage}
+          alt={title}
+          width={82}
+          height={82}
+          className="w-20.5 rounded-md"
+        />
       </CardHeader>
       <CardContent className="space-y-4">
         <Separator />

@@ -1,6 +1,6 @@
+import { ButtonGroup } from "@buttons/button-group";
 import { IconPlus as PlusIcon } from "@tabler/icons-react";
 import { Button } from "./button";
-import { ButtonGroup } from "@buttons/button-group";
 
 export default function ButtonGroupSize() {
   return (

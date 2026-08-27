@@ -1,5 +1,5 @@
-import { IconSquareRoundedChevronRightFilled } from "@tabler/icons-react";
 import { Button } from "@buttons/button";
+import { IconSquareRoundedChevronRightFilled } from "@tabler/icons-react";
 
 export default function ButtonSize() {
   return (

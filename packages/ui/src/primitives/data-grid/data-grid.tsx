@@ -90,7 +90,7 @@ export interface DataGridProps<TData extends object> {
   };
 }
 
-const DataGridContext = createContext<DataGridContextProps<any> | undefined>(
+const DataGridContext = createContext<DataGridContextProps<object> | undefined>(
   undefined,
 );
 
@@ -127,7 +127,7 @@ function DataGridProvider<TData extends object>({
   );
 }
 
-const DEFAULT_DATAGRID_PROPS: Partial<DataGridProps<any>> = {
+const DEFAULT_DATAGRID_PROPS: Partial<DataGridProps<object>> = {
   loadingMode: "skeleton",
   tableLayout: {
     dense: false,
