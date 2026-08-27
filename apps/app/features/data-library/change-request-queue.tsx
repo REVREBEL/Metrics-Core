@@ -8,6 +8,7 @@ import {
   Filter,
   RefreshCw,
   RotateCcw,
+  Send,
   XCircle,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -25,10 +26,40 @@ export interface QueueItem {
   description: string | null;
   submitterId: string;
   reviewerId: string | null;
-  status: "submitted" | "approved" | "rejected" | "withdrawn";
+  status:
+    | "submitted"
+    | "approved"
+    | "rejected"
+    | "withdrawn"
+    | "published"
+    | "conflict";
   reviewNotes: string | null;
   submittedAt: string | Date;
   reviewedAt: string | Date | null;
+}
+
+interface ChangeRequestItemDetail {
+  id: string;
+  rowKey: string;
+  originalPayload: Record<string, unknown> | null;
+  submittedPayload: Record<string, unknown>;
+}
+
+interface ChangeRequestDetail extends QueueItem {
+  items: ChangeRequestItemDetail[];
+}
+
+interface PublicationConflictDetail {
+  rowKey: string;
+  message: string;
+}
+
+interface PublicationUiResult {
+  success: boolean;
+  outcome?: string;
+  message: string;
+  conflicts?: PublicationConflictDetail[];
+  nextAction?: string;
 }
 
 export function ChangeRequestQueue() {
@@ -37,8 +68,12 @@ export function ChangeRequestQueue() {
   const [selectedTable, setSelectedTable] = useState<string>("");
   const [submitterFilter, setSubmitterFilter] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // biome-ignore lint/suspicious/noExplicitAny: Details have dynamically resolved nested properties.
-  const [selectedReqDetail, setSelectedReqDetail] = useState<any | null>(null);
+  const [isPublishing, setIsPublishing] = useState<boolean>(false);
+  const [canPublishSelected, setCanPublishSelected] = useState(false);
+  const [publicationResult, setPublicationResult] =
+    useState<PublicationUiResult | null>(null);
+  const [selectedReqDetail, setSelectedReqDetail] =
+    useState<ChangeRequestDetail | null>(null);
 
   // Review modal state
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
@@ -75,9 +110,27 @@ export function ChangeRequestQueue() {
   }, [selectedStatus, selectedTable]);
 
   async function handleInspect(id: string) {
+    setPublicationResult(null);
+    setCanPublishSelected(false);
     const res = await getChangeRequestAction(id);
-    if (res.success) {
-      setSelectedReqDetail(res.data);
+    if (!res.success) return;
+
+    const detail = res.data as ChangeRequestDetail;
+    setSelectedReqDetail(detail);
+
+    if (detail.status !== "approved") return;
+
+    try {
+      const capabilityResponse = await fetch(
+        `/api/data-library/publish?tableKey=${encodeURIComponent(detail.tableKey)}`,
+      );
+      if (!capabilityResponse.ok) return;
+      const capability = (await capabilityResponse.json()) as {
+        canPublish?: boolean;
+      };
+      setCanPublishSelected(Boolean(capability.canPublish));
+    } catch {
+      setCanPublishSelected(false);
     }
   }
 
@@ -100,6 +153,7 @@ export function ChangeRequestQueue() {
     setReviewModalOpen(false);
     setReviewNotes("");
     setSelectedReqDetail(null);
+    setCanPublishSelected(false);
     loadQueue();
   }
 
@@ -111,7 +165,50 @@ export function ChangeRequestQueue() {
       return;
     }
     setSelectedReqDetail(null);
+    setCanPublishSelected(false);
     loadQueue();
+  }
+
+  async function handlePublish(id: string) {
+    setIsPublishing(true);
+    setPublicationResult(null);
+    setActionError(null);
+
+    try {
+      const response = await fetch("/api/data-library/publish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ changeRequestId: id }),
+      });
+
+      const result = (await response.json()) as PublicationUiResult;
+      setPublicationResult(result);
+
+      if (response.status === 409 && result.outcome === "conflict") {
+        setSelectedReqDetail((current) =>
+          current ? { ...current, status: "conflict" } : current,
+        );
+        setCanPublishSelected(false);
+        loadQueue();
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(result.message || "Publication failed");
+      }
+
+      setSelectedReqDetail((current) =>
+        current ? { ...current, status: "published" } : current,
+      );
+      setCanPublishSelected(false);
+      loadQueue();
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "An unknown error occurred.";
+      setActionError(message);
+    } finally {
+      setIsPublishing(false);
+    }
   }
 
   return (
@@ -122,8 +219,8 @@ export function ChangeRequestQueue() {
             Change Requests Queue
           </h2>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Review, approve, reject, or withdraw governed Data Library edit
-            requests.
+            Review, approve, reject, withdraw, or publish governed Data Library
+            edit requests.
           </p>
         </div>
         <button
@@ -143,7 +240,6 @@ export function ChangeRequestQueue() {
         </div>
       )}
 
-      {/* Filter Toolbar */}
       <div className="flex flex-wrap items-center gap-3 bg-slate-50 p-3 rounded-lg dark:bg-slate-900/50 border dark:border-slate-800">
         <Filter className="h-4 w-4 text-slate-400" />
         <div className="flex items-center space-x-2">
@@ -161,6 +257,8 @@ export function ChangeRequestQueue() {
           >
             <option value="submitted">Submitted (Pending)</option>
             <option value="approved">Approved</option>
+            <option value="published">Published</option>
+            <option value="conflict">Conflict</option>
             <option value="rejected">Rejected</option>
             <option value="withdrawn">Withdrawn</option>
             <option value="">All Statuses</option>
@@ -202,7 +300,6 @@ export function ChangeRequestQueue() {
         </div>
       </div>
 
-      {/* Queue Table */}
       <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
         <table className="w-full text-left text-sm">
           <thead className="bg-slate-50 text-xs font-semibold uppercase text-slate-500 dark:bg-slate-900 dark:text-slate-400">
@@ -275,7 +372,6 @@ export function ChangeRequestQueue() {
         </table>
       </div>
 
-      {/* Detail Drawer */}
       {selectedReqDetail && (
         <div className="rounded-lg border border-indigo-200 bg-indigo-50/30 p-6 dark:border-indigo-900/50 dark:bg-slate-900">
           <div className="flex items-center justify-between border-b pb-3 dark:border-slate-800">
@@ -293,7 +389,10 @@ export function ChangeRequestQueue() {
             </div>
             <button
               type="button"
-              onClick={() => setSelectedReqDetail(null)}
+              onClick={() => {
+                setSelectedReqDetail(null);
+                setCanPublishSelected(false);
+              }}
               className="text-slate-400 hover:text-slate-600"
             >
               Close
@@ -306,13 +405,11 @@ export function ChangeRequestQueue() {
             </p>
           )}
 
-          {/* Immutable Item Snapshots */}
           <div className="mt-4 space-y-3">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
               Immutable Item Snapshots ({selectedReqDetail.items.length}):
             </h4>
-            {/* biome-ignore lint/suspicious/noExplicitAny: Item payloads contain heterogeneous, dynamic table records. */}
-            {selectedReqDetail.items.map((item: any) => (
+            {selectedReqDetail.items.map((item) => (
               <div
                 key={item.id}
                 className="rounded border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-950 text-xs"
@@ -341,6 +438,69 @@ export function ChangeRequestQueue() {
               </div>
             ))}
           </div>
+
+          {publicationResult && (
+            <div className="mt-4 p-4 rounded-lg border bg-white dark:bg-slate-950 dark:border-slate-800">
+              <h4 className="text-sm font-semibold mb-2">Publication Result</h4>
+              <div
+                className={
+                  publicationResult.success
+                    ? "text-sm text-emerald-600 dark:text-emerald-400 space-y-2"
+                    : "text-sm text-rose-600 dark:text-rose-400 space-y-2"
+                }
+              >
+                <p>{publicationResult.message}</p>
+                {publicationResult.conflicts &&
+                  publicationResult.conflicts.length > 0 && (
+                    <div>
+                      <h5 className="font-semibold">Conflicts:</h5>
+                      <ul className="list-disc list-inside space-y-1 mt-1">
+                        {publicationResult.conflicts.map((conflict) => (
+                          <li key={conflict.rowKey}>
+                            <strong>Row {conflict.rowKey}:</strong>{" "}
+                            {conflict.message}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                {publicationResult.nextAction && (
+                  <p className="text-slate-600 dark:text-slate-300">
+                    Next action: {publicationResult.nextAction}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {selectedReqDetail.status === "approved" && canPublishSelected && (
+            <div className="mt-6 flex items-center justify-end space-x-3 pt-4 border-t dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => handlePublish(selectedReqDetail.id)}
+                disabled={isPublishing}
+                className="inline-flex items-center space-x-2 rounded bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 disabled:bg-blue-300 dark:disabled:bg-blue-900"
+              >
+                <Send className="h-3.5 w-3.5" />
+                <span>
+                  {isPublishing ? "Publishing..." : "Publish to Warehouse"}
+                </span>
+              </button>
+            </div>
+          )}
+
+          {selectedReqDetail.status === "approved" && !canPublishSelected && (
+            <div className="mt-6 border-t pt-4 text-right text-xs text-slate-500 dark:border-slate-800">
+              Publication requires the table-specific publish permission.
+            </div>
+          )}
+
+          {selectedReqDetail.status === "conflict" && (
+            <div className="mt-6 border-t pt-4 text-xs text-orange-700 dark:border-slate-800 dark:text-orange-400">
+              Refresh current warehouse values, revise the restored drafts, and
+              submit a new change request.
+            </div>
+          )}
 
           {selectedReqDetail.status === "submitted" && (
             <div className="mt-6 flex items-center justify-end space-x-3 pt-4 border-t dark:border-slate-800">
@@ -379,7 +539,6 @@ export function ChangeRequestQueue() {
         </div>
       )}
 
-      {/* Review Modal */}
       {reviewModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl dark:bg-slate-900">
@@ -390,7 +549,7 @@ export function ChangeRequestQueue() {
             </h3>
             <p className="text-xs text-slate-500 mt-1">
               {reviewDecision === "approve"
-                ? "Approval confirms governance review. Note: warehouse publication remains explicitly deferred."
+                ? "Approval confirms governance review. Publication remains a separate permissioned action."
                 : "Rejection will transition the request to rejected and restore drafts to editable draft state."}
             </p>
 
@@ -472,6 +631,18 @@ function StatusBadge({ status }: { status: string }) {
       return (
         <span className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">
           <RotateCcw className="mr-1 h-3 w-3" /> Withdrawn
+        </span>
+      );
+    case "published":
+      return (
+        <span className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-950/40 dark:text-blue-400">
+          <Send className="mr-1 h-3 w-3" /> Published
+        </span>
+      );
+    case "conflict":
+      return (
+        <span className="inline-flex items-center rounded-full bg-orange-50 px-2.5 py-0.5 text-xs font-medium text-orange-700 dark:bg-orange-950/40 dark:text-orange-400">
+          <AlertCircle className="mr-1 h-3 w-3" /> Conflict
         </span>
       );
     default:
