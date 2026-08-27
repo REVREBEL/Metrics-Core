@@ -72,11 +72,18 @@ function quoteIdentifier(identifier: string): string {
   return `\`${identifier}\``;
 }
 
+function validateProjectId(projectId: string): string {
+  if (!/^[A-Za-z0-9][A-Za-z0-9-]*$/.test(projectId)) {
+    throw new Error(`Unsafe BigQuery project id: ${projectId}`);
+  }
+  return projectId;
+}
+
 function fullTableName(
   projectId: string,
   definition: PublicationTableDefinition,
 ): string {
-  const project = quoteIdentifier(projectId).slice(1, -1);
+  const project = validateProjectId(projectId);
   const dataset = quoteIdentifier(definition.dataset).slice(1, -1);
   const table = quoteIdentifier(definition.table).slice(1, -1);
   return `\`${project}.${dataset}.${table}\``;
@@ -225,42 +232,43 @@ export function detectPublicationConflicts(
     const submittedColumns = editableColumns.filter((column) =>
       Object.prototype.hasOwnProperty.call(item.submittedPayload, column.key),
     );
-    const submittedAlreadyApplied =
-      submittedColumns.length > 0 &&
-      submittedColumns.every((column) =>
-        valuesEqual(
-          normalizeValue(current[column.key], column.type),
-          normalizeValue(item.submittedPayload[column.key], column.type),
-        ),
-      );
-
-    if (submittedAlreadyApplied) {
+    if (submittedColumns.length === 0) {
       alreadyApplied.push(item);
       continue;
     }
 
     const conflictingFields: PublicationConflict["conflictingFields"] = {};
-    for (const column of editableColumns) {
-      if (!Object.prototype.hasOwnProperty.call(item.originalPayload, column.key)) {
+    let allSubmittedValuesAlreadyApplied = true;
+
+    for (const column of submittedColumns) {
+      const original = normalizeValue(item.originalPayload[column.key], column.type);
+      const submitted = normalizeValue(item.submittedPayload[column.key], column.type);
+      const actual = normalizeValue(current[column.key], column.type);
+
+      if (valuesEqual(actual, submitted)) {
         continue;
       }
-      const expected = normalizeValue(item.originalPayload[column.key], column.type);
-      const actual = normalizeValue(current[column.key], column.type);
-      if (!valuesEqual(expected, actual)) {
-        conflictingFields[column.key] = { expected, actual };
+
+      allSubmittedValuesAlreadyApplied = false;
+      if (!valuesEqual(actual, original)) {
+        conflictingFields[column.key] = { expected: original, actual };
       }
     }
 
     if (Object.keys(conflictingFields).length > 0) {
       conflicts.push({
         rowKey: item.rowKey,
-        message: "The warehouse row changed after this request was drafted.",
+        message: "A field being published changed after this request was drafted.",
         conflictingFields,
       });
       continue;
     }
 
-    pendingItems.push(item);
+    if (allSubmittedValuesAlreadyApplied) {
+      alreadyApplied.push(item);
+    } else {
+      pendingItems.push(item);
+    }
   }
 
   return { conflicts, pendingItems, alreadyApplied };
@@ -301,6 +309,9 @@ function buildAtomicMergeSql(
     sourceFields.push(
       `${jsonValueExpression("item", `_original__${column.key}`, column.type)} AS ${quoteIdentifier(`_original__${column.key}`)}`,
     );
+    sourceFields.push(
+      `${jsonValueExpression("item", `_apply__${column.key}`, "boolean")} AS ${quoteIdentifier(`_apply__${column.key}`)}`,
+    );
   }
 
   const source = `(
@@ -315,12 +326,12 @@ function buildAtomicMergeSql(
   const snapshotMatches = editableColumns
     .map(
       (column) =>
-        `(T.${quoteIdentifier(column.key)} = S.${quoteIdentifier(`_original__${column.key}`)} OR (T.${quoteIdentifier(column.key)} IS NULL AND S.${quoteIdentifier(`_original__${column.key}`)} IS NULL))`,
+        `(NOT S.${quoteIdentifier(`_apply__${column.key}`)} OR T.${quoteIdentifier(column.key)} = S.${quoteIdentifier(`_original__${column.key}`)} OR (T.${quoteIdentifier(column.key)} IS NULL AND S.${quoteIdentifier(`_original__${column.key}`)} IS NULL))`,
     )
     .join(" AND ");
   const updateParts = editableColumns.map(
     (column) =>
-      `T.${quoteIdentifier(column.key)} = S.${quoteIdentifier(column.key)}`,
+      `T.${quoteIdentifier(column.key)} = IF(S.${quoteIdentifier(`_apply__${column.key}`)}, S.${quoteIdentifier(column.key)}, T.${quoteIdentifier(column.key)})`,
   );
   if (definition.columns.some((column) => column.key === "updated_date")) {
     updateParts.push("T.`updated_date` = CURRENT_DATE()");
@@ -358,10 +369,12 @@ function buildSourceRows(
       ...parseRowKey(item.rowKey, definition.primaryKey),
     };
     for (const column of editableColumns) {
-      row[column.key] = Object.prototype.hasOwnProperty.call(
+      const applies = Object.prototype.hasOwnProperty.call(
         item.submittedPayload,
         column.key,
-      )
+      );
+      row[`_apply__${column.key}`] = applies;
+      row[column.key] = applies
         ? normalizeValue(item.submittedPayload[column.key], column.type)
         : normalizeValue(item.originalPayload[column.key], column.type);
       row[`_original__${column.key}`] = normalizeValue(
@@ -446,7 +459,7 @@ export async function publishRowsToWarehouse(
             : initialCheck.pendingItems.map((item) => ({
                 rowKey: item.rowKey,
                 message:
-                  "The warehouse row changed during publication. Refresh current values and resubmit.",
+                  "A field being published changed during publication. Refresh current values and resubmit.",
                 conflictingFields: {},
               })),
         publishedRows: 0,
