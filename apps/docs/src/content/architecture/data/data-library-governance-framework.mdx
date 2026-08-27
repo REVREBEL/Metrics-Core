@@ -112,7 +112,13 @@ The API boundary is:
 POST /api/data-library/publish
 ```
 
-The feature orchestration service is:
+The canonical feature publication entry point is:
+
+```text
+apps/app/features/data-library/publication.ts
+```
+
+It exposes the governed orchestration implemented in:
 
 ```text
 apps/app/features/data-library/publication-service.ts
