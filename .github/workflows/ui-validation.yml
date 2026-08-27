@@ -9,6 +9,9 @@ on:
       - 'apps/registry/**'
       - 'packages/ui/**'
       - '.github/workflows/ui-validation.yml'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'tsconfig.json'
 
 jobs:
   validate:
@@ -20,8 +23,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
-        with:
-          version: 8
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -46,5 +47,5 @@ jobs:
 
       - name: Validate Registry
         run: |
-          pnpm --filter @apps/registry registry:validate
-          pnpm --filter @apps/registry build
+          pnpm --filter @apps/registry registry:build
+          git diff --exit-code
