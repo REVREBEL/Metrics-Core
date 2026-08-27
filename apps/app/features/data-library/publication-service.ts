@@ -323,15 +323,32 @@ export async function publishFeatureChangeRequest(
   }
 
   const draftIds = request.items.map((item) => item.draftEditId);
-  await dependencies.recordAudit({
-    actorId: authContext.userId,
-    requestId: request.id,
-    tableKey: request.tableKey,
-    action: "publication_started",
-    correlationId,
-    metadata: { rowKeys: request.items.map((item) => item.rowKey) },
-    beforeState: { status: request.status },
-  });
+  try {
+    await dependencies.recordAudit({
+      actorId: authContext.userId,
+      requestId: request.id,
+      tableKey: request.tableKey,
+      action: "publication_started",
+      correlationId,
+      metadata: { rowKeys: request.items.map((item) => item.rowKey) },
+      beforeState: { status: request.status },
+    });
+  } catch (error) {
+    return buildResult(startedAt, dependencies.now(), correlationId, {
+      success: false,
+      outcome: "failed",
+      message:
+        error instanceof Error
+          ? `Publication audit could not start: ${error.message}`
+          : "Publication audit could not start.",
+      conflicts: [],
+      publishedRows: 0,
+      warehouseRowsWritten: 0,
+      warehouseJobId: null,
+      retryable: true,
+      nextAction: "Restore application database audit availability, then retry.",
+    });
+  }
 
   try {
     const warehouseResult = await dependencies.publishWarehouse(definition, request.items);
