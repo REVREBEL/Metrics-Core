@@ -331,10 +331,10 @@ function buildAtomicMergeSql(
     .join(" AND ");
   const updateParts = editableColumns.map(
     (column) =>
-      `T.${quoteIdentifier(column.key)} = IF(S.${quoteIdentifier(`_apply__${column.key}`)}, S.${quoteIdentifier(column.key)}, T.${quoteIdentifier(column.key)})`,
+      `${quoteIdentifier(column.key)} = IF(S.${quoteIdentifier(`_apply__${column.key}`)}, S.${quoteIdentifier(column.key)}, T.${quoteIdentifier(column.key)})`,
   );
   if (definition.columns.some((column) => column.key === "updated_date")) {
-    updateParts.push("T.`updated_date` = CURRENT_DATE()");
+    updateParts.push("`updated_date` = CURRENT_DATE()");
   }
 
   return `
