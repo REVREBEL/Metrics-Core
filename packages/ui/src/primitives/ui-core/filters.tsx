@@ -1941,22 +1941,60 @@ export function Filters<T = unknown>({
   const [tempSelectedValues, setTempSelectedValues] = useState<unknown[]>([]);
 
   // Merge provided i18n with defaults
-  const mergedI18n: FilterI18nConfig = {
-    ...DEFAULT_I18N,
-    ...i18n,
-    operators: {
-      ...DEFAULT_I18N.operators,
-      ...i18n?.operators,
-    },
-    placeholders: {
-      ...DEFAULT_I18N.placeholders,
-      ...i18n?.placeholders,
-    },
-    validation: {
-      ...DEFAULT_I18N.validation,
-      ...i18n?.validation,
-    },
-  };
+  const mergedI18n: FilterI18nConfig = useMemo(
+    () => ({
+      ...DEFAULT_I18N,
+      ...i18n,
+      operators: {
+        ...DEFAULT_I18N.operators,
+        ...i18n?.operators,
+      },
+      placeholders: {
+        ...DEFAULT_I18N.placeholders,
+        ...i18n?.placeholders,
+      },
+      validation: {
+        ...DEFAULT_I18N.validation,
+        ...i18n?.validation,
+      },
+    }),
+    [i18n],
+  );
+
+  const contextValue = useMemo<FilterContextValue>(
+    () => ({
+      variant,
+      size,
+      radius,
+      i18n: mergedI18n,
+      cursorPointer,
+      className,
+      showAddButton,
+      addButtonText,
+      addButtonIcon,
+      addButtonClassName,
+      addButton,
+      showSearchInput,
+      trigger,
+      allowMultiple,
+    }),
+    [
+      variant,
+      size,
+      radius,
+      mergedI18n,
+      cursorPointer,
+      className,
+      showAddButton,
+      addButtonText,
+      addButtonIcon,
+      addButtonClassName,
+      addButton,
+      showSearchInput,
+      trigger,
+      allowMultiple,
+    ],
+  );
 
   const fieldsMap = useMemo(() => getFieldsMap(fields), [fields]);
 
@@ -2117,24 +2155,7 @@ export function Filters<T = unknown>({
   }, [fields, filters, allowMultiple]);
 
   return (
-    <FilterContext.Provider
-      value={{
-        variant,
-        size,
-        radius,
-        i18n: mergedI18n,
-        cursorPointer,
-        className,
-        showAddButton,
-        addButtonText,
-        addButtonIcon,
-        addButtonClassName,
-        addButton,
-        showSearchInput,
-        trigger,
-        allowMultiple,
-      }}
-    >
+    <FilterContext.Provider value={contextValue}>
       <div
         className={cn(filtersContainerVariants({ variant, size }), className)}
       >
