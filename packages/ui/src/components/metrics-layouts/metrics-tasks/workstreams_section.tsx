@@ -2,7 +2,7 @@
 
 import { IconClock } from "@tabler/icons-react";
 import { Building2, ChevronDown, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   Collapsible,
@@ -81,13 +81,14 @@ function VendorBadge({ assignee }: { assignee: ExternalAssignee }) {
   );
 }
 
-function WorkstreamRow({ workstream }: { workstream: Workstream }) {
-  const { externalAssignees } = useTasks();
-
-  const vendor = workstream.ownerExternalAssigneeId
-    ? externalAssignees.find((a) => a.id === workstream.ownerExternalAssigneeId)
-    : null;
-
+function WorkstreamRow({
+  workstream,
+  vendor,
+}: {
+  workstream: Workstream;
+  vendor?: ExternalAssignee | null;
+}) {
+  // ⚡ Bolt: Vendor lookup passed down directly from parent O(1) Map to avoid O(N * M) .find() array traversals.
   const entityTypeLabel =
     entityTypeLabels[workstream.responsibleEntityType] ??
     workstream.responsibleEntityType;
@@ -155,18 +156,37 @@ export function WorkstreamsSection({
   initiativeId,
   className,
 }: WorkstreamsSectionProps) {
-  const { workstreams } = useTasks();
+  const { workstreams, externalAssignees } = useTasks();
   const [open, setOpen] = useState(true);
 
-  const filtered = initiativeId
-    ? workstreams.filter((w) => w.initiativeId === initiativeId)
-    : workstreams;
+  // ⚡ Bolt: Combined filtering, external count calculation, and vendor Map creation into a single pass O(N) useMemo block.
+  // Replaces multiple .filter() array traversals and per-row O(M) .find() calls with O(1) Map lookups.
+  const { filtered, externalCount, externalAssigneesMap } = useMemo(() => {
+    const assigneesMap = new Map<string, ExternalAssignee>();
+    for (const a of externalAssignees) {
+      assigneesMap.set(a.id, a);
+    }
+
+    const filteredList: Workstream[] = [];
+    let extCount = 0;
+
+    for (const ws of workstreams) {
+      if (!initiativeId || ws.initiativeId === initiativeId) {
+        filteredList.push(ws);
+        if (ws.ownerExternalAssigneeId) {
+          extCount++;
+        }
+      }
+    }
+
+    return {
+      filtered: filteredList,
+      externalCount: extCount,
+      externalAssigneesMap: assigneesMap,
+    };
+  }, [workstreams, initiativeId, externalAssignees]);
 
   if (filtered.length === 0) return null;
-
-  const externalCount = filtered.filter(
-    (w) => w.ownerExternalAssigneeId,
-  ).length;
 
   return (
     <Collapsible open={open} onOpenChange={setOpen} className={className}>
@@ -200,7 +220,15 @@ export function WorkstreamsSection({
       <CollapsibleContent>
         <div className="flex flex-col gap-2">
           {filtered.map((ws) => (
-            <WorkstreamRow key={ws.id} workstream={ws} />
+            <WorkstreamRow
+              key={ws.id}
+              workstream={ws}
+              vendor={
+                ws.ownerExternalAssigneeId
+                  ? externalAssigneesMap.get(ws.ownerExternalAssigneeId)
+                  : null
+              }
+            />
           ))}
         </div>
       </CollapsibleContent>
