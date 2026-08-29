@@ -36,3 +36,7 @@
 ## 2026-07-28 - [Avoiding Hot-Path Array Allocations & Inline Filtering]
 **Learning:** Hot paths such as canonicalizing row keys inside table grids or loops are highly sensitive to small memory allocations. Using `.map` with `Object.fromEntries` inside these functions allocates fresh arrays and objects for every invocation, creating severe garbage collection and CPU overhead. Furthermore, performing inline `.filter()` in JSX maps on every single render triggers redundant array traversals.
 **Action:** Replace map-and-construct patterns on hot paths with manual, pre-allocated-style `for` loops to build objects directly. Always memoize array filtering operations in components to avoid re-execution during state updates.
+
+## 2026-07-29 - [Column Type Detection Optimization & RegExp Hoisting]
+**Learning:** Evaluating column types dynamically across raw table JSON rows by running `.reduce()` with nested `.filter()` iterations (`arr.filter(...)`) causes quadratic time complexity ($O(N^2)$) per column. In addition, defining `RegExp` literals directly inside type-detector functions forces JavaScript engines to re-compile regex objects repeatedly during tight loops.
+**Action:** Hoist regex literals outside helper functions, and compute column type frequency distributions using a single-pass $O(N)$ accumulator with bounded `Set` tracking for boolean detection.
