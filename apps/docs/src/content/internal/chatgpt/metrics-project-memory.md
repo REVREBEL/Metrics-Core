@@ -167,7 +167,7 @@ Source of truth for:
 
 Repository implementation status is **IMPLEMENTED** for the application-persistence contracts currently owned by `packages/db`.
 
-`packages/db` contains repository-owned PostgreSQL/Drizzle schema, migrations, repositories, and persistence contracts. The current implemented schema includes:
+`packages/db` owns the PostgreSQL/Drizzle schema, Drizzle repositories, and persistence contracts. The current implemented schema includes:
 
 - Data Library table metadata;
 - draft mapping edits;
