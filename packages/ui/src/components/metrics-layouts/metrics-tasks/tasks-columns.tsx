@@ -6,6 +6,12 @@ import { labels, priorities, statuses } from "../data/data";
 import type { Task } from "../data/schema";
 import { DataTableRowActions } from "./data-table-row-actions";
 
+// ⚡ Bolt: Pre-computed static Maps for O(1) lookup during table cell rendering,
+// eliminating O(M) array traversals (.find) per cell per row on every render cycle.
+const labelMap = new Map(labels.map((l) => [l.value, l]));
+const statusMap = new Map(statuses.map((s) => [s.value, s]));
+const priorityMap = new Map(priorities.map((p) => [p.value, p]));
+
 export const tasksColumns: ColumnDef<Task>[] = [
   {
     id: "select",
@@ -50,7 +56,9 @@ export const tasksColumns: ColumnDef<Task>[] = [
       tdClassName: "ps-4",
     },
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label);
+      const label = row.original.label
+        ? labelMap.get(row.original.label)
+        : undefined;
 
       return (
         <div className="flex space-x-2">
@@ -67,9 +75,7 @@ export const tasksColumns: ColumnDef<Task>[] = [
     ),
     meta: { className: "ps-1", tdClassName: "ps-4" },
     cell: ({ row }) => {
-      const status = statuses.find(
-        (status) => status.value === row.getValue("status"),
-      );
+      const status = statusMap.get(row.getValue("status"));
 
       if (!status) {
         return null;
@@ -95,9 +101,7 @@ export const tasksColumns: ColumnDef<Task>[] = [
     ),
     meta: { className: "ps-1", tdClassName: "ps-3" },
     cell: ({ row }) => {
-      const priority = priorities.find(
-        (priority) => priority.value === row.getValue("priority"),
-      );
+      const priority = priorityMap.get(row.getValue("priority"));
 
       if (!priority) {
         return null;
