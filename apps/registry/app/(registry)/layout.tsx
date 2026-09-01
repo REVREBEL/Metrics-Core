@@ -1,9 +1,8 @@
-import type { ReactNode } from "react";
-
 import {
   MobileSidebarTrigger,
   RegistrySidebar,
 } from "@components/registry-sidebar";
+import type { ReactNode } from "react";
 
 export default function RegistryLayout({
   children,

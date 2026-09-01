@@ -1,7 +1,8 @@
-import { promises as fs } from "node:fs"
-import path from "node:path"
+import { promises as fs } from "node:fs";
+import path from "node:path";
 
-import { REGISTRY_FOLDERS_JSON, WORKSPACE_ROOT } from "./lib/paths.mjs"
+import { REGISTRY_FOLDERS_JSON, WORKSPACE_ROOT } from "./lib/paths.mjs";
+
 const SOURCE_ROOTS = [
   { key: "primitives", source: "packages/ui/src/primitives", kind: "group" },
   { key: "components", source: "packages/ui/src/components", kind: "group" },
@@ -9,12 +10,16 @@ const SOURCE_ROOTS = [
   { key: "hooks", source: "packages/ui/src/hooks", kind: "list" },
   { key: "styles", source: "packages/ui/src/styles", kind: "token" },
   { key: "types", source: "packages/ui/src/types", kind: "list" },
-  { key: "ui-registry", source: "packages/ui/src/ui-registry", kind: "registry" },
+  {
+    key: "ui-registry",
+    source: "packages/ui/src/ui-registry",
+    kind: "registry",
+  },
   { key: "utils", source: "packages/ui/src/utils", kind: "list" },
   { key: "context", source: "packages/ui/src/context", kind: "list" },
   { key: "icons", source: "packages/ui/src/icons", kind: "list" },
   { key: "lib", source: "packages/ui/src/lib", kind: "list" },
-]
+];
 
 const EXCLUDED_DIRS = new Set([
   "node_modules",
@@ -23,7 +28,7 @@ const EXCLUDED_DIRS = new Set([
   "build",
   "coverage",
   ".turbo",
-])
+]);
 
 const EXCLUDED_FILES = new Set([
   "index.ts",
@@ -32,14 +37,14 @@ const EXCLUDED_FILES = new Set([
   "registry-folders.ts",
   "registry.metadata.json",
   "registry.tokens.json",
-])
+]);
 
-const EXCLUDED_PATTERNS = [/\.stories\./, /\.test\./, /\.spec\./, /\.d\.ts$/]
+const EXCLUDED_PATTERNS = [/\.stories\./, /\.test\./, /\.spec\./, /\.d\.ts$/];
 
 function isExcludedFile(name) {
-  if (EXCLUDED_FILES.has(name)) return true
-  if (name === ".DS_Store") return true
-  return EXCLUDED_PATTERNS.some((pattern) => pattern.test(name))
+  if (EXCLUDED_FILES.has(name)) return true;
+  if (name === ".DS_Store") return true;
+  return EXCLUDED_PATTERNS.some((pattern) => pattern.test(name));
 }
 
 function toTitle(value) {
@@ -47,59 +52,71 @@ function toTitle(value) {
     .split(/[-_\s/]+/)
     .filter(Boolean)
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ")
+    .join(" ");
 }
 
 function toRelativeRepoPath(absPath) {
-  return path.relative(WORKSPACE_ROOT, absPath).replace(/\\/g, "/")
+  return path.relative(WORKSPACE_ROOT, absPath).replace(/\\/g, "/");
 }
 
 function classifyPageKind(rootKind, isRoot) {
-  if (isRoot) return "landing"
-  return rootKind
+  if (isRoot) return "landing";
+  return rootKind;
 }
 
 async function readDirectory(dir) {
   try {
-    return await fs.readdir(dir, { withFileTypes: true })
+    return await fs.readdir(dir, { withFileTypes: true });
   } catch {
-    return []
+    return [];
   }
 }
 
 async function buildTree() {
-  const nodes = new Map()
+  const nodes = new Map();
 
   async function walk(dirPath, rootKey, rootKind, rootSource, parentId = null) {
     const entries = (await readDirectory(dirPath)).sort((a, b) =>
-      a.name.localeCompare(b.name)
-    )
-    const relativeToRoot = path.relative(path.join(WORKSPACE_ROOT, rootSource), dirPath)
-    const folderId = relativeToRoot === "" ? rootKey : `${rootKey}/${relativeToRoot.replace(/\\/g, "/")}`
-    const sourcePath = toRelativeRepoPath(dirPath)
+      a.name.localeCompare(b.name),
+    );
+    const relativeToRoot = path.relative(
+      path.join(WORKSPACE_ROOT, rootSource),
+      dirPath,
+    );
+    const folderId =
+      relativeToRoot === ""
+        ? rootKey
+        : `${rootKey}/${relativeToRoot.replace(/\\/g, "/")}`;
+    const sourcePath = toRelativeRepoPath(dirPath);
 
-    const directFiles = []
-    const childIds = []
+    const directFiles = [];
+    const childIds = [];
 
     for (const entry of entries) {
-      if (entry.name.startsWith(".")) continue
+      if (entry.name.startsWith(".")) continue;
 
-      const fullPath = path.join(dirPath, entry.name)
+      const fullPath = path.join(dirPath, entry.name);
       if (entry.isDirectory()) {
-        if (EXCLUDED_DIRS.has(entry.name)) continue
-        const child = await walk(fullPath, rootKey, rootKind, rootSource, folderId)
-        if (child) childIds.push(child.id)
-        continue
+        if (EXCLUDED_DIRS.has(entry.name)) continue;
+        const child = await walk(
+          fullPath,
+          rootKey,
+          rootKind,
+          rootSource,
+          folderId,
+        );
+        if (child) childIds.push(child.id);
+        continue;
       }
 
-      if (!entry.isFile()) continue
-      if (isExcludedFile(entry.name)) continue
+      if (!entry.isFile()) continue;
+      if (isExcludedFile(entry.name)) continue;
 
-      directFiles.push(toRelativeRepoPath(fullPath))
+      directFiles.push(toRelativeRepoPath(fullPath));
     }
 
     if (directFiles.length === 0 && childIds.length === 0) {
-      return null
+      return null;
     }
     const node = {
       id: folderId,
@@ -112,38 +129,41 @@ async function buildTree() {
       children: childIds,
       directFileCount: directFiles.length,
       childCount: childIds.length,
-    }
+    };
 
-    nodes.set(folderId, node)
+    nodes.set(folderId, node);
 
-    node.children = childIds.sort((a, b) => a.localeCompare(b))
-    node.childCount = node.children.length
-    return node
+    node.children = childIds.sort((a, b) => a.localeCompare(b));
+    node.childCount = node.children.length;
+    return node;
   }
 
-  const rootNodes = []
+  const rootNodes = [];
   for (const root of SOURCE_ROOTS) {
-    const absRoot = path.join(WORKSPACE_ROOT, root.source)
-    const node = await walk(absRoot, root.key, root.kind, root.source, null)
-    if (node) rootNodes.push(node.id)
+    const absRoot = path.join(WORKSPACE_ROOT, root.source);
+    const node = await walk(absRoot, root.key, root.kind, root.source, null);
+    if (node) rootNodes.push(node.id);
   }
 
   return {
     generatedAt: new Date().toISOString(),
     roots: rootNodes,
     nodes: Object.fromEntries(nodes.entries()),
-  }
+  };
 }
 
 async function main() {
-  const manifest = await buildTree()
-  await fs.writeFile(REGISTRY_FOLDERS_JSON, `${JSON.stringify(manifest, null, 2)}\n`)
+  const manifest = await buildTree();
+  await fs.writeFile(
+    REGISTRY_FOLDERS_JSON,
+    `${JSON.stringify(manifest, null, 2)}\n`,
+  );
   console.log(
-    `[registry:folders:sync] wrote ${manifest.roots.length} roots and ${Object.keys(manifest.nodes).length} folder nodes to ${path.relative(WORKSPACE_ROOT, REGISTRY_FOLDERS_JSON)}`
-  )
+    `[registry:folders:sync] wrote ${manifest.roots.length} roots and ${Object.keys(manifest.nodes).length} folder nodes to ${path.relative(WORKSPACE_ROOT, REGISTRY_FOLDERS_JSON)}`,
+  );
 }
 
 main().catch((error) => {
-  console.error(error)
-  process.exit(1)
-})
+  console.error(error);
+  process.exit(1);
+});

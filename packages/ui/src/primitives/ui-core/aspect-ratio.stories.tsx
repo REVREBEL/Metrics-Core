@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import Image from "next/image";
 
 import { AspectRatio } from "./aspect-ratio";
 
@@ -21,10 +22,11 @@ export const Default: Story = {
   render: (args) => (
     <div className="w-[450px]">
       <AspectRatio {...args} className="bg-muted">
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1588345921523-c2dcd57f7d60?w=800&dpr=2&q=80"
-          alt="Photo by Drew Beamer"
-          className="rounded-md object-cover size-full"
+          alt="A landscape by Drew Beamer"
+          fill
+          className="rounded-md object-cover"
         />
       </AspectRatio>
     </div>

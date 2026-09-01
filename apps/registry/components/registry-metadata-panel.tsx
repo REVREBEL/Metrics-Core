@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/primitives/ui-core/card";
+import type { ComponentMetadata } from "@lib/registry";
 import {
   Table,
   TableBody,
@@ -13,8 +7,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/primitives/tables/table";
-
-import type { ComponentMetadata } from "@lib/registry";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/primitives/ui-core/card";
 
 export function RegistryMetadataPanel({
   metadata,
@@ -35,14 +34,17 @@ export function RegistryMetadataPanel({
       <CardHeader>
         <CardTitle>Documentation</CardTitle>
         <CardDescription>
-          Props and notes come from the generated metadata layer, not the install manifest.
+          Props and notes come from the generated metadata layer, not the
+          install manifest.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {hasDescription ? (
           <div className="space-y-2">
             <h2 className="font-medium text-base">Description</h2>
-            <p className="text-muted-foreground text-sm">{metadata.description}</p>
+            <p className="text-muted-foreground text-sm">
+              {metadata.description}
+            </p>
           </div>
         ) : null}
 
@@ -63,7 +65,9 @@ export function RegistryMetadataPanel({
                   {props.map((prop) => (
                     <TableRow key={prop.name}>
                       <TableCell className="font-medium">{prop.name}</TableCell>
-                      <TableCell className="font-mono text-xs">{prop.type}</TableCell>
+                      <TableCell className="font-mono text-xs">
+                        {prop.type}
+                      </TableCell>
                       <TableCell className="font-mono text-xs">
                         {prop.defaultValue ?? "—"}
                       </TableCell>

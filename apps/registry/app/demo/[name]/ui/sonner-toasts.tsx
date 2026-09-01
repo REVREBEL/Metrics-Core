@@ -1,8 +1,7 @@
 "use client";
 
-import { toast } from "sonner";
-
 import { Button } from "@buttons";
+import { toast } from "sonner";
 
 export function Sonner() {
   return <Button onClick={() => toast("Toast")}>Normal Toast</Button>;

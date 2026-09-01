@@ -9,7 +9,9 @@ export const CHANGE_REQUEST_STATUSES = [
 
 export type ChangeRequestStatus = (typeof CHANGE_REQUEST_STATUSES)[number];
 
-export function isChangeRequestStatus(value: unknown): value is ChangeRequestStatus {
+export function isChangeRequestStatus(
+  value: unknown,
+): value is ChangeRequestStatus {
   return CHANGE_REQUEST_STATUSES.includes(value as ChangeRequestStatus);
 }
 

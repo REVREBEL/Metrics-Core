@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { ChevronsUpDownIcon } from "lucide-react";
 import { useState } from "react";
@@ -51,7 +51,7 @@ const LanguageDropdown = ({
               "border-stone-600/50 ring-1 dark:border-stone-400/50 dark:ring-stone-800/50",
             isOpen && codeBlockTheme === "system" && "ring-stone-200/70",
             isOpen && codeBlockTheme === "dark" && "ring-stone-800/50",
-            !isOpen && "border-transparent"
+            !isOpen && "border-transparent",
           )}
         >
           <LanguageIcon language={selectedLanguage} />
@@ -67,7 +67,7 @@ const LanguageDropdown = ({
           "min-w-[170px] overflow-y-auto border p-1",
           codeBlockTheme === "system" &&
             "border-stone-200/70 bg-white dark:border-white/10 dark:bg-[#0F1117]",
-          codeBlockTheme === "dark" && "border-white/10 bg-[#0F1117]"
+          codeBlockTheme === "dark" && "border-white/10 bg-[#0F1117]",
         )}
         sideOffset={0}
       >
@@ -92,7 +92,7 @@ const LanguageDropdown = ({
                   "text-stone-500 dark:text-white/50",
                 language !== selectedLanguage &&
                   codeBlockTheme === "dark" &&
-                  "text-white/50"
+                  "text-white/50",
               )}
               isSelected={isSelected}
               key={`Language${i}${language}`}

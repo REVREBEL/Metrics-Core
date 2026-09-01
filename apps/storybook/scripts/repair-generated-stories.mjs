@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFile, readdir, writeFile } from "node:fs/promises";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const repoRoot = resolve(new URL("../../..", import.meta.url).pathname);
@@ -14,7 +14,8 @@ async function walk(directory) {
   for (const entry of entries) {
     const path = resolve(directory, entry.name);
     if (entry.isDirectory()) files.push(...(await walk(path)));
-    else if (entry.isFile() && entry.name.endsWith(".stories.tsx")) files.push(path);
+    else if (entry.isFile() && entry.name.endsWith(".stories.tsx"))
+      files.push(path);
   }
 
   return files;
@@ -23,10 +24,12 @@ async function walk(directory) {
 function repairTodoBlock(source) {
   const lines = source.split("\n");
   const start = lines.findIndex((line) =>
-    line.startsWith("// TODO(story): Provide representative values for required props:"),
+    line.startsWith(
+      "// TODO(story): Provide representative values for required props:",
+    ),
   );
-  const importIndex = lines.findIndex((line, index) =>
-    index > start && line.startsWith("import type "),
+  const importIndex = lines.findIndex(
+    (line, index) => index > start && line.startsWith("import type "),
   );
 
   if (start === -1 || importIndex === -1) return source;

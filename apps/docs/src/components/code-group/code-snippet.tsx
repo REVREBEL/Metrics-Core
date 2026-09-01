@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { memo, type ReactNode } from "react";
 
@@ -43,7 +43,7 @@ const CodeSnippet = memo(
         <code suppressHydrationWarning>{children}</code>
       </pre>
     );
-  }
+  },
 );
 
 export { CodeSnippet, type CodeSnippetProps };

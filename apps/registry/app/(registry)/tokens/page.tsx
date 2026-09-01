@@ -76,7 +76,9 @@ function TokenCard({ token }: { token: Token }) {
     <div className="flex min-w-0 items-center gap-4 rounded-lg border bg-card p-4">
       <TokenPreview token={token} />
       <div className="min-w-0 flex-1">
-        <div className="truncate font-medium">{formatTokenName(token.name)}</div>
+        <div className="truncate font-medium">
+          {formatTokenName(token.name)}
+        </div>
         <code className="block truncate font-mono text-muted-foreground text-xs">
           --{token.name}
         </code>
@@ -180,7 +182,9 @@ function FontSpecimenCard({ token }: { token: Token }) {
             --{token.name}
           </code>
         </div>
-        <span className="rounded-full border px-2 py-1 text-xs">Font token</span>
+        <span className="rounded-full border px-2 py-1 text-xs">
+          Font token
+        </span>
       </div>
 
       <div className="space-y-4">
@@ -283,9 +287,7 @@ export default function TokensPage() {
 
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="font-bold text-3xl tracking-tight">
-              Design Tokens
-            </h1>
+            <h1 className="font-bold text-3xl tracking-tight">Design Tokens</h1>
             <p className="mt-1 max-w-3xl text-muted-foreground">
               Live token catalog generated from the registry CSS sources,
               including Metrics segment, channel, social, and review tokens.

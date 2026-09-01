@@ -25,7 +25,7 @@ export const Default: Story = {
     <Carousel {...args} className="w-full max-w-xs">
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index}>
+          <CarouselItem key={`carousel-item-${index}`}>
             <div className="p-1">
               <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-6">

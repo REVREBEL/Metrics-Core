@@ -1,9 +1,8 @@
+import type { ShikiHighlightedHtmlArgs } from "@shikijs/types";
 import { type Remote, wrap } from "comlink";
 
-import type { ShikiHighlightedHtmlArgs } from "@shikijs/types";
-
 type HighlightFn = (
-  props: ShikiHighlightedHtmlArgs
+  props: ShikiHighlightedHtmlArgs,
 ) => string | undefined | Promise<string | undefined>;
 type ShikiWorkerInstance =
   | Remote<{ highlight: HighlightFn; ready: () => Promise<void> }>
@@ -27,7 +26,7 @@ function getShikiWorker(): ShikiWorkerInstance {
   } catch (error) {
     console.warn(
       "@mintlify/components: Shiki worker unavailable, using synchronous highlighting",
-      error
+      error,
     );
     return undefined;
   }

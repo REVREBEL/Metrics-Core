@@ -1,15 +1,6 @@
 "use client";
 
 import {
-  IconArrowRight,
-  IconLayoutGrid,
-  IconListDetails,
-  IconSparkles,
-} from "@tabler/icons-react";
-import Link from "next/link";
-import { useMemo, useState } from "react";
-
-import {
   getRegistryFolderNode,
   getRegistryFolderRoots,
   type RegistryFolderNode,
@@ -27,6 +18,14 @@ import {
   getRootSummary,
   toFolderHref,
 } from "@lib/site";
+import {
+  IconArrowRight,
+  IconLayoutGrid,
+  IconListDetails,
+  IconSparkles,
+} from "@tabler/icons-react";
+import Link from "next/link";
+import { useMemo, useState } from "react";
 
 type FolderViewProps = {
   folderFilter?: string;
@@ -40,8 +39,7 @@ type RegistryCatalogItem = {
   type: string;
 };
 
-type ButtonPreviewGroupId =
-  RegistryButtonPreviewGroupId;
+type ButtonPreviewGroupId = RegistryButtonPreviewGroupId;
 
 type GroupedPreviewEntry = {
   description?: string;
@@ -61,7 +59,8 @@ const BUTTON_PREVIEW_GROUPS: Array<{
 }> = [
   {
     title: "Core Button Variants",
-    description: "Default, secondary, outline, destructive, ghost, and size states shown as one base family.",
+    description:
+      "Default, secondary, outline, destructive, ghost, and size states shown as one base family.",
     itemNames: [
       "button",
       "button-default",
@@ -76,7 +75,8 @@ const BUTTON_PREVIEW_GROUPS: Array<{
   },
   {
     title: "Icon And Inline Actions",
-    description: "Compact icon buttons, inline icon placements, spinner affordances, and link-style actions.",
+    description:
+      "Compact icon buttons, inline icon placements, spinner affordances, and link-style actions.",
     itemNames: [
       "button-icon",
       "button-with-icon",
@@ -89,14 +89,16 @@ const BUTTON_PREVIEW_GROUPS: Array<{
   },
   {
     title: "Rounded Buttons",
-    description: "Rounded pill treatments and icon controls should render as their own visual pattern.",
+    description:
+      "Rounded pill treatments and icon controls should render as their own visual pattern.",
     itemNames: ["button-rounded"],
     previewId: "rounded",
     layout: "half",
   },
   {
     title: "Button Group Composition",
-    description: "Horizontal, vertical, nested, separator, and grouped compositions belong together.",
+    description:
+      "Horizontal, vertical, nested, separator, and grouped compositions belong together.",
     itemNames: [
       "button-group",
       "button-group-size",
@@ -111,7 +113,8 @@ const BUTTON_PREVIEW_GROUPS: Array<{
   },
   {
     title: "Dropdown, Popover, Split",
-    description: "Grouped actions with menus and split-button patterns need a wider preview canvas.",
+    description:
+      "Grouped actions with menus and split-button patterns need a wider preview canvas.",
     itemNames: [
       "button-group-dropdown",
       "button-group-popover",
@@ -123,7 +126,8 @@ const BUTTON_PREVIEW_GROUPS: Array<{
   },
   {
     title: "Toolbar And Status Actions",
-    description: "Toolbar toggles, async save states, and discovery-style actions should be previewed together.",
+    description:
+      "Toolbar toggles, async save states, and discovery-style actions should be previewed together.",
     itemNames: ["toolbar-button", "status-button", "discover-button"],
     previewId: "toolbar",
     layout: "half",
@@ -158,7 +162,9 @@ function isButtonsFolder(node: RegistryFolderNode | null) {
   );
 }
 
-function buildDefaultGroupedEntries(items: RegistryCatalogItem[]): GroupedPreviewEntry[] {
+function buildDefaultGroupedEntries(
+  items: RegistryCatalogItem[],
+): GroupedPreviewEntry[] {
   const groups = new Map<string, GroupedPreviewEntry>();
 
   for (const item of items) {
@@ -203,7 +209,9 @@ function buildDefaultGroupedEntries(items: RegistryCatalogItem[]): GroupedPrevie
   return Array.from(groups.values());
 }
 
-function buildButtonGroupedEntries(items: RegistryCatalogItem[]): GroupedPreviewEntry[] {
+function buildButtonGroupedEntries(
+  items: RegistryCatalogItem[],
+): GroupedPreviewEntry[] {
   const itemMap = new Map(items.map((item) => [item.name, item]));
   const assigned = new Set<string>();
   const entries: GroupedPreviewEntry[] = [];
@@ -237,17 +245,24 @@ function buildButtonGroupedEntries(items: RegistryCatalogItem[]): GroupedPreview
   return entries.concat(buildDefaultGroupedEntries(leftovers));
 }
 
-function hasMatchingDescendant(node: RegistryFolderNode, query: string): boolean {
+function hasMatchingDescendant(
+  node: RegistryFolderNode,
+  query: string,
+): boolean {
   return node.children.some((childId) => {
     const child = getRegistryFolderNode(childId);
     if (!child) return false;
-    return getNodeText(child).includes(query) || hasMatchingDescendant(child, query);
+    return (
+      getNodeText(child).includes(query) || hasMatchingDescendant(child, query)
+    );
   });
 }
 
 function matchesFolder(node: RegistryFolderNode, query: string): boolean {
   if (!query) return true;
-  return getNodeText(node).includes(query) || hasMatchingDescendant(node, query);
+  return (
+    getNodeText(node).includes(query) || hasMatchingDescendant(node, query)
+  );
 }
 
 function FolderCard({ node }: { node: RegistryFolderNode }) {
@@ -259,7 +274,9 @@ function FolderCard({ node }: { node: RegistryFolderNode }) {
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="font-medium text-base">{node.title}</h2>
-          <p className="mt-1 break-all text-muted-foreground text-xs">{node.sourcePath}</p>
+          <p className="mt-1 break-all text-muted-foreground text-xs">
+            {node.sourcePath}
+          </p>
         </div>
         <span className="rounded-full border px-2 py-1 text-xs">
           {node.childCount + node.directFileCount}
@@ -267,8 +284,12 @@ function FolderCard({ node }: { node: RegistryFolderNode }) {
       </div>
       <div className="mt-4 flex flex-wrap gap-2 text-xs text-muted-foreground">
         <span className="rounded-full border px-2 py-1">{node.kind}</span>
-        <span className="rounded-full border px-2 py-1">{node.childCount} groups</span>
-        <span className="rounded-full border px-2 py-1">{node.directFileCount} files</span>
+        <span className="rounded-full border px-2 py-1">
+          {node.childCount} groups
+        </span>
+        <span className="rounded-full border px-2 py-1">
+          {node.directFileCount} files
+        </span>
       </div>
     </Link>
   );
@@ -355,7 +376,9 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
 
     while (cursor) {
       trail.unshift(cursor);
-      cursor = cursor.parentId ? getRegistryFolderNode(cursor.parentId) ?? null : null;
+      cursor = cursor.parentId
+        ? (getRegistryFolderNode(cursor.parentId) ?? null)
+        : null;
     }
 
     return trail;
@@ -378,7 +401,10 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
               {breadcrumb.map((node, index) => (
                 <span key={node.id} className="flex items-center gap-2">
                   {index > 0 ? <span>/</span> : null}
-                  <Link className="underline-offset-4 hover:underline" href={toFolderHref(node.id)}>
+                  <Link
+                    className="underline-offset-4 hover:underline"
+                    href={toFolderHref(node.id)}
+                  >
                     {node.title}
                   </Link>
                 </span>
@@ -389,7 +415,9 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
 
         <div className="rounded-lg border bg-card px-4 py-3 text-right">
           <div className="font-semibold text-2xl tabular-nums">
-            {currentNode ? currentNode.directFileCount + currentNode.childCount : rootNodes.length}
+            {currentNode
+              ? currentNode.directFileCount + currentNode.childCount
+              : rootNodes.length}
           </div>
           <div className="text-muted-foreground text-xs">
             {currentNode ? "visible entries" : "root folders"}
@@ -433,7 +461,11 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
                   Registry items in this folder
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  {getRootSummary(currentNode.id.split("/")[0] ?? currentNode.id).description}
+                  {
+                    getRootSummary(
+                      currentNode.id.split("/")[0] ?? currentNode.id,
+                    ).description
+                  }
                 </p>
               </div>
               <span className="rounded-full border px-3 py-1 text-xs">
@@ -457,16 +489,22 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
                           {entry.items[0]?.type.replace("registry:", "")}
                         </div>
                         <h2 className="mt-2 font-semibold text-xl">
-                          {entry.title
-                            ?? (entry.layout === "grouped"
-                              ? entry.previewInput.title ?? entry.previewInput.name
-                              : entry.items[0]?.title ?? toTitle(entry.items[0]?.name ?? entry.previewInput.name))}
+                          {entry.title ??
+                            (entry.layout === "grouped"
+                              ? (entry.previewInput.title ??
+                                entry.previewInput.name)
+                              : (entry.items[0]?.title ??
+                                toTitle(
+                                  entry.items[0]?.name ??
+                                    entry.previewInput.name,
+                                )))}
                         </h2>
                         <p className="mt-2 text-sm text-muted-foreground">
-                          {entry.description
-                            ?? (entry.layout === "grouped"
+                          {entry.description ??
+                            (entry.layout === "grouped"
                               ? `${entry.items.length} related registry items shown together.`
-                              : entry.items[0]?.description || "Registry item available for install and preview.")}
+                              : entry.items[0]?.description ||
+                                "Registry item available for install and preview.")}
                         </p>
                       </div>
                       {entry.items.length === 1 ? (
@@ -489,7 +527,8 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
               </div>
             ) : (
               <div className="mt-5 rounded-2xl border border-dashed p-5 text-sm text-muted-foreground">
-                This folder does not map cleanly to registry item metadata yet, so the raw source files are listed below.
+                This folder does not map cleanly to registry item metadata yet,
+                so the raw source files are listed below.
               </div>
             )}
           </section>
@@ -513,7 +552,10 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
             <div className="mt-3 divide-y rounded-md border">
               {visibleFiles.length > 0 ? (
                 visibleFiles.map((filePath) => (
-                  <div key={filePath} className="flex items-center justify-between gap-3 px-3 py-2 text-sm">
+                  <div
+                    key={filePath}
+                    className="flex items-center justify-between gap-3 px-3 py-2 text-sm"
+                  >
                     <span className="truncate font-mono">{filePath}</span>
                     <span className="text-xs text-muted-foreground">
                       {toTitle(filePath.split("/").pop() ?? "")}
@@ -543,11 +585,7 @@ export function CatalogView({ folderFilter }: FolderViewProps) {
   );
 }
 
-function RegistryItemPreview({
-  item,
-}: {
-  item: RegistryCatalogItem;
-}) {
+function RegistryItemPreview({ item }: { item: RegistryCatalogItem }) {
   const Preview = getVisualPreview({
     description: item.description,
     name: item.name,
@@ -580,11 +618,7 @@ function RegistryItemPreview({
   );
 }
 
-function RegistryGroupPreview({
-  entry,
-}: {
-  entry: GroupedPreviewEntry;
-}) {
+function RegistryGroupPreview({ entry }: { entry: GroupedPreviewEntry }) {
   const Preview = getVisualPreview(entry.previewInput);
 
   return (

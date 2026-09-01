@@ -5,7 +5,12 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useSearch } from "@/context/search-provider";
 import { useTheme } from "@/context/theme-provider";
-import { sidebarData, type NavGroup, type NavItem } from "../layouts/data/sidebar-data";
+import {
+  type NavGroup,
+  type NavItem,
+  sidebarData,
+  type NavLink,
+} from "../layouts/data/sidebar-data";
 import {
   CommandDialog,
   CommandEmpty,
@@ -38,11 +43,11 @@ export function CommandMenu() {
           <CommandEmpty>No results found.</CommandEmpty>
           {sidebarData.navGroups.map((group: NavGroup) => (
             <CommandGroup key={group.title} heading={group.title}>
-              {group.items.map((navItem: NavItem, i: number) => {
+              {group.items.map((navItem: NavItem) => {
                 if (navItem.url)
                   return (
                     <CommandItem
-                      key={`${navItem.url}-${i}`}
+                      key={navItem.url}
                       value={`${navItem.title} ${navItem.url}`}
                       onSelect={() => {
                         runCommand(() => router.push(navItem.url));
@@ -55,9 +60,9 @@ export function CommandMenu() {
                     </CommandItem>
                   );
 
-                return navItem.items?.map((subItem: any, i: number) => (
+                return navItem.items?.map((subItem: NavLink) => (
                   <CommandItem
-                    key={`${navItem.title}-${subItem.url}-${i}`}
+                    key={subItem.url}
                     value={`${navItem.title}-${subItem.url}`}
                     onSelect={() => {
                       runCommand(() => router.push(subItem.url));

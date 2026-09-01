@@ -64,14 +64,14 @@ const Icon = ({
     !(color || hasLightDarkColors || overrideColor) &&
       "bg-primary dark:bg-primary-light",
     hasLightDarkColors && "bg-(--color-light) dark:bg-(--color-dark)",
-    className
+    className,
   );
   const isPdf = pageType === "pdf";
   const url = getIconUrl(icon.toLowerCase(), iconType, iconLibrary);
 
   if (iconType && !ICON_TYPES.includes(iconType)) {
     console.log(
-      `Invalid iconType ${iconType} expected a string equal to one of: brands, duotone, light, regular, sharp-solid, solid, thin`
+      `Invalid iconType ${iconType} expected a string equal to one of: brands, duotone, light, regular, sharp-solid, solid, thin`,
     );
     return null;
   }
@@ -129,7 +129,7 @@ const Icon = ({
         className={cn(
           classNames,
           !(color || overrideColor || hasLightDarkColors) &&
-            "bg-stone-800 dark:bg-stone-100"
+            "bg-stone-800 dark:bg-stone-100",
         )}
         data-component-part="icon-image"
         src={url}
@@ -146,7 +146,7 @@ const Icon = ({
       className={cn(
         classNames,
         !(color || overrideColor || hasLightDarkColors) &&
-          "bg-stone-800 dark:bg-stone-100"
+          "bg-stone-800 dark:bg-stone-100",
       )}
       data-component-part="icon-svg"
       style={{
@@ -165,5 +165,5 @@ const Icon = ({
   );
 };
 
-export { Icon };
 export type { IconProps };
+export { Icon };

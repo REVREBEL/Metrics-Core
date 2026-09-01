@@ -13,7 +13,7 @@ const InfoIcon = ({
       aria-label={ariaLabel}
       className={cn(
         "size-5 flex-none text-stone-800 dark:text-stone-300",
-        className
+        className,
       )}
       fill="currentColor"
       role="img"
@@ -36,7 +36,7 @@ const WarningIcon = ({
       aria-label={ariaLabel}
       className={cn(
         "size-5 flex-none text-yellow-800 dark:text-yellow-300",
-        className
+        className,
       )}
       fill="none"
       role="img"
@@ -64,7 +64,7 @@ const DangerIcon = ({
       aria-label={ariaLabel}
       className={cn(
         "size-4 flex-none text-red-800 dark:text-red-300",
-        className
+        className,
       )}
       fill="currentColor"
       height="14"
@@ -89,7 +89,7 @@ const TipIcon = ({
       aria-label={ariaLabel}
       className={cn(
         "h-auto w-3.5 text-green-800 dark:text-green-300",
-        className
+        className,
       )}
       fill="currentColor"
       height="14"
@@ -139,7 +139,7 @@ const CheckIcon = ({
       aria-label={ariaLabel}
       className={cn(
         "h-auto w-3.5 text-green-800 dark:text-green-300",
-        className
+        className,
       )}
       fill="currentColor"
       role="img"
@@ -279,7 +279,7 @@ const ActiveCopyButtonIcon = ({
     <svg
       className={cn(
         codeBlockTheme === "system" && "fill-primary dark:fill-primary-light",
-        codeBlockTheme === "dark" && "fill-primary-light"
+        codeBlockTheme === "dark" && "fill-primary-light",
       )}
       fill="none"
       height="11"
@@ -306,7 +306,7 @@ const CopyButtonIcon = ({
         codeBlockTheme === "system" &&
           "text-stone-400 group-hover/copy-button:text-stone-500 dark:text-white/40 dark:group-hover/copy-button:text-white/60",
         codeBlockTheme === "dark" &&
-          "text-white/40 group-hover/copy-button:text-white/60"
+          "text-white/40 group-hover/copy-button:text-white/60",
       )}
       fill="none"
       height="18"
@@ -335,16 +335,16 @@ const CopyButtonIcon = ({
 
 export {
   ActiveCopyButtonIcon,
-  CopyButtonIcon,
-  LinkIcon,
-  InfoIcon,
-  Folder2OpenIcon,
-  Folder2Icon,
-  FileIcon,
   ArrowRightIcon,
   CheckIcon,
+  CopyButtonIcon,
+  DangerIcon,
+  FileIcon,
+  Folder2Icon,
+  Folder2OpenIcon,
+  InfoIcon,
+  LinkIcon,
   NoteIcon,
   TipIcon,
-  DangerIcon,
   WarningIcon,
 };

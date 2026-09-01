@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -7,7 +7,7 @@ const USER_TOGGLED_EXPANDABLES_KEY = "user_toggled_expandables";
 const getManuallyToggledExpandables = (): Record<string, boolean> => {
   try {
     const manuallyToggledExpandables = sessionStorage.getItem(
-      USER_TOGGLED_EXPANDABLES_KEY
+      USER_TOGGLED_EXPANDABLES_KEY,
     );
     return manuallyToggledExpandables
       ? JSON.parse(manuallyToggledExpandables)
@@ -23,7 +23,7 @@ const saveManuallyToggledState = (id: string, isExpanded: boolean) => {
     const updated = { ...current, [id]: isExpanded };
     sessionStorage.setItem(
       USER_TOGGLED_EXPANDABLES_KEY,
-      JSON.stringify(updated)
+      JSON.stringify(updated),
     );
   } catch {
     // silently fail if setItem() fails
@@ -32,7 +32,7 @@ const saveManuallyToggledState = (id: string, isExpanded: boolean) => {
 
 const useExpandableMemory = (
   id: string | undefined,
-  defaultExpanded = false
+  defaultExpanded = false,
 ) => {
   const ref = useRef<HTMLElement>(null);
 
@@ -76,7 +76,7 @@ const useExpandableMemory = (
       {
         rootMargin: "100px",
         threshold: 0,
-      }
+      },
     );
 
     const currentRef = ref.current;
@@ -101,7 +101,7 @@ const useExpandableMemory = (
         saveManuallyToggledState(id, expanded);
       }
     },
-    [id]
+    [id],
   );
 
   return { ref, isExpanded, onManualToggle, isInSessionStorage };

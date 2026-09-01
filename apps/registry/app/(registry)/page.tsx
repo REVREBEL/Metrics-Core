@@ -1,27 +1,8 @@
 import {
-  IconArrowRight,
-  IconAwardFilled,
-  IconBinaryTree2Filled,
-  IconDeviceGamepad2Filled,
-  IconHierarchy3,
-  IconPuzzleFilled,
-  IconSparkles,
-} from "@tabler/icons-react";
-import Link from "next/link";
-
-import { MCPTabs } from "@ui-registry";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/primitives/ui-core/card";
-import {
+  type Component,
   getBlocks,
   getComponents,
   getUIPrimitives,
-  type Component,
 } from "@lib/registry";
 import {
   getFoundationRoots,
@@ -31,6 +12,24 @@ import {
   getStagedRoots,
   toFolderHref,
 } from "@lib/site";
+import {
+  IconArrowRight,
+  IconAwardFilled,
+  IconBinaryTree2Filled,
+  IconDeviceGamepad2Filled,
+  IconHierarchy3,
+  IconPuzzleFilled,
+  IconSparkles,
+} from "@tabler/icons-react";
+import { MCPTabs } from "@ui-registry";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/primitives/ui-core/card";
 
 const uiItems = getUIPrimitives().slice(0, 4) as Component[];
 const componentItems = getComponents().slice(0, 3) as Component[];
@@ -50,10 +49,13 @@ export default function Home() {
             </div>
             <div className="space-y-3">
               <h1 className="max-w-4xl font-semibold text-4xl tracking-tight md:text-6xl">
-                Build the registry foundation before metrics components take over the site.
+                Build the registry foundation before metrics components take
+                over the site.
               </h1>
               <p className="max-w-3xl text-base text-muted-foreground md:text-lg">
-                The homepage now centers on primitives, tokens, folder-based browsing, and install paths. Metrics compositions stay staged until the registry shell is stable.
+                The homepage now centers on primitives, tokens, folder-based
+                browsing, and install paths. Metrics compositions stay staged
+                until the registry shell is stable.
               </p>
             </div>
 
@@ -76,16 +78,28 @@ export default function Home() {
 
             <div className="grid gap-3 sm:grid-cols-3">
               <div className="rounded-2xl bg-slate-950 px-4 py-4 text-white dark:bg-slate-900">
-                <div className="text-3xl font-semibold tabular-nums">{counts.primitives}</div>
-                <div className="mt-1 text-sm text-slate-300">UI primitives installable now</div>
+                <div className="text-3xl font-semibold tabular-nums">
+                  {counts.primitives}
+                </div>
+                <div className="mt-1 text-sm text-slate-300">
+                  UI primitives installable now
+                </div>
               </div>
               <div className="rounded-2xl border border-slate-200 px-4 py-4 dark:border-slate-800">
-                <div className="text-3xl font-semibold tabular-nums">{counts.folderNodes}</div>
-                <div className="mt-1 text-sm text-muted-foreground">Browsable registry folders</div>
+                <div className="text-3xl font-semibold tabular-nums">
+                  {counts.folderNodes}
+                </div>
+                <div className="mt-1 text-sm text-muted-foreground">
+                  Browsable registry folders
+                </div>
               </div>
               <div className="rounded-2xl border border-dashed border-slate-300 px-4 py-4 dark:border-slate-700">
-                <div className="text-3xl font-semibold tabular-nums">{counts.components}</div>
-                <div className="mt-1 text-sm text-muted-foreground">Metrics components still staged</div>
+                <div className="text-3xl font-semibold tabular-nums">
+                  {counts.components}
+                </div>
+                <div className="mt-1 text-sm text-muted-foreground">
+                  Metrics components still staged
+                </div>
               </div>
             </div>
           </div>
@@ -96,7 +110,9 @@ export default function Home() {
                 <div className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                   Focus right now
                 </div>
-                <h2 className="mt-1 font-semibold text-xl">Foundation checklist</h2>
+                <h2 className="mt-1 font-semibold text-xl">
+                  Foundation checklist
+                </h2>
               </div>
               <IconHierarchy3 className="size-5 text-muted-foreground" />
             </div>
@@ -104,19 +120,24 @@ export default function Home() {
               <div className="rounded-2xl bg-white px-4 py-3 dark:bg-slate-950">
                 <div className="font-medium">1. Folder-first navigation</div>
                 <p className="mt-1 text-muted-foreground">
-                  Keep primitives, tokens, helpers, and source structure easy to inspect without dumping every metrics composition onto the homepage.
+                  Keep primitives, tokens, helpers, and source structure easy to
+                  inspect without dumping every metrics composition onto the
+                  homepage.
                 </p>
               </div>
               <div className="rounded-2xl bg-white px-4 py-3 dark:bg-slate-950">
                 <div className="font-medium">2. Reliable install metadata</div>
                 <p className="mt-1 text-muted-foreground">
-                  Registry pages still expose item install paths and MCP config, but the website now frames them inside the actual foundation work.
+                  Registry pages still expose item install paths and MCP config,
+                  but the website now frames them inside the actual foundation
+                  work.
                 </p>
               </div>
               <div className="rounded-2xl bg-white px-4 py-3 dark:bg-slate-950">
                 <div className="font-medium">3. Stage metrics later</div>
                 <p className="mt-1 text-muted-foreground">
-                  Metrics-specific components remain discoverable, but they are visually demoted until the base registry UX is complete.
+                  Metrics-specific components remain discoverable, but they are
+                  visually demoted until the base registry UX is complete.
                 </p>
               </div>
             </div>
@@ -131,7 +152,8 @@ export default function Home() {
               <div>
                 <CardTitle>Foundation folders</CardTitle>
                 <CardDescription>
-                  The front page now prioritizes the source areas that make the registry useful before metrics modules land.
+                  The front page now prioritizes the source areas that make the
+                  registry useful before metrics modules land.
                 </CardDescription>
               </div>
               <div className="rounded-xl bg-slate-900 p-2 text-white dark:bg-white dark:text-slate-900">
@@ -172,7 +194,8 @@ export default function Home() {
               <div>
                 <CardTitle>Installable now</CardTitle>
                 <CardDescription>
-                  Registry items that already have a clean install story while the site foundation is still being hardened.
+                  Registry items that already have a clean install story while
+                  the site foundation is still being hardened.
                 </CardDescription>
               </div>
               <div className="rounded-xl bg-slate-900 p-2 text-white dark:bg-white dark:text-slate-900">
@@ -229,7 +252,8 @@ export default function Home() {
               <div>
                 <CardTitle>Staged metrics area</CardTitle>
                 <CardDescription>
-                  These roots stay visible so the migration path is explicit, but they do not lead the website yet.
+                  These roots stay visible so the migration path is explicit,
+                  but they do not lead the website yet.
                 </CardDescription>
               </div>
               <div className="rounded-xl bg-slate-900 p-2 text-white dark:bg-white dark:text-slate-900">
@@ -257,7 +281,9 @@ export default function Home() {
               );
             })}
             <div className="rounded-2xl border border-slate-200 px-4 py-4 dark:border-slate-800">
-              <div className="mb-2 font-medium text-sm">Representative staged items</div>
+              <div className="mb-2 font-medium text-sm">
+                Representative staged items
+              </div>
               <div className="space-y-2">
                 {componentItems.map((item) => (
                   <Link
@@ -278,33 +304,55 @@ export default function Home() {
           <div className="rounded-[1.75rem] border border-white/70 bg-white/85 p-6 dark:border-slate-800 dark:bg-slate-950/75">
             <h2 className="font-semibold text-xl">MCP configuration</h2>
             <p className="mb-4 mt-2 text-sm text-muted-foreground">
-              This registry still exposes MCP wiring, but the page now frames it as part of the registry foundation. Verify the published{" "}
-              <Link href="/r/registry.json" className="underline underline-offset-4">
+              This registry still exposes MCP wiring, but the page now frames it
+              as part of the registry foundation. Verify the published{" "}
+              <Link
+                href="/r/registry.json"
+                className="underline underline-offset-4"
+              >
                 `style:theme`
               </Link>{" "}
               matches your token sources before widening the catalog.
             </p>
-            <MCPTabs rootUrl={process.env.VERCEL_PROJECT_PRODUCTION_URL ?? ""} />
+            <MCPTabs
+              rootUrl={process.env.VERCEL_PROJECT_PRODUCTION_URL ?? ""}
+            />
           </div>
 
           <div className="rounded-[1.75rem] border border-white/70 bg-white/85 p-6 dark:border-slate-800 dark:bg-slate-950/75">
             <h2 className="font-semibold text-xl">Current registry shape</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               <div className="rounded-2xl bg-slate-50 px-4 py-4 dark:bg-slate-900">
-                <div className="text-2xl font-semibold tabular-nums">{counts.blocks}</div>
-                <div className="mt-1 text-sm text-muted-foreground">Blocks ready to install</div>
+                <div className="text-2xl font-semibold tabular-nums">
+                  {counts.blocks}
+                </div>
+                <div className="mt-1 text-sm text-muted-foreground">
+                  Blocks ready to install
+                </div>
               </div>
               <div className="rounded-2xl bg-slate-50 px-4 py-4 dark:bg-slate-900">
-                <div className="text-2xl font-semibold tabular-nums">{counts.rootFolders}</div>
-                <div className="mt-1 text-sm text-muted-foreground">Top-level source roots</div>
+                <div className="text-2xl font-semibold tabular-nums">
+                  {counts.rootFolders}
+                </div>
+                <div className="mt-1 text-sm text-muted-foreground">
+                  Top-level source roots
+                </div>
               </div>
               <div className="rounded-2xl bg-slate-50 px-4 py-4 dark:bg-slate-900">
-                <div className="text-2xl font-semibold tabular-nums">{counts.totalItems}</div>
-                <div className="mt-1 text-sm text-muted-foreground">Registry items in manifest</div>
+                <div className="text-2xl font-semibold tabular-nums">
+                  {counts.totalItems}
+                </div>
+                <div className="mt-1 text-sm text-muted-foreground">
+                  Registry items in manifest
+                </div>
               </div>
               <div className="rounded-2xl bg-slate-50 px-4 py-4 dark:bg-slate-900">
-                <div className="text-2xl font-semibold tabular-nums">{counts.components}</div>
-                <div className="mt-1 text-sm text-muted-foreground">Metrics compositions waiting</div>
+                <div className="text-2xl font-semibold tabular-nums">
+                  {counts.components}
+                </div>
+                <div className="mt-1 text-sm text-muted-foreground">
+                  Metrics compositions waiting
+                </div>
               </div>
             </div>
           </div>

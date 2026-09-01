@@ -1,11 +1,7 @@
 export default {
-  content: [
-    "./apps/**/*.{ts,tsx}",
-    "./packages/**/*.{ts,tsx}",
-    "./index.ts",
-  ],
+  content: ["./apps/**/*.{ts,tsx}", "./packages/**/*.{ts,tsx}", "./index.ts"],
   theme: {
-    extend: {}
+    extend: {},
   },
-  plugins: []
+  plugins: [],
 };

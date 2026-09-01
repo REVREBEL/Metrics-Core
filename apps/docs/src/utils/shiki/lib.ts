@@ -40,7 +40,7 @@ function findShikiClassName(children: unknown): boolean {
 function getCodeString(
   children: ReactNode,
   className?: string,
-  forceExtract = false
+  forceExtract = false,
 ): string {
   const isShiki =
     className?.includes(SHIKI_CLASSNAME) || findShikiClassName(children);
@@ -66,7 +66,7 @@ function calculateCodeLinesFromHtml(html: string | undefined): number {
 
 function useCalculateCodeLines(
   html: string | undefined,
-  existingNumberOfLines?: number
+  existingNumberOfLines?: number,
 ): number | undefined {
   return useMemo(() => {
     if (existingNumberOfLines !== undefined) {
@@ -76,4 +76,4 @@ function useCalculateCodeLines(
   }, [html, existingNumberOfLines]);
 }
 
-export { getCodeString, calculateCodeLinesFromHtml, useCalculateCodeLines };
+export { calculateCodeLinesFromHtml, getCodeString, useCalculateCodeLines };

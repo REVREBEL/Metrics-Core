@@ -488,7 +488,9 @@ function DataGridTableRowSelectAll() {
         isSomeSelected && !isAllSelected ? "indeterminate" : isAllSelected
       }
       disabled={isLoading || recordCount === 0}
-      onCheckedChange={(value: boolean) => table.toggleAllPageRowsSelected(!!value)}
+      onCheckedChange={(value: boolean) =>
+        table.toggleAllPageRowsSelected(!!value)
+      }
       aria-label="Select all"
       className="align-[inherit]"
     />

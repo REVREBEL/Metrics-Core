@@ -5,7 +5,7 @@ import { getIconKey } from "@/utils/shiki/snippet-presets";
 const getIconUrl = (
   icon: string,
   iconType?: IconType,
-  iconLibrary?: IconLibrary
+  iconLibrary?: IconLibrary,
 ): string => {
   if (iconLibrary === "lucide") {
     return `${MINTLIFY_ICONS_CDN_URL}/lucide/v0.545.0/${icon}.svg`;
@@ -76,11 +76,11 @@ type MultiViewItemType = BaseMultiViewItemType & {
 
 export {
   getIconUrl,
-  isBrandsIcon,
   getLanguageIconUrl,
   ICON_TYPES,
-  type IconType,
   type IconLibrary,
+  type IconType,
+  isBrandsIcon,
   type MultiViewItemType,
   type PageType,
 };

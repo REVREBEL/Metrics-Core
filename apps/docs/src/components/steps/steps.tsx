@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import type React from "react";
 import { type ReactNode, useCallback, useEffect, useState } from "react";
@@ -63,7 +63,7 @@ const StepsItem = ({
     }
 
     const result = await copyToClipboard(
-      `${window.location.href.split("#")[0]}#${encodeURIComponent(id)}`
+      `${window.location.href.split("#")[0]}#${encodeURIComponent(id)}`,
     );
 
     if (result === "success") {
@@ -109,7 +109,7 @@ const StepsItem = ({
 
       setIsTitleHovered(shown);
     },
-    [isAnchorEnabled, noAnchor, id]
+    [isAnchorEnabled, noAnchor, id],
   );
 
   const interactionProps = {
@@ -141,7 +141,7 @@ const StepsItem = ({
       className={cn(
         Classes.Step,
         "group/step relative flex items-start pb-5",
-        className
+        className,
       )}
       data-component-part="step-item"
       id={id}
@@ -153,7 +153,7 @@ const StepsItem = ({
           "absolute top-11 h-[calc(100%-2.75rem)] w-px",
           isLast
             ? 'bg-linear-to-b from-stone-200 via-80% via-stone-200 to-transparent group-has-[[data-component-part="step-content"]:empty]/step:hidden dark:from-white/10 dark:via-white/10'
-            : "bg-stone-200/70 dark:bg-white/10"
+            : "bg-stone-200/70 dark:bg-white/10",
         )}
         contentEditable={false}
         data-component-part="step-line"
@@ -182,7 +182,7 @@ const StepsItem = ({
                 aria-label="Navigate to header"
                 className={cn(
                   "flex items-center border-0 opacity-0",
-                  isTitleHovered && "opacity-100"
+                  isTitleHovered && "opacity-100",
                 )}
                 href={`#${encodeURIComponent(id as string)}`}
                 onClick={(e) => {
@@ -211,7 +211,7 @@ const StepsItem = ({
                 <p
                   className={cn(
                     titleClasses,
-                    "prose dark:prose-invert font-semibold"
+                    "prose dark:prose-invert font-semibold",
                   )}
                   {...titleProps}
                   {...interactionProps}
@@ -269,7 +269,7 @@ type StepsProps = {
 
 const Steps = ({ children, titleSize, className }: StepsProps) => {
   const childArray = (Array.isArray(children) ? children : [children]).filter(
-    Boolean
+    Boolean,
   );
 
   return (
@@ -295,5 +295,5 @@ const Steps = ({ children, titleSize, className }: StepsProps) => {
 
 Steps.Item = StepsItem;
 
-export { Steps };
 export type { StepsItemProps, StepsProps };
+export { Steps };

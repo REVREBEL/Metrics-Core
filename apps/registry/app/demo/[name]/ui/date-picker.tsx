@@ -1,14 +1,9 @@
+import { Button } from "@buttons";
+import { Popover, PopoverContent, PopoverTrigger } from "@popovers";
+import { Calendar } from "@ui";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import * as React from "react";
-
-import { Button } from "@buttons";
-import { Calendar } from "@ui";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@popovers";
 import { cn } from "@/lib/utils";
 
 const date = new Date();

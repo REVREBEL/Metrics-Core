@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 
@@ -22,7 +22,7 @@ const useExpandable = (enable: boolean, numberOfLines?: number) => {
             contentRef.current.scrollHeight +
               (numberOfLines && numberOfLines < SMALL_EXPANDABLE_NUMBER_OF_LINES
                 ? SMALL_EXPANDED_HEIGHT_OFFSET
-                : EXPANDED_HEIGHT_OFFSET)
+                : EXPANDED_HEIGHT_OFFSET),
           );
         }
       });
@@ -40,10 +40,10 @@ const useExpandable = (enable: boolean, numberOfLines?: number) => {
 };
 
 export {
-  SMALL_EXPANDABLE_NUMBER_OF_LINES,
-  SMALL_EXPANDED_HEIGHT_OFFSET,
+  DEFAULT_EXPANDABLE_CODE_BLOCK_HEIGHT,
   EXPANDED_HEIGHT_OFFSET,
   SMALL_EXPANDABLE_CODE_BLOCK_HEIGHT,
-  DEFAULT_EXPANDABLE_CODE_BLOCK_HEIGHT,
+  SMALL_EXPANDABLE_NUMBER_OF_LINES,
+  SMALL_EXPANDED_HEIGHT_OFFSET,
   useExpandable,
 };

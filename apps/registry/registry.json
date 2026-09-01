@@ -1353,9 +1353,7 @@
           "color-lght-green": "var(--base-color-3)"
         }
       },
-      "dependencies": [
-        "radix-ui"
-      ],
+      "dependencies": ["radix-ui"],
       "files": [
         {
           "path": "packages/ui/src/styles/globals.css",
@@ -1698,9 +1696,7 @@
       "type": "registry:component",
       "title": "Brand Logo",
       "description": "A styled, simple, reusable logo",
-      "registryDependencies": [
-        "@metrics/metrics"
-      ],
+      "registryDependencies": ["@metrics/metrics"],
       "files": [
         {
           "path": "packages/ui/src/primitives/ui-core/logo.tsx",
@@ -1752,10 +1748,7 @@
       "type": "registry:component",
       "title": "Promo",
       "description": "Attention-grabbing section to display the current promotional deal.",
-      "registryDependencies": [
-        "@metrics/metrics",
-        "@metrics/button"
-      ],
+      "registryDependencies": ["@metrics/metrics", "@metrics/button"],
       "files": [
         {
           "path": "packages/ui/src/primitives/ui-core/promo.tsx",
@@ -1779,9 +1772,7 @@
       "type": "registry:component",
       "title": "Product Grid",
       "description": "Product grid displaying all products with API to fetch data",
-      "registryDependencies": [
-        "@metrics/metrics"
-      ],
+      "registryDependencies": ["@metrics/metrics"],
       "files": [
         {
           "path": "packages/ui/src/primitives/ui-core/product-grid.tsx",
@@ -2377,9 +2368,7 @@
       "type": "registry:ui",
       "title": "Toggle Group",
       "description": "A set of two-state buttons that can be toggled on or off.",
-      "registryDependencies": [
-        "@metrics/toggle"
-      ],
+      "registryDependencies": ["@metrics/toggle"],
       "files": [
         {
           "path": "packages/ui/src/primitives/ui-core/toggle-group.tsx",
@@ -2406,9 +2395,7 @@
       "type": "registry:ui",
       "title": "Data Table",
       "description": "Powerful table and datagrids built using TanStack Table.",
-      "registryDependencies": [
-        "@metrics/table"
-      ],
+      "registryDependencies": ["@metrics/table"],
       "files": []
     },
     {

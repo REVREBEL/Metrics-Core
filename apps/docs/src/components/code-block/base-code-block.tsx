@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import type React from "react";
 
@@ -87,7 +87,7 @@ const BaseCodeBlock = ({
           codeBlockTheme: codeBlockThemeObject,
           className: shouldHighlight ? className : "lang-text",
           opts,
-        }
+        },
   );
 
   numberOfLines = useCalculateCodeLines(html, numberOfLines);
@@ -96,7 +96,7 @@ const BaseCodeBlock = ({
   const shikiBackgroundColors = getShikiBackgroundColors(
     codeBlockTheme,
     html,
-    children
+    children,
   );
 
   const isFocusEnabled = focusLines.length > 0;
@@ -138,7 +138,7 @@ const BaseCodeBlock = ({
           isHighlightEnabled && "has-highlighted",
           codeBlockTheme === "system"
             ? "scrollbar-code-system"
-            : "scrollbar-code-dark"
+            : "scrollbar-code-dark",
         )}
         data-component-part="code-block-root"
         style={
@@ -158,7 +158,7 @@ const BaseCodeBlock = ({
               "font-mono",
               wrap ? "whitespace-pre-wrap" : "whitespace-pre",
               isParentCodeGroup && "h-full flex-none text-sm",
-              isSmallText ? "text-xs leading-[1.35rem]" : "leading-6"
+              isSmallText ? "text-xs leading-[1.35rem]" : "leading-6",
             )}
             key={codeBlockTheme}
             ref={contentRef}
@@ -175,7 +175,7 @@ const BaseCodeBlock = ({
               "font-mono",
               wrap ? "whitespace-pre-wrap" : "whitespace-pre",
               isParentCodeGroup && "h-full flex-none text-sm",
-              isSmallText ? "text-xs leading-[1.35rem]" : "leading-6"
+              isSmallText ? "text-xs leading-[1.35rem]" : "leading-6",
             )}
             ref={contentRef}
             suppressHydrationWarning
@@ -211,4 +211,4 @@ const BaseCodeBlock = ({
   );
 };
 
-export { type BaseCodeBlockProps, BaseCodeBlock };
+export { BaseCodeBlock, type BaseCodeBlockProps };

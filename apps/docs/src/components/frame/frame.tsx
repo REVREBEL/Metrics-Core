@@ -45,7 +45,7 @@ const Frame = ({
       <Component
         className={cn(
           Classes.Frame,
-          "not-prose relative overflow-hidden rounded-2xl bg-stone-50/50 p-2 dark:bg-stone-800/25"
+          "not-prose relative overflow-hidden rounded-2xl bg-stone-50/50 p-2 dark:bg-stone-800/25",
         )}
         data-component-part="frame"
         data-name="frame"
@@ -76,7 +76,7 @@ const Frame = ({
         <div
           aria-hidden="true"
           className={cn(
-            "pointer-events-none absolute inset-0 rounded-2xl border border-black/5 dark:border-white/5"
+            "pointer-events-none absolute inset-0 rounded-2xl border border-black/5 dark:border-white/5",
           )}
           data-component-part="frame-border"
         />
@@ -85,5 +85,5 @@ const Frame = ({
   );
 };
 
-export { Frame };
 export type { FrameProps };
+export { Frame };

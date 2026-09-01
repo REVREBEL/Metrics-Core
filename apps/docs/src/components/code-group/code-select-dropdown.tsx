@@ -41,7 +41,7 @@ const CodeSelectDropdown = ({
               "hover:bg-primary/10 hover:text-primary dark:hover:bg-primary-light/10 dark:hover:text-primary-light",
               option === selectedOption &&
                 "font-medium text-primary dark:text-primary-light",
-              option !== selectedOption && "text-stone-500 dark:text-white/50"
+              option !== selectedOption && "text-stone-500 dark:text-white/50",
             )}
             key={`Option${i}${option}`}
             onSelect={() => setSelectedOption(option)}

@@ -1,13 +1,13 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"files.associations": {
-			"**/apps/storybook/.storybook/*.css": "tailwindcss",
-			"**/packages/ui/src/styles/*.css": "tailwindcss"
-		}
-	}
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.associations": {
+      "**/apps/storybook/.storybook/*.css": "tailwindcss",
+      "**/packages/ui/src/styles/*.css": "tailwindcss"
+    }
+  }
 }

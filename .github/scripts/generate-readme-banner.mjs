@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import fs from 'node:fs';
-import path from 'node:path';
-import process from 'node:process';
-import sharp from 'sharp';
+import fs from "node:fs";
+import path from "node:path";
+import process from "node:process";
+import sharp from "sharp";
 
 /**
  * Repository root directory.
@@ -18,8 +18,11 @@ const repoRoot = process.cwd();
  * @type {{ light: string, dark: string }}
  */
 const templatePaths = {
-  light: path.join(repoRoot, '.github/assets/templates/readme-banner_light.jpg'),
-  dark: path.join(repoRoot, '.github/assets/templates/readme-banner_dark.jpg')
+  light: path.join(
+    repoRoot,
+    ".github/assets/templates/readme-banner_light.jpg",
+  ),
+  dark: path.join(repoRoot, ".github/assets/templates/readme-banner_dark.jpg"),
 };
 
 /**
@@ -28,8 +31,8 @@ const templatePaths = {
  * @type {{ light: string, dark: string }}
  */
 const outputPaths = {
-  light: path.join(repoRoot, '.github/assets/readme-banner_light.png'),
-  dark: path.join(repoRoot, '.github/assets/readme-banner_dark.png')
+  light: path.join(repoRoot, ".github/assets/readme-banner_light.png"),
+  dark: path.join(repoRoot, ".github/assets/readme-banner_dark.png"),
 };
 
 /**
@@ -40,8 +43,8 @@ const outputPaths = {
  * @type {{ woff2: string, woff: string }}
  */
 const fontPaths = {
-  woff2: path.join(repoRoot, '.github/assets/fonts/khand-bold.woff2'),
-  woff: path.join(repoRoot, '.github/assets/fonts/khand-bold.woff')
+  woff2: path.join(repoRoot, ".github/assets/fonts/khand-bold.woff2"),
+  woff: path.join(repoRoot, ".github/assets/fonts/khand-bold.woff"),
 };
 
 /**
@@ -114,13 +117,12 @@ function getRepoSlug() {
   const githubRepository = process.env.GITHUB_REPOSITORY?.trim();
 
   if (githubRepository) {
-    const parts = githubRepository.split('/');
+    const parts = githubRepository.split("/");
     return parts[parts.length - 1];
   }
 
   return path.basename(repoRoot);
 }
-
 
 /**
  * Convert a slug-like repository name into an uppercase display title.
@@ -135,12 +137,11 @@ function getRepoSlug() {
 function formatRepoTitle(repoSlug) {
   const normalized = repoSlug
     .trim()
-    .replace(/[_-]+/g, ' ')
-    .replace(/\s+/g, ' ');
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ");
 
   return normalized.toUpperCase();
 }
-
 
 /**
  * Escape XML special characters for safe SVG text rendering.
@@ -150,11 +151,11 @@ function formatRepoTitle(repoSlug) {
  */
 function escapeXml(value) {
   return value
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 /**
@@ -169,7 +170,7 @@ function escapeXml(value) {
 function wrapTitle(title, fontSize, maxWidthPx, lineLimit) {
   const words = title.split(/\s+/).filter(Boolean);
   const lines = [];
-  let currentLine = '';
+  let currentLine = "";
 
   /**
    * Estimate width of a text line.
@@ -201,17 +202,24 @@ function wrapTitle(title, fontSize, maxWidthPx, lineLimit) {
     }
   }
 
-  const consumedWordsCount = lines.join(' ').split(/\s+/).filter(Boolean).length;
+  const consumedWordsCount = lines
+    .join(" ")
+    .split(/\s+/)
+    .filter(Boolean).length;
   const remainingWords = words.slice(consumedWordsCount);
 
   if (lines.length < lineLimit) {
-    const finalLine = [currentLine, ...remainingWords].filter(Boolean).join(' ').trim();
+    const finalLine = [currentLine, ...remainingWords]
+      .filter(Boolean)
+      .join(" ")
+      .trim();
 
     if (finalLine) {
       lines.push(finalLine);
     }
   } else if (remainingWords.length > 0) {
-    lines[lineLimit - 1] = `${lines[lineLimit - 1]} ${remainingWords.join(' ')}`.trim();
+    lines[lineLimit - 1] =
+      `${lines[lineLimit - 1]} ${remainingWords.join(" ")}`.trim();
   }
 
   return lines.slice(0, lineLimit);
@@ -228,14 +236,14 @@ function getEmbeddedFont() {
   const candidates = [
     {
       filePath: fontPaths.woff2,
-      mimeType: 'font/woff2',
-      format: 'woff2'
+      mimeType: "font/woff2",
+      format: "woff2",
     },
     {
       filePath: fontPaths.woff,
-      mimeType: 'font/woff',
-      format: 'woff'
-    }
+      mimeType: "font/woff",
+      format: "woff",
+    },
   ];
 
   for (const candidate of candidates) {
@@ -243,13 +251,13 @@ function getEmbeddedFont() {
       return {
         mimeType: candidate.mimeType,
         format: candidate.format,
-        base64: fs.readFileSync(candidate.filePath).toString('base64')
+        base64: fs.readFileSync(candidate.filePath).toString("base64"),
       };
     }
   }
 
   throw new Error(
-    `Missing brand font file. Expected one of: ${fontPaths.woff2} or ${fontPaths.woff}`
+    `Missing brand font file. Expected one of: ${fontPaths.woff2} or ${fontPaths.woff}`,
   );
 }
 
@@ -273,7 +281,7 @@ function buildSvgOverlay({
   subtitleColor,
   width,
   height,
-  brandFont
+  brandFont,
 }) {
   const wrappedLines = wrapTitle(title, titleFontSize, maxTextWidth, maxLines);
   const lineHeight = 82;
@@ -295,7 +303,7 @@ function buildSvgOverlay({
         >${escapeXml(line)}</text>
       `;
     })
-    .join('\n');
+    .join("\n");
 
   const subtitleSvg = `
     <text
@@ -360,7 +368,7 @@ async function generateBanner({
   subtitle,
   textColor,
   subtitleColor,
-  brandFont
+  brandFont,
 }) {
   ensureOutputDirectory(outputPath);
 
@@ -378,7 +386,7 @@ async function generateBanner({
     subtitleColor,
     width: metadata.width,
     height: metadata.height,
-    brandFont
+    brandFont,
   });
 
   await image
@@ -401,7 +409,7 @@ function validateInputs() {
 
   if (!fs.existsSync(fontPaths.woff2) && !fs.existsSync(fontPaths.woff)) {
     throw new Error(
-      `Missing font files. Expected ${fontPaths.woff2} or ${fontPaths.woff}`
+      `Missing font files. Expected ${fontPaths.woff2} or ${fontPaths.woff}`,
     );
   }
 }
@@ -416,17 +424,17 @@ async function main() {
 
   const repoSlug = getRepoSlug();
   const repoTitle = formatRepoTitle(repoSlug);
-  const subtitle = 'GITHUB REPOSITORY';
+  const subtitle = "GITHUB REPOSITORY";
   const brandFont = getEmbeddedFont();
-  
+
   await generateBanner({
     inputPath: templatePaths.light,
     outputPath: outputPaths.light,
     title: repoTitle,
     subtitle,
-    textColor: '#1E447C',
-    subtitleColor: '#1E447C',
-    brandFont
+    textColor: "#1E447C",
+    subtitleColor: "#1E447C",
+    brandFont,
   });
 
   await generateBanner({
@@ -434,9 +442,9 @@ async function main() {
     outputPath: outputPaths.dark,
     title: repoTitle,
     subtitle,
-    textColor: '#F3F2ED',
-    subtitleColor: '#F3F2ED',
-    brandFont
+    textColor: "#F3F2ED",
+    subtitleColor: "#F3F2ED",
+    brandFont,
   });
 
   process.stdout.write(`Generated README banners for: ${repoTitle}\n`);

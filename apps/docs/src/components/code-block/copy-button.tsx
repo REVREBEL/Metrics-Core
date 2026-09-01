@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { type ComponentPropsWithoutRef, useEffect, useState } from "react";
 import { ActiveCopyButtonIcon, CopyButtonIcon } from "@/icons";
@@ -43,7 +43,7 @@ const CopyToClipboardButton = ({
     // Hide copy button if the browser does not support it
     if (typeof window !== "undefined" && !navigator.clipboard) {
       console.warn(
-        "The browser's Clipboard API is unavailable. The Clipboard API is only available on HTTPS."
+        "The browser's Clipboard API is unavailable. The Clipboard API is only available on HTTPS.",
       );
       setIsDisabled(true);
     } else {
@@ -99,4 +99,4 @@ const CopyToClipboardButton = ({
   );
 };
 
-export { type CopyToClipboardButtonProps, CopyToClipboardButton };
+export { CopyToClipboardButton, type CopyToClipboardButtonProps };

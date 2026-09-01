@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { createContext } from "react";
 
@@ -14,5 +14,5 @@ const DEFAULT_VALUE: TreeLevelContextValue = {
 
 const TreeLevelContext = createContext<TreeLevelContextValue>(DEFAULT_VALUE);
 
-export { TreeLevelContext };
 export type { TreeLevelContextValue };
+export { TreeLevelContext };

@@ -1,9 +1,7 @@
+import { SidebarProvider, Toaster } from "@ui";
 import React, { type ReactNode } from "react";
-
 import { BrandHeader } from "@/components/brand-header";
 import { BrandSidebar } from "@/components/brand-sidebar";
-import { SidebarProvider } from "@ui";
-import { Toaster } from "@ui";
 
 export default function ShellLayout({
   children,

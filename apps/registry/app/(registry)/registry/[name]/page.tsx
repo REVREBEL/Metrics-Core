@@ -1,10 +1,10 @@
-import { IconSquareRoundedArrowLeftFilled } from "@tabler/icons-react";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-
-import { ComponentCard } from "@ui-registry";
 import { getRegistryItem, getRegistryItems } from "@lib/registry";
 import { getPrompt } from "@lib/utils";
+import { IconSquareRoundedArrowLeftFilled } from "@tabler/icons-react";
+
+import { ComponentCard } from "@ui-registry";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   return getRegistryItems().map(({ name }) => ({

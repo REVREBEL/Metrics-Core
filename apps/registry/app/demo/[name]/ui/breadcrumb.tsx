@@ -1,4 +1,10 @@
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@dropdowns";
+import {
   Breadcrumb,
   BreadcrumbEllipsis,
   BreadcrumbItem,
@@ -7,12 +13,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@ui";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@dropdowns";
 
 export const breadcrumb = {
   name: "breadcrumb",

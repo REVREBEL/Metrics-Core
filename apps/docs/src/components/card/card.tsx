@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/complexity/noExcessiveCognitiveComplexity: TODO */
-import { IconSquareRoundedArrowUpFilled } from '@tabler/icons-react';
+import { IconSquareRoundedArrowUpFilled } from "@tabler/icons-react";
 import type React from "react";
 import type {
   ComponentPropsWithoutRef,
@@ -90,7 +90,7 @@ const Card = ({
       className={cn(
         resolvedHref &&
           "hover:border-primary! dark:hover:border-primary-light!",
-        className
+        className,
       )}
       cta={cta}
       disabled={disabled}
@@ -166,7 +166,7 @@ const GenericCard = <T extends ElementType = "div">({
         props.href && "cursor-pointer",
         props.href &&
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-primary-light",
-        className
+        className,
       )}
       {...newTabProps}
       {...props}
@@ -184,7 +184,7 @@ const GenericCard = <T extends ElementType = "div">({
       <div
         className={cn(
           "relative px-6 py-5",
-          horizontal && "flex items-center gap-x-4"
+          horizontal && "flex items-center gap-x-4",
         )}
         data-component-part="card-content-container"
       >
@@ -193,7 +193,7 @@ const GenericCard = <T extends ElementType = "div">({
             aria-hidden="true"
             className={cn(
               "absolute top-5 right-5 text-primary group-hover:text-primary dark:text-stone-500 dark:group-hover:text-primary-light",
-              !shouldShowArrowIcon && "hidden"
+              !shouldShowArrowIcon && "hidden",
             )}
             data-component-part="card-arrow"
           >
@@ -206,7 +206,7 @@ const GenericCard = <T extends ElementType = "div">({
             <h2
               className={cn(
                 "not-prose wrap-break-word font-semibold text-base text-stone-800 dark:text-white",
-                icon !== null && icon !== undefined && !horizontal && "mt-4"
+                icon !== null && icon !== undefined && !horizontal && "mt-4",
               )}
               contentEditable={false}
               data-component-part="card-title"
@@ -220,7 +220,7 @@ const GenericCard = <T extends ElementType = "div">({
               title
                 ? "text-primary dark:text-stone-400"
                 : "text-primary dark:text-stone-300",
-              horizontal && "mt-0 leading-6"
+              horizontal && "mt-0 leading-6",
             )}
             data-component-part="card-content"
           >
@@ -233,7 +233,7 @@ const GenericCard = <T extends ElementType = "div">({
                   "flex flex-row items-center gap-2 text-left font-medium text-sm text-stone-600 dark:text-stone-400",
                   !disabled &&
                     "group-hover:text-primary group-hover:dark:text-primary-light",
-                  disabled && "opacity-50"
+                  disabled && "opacity-50",
                 )}
               >
                 {cta}
@@ -247,5 +247,5 @@ const GenericCard = <T extends ElementType = "div">({
   );
 };
 
+export type { CardComponentProps, CardIconProps, CardProps, CardPropsBase };
 export { Card, GenericCard };
-export type { CardProps, CardPropsBase, CardComponentProps, CardIconProps };

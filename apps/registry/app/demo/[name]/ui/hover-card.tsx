@@ -1,9 +1,11 @@
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@ui";
-import { Avatar, AvatarFallback, AvatarImage } from "@ui";
 import { CalendarDays } from "lucide-react";
 
 export const hoverCard = {

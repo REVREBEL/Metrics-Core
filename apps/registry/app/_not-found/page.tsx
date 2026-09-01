@@ -8,5 +8,5 @@ export default function InternalNotFoundPage() {
         </main>
       </body>
     </html>
-  )
+  );
 }

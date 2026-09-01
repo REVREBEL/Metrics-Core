@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { type CSSProperties, type ReactNode, useId, useState } from "react";
 import { Classes } from "@/constants/selectors";
@@ -48,7 +48,7 @@ const TreeFolder = ({
         className={cn(
           "flex items-center gap-1.5 rounded-lg py-1 pr-1.5 pl-[calc(var(--padding-left)*1px)] text-stone-700 -outline-offset-1 hover:bg-stone-100 dark:text-stone-400 dark:hover:bg-stone-900",
           openable ? "cursor-pointer" : "cursor-default",
-          Classes.TreeFolder
+          Classes.TreeFolder,
         )}
         id={nodeId}
         onClick={openable ? () => setOpen((prev) => !prev) : undefined}
@@ -94,5 +94,5 @@ const TreeFolder = ({
   );
 };
 
-export { TreeFolder };
 export type { TreeFolderProps };
+export { TreeFolder };

@@ -1,19 +1,3 @@
-import {
-  Cloud,
-  CreditCard,
-  GitBranch,
-  Keyboard,
-  LifeBuoy,
-  LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
-  Settings,
-  User,
-  Users,
-} from "lucide-react";
-
 import { Button } from "@buttons";
 import {
   DropdownMenu,
@@ -29,6 +13,21 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@dropdowns";
+import {
+  Cloud,
+  CreditCard,
+  GitBranch,
+  Keyboard,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  MessageSquare,
+  Plus,
+  PlusCircle,
+  Settings,
+  User,
+  Users,
+} from "lucide-react";
 
 export const dropdownMenu = {
   name: "dropdown-menu",

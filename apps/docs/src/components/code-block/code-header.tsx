@@ -26,7 +26,7 @@ const CodeHeader = ({
       <div
         className={cn(
           "flex min-w-0 grow-0 items-center gap-1.5 text-stone-700 dark:text-stone-300",
-          codeBlockTheme === "dark" && "text-stone-300"
+          codeBlockTheme === "dark" && "text-stone-300",
         )}
         data-component-part="code-block-header-filename"
       >
@@ -34,7 +34,7 @@ const CodeHeader = ({
           <ComponentIcon
             className={cn(
               "size-3.5 shrink-0 bg-stone-500 dark:bg-stone-400",
-              Classes.CodeBlockIcon
+              Classes.CodeBlockIcon,
             )}
             icon={icon}
             iconType="regular"
@@ -52,4 +52,4 @@ const CodeHeader = ({
   );
 };
 
-export { type CodeHeaderProps, CodeHeader };
+export { CodeHeader, type CodeHeaderProps };

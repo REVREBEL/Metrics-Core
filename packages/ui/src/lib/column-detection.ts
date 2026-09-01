@@ -46,13 +46,19 @@ export const detectColumns = (data: JsonData[]): Column[] => {
     }
 
     // Determine the most frequent type
-    let mostCommonType: "string" | "number" | "boolean" | "date" | "object" = "string";
+    let mostCommonType: "string" | "number" | "boolean" | "date" | "object" =
+      "string";
     let maxCount = -1;
 
     for (const type in typeCounts) {
       if (typeCounts[type] > maxCount) {
         maxCount = typeCounts[type];
-        mostCommonType = type as "string" | "number" | "boolean" | "date" | "object";
+        mostCommonType = type as
+          | "string"
+          | "number"
+          | "boolean"
+          | "date"
+          | "object";
       }
     }
 

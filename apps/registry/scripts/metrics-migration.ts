@@ -1,14 +1,14 @@
 export type RegistryComponent = {
-  name: string
-  title: string
-  description: string
-  type: "primitive" | "metric-card"
-  files: string[]
-  dependencies?: string[]
-  registryDependencies?: string[]
-  cssVars?: string[]
-  status: "ready" | "needs-refactor" | "deprecated"
-}
+  name: string;
+  title: string;
+  description: string;
+  type: "primitive" | "metric-card";
+  files: string[];
+  dependencies?: string[];
+  registryDependencies?: string[];
+  cssVars?: string[];
+  status: "ready" | "needs-refactor" | "deprecated";
+};
 
 const metricCssVars = [
   "--color-primary",
@@ -23,7 +23,7 @@ const metricCssVars = [
   "--card",
   "--card-foreground",
   "--border",
-]
+];
 
 export const metricsRegistryComponents: RegistryComponent[] = [
   {
@@ -87,4 +87,4 @@ export const metricsRegistryComponents: RegistryComponent[] = [
     cssVars: metricCssVars,
     status: "needs-refactor",
   },
-]
+];

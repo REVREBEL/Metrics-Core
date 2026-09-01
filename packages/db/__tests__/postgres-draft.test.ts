@@ -1,13 +1,19 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { DatabaseConfigurationError, PostgresDraftRepository } from "../src/index";
+import {
+  DatabaseConfigurationError,
+  PostgresDraftRepository,
+} from "../src/index";
 
 test("PostgresDraftRepository verifies DatabaseConfigurationError when DATABASE_URL is unconfigured", async () => {
   const origEnv = process.env.DATABASE_URL;
   delete process.env.DATABASE_URL;
 
   try {
-    assert.throws(() => new PostgresDraftRepository(), DatabaseConfigurationError);
+    assert.throws(
+      () => new PostgresDraftRepository(),
+      DatabaseConfigurationError,
+    );
   } finally {
     if (origEnv) {
       process.env.DATABASE_URL = origEnv;
@@ -62,7 +68,11 @@ test("PostgresDraftRepository performs atomic upserts and audit writes when DATA
     assert.equal(updated[0].draftPayload.name, "Proposed Change 2");
 
     // 4. Discard single draft
-    const discardedCount = await repo.discardDraftsWithAudit(tableKey, testUserId, [rowKey]);
+    const discardedCount = await repo.discardDraftsWithAudit(
+      tableKey,
+      testUserId,
+      [rowKey],
+    );
     assert.equal(discardedCount, 1);
 
     const remaining = await repo.listDrafts(tableKey, testUserId);

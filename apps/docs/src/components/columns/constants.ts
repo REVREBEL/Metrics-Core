@@ -3,6 +3,5 @@ type ColCount = (typeof COL_OPTIONS)[number];
 
 const DEFAULT_COLS = 2;
 
-export { COL_OPTIONS, DEFAULT_COLS };
-
 export type { ColCount };
+export { COL_OPTIONS, DEFAULT_COLS };

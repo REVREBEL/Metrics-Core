@@ -1,5 +1,4 @@
-import { Label } from "@ui";
-import { Switch } from "@ui";
+import { Label, Switch } from "@ui";
 
 export const switchComponent = {
   name: "switch",

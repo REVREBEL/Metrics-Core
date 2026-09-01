@@ -200,4 +200,4 @@ type CodeStyling =
     }
   | undefined;
 
-export type { CodeStyling, CodeBlockTheme };
+export type { CodeBlockTheme, CodeStyling };

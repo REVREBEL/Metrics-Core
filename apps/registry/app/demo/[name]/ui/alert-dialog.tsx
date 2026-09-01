@@ -1,3 +1,4 @@
+import { Button } from "@buttons";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,7 +10,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@ui";
-import { Button } from "@buttons";
 
 export const alertDialog = {
   name: "alert-dialog",

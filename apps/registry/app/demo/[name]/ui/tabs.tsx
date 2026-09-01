@@ -1,4 +1,6 @@
 import { Button } from "@buttons";
+import { Input } from "@inputs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@tabs";
 import {
   Card,
   CardContent,
@@ -6,10 +8,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  Label,
 } from "@ui";
-import { Input } from "@inputs";
-import { Label } from "@ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@tabs";
 
 export const tabs = {
   name: "tabs",
