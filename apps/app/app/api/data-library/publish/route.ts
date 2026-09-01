@@ -48,7 +48,10 @@ export async function POST(req: Request) {
     const body = (await req.json()) as { changeRequestId?: string };
     changeRequestId = body.changeRequestId;
   } catch {
-    return NextResponse.json({ message: "Invalid JSON body." }, { status: 400 });
+    return NextResponse.json(
+      { message: "Invalid JSON body." },
+      { status: 400 },
+    );
   }
 
   if (!changeRequestId) {
@@ -59,8 +62,13 @@ export async function POST(req: Request) {
   }
 
   try {
-    const result = await publishFeatureChangeRequest(changeRequestId, authContext);
-    return NextResponse.json(result, { status: statusForOutcome(result.outcome) });
+    const result = await publishFeatureChangeRequest(
+      changeRequestId,
+      authContext,
+    );
+    return NextResponse.json(result, {
+      status: statusForOutcome(result.outcome),
+    });
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Publication service failed.";
