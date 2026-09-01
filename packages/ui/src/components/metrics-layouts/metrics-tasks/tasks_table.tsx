@@ -35,6 +35,12 @@ import { labels, priorities, statuses } from "../data/data";
 import type { Task } from "../data/schema";
 import { useTasks } from "./tasks-provider";
 
+// ⚡ Bolt: Pre-computed static Maps for O(1) lookup in render loops, TaxonomyBadge, and CSV export logic,
+// eliminating redundant O(M) array traversals (.find).
+const labelMap = new Map(labels.map((l) => [l.value, l]));
+const statusMap = new Map(statuses.map((s) => [s.value, s]));
+const priorityMap = new Map(priorities.map((p) => [p.value, p]));
+
 type TasksTableProps = {
   data: Task[];
 };
@@ -188,16 +194,13 @@ export function TasksTable({ data }: TasksTableProps) {
     const escapeCsv = (value: string) => `"${value.replace(/"/g, '""')}"`;
 
     const rows = selectedTasks.map((task) => {
-      const statusLabel =
-        statuses.find((status) => status.value === task.status)?.label ??
-        task.status;
+      const statusLabel = statusMap.get(task.status)?.label ?? task.status;
       const labelText =
-        labels.find((label) => label.value === task.label)?.label ??
+        (task.label ? labelMap.get(task.label)?.label : undefined) ??
         task.label ??
         "";
       const priorityLabel =
-        priorities.find((priority) => priority.value === task.priority)
-          ?.label ?? task.priority;
+        priorityMap.get(task.priority)?.label ?? task.priority;
 
       const record = {
         id: task.id,
@@ -408,8 +411,9 @@ export function TasksTable({ data }: TasksTableProps) {
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline">
-                      {labels.find((label) => label.value === task.label)
-                        ?.label ?? task.label}
+                      {(task.label
+                        ? labelMap.get(task.label)?.label
+                        : undefined) ?? task.label}
                     </Badge>
                   </TableCell>
                   <TableCell>
@@ -507,7 +511,13 @@ function TaxonomyBadge({
   items: typeof statuses;
   value: string;
 }) {
-  const item = items.find((candidate) => candidate.value === value);
+  // Use map lookup if items match statuses or priorities, else fallback to .find
+  const item =
+    items === statuses
+      ? statusMap.get(value)
+      : items === priorities
+        ? priorityMap.get(value)
+        : items.find((candidate) => candidate.value === value);
   const Icon = item?.icon;
 
   return (
