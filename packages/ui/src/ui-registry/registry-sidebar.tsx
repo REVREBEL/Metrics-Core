@@ -24,13 +24,26 @@ function folderHref(folder: string) {
     .join("/")}`;
 }
 
-function matches(node: RegistryFolderNode, query: string): boolean {
-  const haystack = [node.id, node.title, node.sourcePath, ...node.directFiles]
-    .join(" ")
-    .toLowerCase();
+// Module-level cache to avoid repeated array creation and string lowercasing per node
+const nodeTextCache = new Map<string, string>();
 
+function getNodeText(node: RegistryFolderNode): string {
+  let text = nodeTextCache.get(node.id);
+  if (!text) {
+    text = [node.id, node.title, node.sourcePath, ...node.directFiles]
+      .join(" ")
+      .toLowerCase();
+    nodeTextCache.set(node.id, text);
+  }
+  return text;
+}
+
+function matches(node: RegistryFolderNode, query: string): boolean {
+  // Early return when query is empty to avoid evaluating haystack or traversing children
   if (!query) return true;
-  if (haystack.includes(query)) return true;
+
+  if (getNodeText(node).includes(query)) return true;
+
   return node.children.some((childId) => {
     const child = REGISTRY_FOLDER_MANIFEST.nodes[childId];
     return child ? matches(child, query) : false;
