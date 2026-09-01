@@ -436,6 +436,7 @@ function DataGridTableLoader() {
           fill="none"
           viewBox="0 0 24 24"
         >
+          <title>Loading</title>
           <circle
             className="opacity-25"
             cx="12"
@@ -467,7 +468,7 @@ function DataGridTableRowSelect<TData>({ row }: { row: Row<TData> }) {
       ></div>
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value: any) => row.toggleSelected(!!value)}
+        onCheckedChange={(value: boolean) => row.toggleSelected(!!value)}
         aria-label="Select row"
         className="align-[inherit]"
       />
@@ -487,7 +488,7 @@ function DataGridTableRowSelectAll() {
         isSomeSelected && !isAllSelected ? "indeterminate" : isAllSelected
       }
       disabled={isLoading || recordCount === 0}
-      onCheckedChange={(value: any) => table.toggleAllPageRowsSelected(!!value)}
+      onCheckedChange={(value: boolean) => table.toggleAllPageRowsSelected(!!value)}
       aria-label="Select all"
       className="align-[inherit]"
     />

@@ -207,7 +207,9 @@ test("conflicts are durable and restore drafts for recovery", async () => {
   assert.deepEqual(harness.transitions, [
     { requestStatus: "conflict", draftStatus: "draft" },
   ]);
-  assert.ok(harness.audits.some((entry) => entry.action === "publication_conflict"));
+  assert.ok(
+    harness.audits.some((entry) => entry.action === "publication_conflict"),
+  );
 });
 
 test("successful publication updates request and draft lifecycle and records success", async () => {
@@ -227,8 +229,12 @@ test("successful publication updates request and draft lifecycle and records suc
   assert.deepEqual(harness.transitions, [
     { requestStatus: "published", draftStatus: "published" },
   ]);
-  assert.ok(harness.audits.some((entry) => entry.action === "publication_started"));
-  assert.ok(harness.audits.some((entry) => entry.action === "publication_succeeded"));
+  assert.ok(
+    harness.audits.some((entry) => entry.action === "publication_started"),
+  );
+  assert.ok(
+    harness.audits.some((entry) => entry.action === "publication_succeeded"),
+  );
 });
 
 test("operational failure remains retryable and a later retry is idempotent", async () => {
@@ -246,7 +252,9 @@ test("operational failure remains retryable and a later retry is idempotent", as
   assert.equal(first.outcome, "failed");
   assert.equal(first.retryable, true);
   assert.equal(request.status, "approved");
-  assert.ok(harness.audits.some((entry) => entry.action === "publication_failed"));
+  assert.ok(
+    harness.audits.some((entry) => entry.action === "publication_failed"),
+  );
 
   harness.setPublisher(async () => ({
     success: true,

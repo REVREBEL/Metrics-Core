@@ -12,6 +12,7 @@ export const Logo = memo(() => {
         className="size-8"
         role="graphics-symbol"
       >
+        <title>Brand Logo</title>
         <circle className="fill-primary" cx="13.5" cy="6.5" r="2.5" />
         <circle className="fill-primary" cx="19" cy="13" r="2.5" />
         <circle className="fill-primary" cx="13.5" cy="19.5" r="2.5" />

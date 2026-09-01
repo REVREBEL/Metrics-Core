@@ -1,7 +1,13 @@
 import { randomUUID } from "node:crypto";
 import {
-  type ChangeRequestWithItems,
+  type PublicationConflict,
+  type PublicationTableDefinition,
+  publishRowsToWarehouse,
+  type WarehousePublicationResult,
+} from "@repo/data/server/data-library";
+import {
   appAuditLog,
+  type ChangeRequestWithItems,
   eq,
   getDb,
   inArray,
@@ -9,12 +15,6 @@ import {
   lookupTableChangeRequests,
   lookupTableDraftEdits,
 } from "@repo/db";
-import {
-  type PublicationConflict,
-  type PublicationTableDefinition,
-  type WarehousePublicationResult,
-  publishRowsToWarehouse,
-} from "@repo/data/server/data-library";
 import { getDataLibraryTableDefinition } from "./registry";
 import type { VerifiedWorkspaceSession } from "./session";
 
@@ -144,7 +144,10 @@ async function loadRequestFromDb(
       ...item,
       originalPayload: item.originalPayload as Record<string, unknown> | null,
       submittedPayload: item.submittedPayload as Record<string, unknown>,
-      validationSnapshot: item.validationSnapshot as Record<string, unknown> | null,
+      validationSnapshot: item.validationSnapshot as Record<
+        string,
+        unknown
+      > | null,
     })),
   } as ChangeRequestWithItems;
 }
@@ -266,7 +269,7 @@ export async function publishFeatureChangeRequest(
   }
 
   const definition = getDataLibraryTableDefinition(request.tableKey);
-  if (!definition || definition.publication !== "supported") {
+  if (definition?.publication !== "supported") {
     return buildResult(startedAt, dependencies.now(), correlationId, {
       success: false,
       outcome: "unsupported",
@@ -346,12 +349,16 @@ export async function publishFeatureChangeRequest(
       warehouseRowsWritten: 0,
       warehouseJobId: null,
       retryable: true,
-      nextAction: "Restore application database audit availability, then retry.",
+      nextAction:
+        "Restore application database audit availability, then retry.",
     });
   }
 
   try {
-    const warehouseResult = await dependencies.publishWarehouse(definition, request.items);
+    const warehouseResult = await dependencies.publishWarehouse(
+      definition,
+      request.items,
+    );
 
     if (!warehouseResult.success) {
       await dependencies.transitionOutcome({
@@ -425,7 +432,9 @@ export async function publishFeatureChangeRequest(
     });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "An unknown publication error occurred.";
+      error instanceof Error
+        ? error.message
+        : "An unknown publication error occurred.";
 
     try {
       await dependencies.recordAudit({
@@ -454,7 +463,8 @@ export async function publishFeatureChangeRequest(
       warehouseRowsWritten: 0,
       warehouseJobId: null,
       retryable: true,
-      nextAction: "Retry the approved request after the operational error is resolved.",
+      nextAction:
+        "Retry the approved request after the operational error is resolved.",
     });
   }
 }

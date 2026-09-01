@@ -816,13 +816,17 @@ const flattenFields = <T = unknown>(
 ): FilterFieldConfig<T>[] => {
   return fields.reduce<FilterFieldConfig<T>[]>((acc, item) => {
     if (isFieldGroup(item)) {
-      return [...acc, ...item.fields];
+      return acc.concat(item.fields);
     }
     // Handle group-level fields (new structure)
     if (isGroupLevelField(item)) {
-      return [...acc, ...item.fields!];
+      if (item.fields) {
+        return acc.concat(item.fields);
+      }
+      return acc;
     }
-    return [...acc, item];
+    acc.push(item);
+    return acc;
   }, []);
 };
 
@@ -2228,7 +2232,7 @@ export function Filters<T = unknown>({
 
                           return (
                             <CommandGroup
-                              key={`group-${index}`}
+                              key={item.group || `group-${index}`}
                               heading={item.group || "Fields"}
                             >
                               {groupFields.map((field, fieldIndex) => {
@@ -2236,7 +2240,7 @@ export function Filters<T = unknown>({
                                 if (field.type === "separator") {
                                   return (
                                     <CommandSeparator
-                                      key={`separator-${fieldIndex}`}
+                                      key={`separator-${field.type}-${fieldIndex}`}
                                     />
                                   );
                                 }
@@ -2280,7 +2284,7 @@ export function Filters<T = unknown>({
 
                           return (
                             <CommandGroup
-                              key={`group-${index}`}
+                              key={item.group || `group-${index}`}
                               heading={item.group || "Fields"}
                             >
                               {groupFields.map((field, fieldIndex) => {
@@ -2288,7 +2292,7 @@ export function Filters<T = unknown>({
                                 if (field.type === "separator") {
                                   return (
                                     <CommandSeparator
-                                      key={`separator-${fieldIndex}`}
+                                      key={`separator-${field.type}-${fieldIndex}`}
                                     />
                                   );
                                 }

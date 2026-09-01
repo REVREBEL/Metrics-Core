@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "biome check .",
     "test": "echo \"No tests configured\"",
+    "links:check": "node scripts/check-links.mjs",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "dependencies": {
