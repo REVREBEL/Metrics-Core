@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useWorkspace } from "@repo/ui/context";
-import { BookOpen, LifeBuoy, MessageCircle } from "lucide-react";
+import { BookOpen, MessageCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function HelpDeskPage() {
   const { workspace } = useWorkspace();
