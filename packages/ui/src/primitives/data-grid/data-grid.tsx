@@ -109,6 +109,9 @@ function DataGridProvider<TData extends object>({
 }: DataGridProps<TData> & { table: Table<TData> }) {
   const { recordCount, isLoading } = props;
 
+  // ⚡ Bolt: Destructuring `props` creates a fresh object reference on every render.
+  // Including `props` directly in the useMemo dependency array invalidated the context
+  // on every parent render. We memoize the context value based on stable primitive/object references.
   const value = useMemo(
     () => ({
       props,
@@ -116,8 +119,7 @@ function DataGridProvider<TData extends object>({
       recordCount,
       isLoading: isLoading || false,
     }),
-    // biome-ignore lint/correctness/useExhaustiveDependencies: props is used for the context but we also include its individual properties to stabilize the object
-    [props, table, recordCount, isLoading],
+    [props.className, props.loadingMode, props.loadingMessage, props.emptyMessage, props.onRowClick, props.tableLayout, props.tableClassNames, table, recordCount, isLoading],
   );
 
   return (
