@@ -1,3 +1,5 @@
 declare module "swapy" {
-  export function createSwapy(container: any, config?: any): any;
+  interface Swapy {}
+  interface Config {}
+  export function createSwapy(container: HTMLElement, config?: Partial<Config>): Swapy;
 }

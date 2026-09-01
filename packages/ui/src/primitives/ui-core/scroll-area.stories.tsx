@@ -20,7 +20,7 @@ export const Default: Story = {
       <div className="p-4">
         <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
         {Array.from({ length: 50 }).map((_, i, a) => (
-          <div key={i}>
+          <div key={`tag-${a.length - i}`}>
             <div className="text-sm">{`tag-${a.length - i}`}</div>
             {i < a.length - 1 && <div className="my-2 h-px bg-border" />}
           </div>

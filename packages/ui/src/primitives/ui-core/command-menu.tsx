@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useSearch } from "@/context/search-provider";
 import { useTheme } from "@/context/theme-provider";
-import { sidebarData } from "../layouts/data/sidebar-data";
+import { sidebarData, type NavGroup, type NavItem } from "../layouts/data/sidebar-data";
 import {
   CommandDialog,
   CommandEmpty,
@@ -36,9 +36,9 @@ export function CommandMenu() {
       <CommandList>
         <ScrollArea type="hover" className="h-72 pe-1">
           <CommandEmpty>No results found.</CommandEmpty>
-          {sidebarData.navGroups.map((group: any) => (
+          {sidebarData.navGroups.map((group: NavGroup) => (
             <CommandGroup key={group.title} heading={group.title}>
-              {group.items.map((navItem: any, i: number) => {
+              {group.items.map((navItem: NavItem, i: number) => {
                 if (navItem.url)
                   return (
                     <CommandItem
