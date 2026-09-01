@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   type ReactNode,
@@ -62,7 +62,7 @@ const Expandable = ({
   const [localOpen, setLocalOpen] = useState(defaultOpen);
 
   const containsAnchor = Boolean(
-    uniqueParamId && anchor?.includes(uniqueParamId)
+    uniqueParamId && anchor?.includes(uniqueParamId),
   );
   const shouldOverrideForAnchor =
     containsAnchor && !hasScrolledToAnchorRef?.current;
@@ -78,7 +78,7 @@ const Expandable = ({
     : localOpen;
 
   const [shouldRenderChildren, setShouldRenderChildren] = useState(
-    open || !lazy
+    open || !lazy,
   );
 
   useLayoutEffect(() => {
@@ -124,7 +124,7 @@ const Expandable = ({
       className={cn(
         Classes.Expandable,
         "mt-4 rounded-xl border-standard",
-        className
+        className,
       )}
       data-component-part="expandable"
       data-testid={uniqueParamId ? `${uniqueParamId}-children` : undefined}
@@ -146,14 +146,14 @@ const Expandable = ({
           "not-prose flex w-full cursor-pointer flex-row content-center items-center text-sm",
           "rounded-t-xl px-3.5 py-3 text-stone-600 hover:bg-stone-50/50 hover:text-stone-900 dark:text-stone-300 dark:hover:bg-white/5 dark:hover:text-stone-200",
           "list-none [&::-webkit-details-marker]:hidden",
-          !open && "rounded-b-xl"
+          !open && "rounded-b-xl",
         )}
         data-component-part="expandable-button"
       >
         <Icon
           className={cn(
             "size-2.5 bg-stone-400 transition-transform",
-            open && "rotate-90"
+            open && "rotate-90",
           )}
           data-component-part="expandable-icon"
           icon="angle-right"
@@ -169,7 +169,7 @@ const Expandable = ({
       <div
         className={cn(
           EXPANDABLE_CONTENT_CLASS,
-          "mx-3 border-stone-100 border-t px-2 dark:border-white/10"
+          "mx-3 border-stone-100 border-t px-2 dark:border-white/10",
         )}
         data-component-part={EXPANDABLE_CONTENT_CLASS}
         id={contentId}
@@ -180,5 +180,5 @@ const Expandable = ({
   );
 };
 
-export { Expandable };
 export type { ExpandableProps };
+export { Expandable };

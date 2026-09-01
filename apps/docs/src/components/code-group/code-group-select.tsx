@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { cn } from "@/utils/cn";
@@ -54,7 +54,7 @@ const CodeGroupSelect = ({
     safeSelectedGroup !== undefined ? snippets[safeSelectedGroup] : undefined;
   const options = useMemo(
     () => (groupSnippets ? Object.keys(groupSnippets) : undefined),
-    [groupSnippets]
+    [groupSnippets],
   );
   const [selectedOption, setSelectedOption] = useState(options?.[0]);
 
@@ -107,7 +107,7 @@ const CodeGroupSelect = ({
       className={cn(
         "not-prose relative flex min-w-full max-w-full flex-col overflow-hidden rounded-2xl p-0.5 text-xs leading-6",
         "border border-gray-950/10 bg-gray-50 dark:border-white/10 dark:bg-white/5",
-        className
+        className,
       )}
       data-testid="code-group-select"
     >
@@ -167,4 +167,4 @@ const CodeGroupSelect = ({
   );
 };
 
-export { type ExampleCodeSnippet, type CodeGroupSelectProps, CodeGroupSelect };
+export { CodeGroupSelect, type CodeGroupSelectProps, type ExampleCodeSnippet };

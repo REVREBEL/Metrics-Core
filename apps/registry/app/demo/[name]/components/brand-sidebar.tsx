@@ -1,5 +1,5 @@
-import { BrandSidebar } from "@/components/brand-sidebar";
 import { SidebarProvider } from "@ui";
+import { BrandSidebar } from "@/components/brand-sidebar";
 
 export const brandSidebar = {
   name: "brand-sidebar",

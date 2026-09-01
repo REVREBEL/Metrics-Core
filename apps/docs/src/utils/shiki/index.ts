@@ -107,7 +107,7 @@ function getShikiLanguage(lang: string | undefined): ShikiLanguage {
 
 function getLanguageFromClassName(
   className: string | undefined,
-  fallback?: string
+  fallback?: string,
 ): string {
   // biome-ignore lint/performance/useTopLevelRegex: TODO
   const match = /language-(\w+)/.exec(className ?? "");
@@ -147,7 +147,7 @@ async function loadShikiThemes(codeblocks?: CodeStyling) {
 
   const loaded = highlighter.getLoadedThemes();
   const toLoad = getThemesForCodeStyling(codeblocks).filter(
-    (t) => t !== "css-variables" && !loaded.includes(t)
+    (t) => t !== "css-variables" && !loaded.includes(t),
   ) as [BundledTheme, ...BundledTheme[]];
 
   if (toLoad.length > 0) {
@@ -176,16 +176,16 @@ type ShikiHighlightedHtmlArgs = {
 function getShikiHighlightedHtml(
   props: ShikiHighlightedHtmlArgs & {
     opts: ShikiHighlightedHtmlArgs["opts"] & { noAsync: true };
-  }
+  },
 ): string | undefined;
 
 function getShikiHighlightedHtml(
-  props: ShikiHighlightedHtmlArgs
+  props: ShikiHighlightedHtmlArgs,
 ): string | undefined | Promise<string | undefined>;
 
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: TODO
 function getShikiHighlightedHtml(
-  props: ShikiHighlightedHtmlArgs
+  props: ShikiHighlightedHtmlArgs,
 ): string | undefined | Promise<string | undefined> {
   if (!props.codeString || highlighterError !== undefined) {
     return undefined;
@@ -243,8 +243,7 @@ function getShikiHighlightedHtml(
   if (lang) {
     try {
       const serializer =
-        !!props.opts?.highlightedLines?.length ||
-        !!props.opts?.focusedLines?.length
+        props.opts?.highlightedLines?.length || props.opts?.focusedLines?.length
           ? "codeToHast"
           : "codeToHtml";
       const code = props.codeString.trim();
@@ -277,7 +276,7 @@ function getShikiHighlightedHtml(
       return hastToHtml(html);
     }
     const spanElements = codeElement.children.filter(
-      (child) => child.type === "element" && child.tagName === "span"
+      (child) => child.type === "element" && child.tagName === "span",
     ) as Element[];
     // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: TODO
     spanElements.forEach((child, index) => {
@@ -307,11 +306,11 @@ function getShikiHighlightedHtml(
 }
 
 export {
-  SHIKI_TRANSFORMERS,
-  highlighterPromise,
-  getShikiLanguage,
   getLanguageFromClassName,
-  loadShikiThemes,
-  type ShikiHighlightedHtmlArgs,
   getShikiHighlightedHtml,
+  getShikiLanguage,
+  highlighterPromise,
+  loadShikiThemes,
+  SHIKI_TRANSFORMERS,
+  type ShikiHighlightedHtmlArgs,
 };

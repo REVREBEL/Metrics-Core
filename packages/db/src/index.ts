@@ -1,7 +1,6 @@
 import { and, eq, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import * as schema from "./schema";
 import type {
   ChangeRequestFilters,
   ChangeRequestItemRecord,
@@ -12,6 +11,7 @@ import type {
   ReviewChangeRequestParams,
   WithdrawChangeRequestParams,
 } from "./repository-types";
+import * as schema from "./schema";
 
 export { and, eq, inArray } from "drizzle-orm";
 
@@ -65,8 +65,16 @@ export interface DraftRepository {
     userId: string,
     records: SaveDraftWithAuditInput[],
   ): Promise<DraftEditRecord[]>;
-  discardDrafts(tableKey: string, userId: string, rowKeys: string[]): Promise<number>;
-  discardDraftsWithAudit(tableKey: string, userId: string, rowKeys: string[]): Promise<number>;
+  discardDrafts(
+    tableKey: string,
+    userId: string,
+    rowKeys: string[],
+  ): Promise<number>;
+  discardDraftsWithAudit(
+    tableKey: string,
+    userId: string,
+    rowKeys: string[],
+  ): Promise<number>;
   discardAllDrafts(tableKey: string, userId: string): Promise<number>;
   discardAllDraftsWithAudit(tableKey: string, userId: string): Promise<number>;
   recordAuditLog(audit: AuditLogRecord): Promise<void>;
@@ -93,7 +101,10 @@ export class PostgresDraftRepository implements DraftRepository {
     this.db = getDb();
   }
 
-  async listDrafts(tableKey: string, userId: string): Promise<DraftEditRecord[]> {
+  async listDrafts(
+    tableKey: string,
+    userId: string,
+  ): Promise<DraftEditRecord[]> {
     const rows = await this.db
       .select()
       .from(schema.lookupTableDraftEdits)
@@ -150,7 +161,10 @@ export class PostgresDraftRepository implements DraftRepository {
       tableKey: inserted.tableKey,
       userId: inserted.userId,
       rowKey: inserted.rowKey,
-      originalPayload: inserted.originalPayload as Record<string, unknown> | null,
+      originalPayload: inserted.originalPayload as Record<
+        string,
+        unknown
+      > | null,
       draftPayload: inserted.draftPayload as Record<string, unknown>,
       status: inserted.status,
       createdAt: inserted.createdAt,
@@ -226,7 +240,10 @@ export class PostgresDraftRepository implements DraftRepository {
           tableKey: saved.tableKey,
           userId: saved.userId,
           rowKey: saved.rowKey,
-          originalPayload: saved.originalPayload as Record<string, unknown> | null,
+          originalPayload: saved.originalPayload as Record<
+            string,
+            unknown
+          > | null,
           draftPayload: saved.draftPayload as Record<string, unknown>,
           status: saved.status,
           createdAt: saved.createdAt,
@@ -238,7 +255,11 @@ export class PostgresDraftRepository implements DraftRepository {
     });
   }
 
-  async discardDrafts(tableKey: string, userId: string, rowKeys: string[]): Promise<number> {
+  async discardDrafts(
+    tableKey: string,
+    userId: string,
+    rowKeys: string[],
+  ): Promise<number> {
     if (!rowKeys || rowKeys.length === 0) {
       throw new Error("discardDrafts requires a non-empty array of rowKeys.");
     }
@@ -263,7 +284,9 @@ export class PostgresDraftRepository implements DraftRepository {
     rowKeys: string[],
   ): Promise<number> {
     if (!rowKeys || rowKeys.length === 0) {
-      throw new Error("discardDraftsWithAudit requires a non-empty array of rowKeys.");
+      throw new Error(
+        "discardDraftsWithAudit requires a non-empty array of rowKeys.",
+      );
     }
 
     return this.db.transaction(async (tx) => {
@@ -362,7 +385,10 @@ export class InMemoryDraftRepository implements DraftRepository {
     return `${userId}:${tableKey}:${rowKey}`;
   }
 
-  async listDrafts(tableKey: string, userId: string): Promise<DraftEditRecord[]> {
+  async listDrafts(
+    tableKey: string,
+    userId: string,
+  ): Promise<DraftEditRecord[]> {
     const results: DraftEditRecord[] = [];
     for (const draft of this.drafts.values()) {
       if (
@@ -381,11 +407,14 @@ export class InMemoryDraftRepository implements DraftRepository {
     const existing = this.drafts.get(key);
     const now = new Date();
     const record: DraftEditRecord = {
-      id: existing ? existing.id : `draft-${Math.random().toString(36).substring(2, 9)}`,
+      id: existing
+        ? existing.id
+        : `draft-${Math.random().toString(36).substring(2, 9)}`,
       tableKey: input.tableKey,
       userId: input.userId,
       rowKey: input.rowKey,
-      originalPayload: input.originalPayload ?? existing?.originalPayload ?? null,
+      originalPayload:
+        input.originalPayload ?? existing?.originalPayload ?? null,
       draftPayload: input.draftPayload,
       status: "draft",
       createdAt: existing ? existing.createdAt : now,
@@ -425,7 +454,11 @@ export class InMemoryDraftRepository implements DraftRepository {
     return savedResults;
   }
 
-  async discardDrafts(tableKey: string, userId: string, rowKeys: string[]): Promise<number> {
+  async discardDrafts(
+    tableKey: string,
+    userId: string,
+    rowKeys: string[],
+  ): Promise<number> {
     if (!rowKeys || rowKeys.length === 0) {
       throw new Error("discardDrafts requires a non-empty array of rowKeys.");
     }
@@ -484,7 +517,9 @@ export class InMemoryDraftRepository implements DraftRepository {
   }
 }
 
-export class PostgresChangeRequestRepository implements ChangeRequestRepository {
+export class PostgresChangeRequestRepository
+  implements ChangeRequestRepository
+{
   private db: ReturnType<typeof getDb>;
 
   constructor() {
@@ -500,7 +535,9 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
 
     const trimmedTitle = params.title.trim();
     if (!trimmedTitle || trimmedTitle.length < 3 || trimmedTitle.length > 100) {
-      throw new Error("Title is required and must be between 3 and 100 characters.");
+      throw new Error(
+        "Title is required and must be between 3 and 100 characters.",
+      );
     }
 
     const trimmedDesc = params.description?.trim() || null;
@@ -590,7 +627,10 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
         rowKey: item.rowKey,
         originalPayload: item.originalPayload as Record<string, unknown> | null,
         submittedPayload: item.submittedPayload as Record<string, unknown>,
-        validationSnapshot: item.validationSnapshot as Record<string, unknown> | null,
+        validationSnapshot: item.validationSnapshot as Record<
+          string,
+          unknown
+        > | null,
         createdAt: item.createdAt,
       }));
 
@@ -619,13 +659,19 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
     const conditions = [];
 
     if (filters?.status) {
-      conditions.push(eq(schema.lookupTableChangeRequests.status, filters.status));
+      conditions.push(
+        eq(schema.lookupTableChangeRequests.status, filters.status),
+      );
     }
     if (filters?.tableKey) {
-      conditions.push(eq(schema.lookupTableChangeRequests.tableKey, filters.tableKey));
+      conditions.push(
+        eq(schema.lookupTableChangeRequests.tableKey, filters.tableKey),
+      );
     }
     if (filters?.submitterId) {
-      conditions.push(eq(schema.lookupTableChangeRequests.submitterId, filters.submitterId));
+      conditions.push(
+        eq(schema.lookupTableChangeRequests.submitterId, filters.submitterId),
+      );
     }
 
     const rows = await this.db
@@ -685,7 +731,10 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
         rowKey: i.rowKey,
         originalPayload: i.originalPayload as Record<string, unknown> | null,
         submittedPayload: i.submittedPayload as Record<string, unknown>,
-        validationSnapshot: i.validationSnapshot as Record<string, unknown> | null,
+        validationSnapshot: i.validationSnapshot as Record<
+          string,
+          unknown
+        > | null,
         createdAt: i.createdAt,
       })),
     };
@@ -695,8 +744,13 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
     params: ReviewChangeRequestParams,
   ): Promise<ChangeRequestWithItems> {
     const trimmedNotes = params.reviewNotes?.trim() ?? null;
-    if (params.decision === "reject" && (!trimmedNotes || trimmedNotes.length < 3)) {
-      throw new Error("Rejection notes are required and must be at least 3 characters.");
+    if (
+      params.decision === "reject" &&
+      (!trimmedNotes || trimmedNotes.length < 3)
+    ) {
+      throw new Error(
+        "Rejection notes are required and must be at least 3 characters.",
+      );
     }
     if (trimmedNotes && trimmedNotes.length > 2000) {
       throw new Error("Review notes cannot exceed 2000 characters.");
@@ -714,15 +768,21 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
       }
 
       if (req.status !== "submitted") {
-        throw new Error(`Change request '${req.id}' is in status '${req.status}' and cannot be reviewed.`);
+        throw new Error(
+          `Change request '${req.id}' is in status '${req.status}' and cannot be reviewed.`,
+        );
       }
 
       if (req.submitterId === params.reviewerId) {
-        throw new Error("Self-review prohibited. Submitter cannot approve or reject their own request.");
+        throw new Error(
+          "Self-review prohibited. Submitter cannot approve or reject their own request.",
+        );
       }
 
-      const newReqStatus = params.decision === "approve" ? "approved" : "rejected";
-      const newDraftStatus = params.decision === "approve" ? "approved" : "draft";
+      const newReqStatus =
+        params.decision === "approve" ? "approved" : "rejected";
+      const newDraftStatus =
+        params.decision === "approve" ? "approved" : "draft";
 
       const [updatedReq] = await tx
         .update(schema.lookupTableChangeRequests)
@@ -739,7 +799,12 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
       const items = await tx
         .select()
         .from(schema.lookupTableChangeRequestItems)
-        .where(eq(schema.lookupTableChangeRequestItems.changeRequestId, params.changeRequestId));
+        .where(
+          eq(
+            schema.lookupTableChangeRequestItems.changeRequestId,
+            params.changeRequestId,
+          ),
+        );
 
       const draftEditIds = items.map((i) => i.draftEditId);
 
@@ -748,7 +813,10 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
         .set({ status: newDraftStatus, updatedAt: new Date() })
         .where(inArray(schema.lookupTableDraftEdits.id, draftEditIds));
 
-      const action = params.decision === "approve" ? "CHANGE_REQUEST_APPROVED" : "CHANGE_REQUEST_REJECTED";
+      const action =
+        params.decision === "approve"
+          ? "CHANGE_REQUEST_APPROVED"
+          : "CHANGE_REQUEST_REJECTED";
 
       await tx.insert(schema.appAuditLog).values({
         actorId: params.reviewerId,
@@ -785,7 +853,10 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
           rowKey: i.rowKey,
           originalPayload: i.originalPayload as Record<string, unknown> | null,
           submittedPayload: i.submittedPayload as Record<string, unknown>,
-          validationSnapshot: i.validationSnapshot as Record<string, unknown> | null,
+          validationSnapshot: i.validationSnapshot as Record<
+            string,
+            unknown
+          > | null,
           createdAt: i.createdAt,
         })),
       };
@@ -807,7 +878,9 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
       }
 
       if (req.status !== "submitted") {
-        throw new Error(`Change request '${req.id}' is in status '${req.status}' and cannot be withdrawn.`);
+        throw new Error(
+          `Change request '${req.id}' is in status '${req.status}' and cannot be withdrawn.`,
+        );
       }
 
       const [updatedReq] = await tx
@@ -823,7 +896,12 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
       const items = await tx
         .select()
         .from(schema.lookupTableChangeRequestItems)
-        .where(eq(schema.lookupTableChangeRequestItems.changeRequestId, params.changeRequestId));
+        .where(
+          eq(
+            schema.lookupTableChangeRequestItems.changeRequestId,
+            params.changeRequestId,
+          ),
+        );
 
       const draftEditIds = items.map((i) => i.draftEditId);
 
@@ -866,7 +944,10 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
           rowKey: i.rowKey,
           originalPayload: i.originalPayload as Record<string, unknown> | null,
           submittedPayload: i.submittedPayload as Record<string, unknown>,
-          validationSnapshot: i.validationSnapshot as Record<string, unknown> | null,
+          validationSnapshot: i.validationSnapshot as Record<
+            string,
+            unknown
+          > | null,
           createdAt: i.createdAt,
         })),
       };
@@ -874,7 +955,9 @@ export class PostgresChangeRequestRepository implements ChangeRequestRepository 
   }
 }
 
-export class InMemoryChangeRequestRepository implements ChangeRequestRepository {
+export class InMemoryChangeRequestRepository
+  implements ChangeRequestRepository
+{
   public requests: Map<string, ChangeRequestRecord> = new Map();
   public items: Map<string, ChangeRequestItemRecord[]> = new Map();
   public auditLogs: AuditLogRecord[] = [];
@@ -893,7 +976,9 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
 
     const trimmedTitle = params.title.trim();
     if (!trimmedTitle || trimmedTitle.length < 3 || trimmedTitle.length > 100) {
-      throw new Error("Title is required and must be between 3 and 100 characters.");
+      throw new Error(
+        "Title is required and must be between 3 and 100 characters.",
+      );
     }
 
     const trimmedDesc = params.description?.trim() || null;
@@ -966,7 +1051,8 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
     for (const req of this.requests.values()) {
       if (filters?.status && req.status !== filters.status) continue;
       if (filters?.tableKey && req.tableKey !== filters.tableKey) continue;
-      if (filters?.submitterId && req.submitterId !== filters.submitterId) continue;
+      if (filters?.submitterId && req.submitterId !== filters.submitterId)
+        continue;
       results.push({ ...req });
     }
     return results;
@@ -991,24 +1077,35 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
     }
 
     if (req.status !== "submitted") {
-      throw new Error(`Change request '${req.id}' is in status '${req.status}' and cannot be reviewed.`);
+      throw new Error(
+        `Change request '${req.id}' is in status '${req.status}' and cannot be reviewed.`,
+      );
     }
 
     if (req.submitterId === params.reviewerId) {
-      throw new Error("Self-review prohibited. Submitter cannot approve or reject their own request.");
+      throw new Error(
+        "Self-review prohibited. Submitter cannot approve or reject their own request.",
+      );
     }
 
     const trimmedNotes = params.reviewNotes?.trim() ?? null;
-    if (params.decision === "reject" && (!trimmedNotes || trimmedNotes.length < 3)) {
-      throw new Error("Rejection notes are required and must be at least 3 characters.");
+    if (
+      params.decision === "reject" &&
+      (!trimmedNotes || trimmedNotes.length < 3)
+    ) {
+      throw new Error(
+        "Rejection notes are required and must be at least 3 characters.",
+      );
     }
     if (trimmedNotes && trimmedNotes.length > 2000) {
       throw new Error("Review notes cannot exceed 2000 characters.");
     }
 
     const now = new Date();
-    const newReqStatus = params.decision === "approve" ? "approved" : "rejected";
-    const targetDraftStatus = params.decision === "approve" ? "approved" : "draft";
+    const newReqStatus =
+      params.decision === "approve" ? "approved" : "rejected";
+    const targetDraftStatus =
+      params.decision === "approve" ? "approved" : "draft";
 
     const updated: ChangeRequestRecord = {
       ...req,
@@ -1023,12 +1120,19 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
     if (this.draftRepo) {
       const items = this.items.get(req.id) ?? [];
       const draftEditIds = items.map((i) => i.draftEditId);
-      await this.draftRepo.transitionDrafts(draftEditIds, "submitted", targetDraftStatus);
+      await this.draftRepo.transitionDrafts(
+        draftEditIds,
+        "submitted",
+        targetDraftStatus,
+      );
     }
 
     this.requests.set(req.id, updated);
 
-    const action = params.decision === "approve" ? "CHANGE_REQUEST_APPROVED" : "CHANGE_REQUEST_REJECTED";
+    const action =
+      params.decision === "approve"
+        ? "CHANGE_REQUEST_APPROVED"
+        : "CHANGE_REQUEST_REJECTED";
 
     this.auditLogs.push({
       actorId: params.reviewerId,
@@ -1060,7 +1164,9 @@ export class InMemoryChangeRequestRepository implements ChangeRequestRepository 
     }
 
     if (req.status !== "submitted") {
-      throw new Error(`Change request '${req.id}' is in status '${req.status}' and cannot be withdrawn.`);
+      throw new Error(
+        `Change request '${req.id}' is in status '${req.status}' and cannot be withdrawn.`,
+      );
     }
 
     const now = new Date();

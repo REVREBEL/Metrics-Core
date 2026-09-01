@@ -33,41 +33,45 @@
   font-style: normal;
   font-weight: 300 700;
   font-display: swap;
-  src: url('./khand/khand-variable.woff2') format('woff2'),
-    url('./khand/khand-variable.woff') format('woff'),
-    url('./khand/khand-variable.ttf') format('truetype');
+  src:
+    url("./khand/khand-variable.woff2") format("woff2"),
+    url("./khand/khand-variable.woff") format("woff"),
+    url("./khand/khand-variable.ttf") format("truetype");
 }
 
 /** Funnel Sans (variable, 300–700) */
 @font-face {
-  font-family: 'Funnel Sans';
+  font-family: "Funnel Sans";
   font-style: normal;
   font-weight: 300 700;
   font-display: swap;
-  src: url('./funnel-sans/funnel-sans-variable.woff2') format('woff2'),
-    url('./funnel-sans/funnel-sans-variable.woff') format('woff'),
-    url('./funnel-sans/funnel-sans-variable.ttf') format('truetype');
+  src:
+    url("./funnel-sans/funnel-sans-variable.woff2") format("woff2"),
+    url("./funnel-sans/funnel-sans-variable.woff") format("woff"),
+    url("./funnel-sans/funnel-sans-variable.ttf") format("truetype");
 }
 
 /** Fira Code (variable, 300–500) */
 @font-face {
-  font-family: 'Fira Code';
+  font-family: "Fira Code";
   font-style: normal;
   font-weight: 300 500;
   font-display: swap;
-  src: url('./fira-code/fira-code-variable.woff2') format('woff2'),
-    url('./fira-code/fira-code-variable.woff') format('woff');
+  src:
+    url("./fira-code/fira-code-variable.woff2") format("woff2"),
+    url("./fira-code/fira-code-variable.woff") format("woff");
 }
 
 /* General Sans (variable, 300–500) */
 @font-face {
-  font-family: 'General Sans';
+  font-family: "General Sans";
   font-style: normal;
   font-weight: 300 500;
   font-display: swap;
-  src: url('./general-sans/general-sans-variable.woff2') format('woff2'),
-    url('./general-sans/general-sans-variable.woff') format('woff'),
-    url('./general-sans/general-sans-variable.ttf') format('truetype');
+  src:
+    url("./general-sans/general-sans-variable.woff2") format("woff2"),
+    url("./general-sans/general-sans-variable.woff") format("woff"),
+    url("./general-sans/general-sans-variable.ttf") format("truetype");
 }
 
 /* Supreme (variable, 300–800) */
@@ -76,19 +80,21 @@
   font-style: normal;
   font-weight: 300 800;
   font-display: swap;
-  src: url('./supreme/supreme-variable.woff2') format('woff2'),
-    url('./supreme/supreme-variable.woff') format('woff'),
-    url('./supreme/supreme-variable.ttf') format('truetype');
+  src:
+    url("./supreme/supreme-variable.woff2") format("woff2"),
+    url("./supreme/supreme-variable.woff") format("woff"),
+    url("./supreme/supreme-variable.ttf") format("truetype");
 }
 
 /** Noto Emoji (variable, constrained to 700) */
 @font-face {
-  font-family: 'Noto Emoji';
+  font-family: "Noto Emoji";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('./noto-emoji/noto-emoji-variable.woff2') format('woff2'),
-    url('./noto-emoji/noto-emoji-variable.woff') format('woff');
+  src:
+    url("./noto-emoji/noto-emoji-variable.woff2") format("woff2"),
+    url("./noto-emoji/noto-emoji-variable.woff") format("woff");
 }
 
 /**  Pacifico (static only, 400) */
@@ -97,12 +103,11 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('./pacifico/pacifico-regular.woff2') format('woff2'),
-    url('./pacifico/pacifico-regular.woff') format('woff'),
-    url('./pacifico/pacifico-regular.ttf') format('truetype');
+  src:
+    url("./pacifico/pacifico-regular.woff2") format("woff2"),
+    url("./pacifico/pacifico-regular.woff") format("woff"),
+    url("./pacifico/pacifico-regular.ttf") format("truetype");
 }
-
-
 
 /** Barlow (variable, 800–900) */
 @font-face {
@@ -110,11 +115,11 @@
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url('./barlow/barlow-bold.woff2') format('woff2'),
-    url('./barlow/barlow-bold.woff') format('woff'),
-    url('./barlow/barlow-bold.ttf') format('truetype');
+  src:
+    url("./barlow/barlow-bold.woff2") format("woff2"),
+    url("./barlow/barlow-bold.woff") format("woff"),
+    url("./barlow/barlow-bold.ttf") format("truetype");
 }
-
 
 /** Barlow (variable, 800–900) */
 @font-face {
@@ -122,9 +127,10 @@
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: url('./barlow/barlow-black.woff2') format('woff2'),
-    url('./barlow/barlow-black.woff') format('woff'),
-    url('./barlow/barlow-black.ttf') format('truetype');
+  src:
+    url("./barlow/barlow-black.woff2") format("woff2"),
+    url("./barlow/barlow-black.woff") format("woff"),
+    url("./barlow/barlow-black.ttf") format("truetype");
 }
 
 /** Logic Monoscript (static only, 300–900) */
@@ -182,8 +188,6 @@
     url("./logic-monoscript/logic-monoscript-black.woff") format("woff"),
     url("./logic-monoscript/logic-monoscript-black.ttf") format("truetype");
 }
-
-
 
 /** -----------------------------------------------------------
 
@@ -252,8 +256,6 @@ font-family: "General Sans",
   monospace;
 
 ----------------------------------------------------------- */
-
-
 
 /** -----------------------------------------------------------
 

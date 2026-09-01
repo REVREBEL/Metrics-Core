@@ -1,5 +1,5 @@
-import { Label } from "@ui";
 import { Input } from "@inputs";
+import { Label } from "@ui";
 
 export const label = {
   name: "label",

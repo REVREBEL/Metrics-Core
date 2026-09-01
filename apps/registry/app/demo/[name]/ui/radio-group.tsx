@@ -1,5 +1,4 @@
-import { RadioGroup, RadioGroupItem } from "@ui";
-import { Label } from "@ui";
+import { Label, RadioGroup, RadioGroupItem } from "@ui";
 
 export const radioGroup = {
   name: "radio-group",

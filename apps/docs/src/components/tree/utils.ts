@@ -1,6 +1,6 @@
 const getParentTreeItem = (
   element: HTMLElement,
-  container: HTMLElement
+  container: HTMLElement,
 ): HTMLElement | null => {
   const findParent = (parent: HTMLElement | null): HTMLElement | null => {
     if (!parent || parent === container) {
@@ -35,7 +35,7 @@ const getFirstChildTreeItem = (folder: HTMLElement): HTMLElement | null => {
 
 const isInsideCollapsedGroup = (
   el: HTMLElement,
-  container: HTMLElement
+  container: HTMLElement,
 ): boolean => {
   const checkParent = (parent: HTMLElement | null): boolean => {
     if (!parent || parent === container) {
@@ -57,7 +57,7 @@ const isInsideCollapsedGroup = (
 
 const getVisibleTreeItems = (container: HTMLElement): HTMLElement[] =>
   Array.from(
-    container.querySelectorAll<HTMLElement>('[role="treeitem"]')
+    container.querySelectorAll<HTMLElement>('[role="treeitem"]'),
   ).filter((el) => !isInsideCollapsedGroup(el, container));
 
 const calculatePaddingLeft = (level: number) => {
@@ -71,7 +71,7 @@ const getTreeItemLabel = (element: HTMLElement): string | null => {
 
 const getSiblingFolders = (
   element: HTMLElement,
-  container: HTMLElement
+  container: HTMLElement,
 ): HTMLElement[] => {
   const findParentGroup = (el: HTMLElement | null): HTMLElement | null => {
     if (!el || el === container) {
@@ -93,7 +93,7 @@ const getSiblingFolders = (
 
   return Array.from(parentGroup.children).flatMap((child) => {
     const nested = child.querySelector<HTMLElement>(
-      ':scope > [role="treeitem"][aria-expanded]'
+      ':scope > [role="treeitem"][aria-expanded]',
     );
     const direct =
       child instanceof HTMLElement &&
@@ -115,11 +115,11 @@ const updateRovingTabindex = (container: HTMLElement, target: HTMLElement) => {
 };
 
 export {
-  getParentTreeItem,
-  getFirstChildTreeItem,
-  getVisibleTreeItems,
   calculatePaddingLeft,
-  getTreeItemLabel,
+  getFirstChildTreeItem,
+  getParentTreeItem,
   getSiblingFolders,
+  getTreeItemLabel,
+  getVisibleTreeItems,
   updateRovingTabindex,
 };

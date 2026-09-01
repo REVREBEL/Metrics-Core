@@ -175,10 +175,10 @@ const getShikiLanguageFromPreset = (lang: string): string =>
   getPreset(lang)?.shikiLanguage ?? lang;
 
 export {
-  type SnippetPreset,
-  SNIPPET_PRESETS,
-  getPreset,
   getDisplayName,
   getIconKey,
+  getPreset,
   getShikiLanguageFromPreset,
+  SNIPPET_PRESETS,
+  type SnippetPreset,
 };

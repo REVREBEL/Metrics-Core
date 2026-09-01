@@ -7,7 +7,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "REVREBEL Registry",
-  description: "Registry foundations for REVREBEL primitives, tokens, utilities, and staged UI packages.",
+  description:
+    "Registry foundations for REVREBEL primitives, tokens, utilities, and staged UI packages.",
   icons: [{ rel: "icon", url: "/favicon.svg", type: "image/svg+xml" }],
 };
 

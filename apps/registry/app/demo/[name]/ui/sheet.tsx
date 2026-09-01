@@ -1,4 +1,7 @@
+import { Button } from "@buttons";
+import { Input } from "@inputs";
 import {
+  Label,
   Sheet,
   SheetClose,
   SheetContent,
@@ -8,9 +11,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@ui";
-import { Button } from "@buttons";
-import { Input } from "@inputs";
-import { Label } from "@ui";
 
 export const sheet = {
   name: "sheet",
@@ -29,11 +29,15 @@ export const sheet = {
           </SheetHeader>
           <div className="grid gap-4 px-4 py-6">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">Name</Label>
+              <Label htmlFor="name" className="text-right">
+                Name
+              </Label>
               <Input id="name" value="Pedro Duarte" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">Username</Label>
+              <Label htmlFor="username" className="text-right">
+                Username
+              </Label>
               <Input id="username" value="@peduarte" className="col-span-3" />
             </div>
           </div>

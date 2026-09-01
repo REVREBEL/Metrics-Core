@@ -42,7 +42,7 @@ const Tile = ({ href, children, title, description, className }: TileProps) => {
   const DEFAULT_BG_PATTERN_CLASSES = cn(
     "pointer-events-none size-full select-none bg-center bg-repeat-round [grid-area:1/1]",
     "after:absolute after:left-0 after:h-full after:w-[7px] after:bg-stone-50 after:content-[''] dark:after:bg-stone-900",
-    "before:absolute before:right-0 before:h-full before:w-[7px] before:bg-stone-50 before:content-[''] dark:before:bg-stone-900"
+    "before:absolute before:right-0 before:h-full before:w-[7px] before:bg-stone-50 before:content-[''] dark:before:bg-stone-900",
   );
 
   return (
@@ -52,7 +52,7 @@ const Tile = ({ href, children, title, description, className }: TileProps) => {
       className={cn(
         Classes.Tile,
         "group not-prose flex w-full min-w-0 cursor-pointer flex-col items-center justify-center gap-1",
-        className
+        className,
       )}
     >
       <div
@@ -113,5 +113,5 @@ const Tile = ({ href, children, title, description, className }: TileProps) => {
   );
 };
 
-export { Tile };
 export type { TileProps };
+export { Tile };

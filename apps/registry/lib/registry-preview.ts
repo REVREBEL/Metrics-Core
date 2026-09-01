@@ -3,8 +3,8 @@ export {
   getRegistryPreviewSpec,
   getVisualPreview,
   RegistryButtonFamilyPreview,
-  type RegistryPreviewInput,
   type RegistryButtonPreviewGroupId,
+  type RegistryPreviewInput,
   type RegistryPreviewLayout,
   type RegistryPreviewSpec,
 } from "@/lib/registry.visual-previews";

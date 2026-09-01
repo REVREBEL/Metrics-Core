@@ -1,10 +1,10 @@
 import {
+  type Component,
   getBlocks,
   getComponents,
   getRegistryItem,
   getRegistryItems,
   getUIPrimitives,
-  type Component,
 } from "./registry";
 import {
   getRegistryFolderRoots,
@@ -23,37 +23,43 @@ const ROOT_SUMMARY: Record<string, RootSummary> = {
   primitives: {
     id: "primitives",
     eyebrow: "Core UI",
-    description: "Buttons, inputs, cards, tables, and low-level building blocks that should feel complete before product modules arrive.",
+    description:
+      "Buttons, inputs, cards, tables, and low-level building blocks that should feel complete before product modules arrive.",
     status: "live",
   },
   styles: {
     id: "styles",
     eyebrow: "Tokens",
-    description: "Theme variables, reference styles, and the token sources that define the registry visual system.",
+    description:
+      "Theme variables, reference styles, and the token sources that define the registry visual system.",
     status: "live",
   },
   fonts: {
     id: "fonts",
     eyebrow: "Typography",
-    description: "The font system and brand type stack used across the registry foundation.",
+    description:
+      "The font system and brand type stack used across the registry foundation.",
     status: "live",
   },
   "ui-registry": {
     id: "ui-registry",
     eyebrow: "Registry UX",
-    description: "Installer helpers, playground support, and registry-facing UI glue.",
+    description:
+      "Installer helpers, playground support, and registry-facing UI glue.",
     status: "live",
   },
   lib: {
     id: "lib",
     eyebrow: "Support Code",
-    description: "Shared helpers, adapters, and metadata used to keep registry pages predictable.",
+    description:
+      "Shared helpers, adapters, and metadata used to keep registry pages predictable.",
     status: "live",
   },
   components: {
     id: "components",
     eyebrow: "Metrics Modules",
-    description: "Metrics-specific compositions are staged behind the foundational registry work and should not drive the homepage yet.",
+    description:
+      "Metrics-specific compositions are staged behind the foundational registry work and should not drive the homepage yet.",
     status: "staged",
   },
 };
@@ -138,7 +144,10 @@ export function getRegistryItemsForFiles(filePaths: string[]) {
   return items;
 }
 
-export function getRegistryItemsForFolder(folderId: string, filePaths: string[]) {
+export function getRegistryItemsForFolder(
+  folderId: string,
+  filePaths: string[],
+) {
   const directMatches = getRegistryItemsForFiles(filePaths);
 
   if (directMatches.length > 0) {
@@ -150,10 +159,18 @@ export function getRegistryItemsForFolder(folderId: string, filePaths: string[])
   }
 
   const fallbackItems = filePaths
-    .map((filePath) => filePath.split("/").pop()?.replace(/\.tsx?$/, "") ?? "")
+    .map(
+      (filePath) =>
+        filePath
+          .split("/")
+          .pop()
+          ?.replace(/\.tsx?$/, "") ?? "",
+    )
     .filter(Boolean)
     .map((name) => getRegistryItem(name))
     .filter((item): item is Component => Boolean(item));
 
-  return Array.from(new Map(fallbackItems.map((item) => [item.name, item])).values());
+  return Array.from(
+    new Map(fallbackItems.map((item) => [item.name, item])).values(),
+  );
 }

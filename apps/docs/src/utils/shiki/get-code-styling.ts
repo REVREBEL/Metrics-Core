@@ -6,7 +6,7 @@ import {
 } from "@/utils/shiki/constants";
 
 const codeStylingToThemeOrThemes = (
-  codeStylingFromConfig: CodeStyling
+  codeStylingFromConfig: CodeStyling,
 ): { themes: { light: ShikiThemeType; dark: ShikiThemeType } } => {
   if (
     typeof codeStylingFromConfig === "object" &&

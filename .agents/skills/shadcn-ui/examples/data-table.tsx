@@ -1,50 +1,49 @@
 // Example: Data Table with Sorting and Filtering
 // Demonstrates: Table composition, TanStack Table integration, responsive design
 
-"use client"
+"use client";
 
+import { Button } from "@buttons/button";
+import { Input } from "@forms/fields/input";
 import {
-    ColumnDef,
-    ColumnFiltersState,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    SortingState,
-    useReactTable,
-} from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
-import * as React from "react"
-
-import { Button } from "@buttons/button"
+  type ColumnDef,
+  type ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  type SortingState,
+  useReactTable,
+} from "@tanstack/react-table";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import * as React from "react";
 import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@forms/fields/input"
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 // Define data type
 export type User = {
-  id: string
-  name: string
-  email: string
-  role: "admin" | "user" | "viewer"
-  status: "active" | "inactive"
-}
+  id: string;
+  name: string;
+  email: string;
+  role: "admin" | "user" | "viewer";
+  status: "active" | "inactive";
+};
 
 // Sample data
 const data: User[] = [
@@ -69,7 +68,7 @@ const data: User[] = [
     role: "viewer",
     status: "inactive",
   },
-]
+];
 
 // Define columns
 export const columns: ColumnDef<User>[] = [
@@ -84,7 +83,7 @@ export const columns: ColumnDef<User>[] = [
           Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
   },
@@ -99,16 +98,14 @@ export const columns: ColumnDef<User>[] = [
           Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
     accessorKey: "role",
     header: "Role",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("role")}</div>
-    ),
+    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
   },
   {
     accessorKey: "status",
@@ -121,7 +118,7 @@ export const columns: ColumnDef<User>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const user = row.original
+      const user = row.original;
 
       return (
         <DropdownMenu>
@@ -143,16 +140,18 @@ export const columns: ColumnDef<User>[] = [
             <DropdownMenuItem>Edit user</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      )
+      );
     },
   },
-]
+];
 
 export function DataTableExample() {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-  const [columnVisibility, setColumnVisibility] = React.useState({})
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  );
+  const [columnVisibility, setColumnVisibility] = React.useState({});
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
     data,
@@ -171,7 +170,7 @@ export function DataTableExample() {
       columnVisibility,
       rowSelection,
     },
-  })
+  });
 
   return (
     <div className="w-full">
@@ -206,7 +205,7 @@ export function DataTableExample() {
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
-                )
+                );
               })}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -223,10 +222,10 @@ export function DataTableExample() {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -242,7 +241,7 @@ export function DataTableExample() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -286,12 +285,12 @@ export function DataTableExample() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 /**
  * Key Patterns Demonstrated:
- * 
+ *
  * 1. TanStack Table Integration: Using @tanstack/react-table with shadcn/ui
  * 2. Sorting: Click headers to sort ascending/descending
  * 3. Filtering: Text input to filter table data
@@ -299,11 +298,11 @@ export function DataTableExample() {
  * 5. Pagination: Built-in pagination controls
  * 6. Row Actions: Dropdown menu per row for context actions
  * 7. Responsive Design: Table adapts to different screen sizes
- * 
+ *
  * Required Dependencies:
  * - @tanstack/react-table
  * - lucide-react
- * 
+ *
  * Installation:
  * npx shadcn@latest add table
  * npx shadcn@latest add button

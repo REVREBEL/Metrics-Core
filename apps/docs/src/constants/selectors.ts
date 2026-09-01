@@ -137,7 +137,7 @@ const _classes = {
 } as const;
 
 const Classes = Object.fromEntries(
-  Object.entries(_classes).map(([key, value]) => [key, `${value}`])
+  Object.entries(_classes).map(([key, value]) => [key, `${value}`]),
 ) as { readonly [K in keyof typeof _classes]: `${(typeof _classes)[K]}` };
 
 export { Classes };

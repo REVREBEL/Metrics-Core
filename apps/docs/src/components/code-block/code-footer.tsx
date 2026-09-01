@@ -35,4 +35,4 @@ const CodeFooter = ({
   );
 };
 
-export { type CodeFooterProps, CodeFooter };
+export { CodeFooter, type CodeFooterProps };

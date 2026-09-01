@@ -1,9 +1,5 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-import * as React from "react";
-import { Label, Pie, PieChart } from "recharts";
-
 import {
   Card,
   CardContent,
@@ -12,12 +8,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@ui";
+import { TrendingUp } from "lucide-react";
+import * as React from "react";
+import { Label, Pie, PieChart } from "recharts";
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/primitives/charts/chart";
+
 const chartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
   { browser: "safari", visitors: 200, fill: "var(--color-safari)" },

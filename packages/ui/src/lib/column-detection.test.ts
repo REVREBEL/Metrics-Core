@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { detectColumnType, detectColumns, detectColumnsConfig } from "./column-detection";
+import {
+  detectColumns,
+  detectColumnsConfig,
+  detectColumnType,
+} from "./column-detection";
 
 describe("column-detection", () => {
   describe("detectColumnType", () => {
@@ -42,19 +46,61 @@ describe("column-detection", () => {
 
     it("detects types across rows accurately", () => {
       const data = [
-        { id: 1, name: "Alice", active: "yes", createdAt: "2025-01-01", meta: { role: "admin" } },
-        { id: 2, name: "Bob", active: "no", createdAt: "2025-01-02", meta: { role: "user" } },
-        { id: 3, name: "Charlie", active: "yes", createdAt: "2025-01-03", meta: { role: "user" } },
+        {
+          id: 1,
+          name: "Alice",
+          active: "yes",
+          createdAt: "2025-01-01",
+          meta: { role: "admin" },
+        },
+        {
+          id: 2,
+          name: "Bob",
+          active: "no",
+          createdAt: "2025-01-02",
+          meta: { role: "user" },
+        },
+        {
+          id: 3,
+          name: "Charlie",
+          active: "yes",
+          createdAt: "2025-01-03",
+          meta: { role: "user" },
+        },
       ];
 
       const columns = detectColumns(data);
 
       expect(columns).toEqual([
         { id: "id", accessor: "id", label: "Id", type: "number", order: 0 },
-        { id: "name", accessor: "name", label: "Name", type: "string", order: 1 },
-        { id: "active", accessor: "active", label: "Active", type: "boolean", order: 2 },
-        { id: "createdAt", accessor: "createdAt", label: "Created At", type: "date", order: 3 },
-        { id: "meta", accessor: "meta", label: "Meta", type: "object", order: 4 },
+        {
+          id: "name",
+          accessor: "name",
+          label: "Name",
+          type: "string",
+          order: 1,
+        },
+        {
+          id: "active",
+          accessor: "active",
+          label: "Active",
+          type: "boolean",
+          order: 2,
+        },
+        {
+          id: "createdAt",
+          accessor: "createdAt",
+          label: "Created At",
+          type: "date",
+          order: 3,
+        },
+        {
+          id: "meta",
+          accessor: "meta",
+          label: "Meta",
+          type: "object",
+          order: 4,
+        },
       ]);
     });
   });

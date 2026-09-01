@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { DayPicker, type DateRange } from "react-day-picker";
+import { type DateRange, DayPicker } from "react-day-picker";
 
 export function MultiCalendar() {
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>({

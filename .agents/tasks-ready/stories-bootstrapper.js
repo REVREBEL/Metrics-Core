@@ -17,15 +17,40 @@ packages/ui/src/primitives/charts/line-chart.tsx
 packages/ui/src/primitives/charts/line-chart.stories.tsx
 ```
 
-The generator should eliminate repetitive story setup while avoiding misleading examples, destructive overwrites, and unnecessary changes to production component files.
-
-This task is limited to story discovery and story-file generation.
+The generator should eliminate repetitive story setup
+while avoiding misleading
+examples, destructive;
+overwrites, and;
+unnecessary;
+changes;
+to;
+production;
+component;
+files.This;
+task;
+is;
+limited;
+to;
+story;
+discovery;
+and;
+story - file;
+generation.
 
 ---
 
-# Required Outcome
+#
+Required;
+Outcome;
 
-The repository should provide a command such as:
+The;
+repository;
+should;
+provide;
+a;
+command;
+such as
+:
 
 ```bash
 pnpm storybook:stories:generate
@@ -37,19 +62,42 @@ that:
 2. Identifies exported React components.
 3. Detects existing story files.
 4. Creates stories only where they are missing.
-5. Generates useful defaults for simple components.
-6. Uses family templates for known component categories.
-7. Marks unresolved complex props clearly.
-8. Never silently overwrites authored stories.
-9. Produces a machine-readable generation report.
+5. Generates useful defaults
+for simple components.
+6. Uses
+family;
+templates;
+for known component categories.
+7.
+Marks;
+unresolved;
+complex;
+props;
+clearly.
+8;
+Never;
+silently;
+overwrites;
+authored;
+stories.
+9;
+Produces;
+a;
+machine - readable;
+generation;
+report.
 
 ---
 
-# Existing Architecture to Preserve
+#
+Existing;
+Architecture;
+to;
+Preserve;
 
-Do not change:
-
-```txt
+Do;
+not;
+change: ```txt
 packages/ui/src
 apps/storybook
 apps/registry
@@ -57,35 +105,58 @@ apps/registry/registry.json
 root TypeScript aliases
 component folder structure
 shadcn install targets
-```
+```;
 
-Do not move or rename components.
-
-Do not rewrite existing imports inside production components.
-
-Do not make story generation part of normal application builds.
-
-The generator is an explicit development command.
+Do;
+not;
+move;
+or;
+rename;
+components.Do;
+not;
+rewrite;
+existing;
+imports;
+inside;
+production;
+components.Do;
+not;
+make;
+story;
+generation;
+part;
+of;
+normal;
+application;
+builds.The;
+generator;
+is;
+an;
+explicit;
+development;
+command.
 
 ---
 
-# Script Location
+#
+Script;
+Location;
 
-Create:
-
-```txt
+Create: ```txt
 apps/storybook/scripts/generate-stories.mjs
-```
+```;
 
-Supporting modules may be created under:
-
-```txt
+Supporting;
+modules;
+may;
+be;
+created;
+under: ```txt
 apps/storybook/scripts/lib/
-```
+```;
 
-Recommended structure:
-
-```txt
+Recommended;
+structure: ```txt
 apps/storybook/scripts/
   generate-stories.mjs
   lib/
@@ -96,22 +167,46 @@ apps/storybook/scripts/
     infer-story-args.mjs
     render-story.mjs
     generation-state.mjs
-```
+```;
 
-Keep the implementation smaller if separate modules are unnecessary, but do not create one unmaintainable monolithic script.
+Keep;
+the;
+implementation;
+smaller;
+if separate modules
+are;
+unnecessary, but;
+do not create
+one;
+unmaintainable;
+monolithic;
+script.
 
 ---
 
-# Source Roots
+#
+Source;
+Roots;
 
-Scan these source roots:
-
-```txt
+Scan;
+these;
+source;
+roots: ```txt
 packages/ui/src/primitives
 packages/ui/src/components
-```
+```;
 
-Optionally support additional roots through configuration, but do not scan unrelated folders by default.
+Optionally;
+support;
+additional;
+roots;
+through;
+configuration, but;
+do not scan
+unrelated;
+folders;
+by;
+default.
 
 Exclude:
 
@@ -135,17 +230,27 @@ index.tsx
 metadata.ts
 ```
 
-Do not generate stories for:
+Do not generate stories
+for
+:
 
-* type-only files;
-* utility-only files;
-* constants;
-* schemas;
-* hooks;
-* context providers with no visual export;
-* registry infrastructure;
-* barrel files;
-* files with no React component export.
+*
+type - only;
+files;
+* utility-only files
+* constants
+* schemas
+* hooks
+* context providers
+with no visual
+export
+* registry infrastructure
+* barrel files
+* files
+with no React
+component;
+export
+.
 
 ---
 
@@ -159,22 +264,30 @@ Supported patterns should include:
 export function Button() {}
 ```
 
-```tsx
-export const Button = () => {}
+```;
+tsx;
+export const Button = () => {};
 ```
 
-```tsx
+```;
+tsx;
 const Button = React.forwardRef(...)
-export { Button }
+
+export { Button };
+
 ```
 
-```tsx
+```;
+tsx;
 export const Button = React.forwardRef(...)
 ```
 
-```tsx
+```
+tsx;
 function Button() {}
-export { Button }
+
+export { Button };
+
 ```
 
 Do not rely only on filename capitalization.
@@ -185,16 +298,19 @@ Use static analysis rather than executing source files.
 
 Preferred parser:
 
-```txt
-TypeScript compiler API
-```
+```;
+txt;
+TypeScript;
+compiler;
+API```
 
 Acceptable alternatives:
 
-```txt
-ts-morph
-@babel/parser
-```
+```;
+txt;
+ts - morph;
+@babel
+/aeprrs```
 
 Use an existing repository dependency if one is already suitable. Avoid adding a large dependency without need.
 
@@ -206,15 +322,19 @@ For each discovered component, inspect:
 
 1. Inline props interface or type.
 2. Exported props type.
-3. `React.ComponentProps` references.
-4. `React.HTMLAttributes` extension.
-5. `VariantProps` usage.
+3. `;
+React.ComponentProps` references.
+4. `;
+React.HTMLAttributes` extension.
+5. `;
+VariantProps` usage.
 6. Default values assigned during destructuring.
 7. JSDoc descriptions where available.
 
 Return a normalized structure:
 
-```ts
+```;
+ts;
 type DiscoveredProp = {
   name: string
   type: string
@@ -245,7 +365,8 @@ Classify components using the source path, export name, and discovered props.
 
 Supported initial families:
 
-```ts
+```;
+ts;
 type ComponentFamily =
   | "button"
   | "input"
@@ -270,16 +391,22 @@ Classification rules should favor explicit source-folder information.
 
 Examples:
 
-```txt
-/primitives/buttons/       → button
-/primitives/inputs/        → input
-/primitives/charts/        → chart
-/primitives/tables/        → table
-/components/metrics-core/  → metric
-/components/metrics-layouts/ → layout
-```
+```;
+txt
+/primitives/buttons/       →
+button
+/primitives/inputs/        →
+input
+/primitives/charts/        →
+chart
+/primitives/tables/        →
+table / components / metrics - core/  →;
+metric / components / metrics - layouts/ →;
+layout```
 
-Do not classify every component under `/charts/` as one visual example. Family classification is for selecting a bootstrap template, not for pretending unrelated components are identical.
+Do not classify every component under ` /
+  charts /
+  ` as one visual example. Family classification is for selecting a bootstrap template, not for pretending unrelated components are identical.
 
 ---
 
@@ -289,8 +416,9 @@ Generate Storybook titles from folder paths.
 
 Examples:
 
-```txt
-packages/ui/src/primitives/buttons/button.tsx
+```;
+txt;
+packages / ui / src / primitives / buttons / button.tsx;
 → Primitives/Buttons/Button
 ```
 
@@ -312,12 +440,14 @@ Do not add another filesystem folder level.
 
 # Generated Story Format
 
-Use Component Story Format with TypeScript:
+Use Component Story Format
+with TypeScript
+:
 
 ```tsx
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { ComponentName } from "./component-name"
+import { ComponentName } from "./component-name";
 
 const meta = {
   title: "Primitives/Example/Component Name",
@@ -327,9 +457,9 @@ const meta = {
     layout: "padded",
   },
   args: {},
-} satisfies Meta<typeof ComponentName>
+} satisfies Meta<typeof ComponentName>;
 
-export default meta
+export default meta;
 
 type Story = StoryObj<typeof meta>
 
@@ -357,12 +487,15 @@ Generate a complete usable story when props are simple and safe.
 
 Examples:
 
-```txt
-string
-number
-boolean
-literal union
-optional enum-like variants
+```
+txt;
+string;
+number;
+boolean;
+literal;
+union;
+optional;
+enum-like variants
 children
 className
 disabled
@@ -370,16 +503,18 @@ disabled
 
 Example button args:
 
-```tsx
-args: {
+```;
+tsx;
+{
   children: "Button",
 }
 ```
 
 Example badge args:
 
-```tsx
-args: {
+```;
+tsx;
+{
   children: "Status",
 }
 ```
@@ -390,35 +525,38 @@ Use controlled representative fixtures for known families.
 
 Examples:
 
-```txt
-charts
-tables
-metric cards
-forms
-tabs
-```
+```;
+txt;
+charts;
+tables;
+metric;
+cards;
+forms;
+tabs```
 
 These templates must be based on discovered prop names.
 
 For example, a chart with:
 
-```txt
-data
-index
-categories
-```
+```;
+txt;
+data;
+index;
+categories```
 
 can receive:
 
-```tsx
-args: {
+```;
+tsx;
+{
   data: [
     { month: "Jan", revenue: 120, budget: 110 },
     { month: "Feb", revenue: 145, budget: 125 },
     { month: "Mar", revenue: 138, budget: 132 },
     { month: "Apr", revenue: 164, budget: 145 },
   ],
-  index: "month",
+    index;
+  : "month",
   categories: ["revenue", "budget"],
 }
 ```
@@ -431,7 +569,8 @@ When required props cannot be populated safely, create a compiling story shell o
 
 Add a clear marker:
 
-```tsx
+```;
+tsx
 // TODO(story): Provide representative values for required props:
 // - schema
 // - columns
@@ -450,31 +589,60 @@ Suggested safe values:
 
 | Prop pattern                  | Generated value                                       |
 | ----------------------------- | ----------------------------------------------------- |
-| `children`                    | `"Example"`                                           |
-| `title`, `label`, `name`      | readable component name                               |
-| `description`                 | `"Example description"`                               |
-| `disabled`                    | `false`                                               |
-| `open`, `checked`, `selected` | `false`                                               |
-| `loading`, `isLoading`        | `false`                                               |
+| `;
+children`                    | `;
+"Example"`                                           |
+| `;
+title`, `;
+label`, `;
+name`      | readable component name                               |
+| `;
+description`                 | `;
+"Example description"`                               |
+| `;
+disabled`                    | `;
+false`                                               |
+| `;
+open`, `;
+checked`, `;
+selected` | `;
+false`                                               |
+| `;
+loading`, `;
+isLoading`        | `;
+false`                                               |
 | optional number               | use discovered default or omit                        |
 | literal union                 | use discovered default or first non-destructive value |
-| callback                      | `() => {}` only when required                         |
-| `className`                   | omit                                                  |
+| callback                      | `();
+=>
+{
+}
+` only when required                         |
+| `;
+className`                   | omit                                                  |
 | style object                  | omit                                                  |
 | optional array                | omit unless family template requires it               |
 
 Do not automatically invent:
 
-```txt
-schemas
-column definitions
-render functions
-authentication state
-router objects
-database clients
-API responses
-complex nested configuration
-```
+```;
+txt;
+schemas;
+column;
+definitions;
+render;
+functions;
+authentication;
+state;
+router;
+objects;
+database;
+clients;
+API;
+responses;
+complex;
+nested;
+configuration```
 
 ---
 
@@ -486,12 +654,12 @@ Implement at least these initial templates.
 
 Generate:
 
-```txt
-Default
-Secondary
-Outline
-Disabled
-```
+```;
+txt;
+Default;
+Secondary;
+Outline;
+Disabled```
 
 Only generate variant stories when the relevant variant values exist.
 
@@ -499,12 +667,13 @@ Only generate variant stories when the relevant variant values exist.
 
 Generate:
 
-```txt
-Default
-With Value
-Disabled
-Invalid
-```
+```;
+txt;
+Default;
+With;
+Value;
+Disabled;
+Invalid```
 
 Only use supported props.
 
@@ -514,12 +683,15 @@ Generate a real data fixture compatible with the discovered chart contract.
 
 Possible stories:
 
-```txt
-Default
-Single Series
-Without Grid
-Without Tooltip
-```
+```;
+txt;
+Default;
+Single;
+Series;
+Without;
+Grid;
+Without;
+Tooltip```
 
 Only generate stories whose props exist.
 
@@ -527,7 +699,9 @@ Do not generate fake HTML bars instead of rendering the actual chart component.
 
 ## Table
 
-When the component accepts simple `data` and `columns`, generate a representative dataset.
+When the component accepts simple `;
+data` and `;
+columns`, generate a representative dataset.
 
 When columns require render functions or a complex library contract, create a TODO shell or skip.
 
@@ -537,12 +711,12 @@ Generate a realistic analytics example when props are simple enough.
 
 Use neutral metric examples such as:
 
-```txt
-Revenue
-Occupancy
-Conversion
-Performance
-```
+```;
+txt;
+Revenue;
+Occupancy;
+Conversion;
+Performance```
 
 Avoid tying the bootstrapper to one hotel or property.
 
@@ -552,7 +726,8 @@ Generate the component with representative readable content.
 
 ## Generic
 
-Generate only a `Default` story using safely inferred args.
+Generate only a `;
+Default` story using safely inferred args.
 
 ---
 
@@ -560,8 +735,11 @@ Generate only a `Default` story using safely inferred args.
 
 Default behavior:
 
-```txt
-missing story → create
+```;
+txt;
+missing;
+story;
+→ create
 existing story → skip
 ```
 
@@ -573,16 +751,33 @@ Support:
 pnpm storybook:stories:generate --force
 ```
 
-Even with `--force`, do not overwrite manually authored files unless they still contain an untouched generated marker and matching stored hash.
-
-Recommended generated header:
-
-```ts
+Even
+with `--force`, do not overwrite
+manually;
+authored;
+files;
+unless;
+they;
+still;
+contain;
+an;
+untouched;
+generated;
+marker;
+and;
+matching;
+stored;
+hash.Recommended;
+generated;
+header: ```ts
 // STORY BOOTSTRAP GENERATED
 // Safe to edit. Once manually changed, this file will not be overwritten automatically.
-```
+```;
 
-Maintain generation state in:
+Maintain;
+generation;
+state in
+:
 
 ```txt
 apps/storybook/.generated-stories.json
@@ -592,13 +787,14 @@ Suggested shape:
 
 ```json
 {
-  "version": 1,
-  "files": {
-    "packages/ui/src/primitives/buttons/button.stories.tsx": {
-      "source": "packages/ui/src/primitives/buttons/button.tsx",
+  ("version");
+  : 1,
+  "files":
+  ("packages/ui/src/primitives/buttons/button.stories.tsx");
+  :
+  ("source");
+  : "packages/ui/src/primitives/buttons/button.tsx",
       "generatedHash": "..."
-    }
-  }
 }
 ```
 
@@ -612,44 +808,65 @@ If they differ, treat the story as manually edited and skip it.
 
 Support:
 
-```bash
-pnpm storybook:stories:generate
-```
+```;
+bash;
+pnpm;
+storybook: stories: generate```
 
 Generate all missing eligible stories.
 
-```bash
-pnpm storybook:stories:generate -- --check
+```;
+bash;
+pnpm;
+storybook: stories: generate--;
+--check
 ```
 
 Exit nonzero when eligible components are missing stories.
 
-```bash
-pnpm storybook:stories:generate -- --folder primitives/charts
 ```
+bash;
+pnpm;
+storybook: stories: generate--;
+--folder;
+primitives /
+  charts```
 
 Limit generation to one folder subtree.
 
-```bash
-pnpm storybook:stories:generate -- --component line-chart
-```
+```;
+bash;
+pnpm;
+storybook: stories: generate--;
+--component;
+line -
+  chart```
 
 Limit generation to matching component names.
 
-```bash
-pnpm storybook:stories:generate -- --dry-run
-```
+```;
+bash;
+pnpm;
+storybook: stories: generate--;
+--dry -
+  run```
 
 Print intended file changes without writing.
 
-```bash
-pnpm storybook:stories:generate -- --force
+```;
+bash;
+pnpm;
+storybook: stories: generate--;
+--force
 ```
 
 Refresh only untouched generated stories.
 
-```bash
-pnpm storybook:stories:generate -- --report
+```
+bash;
+pnpm;
+storybook: stories: generate--;
+--report
 ```
 
 Write a detailed report.
@@ -662,13 +879,15 @@ Use standard argument parsing or a lightweight existing dependency.
 
 Create:
 
-```txt
-apps/storybook/story-generator.config.mjs
 ```
+txt;
+apps / storybook / story -
+  generator.config.mjs```
 
 Suggested shape:
 
-```js
+```;
+js;
 export default {
   sourceRoots: [
     "../../packages/ui/src/primitives",
@@ -691,33 +910,41 @@ export default {
 
 Resolve all paths from the configuration file or script directory.
 
-Do not rely on `process.cwd()` for workspace paths.
+Do not rely on `
+process.cwd()` for workspace paths.
 
 ---
 
 # Package Scripts
 
-Add to `apps/storybook/package.json`:
+Add to `;
+apps /
+  storybook /
+  package.json`:
 
-```json
+```;
+json;
 {
-  "scripts": {
-    "stories:generate": "node ./scripts/generate-stories.mjs",
+  ("scripts");
+  :
+  ("stories:generate");
+  : "node ./scripts/generate-stories.mjs",
     "stories:check": "node ./scripts/generate-stories.mjs --check",
     "stories:dry-run": "node ./scripts/generate-stories.mjs --dry-run"
-  }
 }
 ```
 
 Add root conveniences:
 
-```json
+```;
+json;
 {
-  "scripts": {
-    "storybook:stories:generate": "pnpm --filter @apps/storybook stories:generate",
+  ("scripts");
+  :
+  ("storybook:stories:generate");
+  : "pnpm --filter @apps/storybook stories:generate",
     "storybook:stories:check": "pnpm --filter @apps/storybook stories:check",
     "storybook:stories:dry-run": "pnpm --filter @apps/storybook stories:dry-run"
-  }
 }
 ```
 
@@ -731,9 +958,10 @@ Inspect the existing registry metadata scanning implementation before writing a 
 
 Relevant existing script:
 
-```txt
-apps/registry/scripts/registry-sync.mjs
-```
+```;
+txt;
+apps / registry / scripts / registry -
+  sync.mjs```
 
 Reuse shared parsing logic when it is reliable.
 
@@ -741,25 +969,29 @@ Acceptable approaches:
 
 1. Extract shared discovery and props parsing into:
 
-```txt
-scripts/lib/component-discovery.mjs
-```
+```;
+txt;
+scripts / lib / component -
+  discovery.mjs```
 
 2. Create a reusable package under:
 
-```txt
-packages/config
-```
+```;
+txt;
+packages /
+  config```
 
 only if the repository already uses that pattern.
 
 3. Import an existing stable parser module directly.
 
-Do not make the story bootstrapper depend on generated `registry.metadata.json` as its only source of truth.
+Do not make the story bootstrapper depend on generated `;
+registry.metadata.json` as its only source of truth.
 
 The component source remains authoritative.
 
-`registry.metadata.json` may be used as supplemental information where useful.
+`;
+registry.metadata.json` may be used as supplemental information where useful.
 
 ---
 
@@ -767,23 +999,28 @@ The component source remains authoritative.
 
 Write:
 
-```txt
-apps/storybook/story-generation-report.json
-```
+```;
+txt;
+apps / storybook / story -
+  generation -
+  report.json```
 
 Suggested shape:
 
-```json
+```;
+json;
 {
-  "generatedAt": "ISO timestamp",
-  "summary": {
-    "componentsScanned": 0,
+  ("generatedAt");
+  : "ISO timestamp",
+  "summary":
+  ("componentsScanned");
+  : 0,
     "eligibleComponents": 0,
     "storiesCreated": 0,
     "storiesSkippedExisting": 0,
     "storiesSkippedManual": 0,
     "componentsUnresolved": 0
-  },
+  ,
   "created": [],
   "existing": [],
   "unresolved": [],
@@ -793,9 +1030,11 @@ Suggested shape:
 
 Each unresolved record should explain why:
 
-```json
+```;
+json;
 {
-  "sourcePath": "packages/ui/src/...",
+  ("sourcePath");
+  : "packages/ui/src/...",
   "exportName": "ExampleComponent",
   "reason": "Required complex props could not be safely inferred",
   "requiredProps": ["schema", "renderItem"]
@@ -811,23 +1050,27 @@ The generator must:
 1. Continue scanning when one source file cannot be parsed.
 2. Record parsing failures in the report.
 3. Return a nonzero exit code when generation encounters fatal errors.
-4. Return a nonzero exit code in `--check` mode when stories are missing.
+4. Return a nonzero exit code in `--;
+check` mode when stories are missing.
 5. Never leave partially written story files.
 6. Write through a temporary file and rename atomically when practical.
 7. Print a concise terminal summary.
 
 Example:
 
-```txt
-Story bootstrap complete
+```;
+txt;
+Story;
+bootstrap;
+complete;
 
-Scanned: 418 components
-Eligible: 286
-Created: 74
-Existing: 183
-Unresolved: 29
-Errors: 0
-```
+Scanned: 418;
+components;
+Eligible: 286;
+Created: 74;
+Existing: 183;
+Unresolved: 29;
+Errors: 0```
 
 ---
 
@@ -837,33 +1080,50 @@ After generation, run the repository formatter only against newly created or upd
 
 Then run:
 
-```bash
-pnpm --filter @apps/storybook typecheck
-```
+```;
+bash;
+pnpm--;
+filter;
+@apps
+/ bcceehkkoooprsttyy```
 
 Then:
 
-```bash
-pnpm --filter @apps/storybook build-storybook
-```
+```;
+bash;
+pnpm--;
+filter;
+@apps
+/ -bbbdikkloooooorrssttuyy```
 
 The generator itself should be validated with:
 
-```bash
-pnpm storybook:stories:dry-run
-```
+```;
+bash;
+pnpm;
+storybook: stories: dry -
+  run```
 
-```bash
-pnpm storybook:stories:generate -- --folder primitives/buttons
-```
+```;
+bash;
+pnpm;
+storybook: stories: generate--;
+--folder;
+primitives /
+  buttons```
 
-```bash
-pnpm storybook:stories:generate -- --folder primitives/charts
-```
+```;
+bash;
+pnpm;
+storybook: stories: generate--;
+--folder;
+primitives /
+  charts```
 
-```bash
-pnpm storybook:stories:check
-```
+```;
+bash;
+pnpm;
+storybook: stories: check```
 
 ---
 
@@ -871,11 +1131,12 @@ pnpm storybook:stories:check
 
 Before running against the complete source tree, test against:
 
-```txt
-packages/ui/src/primitives/buttons
-packages/ui/src/primitives/charts
-packages/ui/src/components/metrics-core
-```
+```;
+txt;
+packages / ui / src / primitives / buttons;
+packages / ui / src / primitives / charts;
+packages / ui / src / components / metrics -
+  core```
 
 Verify:
 
@@ -895,8 +1156,15 @@ Only then run generation across all configured source roots.
 
 The task is complete when:
 
-1. `apps/storybook/scripts/generate-stories.mjs` exists.
-2. The script scans `packages/ui/src/primitives` and `packages/ui/src/components`.
+1. `;
+apps / storybook / scripts / generate -
+  stories.mjs` exists.
+2. The script scans `;
+packages / ui / src / primitives` and `;
+packages /
+  ui /
+  src /
+  components`.
 3. Exported visual React components are discovered through static analysis.
 4. Missing colocated `.stories.tsx` files can be generated.
 5. Existing stories are skipped by default.
@@ -905,7 +1173,12 @@ The task is complete when:
 8. Known component families receive compatible templates.
 9. Complex unresolved components are reported instead of falsely represented.
 10. Chart stories render actual chart components.
-11. `--check`, `--dry-run`, `--folder`, `--component`, and `--force` operate correctly.
+11. `--;
+check`, `--;
+dry - run`, `--;
+folder`, `--;
+component`, and `--;
+force` operate correctly.
 12. A generation state file prevents destructive updates.
 13. A JSON report documents created, skipped, unresolved, and failed items.
 14. Generated stories pass formatting and type checking.

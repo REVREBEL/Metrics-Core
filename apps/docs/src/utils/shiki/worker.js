@@ -112,7 +112,7 @@ function highlightSync(opts) {
   let html;
   if (lang) {
     const serializer =
-      !!opts.opts?.highlightedLines?.length || !!opts.opts?.focusedLines?.length
+      opts.opts?.highlightedLines?.length || opts.opts?.focusedLines?.length
         ? "codeToHast"
         : "codeToHtml";
     const code = opts.codeString.trim();
@@ -136,7 +136,7 @@ function highlightSync(opts) {
       return hastToHtmlFn(html);
     }
     const spanElements = codeElement.children.filter(
-      (child) => child.type === "element" && child.tagName === "span"
+      (child) => child.type === "element" && child.tagName === "span",
     );
     // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: TODO
     spanElements.forEach((c, i) => {

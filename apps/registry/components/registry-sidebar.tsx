@@ -1,6 +1,16 @@
 "use client";
 
 import {
+  getRegistryFolderNode,
+  type RegistryFolderNode,
+} from "@lib/registry-folders";
+import {
+  getFoundationRoots,
+  getRootSummary,
+  getStagedRoots,
+  toFolderHref,
+} from "@lib/site";
+import {
   IconBinaryTree2,
   IconBooks,
   IconChevronDown,
@@ -14,17 +24,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type ReactNode, useMemo, useState } from "react";
 
-import {
-  getRootSummary,
-  getStagedRoots,
-  getFoundationRoots,
-  toFolderHref,
-} from "@lib/site";
-import {
-  getRegistryFolderNode,
-  type RegistryFolderNode,
-} from "@lib/registry-folders";
-
 type NavItem = {
   href: string;
   icon: ReactNode;
@@ -33,8 +32,16 @@ type NavItem = {
 
 const primaryNav: NavItem[] = [
   { href: "/", icon: <IconHome2 className="size-4" />, title: "Overview" },
-  { href: "/catalog", icon: <IconBinaryTree2 className="size-4" />, title: "Catalog" },
-  { href: "/tokens", icon: <IconSparkles className="size-4" />, title: "Tokens" },
+  {
+    href: "/catalog",
+    icon: <IconBinaryTree2 className="size-4" />,
+    title: "Catalog",
+  },
+  {
+    href: "/tokens",
+    icon: <IconSparkles className="size-4" />,
+    title: "Tokens",
+  },
 ];
 
 function matchesNode(node: RegistryFolderNode, query: string): boolean {
@@ -141,13 +148,7 @@ function FolderTree({
   );
 }
 
-function SectionTitle({
-  icon,
-  title,
-}: {
-  icon: ReactNode;
-  title: string;
-}) {
+function SectionTitle({ icon, title }: { icon: ReactNode; title: string }) {
   return (
     <div className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
       {icon}
@@ -176,13 +177,19 @@ function RegistrySidebar() {
     <aside className="hidden w-[300px] shrink-0 border-r border-slate-200/70 bg-slate-100/80 backdrop-blur md:block dark:border-slate-800 dark:bg-slate-950/70">
       <div className="sticky top-0 flex h-screen flex-col">
         <div className="border-b border-slate-200/70 px-4 py-5 dark:border-slate-800">
-          <Link href="/" className="block rounded-2xl bg-slate-900 px-4 py-4 text-white">
+          <Link
+            href="/"
+            className="block rounded-2xl bg-slate-900 px-4 py-4 text-white"
+          >
             <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-300">
               REVREBEL
             </div>
-            <div className="mt-2 text-lg font-semibold">Registry Foundations</div>
+            <div className="mt-2 text-lg font-semibold">
+              Registry Foundations
+            </div>
             <p className="mt-1 text-sm text-slate-300">
-              Stabilize primitives, tokens, and install paths before metrics compositions move in.
+              Stabilize primitives, tokens, and install paths before metrics
+              compositions move in.
             </p>
           </Link>
 
@@ -200,17 +207,26 @@ function RegistrySidebar() {
 
         <div className="flex-1 space-y-6 overflow-y-auto px-4 py-5">
           <section>
-            <SectionTitle icon={<IconHome2 className="size-4" />} title="Navigate" />
+            <SectionTitle
+              icon={<IconHome2 className="size-4" />}
+              title="Navigate"
+            />
             <NavSection items={primaryNav} pathname={pathname} />
           </section>
 
           <section>
-            <SectionTitle icon={<IconFolder className="size-4" />} title="Foundation Folders" />
+            <SectionTitle
+              icon={<IconFolder className="size-4" />}
+              title="Foundation Folders"
+            />
             <div className="space-y-2">
               {foundationRoots.map((root) => {
                 const summary = getRootSummary(root.id);
                 return (
-                  <div key={root.id} className="rounded-2xl border border-white/80 bg-white/70 p-2 dark:border-slate-800 dark:bg-slate-900/70">
+                  <div
+                    key={root.id}
+                    className="rounded-2xl border border-white/80 bg-white/70 p-2 dark:border-slate-800 dark:bg-slate-900/70"
+                  >
                     <Link
                       href={toFolderHref(root.id)}
                       className="mb-2 block rounded-xl px-2.5 py-2 hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -218,9 +234,15 @@ function RegistrySidebar() {
                       <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                         {summary.eyebrow}
                       </div>
-                      <div className="mt-1 font-medium text-sm">{root.title}</div>
+                      <div className="mt-1 font-medium text-sm">
+                        {root.title}
+                      </div>
                     </Link>
-                    <FolderTree node={root} pathname={pathname} query={normalizedQuery} />
+                    <FolderTree
+                      node={root}
+                      pathname={pathname}
+                      query={normalizedQuery}
+                    />
                   </div>
                 );
               })}
@@ -229,7 +251,10 @@ function RegistrySidebar() {
 
           {stagedRoots.length > 0 ? (
             <section>
-              <SectionTitle icon={<IconBooks className="size-4" />} title="Staged" />
+              <SectionTitle
+                icon={<IconBooks className="size-4" />}
+                title="Staged"
+              />
               <div className="space-y-2">
                 {stagedRoots.map((root) => {
                   const summary = getRootSummary(root.id);
@@ -272,7 +297,10 @@ function MobileSidebarTrigger() {
           <Link href="/" className="rounded-full border px-3 py-1.5">
             Home
           </Link>
-          <Link href="/catalog" className="rounded-full bg-foreground px-3 py-1.5 text-background">
+          <Link
+            href="/catalog"
+            className="rounded-full bg-foreground px-3 py-1.5 text-background"
+          >
             Catalog
           </Link>
         </div>

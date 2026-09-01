@@ -1,11 +1,12 @@
 import {
+  Card,
+  CardContent,
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from "@ui";
-import { Card, CardContent } from "@ui";
 
 export const carousel = {
   name: "carousel",

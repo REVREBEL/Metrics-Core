@@ -1,5 +1,5 @@
 import { Menu } from "@base-ui/react/menu";
-import { IconCircleCheckFilled } from '@tabler/icons-react';
+import { IconCircleCheckFilled } from "@tabler/icons-react";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/utils/cn";
 
@@ -27,7 +27,7 @@ const DropdownMenuTrigger = ({
     className={cn(
       "group group overflow-hidden rounded-lg disabled:pointer-events-none [&>span]:line-clamp-1",
       "flex items-center gap-1 py-0.5 text-sm text-stone-950/50 group-hover:text-stone-950/70 dark:text-white/50 dark:group-hover:text-white/70",
-      className
+      className,
     )}
     {...props}
   >
@@ -58,7 +58,7 @@ const DropdownMenuContent = ({
         className={cn(
           "relative max-h-96 min-w-(--anchor-width) overflow-y-auto rounded-2xl border-standard bg-white p-1 text-stone-950/70 shadow-stone-500/5 shadow-xl dark:bg-stone-950 dark:text-white/70 dark:shadow-none dark:shadow-stone-500/5",
           "data-[ending-style]:fade-out-0 data-[starting-style]:fade-in-0 data-[ending-style]:zoom-out-95 data-[starting-style]:zoom-in-95",
-          className
+          className,
         )}
         style={{ textRendering: "geometricPrecision" }}
         {...props}
@@ -87,7 +87,7 @@ const DropdownMenuItem = ({
       isSelected
         ? "font-medium text-primary dark:text-primary-light"
         : "text-stone-950/50 hover:text-stone-950/75 focus:text-stone-950/75 dark:text-white/50 dark:focus:text-white/75 dark:hover:text-white/75",
-      className
+      className,
     )}
     onClick={(e) => {
       onClick?.(e);
@@ -99,7 +99,7 @@ const DropdownMenuItem = ({
     <IconCircleCheckFilled
       className={cn(
         "size-3.5 shrink-0 text-primary dark:text-primary-light",
-        !isSelected && "opacity-0"
+        !isSelected && "opacity-0",
       )}
       strokeWidth={2.5}
     />
@@ -110,10 +110,10 @@ DropdownMenuItem.displayName = "DropdownMenuItem";
 export {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  type DropdownMenuProps,
   type DropdownMenuContentProps,
+  DropdownMenuItem,
   type DropdownMenuItemProps,
+  type DropdownMenuProps,
+  DropdownMenuTrigger,
   type DropdownMenuTriggerProps,
 };

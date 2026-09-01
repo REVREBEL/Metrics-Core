@@ -1,22 +1,6 @@
 "use client";
 
-import {
-  type ColumnDef,
-  type ColumnFiltersState,
-  type SortingState,
-  type VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
-import * as React from "react";
-
 import { Button } from "@buttons";
-import { Checkbox } from "@ui";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -35,6 +19,21 @@ import {
   TableHeader,
   TableRow,
 } from "@tables";
+import {
+  type ColumnDef,
+  type ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  type SortingState,
+  useReactTable,
+  type VisibilityState,
+} from "@tanstack/react-table";
+import { Checkbox } from "@ui";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import * as React from "react";
 
 const data: Payment[] = [
   {

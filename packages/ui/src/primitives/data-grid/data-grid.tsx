@@ -119,7 +119,18 @@ function DataGridProvider<TData extends object>({
       recordCount,
       isLoading: isLoading || false,
     }),
-    [props.className, props.loadingMode, props.loadingMessage, props.emptyMessage, props.onRowClick, props.tableLayout, props.tableClassNames, table, recordCount, isLoading],
+    [
+      props.className,
+      props.loadingMode,
+      props.loadingMessage,
+      props.emptyMessage,
+      props.onRowClick,
+      props.tableLayout,
+      props.tableClassNames,
+      table,
+      recordCount,
+      isLoading,
+    ],
   );
 
   return (

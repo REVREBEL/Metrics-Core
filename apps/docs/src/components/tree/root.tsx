@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 /** biome-ignore-all lint/complexity/noExcessiveCognitiveComplexity: TODO */
 import {
@@ -34,7 +34,7 @@ const TreeRoot = ({ className, children }: TreeProps) => {
   const treeRef = useRef<HTMLDivElement>(null);
   const typeAheadBufferRef = useRef("");
   const typeAheadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null
+    null,
   );
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const TreeRoot = ({ className, children }: TreeProps) => {
     }
 
     const existingFocusable = treeRef.current.querySelector<HTMLElement>(
-      '[role="treeitem"][tabindex="0"]'
+      '[role="treeitem"][tabindex="0"]',
     );
 
     if (existingFocusable) {
@@ -225,5 +225,5 @@ const TreeRoot = ({ className, children }: TreeProps) => {
   );
 };
 
-export { TreeRoot };
 export type { TreeProps };
+export { TreeRoot };

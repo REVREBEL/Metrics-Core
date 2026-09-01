@@ -206,7 +206,9 @@ export function detectPublicationConflicts(
   const conflicts: PublicationConflict[] = [];
   const pendingItems: PublicationItem[] = [];
   const alreadyApplied: PublicationItem[] = [];
-  const editableColumns = definition.columns.filter((column) => column.editable);
+  const editableColumns = definition.columns.filter(
+    (column) => column.editable,
+  );
 
   for (const item of items) {
     const current = currentRows.get(item.rowKey);
@@ -230,7 +232,7 @@ export function detectPublicationConflicts(
     }
 
     const submittedColumns = editableColumns.filter((column) =>
-      Object.prototype.hasOwnProperty.call(item.submittedPayload, column.key),
+      Object.hasOwn(item.submittedPayload, column.key),
     );
     if (submittedColumns.length === 0) {
       alreadyApplied.push(item);
@@ -241,8 +243,14 @@ export function detectPublicationConflicts(
     let allSubmittedValuesAlreadyApplied = true;
 
     for (const column of submittedColumns) {
-      const original = normalizeValue(item.originalPayload[column.key], column.type);
-      const submitted = normalizeValue(item.submittedPayload[column.key], column.type);
+      const original = normalizeValue(
+        item.originalPayload[column.key],
+        column.type,
+      );
+      const submitted = normalizeValue(
+        item.submittedPayload[column.key],
+        column.type,
+      );
       const actual = normalizeValue(current[column.key], column.type);
 
       if (valuesEqual(actual, submitted)) {
@@ -258,7 +266,8 @@ export function detectPublicationConflicts(
     if (Object.keys(conflictingFields).length > 0) {
       conflicts.push({
         rowKey: item.rowKey,
-        message: "A field being published changed after this request was drafted.",
+        message:
+          "A field being published changed after this request was drafted.",
         conflictingFields,
       });
       continue;
@@ -290,9 +299,13 @@ function buildAtomicMergeSql(
   projectId: string,
   definition: PublicationTableDefinition,
 ): string {
-  const editableColumns = definition.columns.filter((column) => column.editable);
+  const editableColumns = definition.columns.filter(
+    (column) => column.editable,
+  );
   if (editableColumns.length === 0) {
-    throw new Error(`No editable columns are registered for ${definition.key}.`);
+    throw new Error(
+      `No editable columns are registered for ${definition.key}.`,
+    );
   }
 
   const sourceFields: string[] = [];
@@ -360,7 +373,9 @@ function buildSourceRows(
   definition: PublicationTableDefinition,
   items: PublicationItem[],
 ): Record<string, unknown>[] {
-  const editableColumns = definition.columns.filter((column) => column.editable);
+  const editableColumns = definition.columns.filter(
+    (column) => column.editable,
+  );
   return items.map((item) => {
     if (!item.originalPayload) {
       throw new Error("New-row publication is not supported.");
@@ -369,10 +384,7 @@ function buildSourceRows(
       ...parseRowKey(item.rowKey, definition.primaryKey),
     };
     for (const column of editableColumns) {
-      const applies = Object.prototype.hasOwnProperty.call(
-        item.submittedPayload,
-        column.key,
-      );
+      const applies = Object.hasOwn(item.submittedPayload, column.key);
       row[`_apply__${column.key}`] = applies;
       row[column.key] = applies
         ? normalizeValue(item.submittedPayload[column.key], column.type)
@@ -405,7 +417,11 @@ export async function publishRowsToWarehouse(
 
   const bq = getBigQueryWriteClient();
   const currentRows = await fetchCurrentRows(bq, definition, items);
-  const initialCheck = detectPublicationConflicts(definition, items, currentRows);
+  const initialCheck = detectPublicationConflicts(
+    definition,
+    items,
+    currentRows,
+  );
   if (initialCheck.conflicts.length > 0) {
     return {
       success: false,
@@ -450,7 +466,11 @@ export async function publishRowsToWarehouse(
     const message = error instanceof Error ? error.message : String(error);
     if (message.includes("DATA_LIBRARY_PUBLICATION_CONFLICT")) {
       const latestRows = await fetchCurrentRows(bq, definition, items);
-      const raceCheck = detectPublicationConflicts(definition, items, latestRows);
+      const raceCheck = detectPublicationConflicts(
+        definition,
+        items,
+        latestRows,
+      );
       return {
         success: false,
         conflicts:

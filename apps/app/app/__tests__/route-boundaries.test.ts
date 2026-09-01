@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { describe, test } from "node:test";
 import path from "node:path";
+import { describe, test } from "node:test";
 
 const appDir = path.resolve(process.cwd(), "app");
 

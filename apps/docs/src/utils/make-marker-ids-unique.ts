@@ -32,12 +32,12 @@ const makeMarkerIdsUnique = (svg: string, prefix: string): string => {
 
     result = result.replace(
       new RegExp(`id="${markerId}"`, "g"),
-      `id="${uniqueMarkerId}"`
+      `id="${uniqueMarkerId}"`,
     );
 
     result = result.replace(
       new RegExp(`url\\(#${markerId}\\)`, "g"),
-      `url(#${uniqueMarkerId})`
+      `url(#${uniqueMarkerId})`,
     );
   }
 

@@ -49,7 +49,11 @@ function CopyCode({ code = "", language }: CopyCodeProps) {
     >
       <div className="rounded-[10px] bg-white px-3.5 py-2.5 text-xs dark:bg-black">
         <pre className="overflow-x-auto">
-          <SyntaxHighlighter language={language} style={vscDarkPlus} PreTag="div">
+          <SyntaxHighlighter
+            language={language}
+            style={vscDarkPlus}
+            PreTag="div"
+          >
             {code}
           </SyntaxHighlighter>
         </pre>

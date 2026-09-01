@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Accordion,
   AccordionContent,
@@ -35,7 +36,7 @@ const V1_3_0_Content = ({
             <li>Automatically resolve dependency conflicts</li>
           </ul>
         </div>
-        <img src={image} alt={title} className="rounded-[10px] w-full h-auto" />
+        <Image src={image} alt={title} width={600} height={300} className="rounded-[10px] w-full h-auto" />
         <Accordion
           type="multiple"
           className="-mt-4 mb-0 w-full"

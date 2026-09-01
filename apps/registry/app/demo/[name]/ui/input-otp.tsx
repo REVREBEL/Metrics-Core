@@ -1,8 +1,8 @@
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSlot,
   InputOTPSeparator,
+  InputOTPSlot,
 } from "@inputs";
 
 export const inputOtp = {

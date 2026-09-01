@@ -1,4 +1,5 @@
 import { Button } from "@buttons";
+import { Input } from "@inputs";
 import {
   Dialog,
   DialogContent,
@@ -7,9 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  Label,
 } from "@ui";
-import { Input } from "@inputs";
-import { Label } from "@ui";
 
 export const dialog = {
   name: "dialog",

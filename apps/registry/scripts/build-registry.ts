@@ -6,9 +6,9 @@ const registry = {
   components: [
     {
       name: "button",
-      path: "registry/button.tsx"
-    }
-  ]
+      path: "registry/button.tsx",
+    },
+  ],
 };
 
 const out = resolve(process.cwd(), "public/registry/index.json");

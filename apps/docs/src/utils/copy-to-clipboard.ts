@@ -1,7 +1,7 @@
 type CopyToClipboardResult = "success" | "error";
 
 const copyToClipboard = async (
-  text: string
+  text: string,
 ): Promise<CopyToClipboardResult> => {
   if (!text) {
     console.warn("Called copyToClipboard() with empty text");
@@ -17,5 +17,5 @@ const copyToClipboard = async (
   }
 };
 
-export { copyToClipboard };
 export type { CopyToClipboardResult };
+export { copyToClipboard };

@@ -114,7 +114,7 @@ const CodeBlock = function CodeBlock(params: CodeBlockProps) {
           ? "p-0.5"
           : "bg-transparent dark:bg-transparent",
         feedbackModalOpen && "border border-primary dark:border-primary-light",
-        className
+        className,
       )}
       ref={anchorRef}
     >
@@ -157,4 +157,4 @@ const CodeBlock = function CodeBlock(params: CodeBlockProps) {
   );
 };
 
-export { type CodeBlockProps, CodeBlock };
+export { CodeBlock, type CodeBlockProps };

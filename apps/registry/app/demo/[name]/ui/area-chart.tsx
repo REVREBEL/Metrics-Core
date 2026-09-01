@@ -1,9 +1,19 @@
 "use client";
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@ui";
 import * as React from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui";
 import {
   type ChartConfig,
   ChartContainer,
@@ -12,13 +22,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/primitives/charts/chart";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@ui";
 
 const DemoChartLegendContent =
   ChartLegendContent as unknown as React.ComponentType<Record<string, unknown>>;

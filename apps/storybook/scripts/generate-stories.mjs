@@ -2,7 +2,7 @@
 
 import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
-import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -54,9 +54,12 @@ function parseArgs(argv) {
     else if (arg === "--force") options.force = true;
     else if (arg === "--folder") options.folder = argv[++index] ?? null;
     else if (arg === "--component") options.component = argv[++index] ?? null;
-    else if (arg === "--report") options.report = argv[++index] ?? options.report;
+    else if (arg === "--report")
+      options.report = argv[++index] ?? options.report;
     else if (arg === "--help" || arg === "-h") {
-      console.log(`Usage: node apps/storybook/scripts/generate-stories.mjs [options]\n\n--check\n--dry-run\n--force\n--folder <path>\n--component <name>\n--report <path>`);
+      console.log(
+        `Usage: node apps/storybook/scripts/generate-stories.mjs [options]\n\n--check\n--dry-run\n--force\n--folder <path>\n--component <name>\n--report <path>`,
+      );
       process.exit(0);
     } else {
       throw new Error(`Unknown option: ${arg}`);
@@ -94,7 +97,9 @@ async function walk(directory) {
 }
 
 function hasExportModifier(node) {
-  return Boolean(node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword));
+  return Boolean(
+    node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword),
+  );
 }
 
 function componentName(name) {
@@ -174,7 +179,9 @@ function isComponentDeclaration(node) {
   if (ts.isClassDeclaration(node)) {
     return Boolean(
       node.heritageClauses?.some((clause) =>
-        clause.types.some((type) => /(Component|PureComponent)/.test(type.expression.getText())),
+        clause.types.some((type) =>
+          /(Component|PureComponent)/.test(type.expression.getText()),
+        ),
       ),
     );
   }
@@ -183,13 +190,15 @@ function isComponentDeclaration(node) {
 
 function propsTypeNode(declaration) {
   if (!declaration) return null;
-  if (ts.isFunctionDeclaration(declaration)) return declaration.parameters[0]?.type ?? null;
+  if (ts.isFunctionDeclaration(declaration))
+    return declaration.parameters[0]?.type ?? null;
   if (ts.isVariableDeclaration(declaration)) {
     const init = declaration.initializer;
     if (init && (ts.isArrowFunction(init) || ts.isFunctionExpression(init))) {
       return init.parameters[0]?.type ?? null;
     }
-    if (init && ts.isCallExpression(init)) return init.typeArguments?.[0] ?? null;
+    if (init && ts.isCallExpression(init))
+      return init.typeArguments?.[0] ?? null;
   }
   return null;
 }
@@ -197,7 +206,10 @@ function propsTypeNode(declaration) {
 function collectLocalTypes(sourceFile) {
   const map = new Map();
   for (const statement of sourceFile.statements) {
-    if (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement)) {
+    if (
+      ts.isInterfaceDeclaration(statement) ||
+      ts.isTypeAliasDeclaration(statement)
+    ) {
       map.set(statement.name.text, statement);
     }
   }
@@ -216,9 +228,12 @@ function propMembersToList(members, sourceFile) {
 
 function resolveProps(typeNode, localTypes, sourceFile, seen = new Set()) {
   if (!typeNode) return [];
-  if (ts.isTypeLiteralNode(typeNode)) return propMembersToList(typeNode.members, sourceFile);
+  if (ts.isTypeLiteralNode(typeNode))
+    return propMembersToList(typeNode.members, sourceFile);
   if (ts.isIntersectionTypeNode(typeNode)) {
-    return typeNode.types.flatMap((part) => resolveProps(part, localTypes, sourceFile, seen));
+    return typeNode.types.flatMap((part) =>
+      resolveProps(part, localTypes, sourceFile, seen),
+    );
   }
   if (ts.isTypeReferenceNode(typeNode) && ts.isIdentifier(typeNode.typeName)) {
     const name = typeNode.typeName.text;
@@ -251,7 +266,8 @@ function classify(filePath) {
   if (p.includes("/inputs/")) return "input";
   if (p.includes("/tables/") || p.includes("/data-grid/")) return "table";
   if (p.includes("/metrics-core/")) return "metric";
-  if (p.includes("/metrics-layouts/") || p.includes("/layouts/")) return "layout";
+  if (p.includes("/metrics-layouts/") || p.includes("/layouts/"))
+    return "layout";
   return "generic";
 }
 
@@ -267,7 +283,10 @@ function inferArgs(component) {
   const args = [];
 
   if (component.family === "chart") {
-    if (props.has("data")) args.push(`data: [\n      { month: "Jan", revenue: 120, budget: 110 },\n      { month: "Feb", revenue: 145, budget: 125 },\n      { month: "Mar", revenue: 138, budget: 132 },\n    ]`);
+    if (props.has("data"))
+      args.push(
+        `data: [\n      { month: "Jan", revenue: 120, budget: 110 },\n      { month: "Feb", revenue: 145, budget: 125 },\n      { month: "Mar", revenue: 138, budget: 132 },\n    ]`,
+      );
     if (props.has("index")) args.push(`index: "month"`);
     if (props.has("categories")) args.push(`categories: ["revenue", "budget"]`);
   }
@@ -276,26 +295,41 @@ function inferArgs(component) {
     if (props.has("title")) args.push(`title: "Revenue"`);
     if (props.has("label")) args.push(`label: "Revenue"`);
     if (props.has("value")) args.push(`value: "$164K"`);
-    if (props.has("description")) args.push(`description: "Current period performance"`);
+    if (props.has("description"))
+      args.push(`description: "Current period performance"`);
   }
 
   for (const prop of component.props) {
     if (args.some((entry) => entry.startsWith(`${prop.name}:`))) continue;
-    if (prop.name === "children") args.push(`children: "${humanize(component.exportName)}"`);
-    else if (prop.required && /(^|\W)string(\W|$)/.test(prop.type)) args.push(`${prop.name}: "${humanize(prop.name)}"`);
-    else if (prop.required && prop.type.trim() === "number") args.push(`${prop.name}: 1`);
-    else if (prop.required && prop.type.trim() === "boolean") args.push(`${prop.name}: false`);
-    else if (prop.required && /=>/.test(prop.type)) args.push(`${prop.name}: () => {}`);
+    if (prop.name === "children")
+      args.push(`children: "${humanize(component.exportName)}"`);
+    else if (prop.required && /(^|\W)string(\W|$)/.test(prop.type))
+      args.push(`${prop.name}: "${humanize(prop.name)}"`);
+    else if (prop.required && prop.type.trim() === "number")
+      args.push(`${prop.name}: 1`);
+    else if (prop.required && prop.type.trim() === "boolean")
+      args.push(`${prop.name}: false`);
+    else if (prop.required && /=>/.test(prop.type))
+      args.push(`${prop.name}: () => {}`);
   }
 
   const resolved = new Set(args.map((entry) => entry.split(":")[0].trim()));
-  const unresolved = component.props.filter((prop) => prop.required && !resolved.has(prop.name));
+  const unresolved = component.props.filter(
+    (prop) => prop.required && !resolved.has(prop.name),
+  );
   return { args, unresolved };
 }
 
 function renderArgs(args) {
   if (args.length === 0) return "{}";
-  return `{\n${args.map((arg) => arg.split("\n").map((line) => `    ${line}`).join("\n")).join(",\n")},\n  }`;
+  return `{\n${args
+    .map((arg) =>
+      arg
+        .split("\n")
+        .map((line) => `    ${line}`)
+        .join("\n"),
+    )
+    .join(",\n")},\n  }`;
 }
 
 function renderStory(component, sourceHash) {
@@ -309,22 +343,34 @@ function renderStory(component, sourceHash) {
 
 async function inspect(filePath) {
   const sourceText = await readFile(filePath, "utf8");
-  const sourceFile = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const sourceFile = ts.createSourceFile(
+    filePath,
+    sourceText,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TSX,
+  );
   const { declarations, exported } = collectDeclarations(sourceFile);
   const localTypes = collectLocalTypes(sourceFile);
   const components = [];
 
   for (const exportName of exported) {
     const declaration = declarations.get(exportName);
-    if (!componentName(exportName) || !isComponentDeclaration(declaration)) continue;
+    if (!componentName(exportName) || !isComponentDeclaration(declaration))
+      continue;
     components.push({
       exportName,
       sourcePath: filePath,
       sourceText,
       storyPath: filePath.replace(/\.(tsx|jsx)$/, ".stories.tsx"),
       sourceRelative: posix(relative(repoRoot, filePath)),
-      storyRelative: posix(relative(repoRoot, filePath.replace(/\.(tsx|jsx)$/, ".stories.tsx"))),
-      basename: filePath.split(sep).pop().replace(/\.(tsx|jsx)$/, ""),
+      storyRelative: posix(
+        relative(repoRoot, filePath.replace(/\.(tsx|jsx)$/, ".stories.tsx")),
+      ),
+      basename: filePath
+        .split(sep)
+        .pop()
+        .replace(/\.(tsx|jsx)$/, ""),
       props: resolveProps(propsTypeNode(declaration), localTypes, sourceFile),
       family: classify(filePath),
       title: storyTitle(filePath, exportName),
@@ -336,18 +382,30 @@ async function inspect(filePath) {
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
-  const roots = options.folder ? [resolve(repoRoot, options.folder)] : defaultRoots;
+  const roots = options.folder
+    ? [resolve(repoRoot, options.folder)]
+    : defaultRoots;
   const files = (await Promise.all(roots.map(walk))).flat();
-  const components = (await Promise.all(files.map(inspect))).flat().filter((component) => {
-    if (!options.component) return true;
-    const needle = options.component.toLowerCase();
-    return component.exportName.toLowerCase().includes(needle) || component.sourceRelative.toLowerCase().includes(needle);
-  });
+  const components = (await Promise.all(files.map(inspect)))
+    .flat()
+    .filter((component) => {
+      if (!options.component) return true;
+      const needle = options.component.toLowerCase();
+      return (
+        component.exportName.toLowerCase().includes(needle) ||
+        component.sourceRelative.toLowerCase().includes(needle)
+      );
+    });
 
   const report = {
     generatedAt: new Date().toISOString(),
     mode: options.check ? "check" : options.dryRun ? "dry-run" : "write",
-    totals: { components: components.length, created: 0, skipped: 0, missing: 0 },
+    totals: {
+      components: components.length,
+      created: 0,
+      skipped: 0,
+      missing: 0,
+    },
     items: [],
   };
 
@@ -355,25 +413,41 @@ async function main() {
     const exists = existsSync(component.storyPath);
     if (exists && !options.force) {
       report.totals.skipped += 1;
-      report.items.push({ component: component.exportName, story: component.storyRelative, status: "skipped-existing" });
+      report.items.push({
+        component: component.exportName,
+        story: component.storyRelative,
+        status: "skipped-existing",
+      });
       continue;
     }
 
     if (options.check) {
       if (!exists) {
         report.totals.missing += 1;
-        report.items.push({ component: component.exportName, story: component.storyRelative, status: "missing" });
+        report.items.push({
+          component: component.exportName,
+          story: component.storyRelative,
+          status: "missing",
+        });
       }
       continue;
     }
 
     if (!options.dryRun) {
       await mkdir(dirname(component.storyPath), { recursive: true });
-      await writeFile(component.storyPath, renderStory(component, hash(component.sourceText)), "utf8");
+      await writeFile(
+        component.storyPath,
+        renderStory(component, hash(component.sourceText)),
+        "utf8",
+      );
     }
 
     report.totals.created += 1;
-    report.items.push({ component: component.exportName, story: component.storyRelative, status: options.dryRun ? "would-create" : "created" });
+    report.items.push({
+      component: component.exportName,
+      story: component.storyRelative,
+      status: options.dryRun ? "would-create" : "created",
+    });
   }
 
   const reportPath = resolve(repoRoot, options.report);
@@ -390,6 +464,8 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error(error instanceof Error ? error.stack ?? error.message : error);
+  console.error(
+    error instanceof Error ? (error.stack ?? error.message) : error,
+  );
   process.exitCode = 1;
 });

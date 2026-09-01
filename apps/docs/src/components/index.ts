@@ -1,6 +1,6 @@
 export * from "./card";
-export * from "./code-group";
 export * from "./code-block";
+export * from "./code-group";
 export * from "./color";
 export * from "./columns";
 export * from "./expandable";

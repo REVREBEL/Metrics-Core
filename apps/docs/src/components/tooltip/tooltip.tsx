@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import type { TooltipPositionerProps } from "@base-ui/react/tooltip";
 import { Tooltip as TooltipBaseUI } from "@base-ui/react/tooltip";
@@ -42,7 +42,7 @@ const Tooltip = ({
 
   const handleOpenChange = (
     nextOpen: boolean,
-    eventDetails: { reason: string }
+    eventDetails: { reason: string },
   ) => {
     const { reason } = eventDetails;
 
@@ -82,7 +82,7 @@ const Tooltip = ({
           className={cn(
             className,
             !isInteractive &&
-              "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
           )}
           onClick={handleClick}
           render={isInteractive ? renderAsChild(children) : undefined}
@@ -156,7 +156,7 @@ const isInteractiveElement = (children: ReactNode): boolean => {
 
   if (typeof children.type === "string") {
     return ["button", "a", "input", "select", "textarea"].includes(
-      children.type.toLowerCase()
+      children.type.toLowerCase(),
     );
   }
 
@@ -172,7 +172,7 @@ const underlineWhenTextOnly = (children: ReactNode) => {
     <span
       className={cn(
         Classes.Tooltip,
-        "underline decoration-2 decoration-stone-400 decoration-dotted underline-offset-4 dark:decoration-stone-500"
+        "underline decoration-2 decoration-stone-400 decoration-dotted underline-offset-4 dark:decoration-stone-500",
       )}
     >
       {children}
@@ -180,5 +180,5 @@ const underlineWhenTextOnly = (children: ReactNode) => {
   );
 };
 
-export { Tooltip };
 export type { TooltipProps };
+export { Tooltip };

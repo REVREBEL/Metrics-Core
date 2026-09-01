@@ -15,8 +15,12 @@ export const dataLibraryTables = pgTable("data_library_tables", {
   displayName: varchar("display_name", { length: 255 }),
   description: text("description"),
   uiMetadata: jsonb("ui_metadata"),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
 export const lookupTableDraftEdits = pgTable(
@@ -30,8 +34,12 @@ export const lookupTableDraftEdits = pgTable(
     originalPayload: jsonb("original_payload"),
     draftPayload: jsonb("draft_payload").notNull(),
     status: varchar("status", { length: 50 }).default("draft").notNull(),
-    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
   },
   (table) => [
     uniqueIndex("lookup_table_draft_edits_user_table_row_idx").on(
@@ -51,7 +59,9 @@ export const appAuditLog = pgTable("app_audit_log", {
   metadata: jsonb("metadata"),
   beforeState: jsonb("before_state"),
   afterState: jsonb("after_state"),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
 export const appUsers = pgTable("app_users", {
@@ -59,35 +69,59 @@ export const appUsers = pgTable("app_users", {
   email: varchar("email", { length: 255 }).notNull().unique(),
   name: varchar("name", { length: 255 }),
   isActive: boolean("is_active").default(true).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
 export const userRoles = pgTable("user_roles", {
   id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id").notNull().references(() => appUsers.id, { onDelete: "cascade" }),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => appUsers.id, { onDelete: "cascade" }),
   role: varchar("role", { length: 100 }).notNull(),
   permissions: jsonb("permissions"),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
-export const lookupTableChangeRequests = pgTable("lookup_table_change_requests", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  tableKey: varchar("table_key", { length: 255 }).notNull(),
-  title: varchar("title", { length: 255 }).notNull(),
-  description: text("description"),
-  submitterId: uuid("submitter_id")
-    .notNull()
-    .references(() => appUsers.id),
-  reviewerId: uuid("reviewer_id")
-    .references(() => appUsers.id),
-  status: varchar("status", { length: 50, enum: ["submitted", "approved", "rejected", "withdrawn", "published", "conflict"] }).notNull(),
-  reviewNotes: text("review_notes"),
-  submittedAt: timestamp("submitted_at", { withTimezone: true }).defaultNow().notNull(),
-  reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
-  withdrawnAt: timestamp("withdrawn_at", { withTimezone: true }),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
-});
+export const lookupTableChangeRequests = pgTable(
+  "lookup_table_change_requests",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    tableKey: varchar("table_key", { length: 255 }).notNull(),
+    title: varchar("title", { length: 255 }).notNull(),
+    description: text("description"),
+    submitterId: uuid("submitter_id")
+      .notNull()
+      .references(() => appUsers.id),
+    reviewerId: uuid("reviewer_id").references(() => appUsers.id),
+    status: varchar("status", {
+      length: 50,
+      enum: [
+        "submitted",
+        "approved",
+        "rejected",
+        "withdrawn",
+        "published",
+        "conflict",
+      ],
+    }).notNull(),
+    reviewNotes: text("review_notes"),
+    submittedAt: timestamp("submitted_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    withdrawnAt: timestamp("withdrawn_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+);
 
 export const lookupTableChangeRequestItems = pgTable(
   "lookup_table_change_request_items",
@@ -103,7 +137,9 @@ export const lookupTableChangeRequestItems = pgTable(
     originalPayload: jsonb("original_payload"),
     submittedPayload: jsonb("submitted_payload").notNull(),
     validationSnapshot: jsonb("validation_snapshot"),
-    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
   },
   (table) => [
     uniqueIndex("change_request_items_req_draft_idx").on(

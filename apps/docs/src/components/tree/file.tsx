@@ -19,7 +19,7 @@ const TreeFile = ({ name }: TreeFileProps) => {
       aria-selected={false}
       className={cn(
         "flex cursor-default items-center gap-1.5 rounded-lg py-1 pr-1.5 pl-[calc(var(--padding-left)*1px)] text-stone-700 -outline-offset-1 hover:bg-stone-100 dark:text-stone-400 dark:hover:bg-stone-900",
-        Classes.TreeFile
+        Classes.TreeFile,
       )}
       data-component-part="tree-file"
       role="treeitem"
@@ -42,5 +42,5 @@ const TreeFile = ({ name }: TreeFileProps) => {
   );
 };
 
-export { TreeFile };
 export type { TreeFileProps };
+export { TreeFile };

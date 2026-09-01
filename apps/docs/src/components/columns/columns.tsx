@@ -24,7 +24,7 @@ const Columns = ({
         "prose dark:prose-invert grid max-w-none gap-4",
         "sm:grid-cols-[repeat(var(--cols),minmax(0,1fr))]",
         "@2xl/columns-container:grid-cols-[repeat(var(--cols),minmax(0,1fr))] @[0px]/columns-container:grid-cols-1",
-        className
+        className,
       )}
       style={{ "--cols": numCols } as React.CSSProperties}
     >
@@ -33,5 +33,5 @@ const Columns = ({
   );
 };
 
-export { Columns };
 export type { ColumnsProps };
+export { Columns };

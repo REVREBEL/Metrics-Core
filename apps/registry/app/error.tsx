@@ -1,11 +1,11 @@
 "use client";
-import { useEffect } from "react";
-import Link from "next/link";
 
 import {
   MobileSidebarTrigger,
   RegistrySidebar,
 } from "@components/registry-sidebar";
+import Link from "next/link";
+import { useEffect } from "react";
 
 export default function ErrorPage({
   error,

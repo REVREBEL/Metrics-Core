@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Tabs } from "@base-ui/react/tabs";
 import React, {
@@ -66,7 +66,7 @@ const CodeGroup = ({
   const childArr = React.Children.toArray(children) as CodeBlockChild[];
   const safeInitialIndex = Math.min(
     Math.max(0, initialSelectedTab),
-    Math.max(0, childArr.length - 1)
+    Math.max(0, childArr.length - 1),
   );
   const [selectedTab, setSelectedTab] = useState(safeInitialIndex);
   const triggerRefs = useRef<Map<number, HTMLElement>>(new Map());
@@ -83,7 +83,7 @@ const CodeGroup = ({
         window.history.replaceState(
           null,
           "",
-          window.location.pathname + window.location.search
+          window.location.pathname + window.location.search,
         );
       }
 
@@ -99,7 +99,7 @@ const CodeGroup = ({
         });
       }
     },
-    [onSelectedTabChange]
+    [onSelectedTabChange],
   );
 
   if (!children) {
@@ -108,7 +108,7 @@ const CodeGroup = ({
 
   if (childArr.length === 0) {
     console.warn(
-      "CodeGroup has no children, expected at least one CodeBlock child."
+      "CodeGroup has no children, expected at least one CodeBlock child.",
     );
     return null;
   }
@@ -126,7 +126,7 @@ const CodeGroup = ({
         codeBlockTheme === "dark" &&
           "codeblock-dark border-transparent bg-codeblock text-stone-50 dark:bg-white/5",
         feedbackModalOpen && "border border-primary dark:border-primary-light",
-        className
+        className,
       )}
       onValueChange={(value) => handleValueChange(String(value))}
       ref={anchorRef as React.Ref<HTMLDivElement>}
@@ -135,7 +135,7 @@ const CodeGroup = ({
       <div
         className={cn(
           "relative flex items-center justify-between gap-2",
-          dropdown ? "px-2.5" : "pr-2.5"
+          dropdown ? "px-2.5" : "pr-2.5",
         )}
         data-component-part="code-group-tab-bar"
       >
@@ -146,7 +146,7 @@ const CodeGroup = ({
                 <ComponentIcon
                   className={cn(
                     "size-3.5 bg-stone-500 dark:bg-stone-400",
-                    Classes.CodeBlockIcon
+                    Classes.CodeBlockIcon,
                   )}
                   icon={childArr[selectedIndex]?.props.icon}
                   iconType="regular"
@@ -158,7 +158,7 @@ const CodeGroup = ({
                 "truncate",
                 codeBlockTheme === "system" &&
                   "text-stone-950 dark:text-stone-50",
-                codeBlockTheme === "dark" && "text-stone-50"
+                codeBlockTheme === "dark" && "text-stone-50",
               )}
             >
               {childArr[selectedIndex]?.props.filename}
@@ -170,7 +170,7 @@ const CodeGroup = ({
               "flex w-0 flex-1 gap-1 overflow-x-auto overflow-y-hidden rounded-tl-xl text-xs leading-6",
               codeBlockTheme === "system"
                 ? "scrollbar-code-system"
-                : "scrollbar-code-dark"
+                : "scrollbar-code-dark",
             )}
           >
             {childArr.map((child, index) => (
@@ -195,7 +195,7 @@ const CodeGroup = ({
                       codeBlockTheme === "system"
                         ? "group-hover:bg-primary dark:group-hover:bg-primary-light"
                         : "group-hover:bg-stone-700/70 group-hover:text-primary-light",
-                      Classes.CodeBlockIcon
+                      Classes.CodeBlockIcon,
                     )}
                     color={selectedIndex === index ? "currentColor" : undefined}
                     icon={child.props.icon}
@@ -266,7 +266,7 @@ type TabItemProps = {
 const TabItem = forwardRef<React.ComponentRef<typeof Tabs.Tab>, TabItemProps>(
   function TabItem(
     { children, value, isSelected, tabsLength, codeBlockTheme },
-    ref
+    ref,
   ) {
     return (
       <Tabs.Tab
@@ -279,7 +279,7 @@ const TabItem = forwardRef<React.ComponentRef<typeof Tabs.Tab>, TabItemProps>(
           !isSelected &&
             codeBlockTheme === "system" &&
             "text-stone-500 dark:text-stone-400",
-          !isSelected && codeBlockTheme === "dark" && "text-stone-400"
+          !isSelected && codeBlockTheme === "dark" && "text-stone-400",
         )}
         ref={ref}
         value={value}
@@ -292,7 +292,7 @@ const TabItem = forwardRef<React.ComponentRef<typeof Tabs.Tab>, TabItemProps>(
               "group-hover:bg-stone-200/50 group-hover:text-primary dark:group-hover:bg-stone-700/70 dark:group-hover:text-primary-light",
             tabsLength > 1 &&
               codeBlockTheme === "dark" &&
-              "group-hover:bg-stone-700/70 group-hover:text-primary-light"
+              "group-hover:bg-stone-700/70 group-hover:text-primary-light",
           )}
         >
           {children}
@@ -303,7 +303,7 @@ const TabItem = forwardRef<React.ComponentRef<typeof Tabs.Tab>, TabItemProps>(
         )}
       </Tabs.Tab>
     );
-  }
+  },
 );
 
 export { CodeGroup, type CodeGroupProps };

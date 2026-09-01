@@ -1,6 +1,6 @@
-import { Popover, PopoverContent, PopoverTrigger } from "@popovers";
 import { Button } from "@buttons";
 import { Input } from "@inputs";
+import { Popover, PopoverContent, PopoverTrigger } from "@popovers";
 import { Label } from "@ui";
 
 export const popover = {
@@ -22,11 +22,19 @@ export const popover = {
             <div className="grid gap-2">
               <div className="grid grid-cols-3 items-center gap-4">
                 <Label htmlFor="width">Width</Label>
-                <Input id="width" defaultValue="100%" className="col-span-2 h-8" />
+                <Input
+                  id="width"
+                  defaultValue="100%"
+                  className="col-span-2 h-8"
+                />
               </div>
               <div className="grid grid-cols-3 items-center gap-4">
                 <Label htmlFor="height">Height</Label>
-                <Input id="height" defaultValue="25px" className="col-span-2 h-8" />
+                <Input
+                  id="height"
+                  defaultValue="25px"
+                  className="col-span-2 h-8"
+                />
               </div>
             </div>
           </div>

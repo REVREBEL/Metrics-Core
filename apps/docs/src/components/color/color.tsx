@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import type React from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
@@ -26,7 +26,7 @@ const Color = ({ children, variant, className }: ColorProps) => {
           "group flex py-6",
           variant === "table" && "flex-col gap-6",
           variant === "compact" && "flex-row flex-wrap gap-x-2 gap-y-4",
-          className
+          className,
         )}
         data-variant={variant}
       >
@@ -46,7 +46,7 @@ const ColorRow = ({ children, title }: ColorRowProps) => {
     <div
       className={cn(
         Classes.ColorRow,
-        "flex flex-col gap-2 md:flex-row md:items-center"
+        "flex flex-col gap-2 md:flex-row md:items-center",
       )}
     >
       {!!title && (
@@ -117,7 +117,7 @@ const ColorItem = ({ name, value }: ColorItemProps) => {
       className={cn(
         "relative flex cursor-copy items-center justify-center rounded-lg border border-stone-200 dark:border-stone-800",
         variant === "compact" && "aspect-square max-h-[104px]",
-        variant === "table" && "aspect-square w-full md:h-10"
+        variant === "table" && "aspect-square w-full md:h-10",
       )}
       data-component-part="color-item-button"
       onClick={handleCopy}
@@ -129,7 +129,7 @@ const ColorItem = ({ name, value }: ColorItemProps) => {
         className={cn(
           "pointer-events-none absolute inset-0 m-auto opacity-0 transition-opacity duration-100",
           "filter-[drop-shadow(0_0_2px_rgb(0_0_0/0.1))_drop-shadow(0_0_4px_rgb(0_0_0/0.1))] text-white dark:text-white",
-          state === "copied" && "opacity-100"
+          state === "copied" && "opacity-100",
         )}
       />
     </button>
@@ -140,7 +140,7 @@ const ColorItem = ({ name, value }: ColorItemProps) => {
       className={cn(
         Classes.ColorItem,
         variant === "compact" && "flex shrink-0 flex-col gap-2",
-        variant === "table" && "w-full max-w-[50px] md:max-w-[60px]"
+        variant === "table" && "w-full max-w-[50px] md:max-w-[60px]",
       )}
     >
       {variant === "table" ? (
@@ -175,5 +175,5 @@ const ColorItem = ({ name, value }: ColorItemProps) => {
 Color.Row = ColorRow;
 Color.Item = ColorItem;
 
-export { Color };
 export type { ColorItemProps, ColorProps, ColorRowProps };
+export { Color };
