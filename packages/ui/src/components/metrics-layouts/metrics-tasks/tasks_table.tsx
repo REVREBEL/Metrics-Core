@@ -70,38 +70,47 @@ export function TasksTable({ data }: TasksTableProps) {
   const filteredTasks = useMemo(() => {
     const normalizedSearch = debouncedSearch.trim().toLowerCase();
 
-    return data
-      .filter((task) => {
-        if (statusFilter !== allFilterValue && task.status !== statusFilter) {
-          return false;
-        }
+    const filtered = data.filter((task) => {
+      if (statusFilter !== allFilterValue && task.status !== statusFilter) {
+        return false;
+      }
 
-        if (
-          priorityFilter !== allFilterValue &&
-          task.priority !== priorityFilter
-        ) {
-          return false;
-        }
+      if (
+        priorityFilter !== allFilterValue &&
+        task.priority !== priorityFilter
+      ) {
+        return false;
+      }
 
-        if (!normalizedSearch) {
-          return true;
-        }
+      if (!normalizedSearch) {
+        return true;
+      }
 
-        return (
-          task.id.toLowerCase().includes(normalizedSearch) ||
-          task.title.toLowerCase().includes(normalizedSearch) ||
-          task.status.toLowerCase().includes(normalizedSearch) ||
-          (task.label?.toLowerCase().includes(normalizedSearch) ?? false) ||
-          (task.priority?.toLowerCase().includes(normalizedSearch) ?? false)
-        );
-      })
-      .sort((a, b) => {
-        const left = String(a[sortKey]).toLowerCase();
-        const right = String(b[sortKey]).toLowerCase();
-        return sortDirection === "asc"
-          ? left.localeCompare(right)
-          : right.localeCompare(left);
-      });
+      return (
+        task.id.toLowerCase().includes(normalizedSearch) ||
+        task.title.toLowerCase().includes(normalizedSearch) ||
+        task.status.toLowerCase().includes(normalizedSearch) ||
+        (task.label?.toLowerCase().includes(normalizedSearch) ?? false) ||
+        (task.priority?.toLowerCase().includes(normalizedSearch) ?? false)
+      );
+    });
+
+    // ⚡ Bolt: Pre-calculate sorting criteria during an initial O(N) pass to avoid string conversion,
+    // lowercasing, and localeCompare calls inside the O(N log N) sort comparator.
+    const mapped = filtered.map((task) => ({
+      task,
+      sortVal: String(task[sortKey] ?? "").toLowerCase(),
+    }));
+
+    const modifier = sortDirection === "asc" ? 1 : -1;
+
+    mapped.sort((a, b) => {
+      if (a.sortVal < b.sortVal) return -1 * modifier;
+      if (a.sortVal > b.sortVal) return 1 * modifier;
+      return 0;
+    });
+
+    return mapped.map((item) => item.task);
   }, [
     data,
     priorityFilter,
