@@ -38,14 +38,13 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint UI Package
-        run: pnpm --filter @repo/ui lint
+      - name: Check UI Barrels
+        run: pnpm --filter @repo/ui barrels:check
 
-      - name: Check Barrel Files
-        run: pnpm --filter @repo/ui barrel:check
-
-      - name: Check Icon Exports
-        run: pnpm --filter @repo/ui icons:check
+      - name: Check UI Icons
+        run: |
+          pnpm --filter @repo/ui icons:sync:check
+          pnpm --filter @repo/ui icons:barrels:check
 
       - name: Build Storybook
         run: pnpm --filter @apps/storybook build
