@@ -8,6 +8,7 @@ on:
       - "apps/storybook/**"
       - "apps/registry/**"
       - "packages/ui/**"
+      - ".github/workflows/ui-validation.yml"
       - "package.json"
       - "pnpm-lock.yaml"
       - "tsconfig.json"

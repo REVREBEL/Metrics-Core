@@ -40,3 +40,7 @@
 ## 2026-07-29 - [Column Type Detection Optimization & RegExp Hoisting]
 **Learning:** Evaluating column types dynamically across raw table JSON rows by running `.reduce()` with nested `.filter()` iterations (`arr.filter(...)`) causes quadratic time complexity ($O(N^2)$) per column. In addition, defining `RegExp` literals directly inside type-detector functions forces JavaScript engines to re-compile regex objects repeatedly during tight loops.
 **Action:** Hoist regex literals outside helper functions, and compute column type frequency distributions using a single-pass $O(N)$ accumulator with bounded `Set` tracking for boolean detection.
+
+## 2026-07-30 - [Memoizing Static Tree Search Haystacks]
+**Learning:** Tree view component search filters (like component registry catalog sidebars) often reconstruct search haystack strings (`[id, title, path, ...files].join(" ").toLowerCase()`) recursively for every node on every keystroke or state update. Furthermore, evaluating haystack creation before checking `if (!query) return true` causes thousands of array allocations even on initial/empty state renders.
+**Action:** Short-circuit empty query filters immediately at function entry and cache static tree node search strings in a module-level `Map` by node ID.

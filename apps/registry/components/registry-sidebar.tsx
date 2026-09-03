@@ -44,14 +44,24 @@ const primaryNav: NavItem[] = [
   },
 ];
 
+// Module-level cache to avoid repeated array creation and string lowercasing per node
+const nodeTextCache = new Map<string, string>();
+
+function getNodeText(node: RegistryFolderNode): string {
+  let text = nodeTextCache.get(node.id);
+  if (!text) {
+    text = [node.id, node.title, node.sourcePath, ...node.directFiles]
+      .join(" ")
+      .toLowerCase();
+    nodeTextCache.set(node.id, text);
+  }
+  return text;
+}
+
 function matchesNode(node: RegistryFolderNode, query: string): boolean {
   if (!query) return true;
 
-  const haystack = [node.id, node.title, node.sourcePath, ...node.directFiles]
-    .join(" ")
-    .toLowerCase();
-
-  if (haystack.includes(query)) return true;
+  if (getNodeText(node).includes(query)) return true;
 
   return node.children.some((childId) => {
     const child = getRegistryFolderNode(childId);
