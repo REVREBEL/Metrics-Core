@@ -26,8 +26,12 @@ type CalendarDay = {
   tasks: Task[];
 };
 
+// ⚡ Bolt: Fast YYYY-MM-DD date key formatting without ISO string overhead or array allocations.
 function formatDateKey(date: Date): string {
-  return date.toISOString().split("T")[0];
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year}-${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""}${day}`;
 }
 
 // ⚡ Bolt: Precompute static DateTimeFormat to avoid expensive repeated implicit instantiation.
@@ -40,7 +44,7 @@ function getMonthDays(year: number, month: number): CalendarDay[] {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // ⚡ Bolt: Precompute today's key to prevent ~42 redundant split & toISOString calls in loops.
+  // ⚡ Bolt: Precompute today's key to prevent redundant formatting calls in loops.
   const todayKey = formatDateKey(today);
 
   const firstDay = new Date(year, month, 1);
@@ -128,10 +132,12 @@ export function CalendarView({ tasks, onTaskClick }: CalendarViewProps) {
     const calendarDays = getMonthDays(year, month);
 
     // Group tasks by due date and assign to calendar days
+    // ⚡ Bolt: Use slice instead of split("T") to eliminate array allocations.
     const grouped: Record<string, Task[]> = {};
     tasks.forEach((task) => {
       if (task.dueDate) {
-        const key = task.dueDate.split("T")[0];
+        const tIndex = task.dueDate.indexOf("T");
+        const key = tIndex !== -1 ? task.dueDate.slice(0, tIndex) : task.dueDate;
         if (!grouped[key]) grouped[key] = [];
         grouped[key].push(task);
       }
@@ -165,11 +171,13 @@ export function CalendarView({ tasks, onTaskClick }: CalendarViewProps) {
   };
 
   // Stats for current view
-  // ⚡ Bolt: Single pass loop for stats, and hoisted `new Date()` outside the loop
+  // ⚡ Bolt: Single pass loop for stats, prefix string matching to avoid split/map arrays, and Date.parse for zero-allocation date checks.
   const stats = useMemo(() => {
-    const currentMonth = currentDate.getMonth();
+    const currentMonth = currentDate.getMonth() + 1;
     const currentYear = currentDate.getFullYear();
-    const now = new Date();
+    const monthStr = currentMonth < 10 ? `0${currentMonth}` : `${currentMonth}`;
+    const yearMonthPrefix = `${currentYear}-${monthStr}`;
+    const nowTs = Date.now();
 
     let total = 0;
     let complete = 0;
@@ -177,14 +185,13 @@ export function CalendarView({ tasks, onTaskClick }: CalendarViewProps) {
 
     for (const task of tasks) {
       if (!task.dueDate) continue;
-      const [year, month] = task.dueDate.split("-").map(Number);
-      if (month - 1 === currentMonth && year === currentYear) {
+      if (task.dueDate.startsWith(yearMonthPrefix)) {
         total++;
         if (task.status === "complete") {
           complete++;
         } else if (task.status !== "canceled") {
-          const taskDueDate = new Date(task.dueDate);
-          if (taskDueDate < now) {
+          const dueTs = Date.parse(task.dueDate);
+          if (!Number.isNaN(dueTs) && dueTs < nowTs) {
             overdue++;
           }
         }
