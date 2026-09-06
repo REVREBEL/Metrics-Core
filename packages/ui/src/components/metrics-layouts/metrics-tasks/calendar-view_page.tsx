@@ -128,10 +128,11 @@ export function CalendarView({ tasks, onTaskClick }: CalendarViewProps) {
     const calendarDays = getMonthDays(year, month);
 
     // Group tasks by due date and assign to calendar days
+    // ⚡ Bolt: Use string slicing .slice(0, 10) instead of .split("T")[0] to avoid array allocation
     const grouped: Record<string, Task[]> = {};
     tasks.forEach((task) => {
       if (task.dueDate) {
-        const key = task.dueDate.split("T")[0];
+        const key = task.dueDate.slice(0, 10);
         if (!grouped[key]) grouped[key] = [];
         grouped[key].push(task);
       }
@@ -165,11 +166,13 @@ export function CalendarView({ tasks, onTaskClick }: CalendarViewProps) {
   };
 
   // Stats for current view
-  // ⚡ Bolt: Single pass loop for stats, and hoisted `new Date()` outside the loop
+  // ⚡ Bolt: Single pass loop using fast string prefix matching and Date.parse timestamp comparison
+  // to eliminate string array allocations (.split("-").map(Number)) and Date object creation per task.
   const stats = useMemo(() => {
     const currentMonth = currentDate.getMonth();
     const currentYear = currentDate.getFullYear();
-    const now = new Date();
+    const yearMonthPrefix = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}`;
+    const nowTs = Date.now();
 
     let total = 0;
     let complete = 0;
@@ -177,14 +180,13 @@ export function CalendarView({ tasks, onTaskClick }: CalendarViewProps) {
 
     for (const task of tasks) {
       if (!task.dueDate) continue;
-      const [year, month] = task.dueDate.split("-").map(Number);
-      if (month - 1 === currentMonth && year === currentYear) {
+      if (task.dueDate.startsWith(yearMonthPrefix)) {
         total++;
         if (task.status === "complete") {
           complete++;
         } else if (task.status !== "canceled") {
-          const taskDueDate = new Date(task.dueDate);
-          if (taskDueDate < now) {
+          const dueTs = Date.parse(task.dueDate);
+          if (!Number.isNaN(dueTs) && dueTs < nowTs) {
             overdue++;
           }
         }
