@@ -46,10 +46,11 @@ const i18n = {
   noFieldsFound: "No fields found",
 };
 
-function isFieldGroup(item: FilterField | FilterFieldGroup): item is FilterFieldGroup {
+function isFieldGroup(
+  item: FilterField | FilterFieldGroup,
+): item is FilterFieldGroup {
   return (item as FilterFieldGroup).fields !== undefined;
 }
-
 
 export function Filters({
   fields,
@@ -64,9 +65,15 @@ export function Filters({
 }) {
   const mergedI18n = { ...i18n, ...customI18n };
   const [open, setOpen] = React.useState(false);
-  const [activeFilterIndex, setActiveFilterIndex] = React.useState<number | null>(null);
-  const [selectedField, setSelectedField] = React.useState<FilterField | null>(null);
-  const [selectedOperator, setSelectedOperator] = React.useState<string | null>(null);
+  const [activeFilterIndex, setActiveFilterIndex] = React.useState<
+    number | null
+  >(null);
+  const [selectedField, setSelectedField] = React.useState<FilterField | null>(
+    null,
+  );
+  const [selectedOperator, setSelectedOperator] = React.useState<string | null>(
+    null,
+  );
   const [filterValue, setFilterValue] = React.useState<string>("");
 
   const operators: Record<string, string[]> = {
@@ -130,7 +137,9 @@ export function Filters({
       const filter = value[index];
       const field = fields
         .flatMap((item) => (isFieldGroup(item) ? item.fields : [item]))
-        .find((f) => f.type !== "separator" && f.value === filter.field) as FilterField;
+        .find(
+          (f) => f.type !== "separator" && f.value === filter.field,
+        ) as FilterField;
       setActiveFilterIndex(index);
       setSelectedField(field);
       setSelectedOperator(filter.operator);
@@ -147,7 +156,9 @@ export function Filters({
   const getFieldLabel = (fieldValue: string) => {
     const field = fields
       .flatMap((item) => (isFieldGroup(item) ? item.fields : [item]))
-      .find((f) => f.type !== "separator" && f.value === fieldValue) as FilterField;
+      .find(
+        (f) => f.type !== "separator" && f.value === fieldValue,
+      ) as FilterField;
     return field?.label || fieldValue;
   };
 
@@ -163,17 +174,26 @@ export function Filters({
           <span className="font-medium">{getFieldLabel(filter.field)}</span>
           <span className="text-gray-500">{filter.operator}</span>
           <span className="font-semibold">{filter.value}</span>
-          <button onClick={() => openFilter(index)} className="text-gray-500 hover:text-gray-800">
+          <button
+            onClick={() => openFilter(index)}
+            className="text-gray-500 hover:text-gray-800"
+          >
             &#9998;
           </button>
-          <button onClick={() => onRemoveFilter(index)} className="text-red-500 hover:text-red-800">
+          <button
+            onClick={() => onRemoveFilter(index)}
+            className="text-red-500 hover:text-red-800"
+          >
             &times;
           </button>
         </div>
       ))}
       <Combobox open={open} onOpenChange={setOpen}>
         <ComboboxTrigger asChild>
-          <button onClick={() => openFilter()} className="text-sm text-blue-500 hover:text-blue-800">
+          <button
+            onClick={() => openFilter()}
+            className="text-sm text-blue-500 hover:text-blue-800"
+          >
             {mergedI18n.addFilter}
           </button>
         </ComboboxTrigger>
@@ -190,7 +210,11 @@ export function Filters({
                         const groupFields = item.fields;
                         return (
                           <CommandGroup
-                            key={item.group ? `group-${item.group}` : `group-no-title-${index}`}
+                            key={
+                              item.group
+                                ? `group-${item.group}`
+                                : `group-no-title-${index}`
+                            }
                             heading={item.group || "Fields"}
                           >
                             {groupFields.map((field, fieldIndex) => {
@@ -215,7 +239,9 @@ export function Filters({
                         );
                       }
                       if (item.type === "separator") {
-                        return <CommandSeparator key={`separator-main-${index}`} />;
+                        return (
+                          <CommandSeparator key={`separator-main-${index}`} />
+                        );
                       }
                       return (
                         <FilterFieldItem
@@ -237,7 +263,10 @@ export function Filters({
                   <ComboboxContent>
                     <ComboboxList>
                       {operators[selectedField.type].map((op) => (
-                        <ComboboxItem key={op} onSelect={() => onOperatorSelect(op)}>
+                        <ComboboxItem
+                          key={op}
+                          onSelect={() => onOperatorSelect(op)}
+                        >
                           {op}
                         </ComboboxItem>
                       ))}
@@ -269,8 +298,12 @@ export function Filters({
                       <ComboboxInput placeholder={mergedI18n.enterValue} />
                       <ComboboxContent>
                         <ComboboxList>
-                          <ComboboxItem onSelect={() => onValueChange("true")}>True</ComboboxItem>
-                          <ComboboxItem onSelect={() => onValueChange("false")}>False</ComboboxItem>
+                          <ComboboxItem onSelect={() => onValueChange("true")}>
+                            True
+                          </ComboboxItem>
+                          <ComboboxItem onSelect={() => onValueChange("false")}>
+                            False
+                          </ComboboxItem>
                         </ComboboxList>
                       </ComboboxContent>
                     </Combobox>
@@ -307,7 +340,9 @@ function FilterFieldItem({
   onFieldSelect,
   i18n,
 }: {
-  field: FilterField & { type: "text" | "date" | "number" | "select" | "boolean" };
+  field: FilterField & {
+    type: "text" | "date" | "number" | "select" | "boolean";
+  };
   selectedFields: string[];
   onFieldSelect: (field: FilterField) => void;
   i18n: typeof i18n;
@@ -320,11 +355,10 @@ function FilterFieldItem({
       <CheckIcon
         className={cn(
           "mr-2 h-4 w-4",
-          selectedFields.includes(field.value) ? "opacity-100" : "opacity-0"
+          selectedFields.includes(field.value) ? "opacity-100" : "opacity-0",
         )}
       />
       {field.label}
     </ComboboxItem>
   );
 }
-
