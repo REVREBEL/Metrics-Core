@@ -277,21 +277,25 @@ export function DataLibraryWorkspace({
   );
 
   // Save Drafts Action
+  // Optimized by Bolt: Build an O(1) row key lookup map upfront to prevent O(L * R) row array searches
+  // and redundant canonicalizeRowKey calls during draft persistence.
   const handleSaveDrafts = async () => {
     if (!selectedTable || unsavedEditCount === 0) return;
     setIsSaving(true);
     setActionFeedback(null);
 
+    const rowByKeyMap = new Map<string, Record<string, unknown>>();
+    for (let i = 0; i < rows.length; i++) {
+      const r = rows[i];
+      const overlay = r._overlay as Record<string, unknown> | undefined;
+      const key =
+        (overlay?.rowKey as string) ??
+        canonicalizeRowKey(selectedTable.primaryKey, r);
+      rowByKeyMap.set(key, r);
+    }
+
     const changes = Object.entries(localEdits).map(([rowKey, draftPayload]) => {
-      const targetRow = rows.find((r) => {
-        const overlay = (r as Record<string, unknown>)._overlay as
-          | Record<string, unknown>
-          | undefined;
-        return (
-          overlay?.rowKey === rowKey ||
-          canonicalizeRowKey(selectedTable.primaryKey, r) === rowKey
-        );
-      });
+      const targetRow = rowByKeyMap.get(rowKey);
       const overlay = targetRow?._overlay as
         | Record<string, unknown>
         | undefined;
@@ -976,35 +980,39 @@ export function DataLibraryWorkspace({
                 </div>
 
                 <div className="space-y-1.5 max-h-[380px] overflow-y-auto pr-1">
-                  {selectedTable.columns.map((col) => {
-                    const overlay = selectedRow._overlay as
+                  {(() => {
+                    // Optimized by Bolt: Hoist selectedOverlay, selectedRowKey, and selectedLocalRowEdits outside
+                    // of the column mapping loop to eliminate O(C) redundant row key canonicalization and state lookups per render cycle.
+                    const selectedOverlay = selectedRow._overlay as
                       | Record<string, unknown>
                       | undefined;
-                    const sourceVal = overlay?.sourceValues
-                      ? (overlay.sourceValues as Record<string, unknown>)[
-                          col.key
-                        ]
-                      : selectedRow[col.key];
-
-                    const rowKey =
-                      (overlay?.rowKey as string) ??
+                    const selectedRowKey =
+                      (selectedOverlay?.rowKey as string) ??
                       canonicalizeRowKey(selectedTable.primaryKey, selectedRow);
-                    const localRowEdits = localEdits[rowKey];
-                    const hasLocalEdit =
-                      localRowEdits && col.key in localRowEdits;
+                    const selectedLocalRowEdits = localEdits[selectedRowKey];
 
-                    const draftVal = hasLocalEdit
-                      ? localRowEdits[col.key]
-                      : overlay?.draftValues
-                        ? (overlay.draftValues as Record<string, unknown>)[
+                    return selectedTable.columns.map((col) => {
+                      const sourceVal = selectedOverlay?.sourceValues
+                        ? (selectedOverlay.sourceValues as Record<string, unknown>)[
                             col.key
                           ]
-                        : undefined;
+                        : selectedRow[col.key];
 
-                    const isChanged =
-                      draftVal !== undefined && draftVal !== sourceVal;
+                      const hasLocalEdit =
+                        selectedLocalRowEdits && col.key in selectedLocalRowEdits;
 
-                    return (
+                      const draftVal = hasLocalEdit
+                        ? selectedLocalRowEdits[col.key]
+                        : selectedOverlay?.draftValues
+                          ? (selectedOverlay.draftValues as Record<string, unknown>)[
+                              col.key
+                            ]
+                          : undefined;
+
+                      const isChanged =
+                        draftVal !== undefined && draftVal !== sourceVal;
+
+                      return (
                       <div
                         key={col.key}
                         className={`rounded border p-2 ${
@@ -1049,7 +1057,8 @@ export function DataLibraryWorkspace({
                         </div>
                       </div>
                     );
-                  })}
+                  });
+                  })()}
                 </div>
               </div>
             </div>
