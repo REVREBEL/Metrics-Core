@@ -11,7 +11,14 @@ import {
   Send,
   XCircle,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+// ⚡ Bolt: Hoist static Intl.DateTimeFormat instance to avoid re-creation inside loops or render passes
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+});
 import {
   getChangeRequestAction,
   listChangeRequestsAction,
@@ -92,15 +99,7 @@ export function ChangeRequestQueue() {
     );
     setIsLoading(false);
     if (res.success) {
-      let data = res.data as QueueItem[];
-      if (submitterFilter.trim()) {
-        data = data.filter((r) =>
-          r.submitterId
-            .toLowerCase()
-            .includes(submitterFilter.trim().toLowerCase()),
-        );
-      }
-      setRequests(data);
+      setRequests(res.data as QueueItem[]);
     }
   }
 
@@ -108,6 +107,23 @@ export function ChangeRequestQueue() {
   useEffect(() => {
     loadQueue();
   }, [selectedStatus, selectedTable]);
+
+  // ⚡ Bolt: Memoize filtered requests and pre-format dates once when requests or submitterFilter changes.
+  // This avoids redundant Date instantiations, Intl formatting, and array filtering on every modal/state update.
+  const filteredRequests = useMemo(() => {
+    const trimmedFilter = submitterFilter.trim().toLowerCase();
+
+    return requests
+      .filter(
+        (r) =>
+          !trimmedFilter ||
+          r.submitterId.toLowerCase().includes(trimmedFilter),
+      )
+      .map((r) => ({
+        ...r,
+        formattedSubmittedAt: dateFormatter.format(new Date(r.submittedAt)),
+      }));
+  }, [requests, submitterFilter]);
 
   async function handleInspect(id: string) {
     setPublicationResult(null);
@@ -322,7 +338,7 @@ export function ChangeRequestQueue() {
                   Loading change requests...
                 </td>
               </tr>
-            ) : requests.length === 0 ? (
+            ) : filteredRequests.length === 0 ? (
               <tr>
                 <td
                   colSpan={6}
@@ -332,7 +348,7 @@ export function ChangeRequestQueue() {
                 </td>
               </tr>
             ) : (
-              requests.map((r) => (
+              filteredRequests.map((r) => (
                 <tr
                   key={r.id}
                   className="hover:bg-slate-50 dark:hover:bg-slate-900/50"
@@ -350,7 +366,7 @@ export function ChangeRequestQueue() {
                     {r.submitterId.substring(0, 8)}...
                   </td>
                   <td className="px-4 py-3 text-xs text-slate-500">
-                    {new Date(r.submittedAt).toLocaleDateString()}
+                    {r.formattedSubmittedAt}
                   </td>
                   <td className="px-4 py-3">
                     <StatusBadge status={r.status} />
