@@ -26,6 +26,11 @@ import { initiativeStatuses, strategyTypes, taskStatuses } from "../data/data";
 import type { Initiative, Task } from "../data/schema";
 import { useTasks } from "./tasks-provider";
 
+// BOLT OPTIMIZATION: Pre-compute strategyType Map to replace O(S) array .find() lookups with O(1) constant time access per card render.
+const strategyTypeMap = new Map(
+  strategyTypes.map((type) => [type.value, type]),
+);
+
 type KanbanViewProps = {
   initiatives: Initiative[];
   tasks: Task[];
@@ -295,19 +300,19 @@ const InitiativeCard = memo(
     initiative: Initiative;
     onClick?: (item: Initiative) => void;
   }) => {
-    const strategyType = strategyTypes.find(
-      (s) => s.value === initiative.strategyType,
-    );
+    // ⚡ Bolt: Uses pre-computed strategyTypeMap for O(1) lookup instead of O(S) .find() array scan
+    const strategyType = strategyTypeMap.get(initiative.strategyType);
     const colors = categoryColors[initiative.strategyType] || {
       bg: "bg-slate-100 dark:bg-slate-800",
       text: "text-slate-700 dark:text-slate-300",
       label: "Uncategorized",
     };
 
-    // Calculate progress
+    // Calculate progress - short circuit .filter() when totalTasks === 0
     const cardTasks = initiative.tasks || [];
     const totalTasks = cardTasks.length;
-    const completedTasks = cardTasks.filter((t) => t.status === "done").length;
+    const completedTasks =
+      totalTasks > 0 ? cardTasks.filter((t) => t.status === "done").length : 0;
     const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
     return (
@@ -468,9 +473,11 @@ const TaskCard = memo(
 
     const checklistItems = task.checklist ?? [];
     const checklistTotal = checklistItems.length;
-    const checklistCompleted = checklistItems.filter(
-      (item) => item.completed,
-    ).length;
+    // ⚡ Bolt: Short-circuit .filter() when checklistTotal === 0 to avoid array iteration/allocations
+    const checklistCompleted =
+      checklistTotal > 0
+        ? checklistItems.filter((item) => item.completed).length
+        : 0;
     const isChecklistComplete =
       checklistTotal > 0 && checklistCompleted === checklistTotal;
 
