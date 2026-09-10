@@ -44,3 +44,7 @@
 ## 2026-07-30 - [Memoizing Static Tree Search Haystacks]
 **Learning:** Tree view component search filters (like component registry catalog sidebars) often reconstruct search haystack strings (`[id, title, path, ...files].join(" ").toLowerCase()`) recursively for every node on every keystroke or state update. Furthermore, evaluating haystack creation before checking `if (!query) return true` causes thousands of array allocations even on initial/empty state renders.
 **Action:** Short-circuit empty query filters immediately at function entry and cache static tree node search strings in a module-level `Map` by node ID.
+
+## 2026-07-31 - [WeakMap Caching for Grid Row Key Canonicalization]
+**Learning:** Data table cell renderers invoke key canonicalization functions like `canonicalizeRowKey` across every cell in a table grid (e.g., 50 rows x 15 columns = 750 calls per render). Without caching, each cell render creates fresh JS objects and executes `JSON.stringify`, leading to thousands of redundant allocations per keystroke during cell editing.
+**Action:** Use a `WeakMap` keyed by row object reference to cache canonicalized string keys, converting repeated stringifications into $O(1)$ lookups with zero memory leaks or object allocations.
