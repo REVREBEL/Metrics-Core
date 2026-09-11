@@ -1,20 +1,18 @@
 "use client";
 
 import { CheckIcon } from "@radix-ui/react-icons";
-import { CommandGroup } from "cmdk";
+import { CommandEmpty, CommandGroup, CommandSeparator } from "cmdk";
+import * as React from "react";
+import { cn } from "@/lib/utils";
 import {
   Combobox,
-  ComboboxClear,
   ComboboxContent,
-  ComboboxEmpty,
-  ComboboxGroup,
   ComboboxInput,
   ComboboxItem,
   ComboboxList,
   ComboboxPopover,
-  ComboboxSeparator,
   ComboboxTrigger,
-} from "./combobox-shadcn";
+} from "./combobox";
 
 export type FilterField =
   | {
@@ -46,10 +44,11 @@ const i18n = {
   noFieldsFound: "No fields found",
 };
 
-function isFieldGroup(item: FilterField | FilterFieldGroup): item is FilterFieldGroup {
+function isFieldGroup(
+  item: FilterField | FilterFieldGroup,
+): item is FilterFieldGroup {
   return (item as FilterFieldGroup).fields !== undefined;
 }
-
 
 export function Filters({
   fields,
@@ -64,9 +63,15 @@ export function Filters({
 }) {
   const mergedI18n = { ...i18n, ...customI18n };
   const [open, setOpen] = React.useState(false);
-  const [activeFilterIndex, setActiveFilterIndex] = React.useState<number | null>(null);
-  const [selectedField, setSelectedField] = React.useState<FilterField | null>(null);
-  const [selectedOperator, setSelectedOperator] = React.useState<string | null>(null);
+  const [activeFilterIndex, setActiveFilterIndex] = React.useState<
+    number | null
+  >(null);
+  const [selectedField, setSelectedField] = React.useState<FilterField | null>(
+    null,
+  );
+  const [selectedOperator, setSelectedOperator] = React.useState<string | null>(
+    null,
+  );
   const [filterValue, setFilterValue] = React.useState<string>("");
 
   const operators: Record<string, string[]> = {
@@ -76,6 +81,36 @@ export function Filters({
     select: ["equals", "not equals"],
     boolean: ["equals"],
   };
+
+  // ⚡ Bolt: Pre-calculate a lookup Map for filter fields using useMemo.
+  // Replaces repeated O(N) .flatMap(...) array allocations and array searches
+  // in openFilter and getFieldLabel.
+  const fieldMap = React.useMemo(() => {
+    const map = new Map<string, FilterField>();
+    for (let i = 0; i < fields.length; i++) {
+      const item = fields[i];
+      if (isFieldGroup(item)) {
+        for (let j = 0; j < item.fields.length; j++) {
+          const field = item.fields[j];
+          if (field.type !== "separator") {
+            map.set(field.value, field);
+          }
+        }
+      } else if (item.type !== "separator") {
+        map.set(item.value, item);
+      }
+    }
+    return map;
+  }, [fields]);
+
+  // ⚡ Bolt: Convert selected field array to a Set to optimize disabled checks in child items from O(M) to O(1).
+  const selectedFieldsSet = React.useMemo(() => {
+    const set = new Set<string>();
+    for (let i = 0; i < value.length; i++) {
+      set.add(value[i].field);
+    }
+    return set;
+  }, [value]);
 
   const onFieldSelect = (field: FilterField) => {
     setSelectedField(field);
@@ -128,9 +163,7 @@ export function Filters({
   const openFilter = (index?: number) => {
     if (typeof index === "number") {
       const filter = value[index];
-      const field = fields
-        .flatMap((item) => (isFieldGroup(item) ? item.fields : [item]))
-        .find((f) => f.type !== "separator" && f.value === filter.field) as FilterField;
+      const field = fieldMap.get(filter.field) ?? null;
       setActiveFilterIndex(index);
       setSelectedField(field);
       setSelectedOperator(filter.operator);
@@ -145,35 +178,44 @@ export function Filters({
   };
 
   const getFieldLabel = (fieldValue: string) => {
-    const field = fields
-      .flatMap((item) => (isFieldGroup(item) ? item.fields : [item]))
-      .find((f) => f.type !== "separator" && f.value === fieldValue) as FilterField;
+    const field = fieldMap.get(fieldValue);
     return field?.label || fieldValue;
   };
-
-  const selectedFields = value.map((v) => v.field);
 
   return (
     <div className="flex flex-wrap items-center gap-2">
       {value.map((filter, index) => (
         <div
+          // biome-ignore lint/suspicious/noArrayIndexKey: Filter list indices can be duplicated if user adds multiple filters on the same field
           key={`${filter.field}-${index}`}
           className="flex items-center gap-1 rounded-md bg-gray-100 px-2 py-1 text-sm"
         >
           <span className="font-medium">{getFieldLabel(filter.field)}</span>
           <span className="text-gray-500">{filter.operator}</span>
           <span className="font-semibold">{filter.value}</span>
-          <button onClick={() => openFilter(index)} className="text-gray-500 hover:text-gray-800">
+          <button
+            type="button"
+            onClick={() => openFilter(index)}
+            className="text-gray-500 hover:text-gray-800"
+          >
             &#9998;
           </button>
-          <button onClick={() => onRemoveFilter(index)} className="text-red-500 hover:text-red-800">
+          <button
+            type="button"
+            onClick={() => onRemoveFilter(index)}
+            className="text-red-500 hover:text-red-800"
+          >
             &times;
           </button>
         </div>
       ))}
       <Combobox open={open} onOpenChange={setOpen}>
         <ComboboxTrigger asChild>
-          <button onClick={() => openFilter()} className="text-sm text-blue-500 hover:text-blue-800">
+          <button
+            type="button"
+            onClick={() => openFilter()}
+            className="text-sm text-blue-500 hover:text-blue-800"
+          >
             {mergedI18n.addFilter}
           </button>
         </ComboboxTrigger>
@@ -190,13 +232,18 @@ export function Filters({
                         const groupFields = item.fields;
                         return (
                           <CommandGroup
-                            key={item.group ? `group-${item.group}` : `group-no-title-${index}`}
+                            key={
+                              item.group
+                                ? `group-${item.group}`
+                                : `group-no-title-${index}`
+                            }
                             heading={item.group || "Fields"}
                           >
                             {groupFields.map((field, fieldIndex) => {
                               if (field.type === "separator") {
                                 return (
                                   <CommandSeparator
+                                    // biome-ignore lint/suspicious/noArrayIndexKey: Structural separators inside group
                                     key={`separator-${item.group}-${fieldIndex}`}
                                   />
                                 );
@@ -205,9 +252,8 @@ export function Filters({
                                 <FilterFieldItem
                                   key={field.value}
                                   field={field}
-                                  selectedFields={selectedFields}
+                                  selectedFieldsSet={selectedFieldsSet}
                                   onFieldSelect={onFieldSelect}
-                                  i18n={mergedI18n}
                                 />
                               );
                             })}
@@ -215,15 +261,19 @@ export function Filters({
                         );
                       }
                       if (item.type === "separator") {
-                        return <CommandSeparator key={`separator-main-${index}`} />;
+                        return (
+                          <CommandSeparator
+                            // biome-ignore lint/suspicious/noArrayIndexKey: Structural separators
+                            key={`separator-main-${index}`}
+                          />
+                        );
                       }
                       return (
                         <FilterFieldItem
                           key={item.value}
                           field={item}
-                          selectedFields={selectedFields}
+                          selectedFieldsSet={selectedFieldsSet}
                           onFieldSelect={onFieldSelect}
-                          i18n={mergedI18n}
                         />
                       );
                     })}
@@ -237,7 +287,10 @@ export function Filters({
                   <ComboboxContent>
                     <ComboboxList>
                       {operators[selectedField.type].map((op) => (
-                        <ComboboxItem key={op} onSelect={() => onOperatorSelect(op)}>
+                        <ComboboxItem
+                          key={op}
+                          onSelect={() => onOperatorSelect(op)}
+                        >
                           {op}
                         </ComboboxItem>
                       ))}
@@ -269,8 +322,12 @@ export function Filters({
                       <ComboboxInput placeholder={mergedI18n.enterValue} />
                       <ComboboxContent>
                         <ComboboxList>
-                          <ComboboxItem onSelect={() => onValueChange("true")}>True</ComboboxItem>
-                          <ComboboxItem onSelect={() => onValueChange("false")}>False</ComboboxItem>
+                          <ComboboxItem onSelect={() => onValueChange("true")}>
+                            True
+                          </ComboboxItem>
+                          <ComboboxItem onSelect={() => onValueChange("false")}>
+                            False
+                          </ComboboxItem>
                         </ComboboxList>
                       </ComboboxContent>
                     </Combobox>
@@ -288,6 +345,7 @@ export function Filters({
             </ComboboxList>
             <div className="p-2">
               <button
+                type="button"
                 onClick={onApplyFilter}
                 className="w-full rounded-md bg-blue-500 px-4 py-2 text-white"
               >
@@ -303,28 +361,22 @@ export function Filters({
 
 function FilterFieldItem({
   field,
-  selectedFields,
+  selectedFieldsSet,
   onFieldSelect,
-  i18n,
 }: {
-  field: FilterField & { type: "text" | "date" | "number" | "select" | "boolean" };
-  selectedFields: string[];
+  field: FilterField & {
+    type: "text" | "date" | "number" | "select" | "boolean";
+  };
+  selectedFieldsSet: Set<string>;
   onFieldSelect: (field: FilterField) => void;
-  i18n: typeof i18n;
 }) {
+  const isSelected = selectedFieldsSet.has(field.value);
   return (
-    <ComboboxItem
-      onSelect={() => onFieldSelect(field)}
-      disabled={selectedFields.includes(field.value)}
-    >
+    <ComboboxItem onSelect={() => onFieldSelect(field)} disabled={isSelected}>
       <CheckIcon
-        className={cn(
-          "mr-2 h-4 w-4",
-          selectedFields.includes(field.value) ? "opacity-100" : "opacity-0"
-        )}
+        className={cn("mr-2 h-4 w-4", isSelected ? "opacity-100" : "opacity-0")}
       />
       {field.label}
     </ComboboxItem>
   );
 }
-
