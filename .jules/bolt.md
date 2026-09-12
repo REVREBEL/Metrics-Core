@@ -44,3 +44,7 @@
 ## 2026-07-30 - [Memoizing Static Tree Search Haystacks]
 **Learning:** Tree view component search filters (like component registry catalog sidebars) often reconstruct search haystack strings (`[id, title, path, ...files].join(" ").toLowerCase()`) recursively for every node on every keystroke or state update. Furthermore, evaluating haystack creation before checking `if (!query) return true` causes thousands of array allocations even on initial/empty state renders.
 **Action:** Short-circuit empty query filters immediately at function entry and cache static tree node search strings in a module-level `Map` by node ID.
+
+## 2026-07-31 - [Memoizing Filter Lookups & Selection Sets]
+**Learning:** In dynamic filter components, calling `.flatMap()` and `.find()` or `.includes()` inside render loops or JSX maps creates an $O(V \cdot F)$ performance bottleneck and allocates temporary arrays on every render pass.
+**Action:** Pre-compute a memoized `Map<string, Field>` and `Set<string>` using `useMemo` from input props. This transforms $O(V \cdot F)$ linear searches and array allocations into $O(1)$ lookups per filter pill / item with zero per-render array allocations.
