@@ -126,15 +126,33 @@ export function toFolderHref(folderId: string) {
     .join("/")}`;
 }
 
+// ⚡ Bolt: Build a Map index for O(1) file path -> component resolution, avoiding O(K * N * M) array traversals.
+let filePathToItemMap: Map<string, Component> | null = null;
+
+function getFilePathToItemMap(): Map<string, Component> {
+  if (!filePathToItemMap) {
+    filePathToItemMap = new Map();
+    for (const item of getRegistryItems()) {
+      if (item.files) {
+        for (const file of item.files) {
+          if (file.path) {
+            filePathToItemMap.set(file.path.replace(/\\/g, "/"), item);
+          }
+        }
+      }
+    }
+  }
+  return filePathToItemMap;
+}
+
 export function getRegistryItemsForFiles(filePaths: string[]) {
   const seen = new Set<string>();
   const items: Component[] = [];
+  const map = getFilePathToItemMap();
 
   for (const filePath of filePaths) {
     const normalizedPath = filePath.replace(/\\/g, "/");
-    const match = getRegistryItems().find((item) =>
-      item.files?.some((file) => file.path === normalizedPath),
-    );
+    const match = map.get(normalizedPath);
 
     if (!match || seen.has(match.name)) continue;
     seen.add(match.name);
