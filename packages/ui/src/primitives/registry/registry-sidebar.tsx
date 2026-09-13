@@ -54,27 +54,30 @@ function folderHref(folder: string) {
     .join("/")}`;
 }
 
-const sourceFolderGroups: FolderGroup[] = Object.entries(
+// ⚡ Bolt: Single pass O(N) folder grouping using Map lookup instead of O(N * M) array .find() calls.
+const sourceFolderGroupsMap = new Map<string, FolderGroup>();
+for (const [id, entry] of Object.entries(
   REGISTRY as Record<string, PlaygroundEntry>,
+)) {
+  if (!entry || typeof entry !== "object") continue;
+
+  const folder = getFolderFromSourcePath(entry.metadata?.sourcePath);
+  let group = sourceFolderGroupsMap.get(folder);
+  if (!group) {
+    group = { folder, items: [] };
+    sourceFolderGroupsMap.set(folder, group);
+  }
+
+  group.items.push({
+    name: id,
+    title: toTitle(entry.name ?? id),
+    path: `${folderHref(folder)}#${id}`,
+  });
+}
+
+const sourceFolderGroups: FolderGroup[] = Array.from(
+  sourceFolderGroupsMap.values(),
 )
-  .reduce<FolderGroup[]>((groups, [id, entry]) => {
-    if (!entry || typeof entry !== "object") return groups;
-
-    const folder = getFolderFromSourcePath(entry.metadata?.sourcePath);
-    let group = groups.find((candidate) => candidate.folder === folder);
-    if (!group) {
-      group = { folder, items: [] };
-      groups.push(group);
-    }
-
-    group.items.push({
-      name: id,
-      title: toTitle(entry.name ?? id),
-      path: `${folderHref(folder)}#${id}`,
-    });
-
-    return groups;
-  }, [])
   .map((group) => ({
     ...group,
     items: group.items.sort((a, b) => a.title.localeCompare(b.title)),

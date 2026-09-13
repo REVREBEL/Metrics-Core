@@ -65,22 +65,36 @@ function mergeItem(item: Component): Component {
 
 const REGISTRY_ITEMS = manifest.items.map(mergeItem);
 
+// ⚡ Bolt: Cache Map index and type-filtered lists at module scope for O(1) lookups and zero allocation re-filtering.
+const registryMap = new Map<string, Component>(
+  REGISTRY_ITEMS.map((item) => [item.name, item]),
+);
+const blocksList = REGISTRY_ITEMS.filter(
+  (item) => item.type === "registry:block",
+);
+const uiPrimitivesList = REGISTRY_ITEMS.filter(
+  (item) => item.type === "registry:ui",
+);
+const componentsList = REGISTRY_ITEMS.filter(
+  (item) => item.type === "registry:component",
+);
+
 export function getRegistryItems(): Component[] {
   return REGISTRY_ITEMS;
 }
 
 export function getRegistryItem(name: string): Component | undefined {
-  return REGISTRY_ITEMS.find((item) => item.name === name);
+  return registryMap.get(name);
 }
 
 export function getBlocks(): Component[] {
-  return REGISTRY_ITEMS.filter((item) => item.type === "registry:block");
+  return blocksList;
 }
 
 export function getUIPrimitives(): Component[] {
-  return REGISTRY_ITEMS.filter((item) => item.type === "registry:ui");
+  return uiPrimitivesList;
 }
 
 export function getComponents(): Component[] {
-  return REGISTRY_ITEMS.filter((item) => item.type === "registry:component");
+  return componentsList;
 }
