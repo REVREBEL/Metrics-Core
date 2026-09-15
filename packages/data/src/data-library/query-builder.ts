@@ -41,6 +41,10 @@ export function buildDataLibraryQuery(
   }
   const selectClause = visibleColumns.map((col) => `\`${col.key}\``).join(", ");
 
+  // ⚡ BOLT OPTIMIZATION: Pre-build a Map of visible columns by key.
+  // Replaces linear O(N) array traversals (.find() and .some()) during filter/sort processing with O(1) Map lookups.
+  const visibleColMap = new Map(visibleColumns.map((col) => [col.key, col]));
+
   const conditions: string[] = [];
   const params: Record<string, unknown> = {};
 
@@ -71,7 +75,7 @@ export function buildDataLibraryQuery(
         continue;
       }
 
-      const colDef = visibleColumns.find((col) => col.key === filterKey);
+      const colDef = visibleColMap.get(filterKey);
       if (!colDef || !colDef.filterable) {
         // Ignore unfilterable or unregistered filter columns
         continue;
@@ -108,11 +112,13 @@ export function buildDataLibraryQuery(
   const requestedSortDir =
     options.sort?.direction?.toLowerCase() === "desc" ? "DESC" : "ASC";
 
-  const primarySortColDef = requestedSortCol
-    ? visibleColumns.find(
-        (col) => col.key === requestedSortCol && col.sortable !== false,
-      )
+  const candidateSortColDef = requestedSortCol
+    ? visibleColMap.get(requestedSortCol)
     : undefined;
+  const primarySortColDef =
+    candidateSortColDef && candidateSortColDef.sortable !== false
+      ? candidateSortColDef
+      : undefined;
 
   const activeSortCol = primarySortColDef
     ? primarySortColDef.key
@@ -129,7 +135,7 @@ export function buildDataLibraryQuery(
   for (const pkCol of definition.primaryKey) {
     if (
       pkCol !== activeSortCol &&
-      visibleColumns.some((col) => col.key === pkCol)
+      visibleColMap.has(pkCol)
     ) {
       sortParts.push(`\`${pkCol}\` ASC NULLS LAST`);
     }
