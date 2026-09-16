@@ -44,3 +44,7 @@
 ## 2026-07-30 - [Memoizing Static Tree Search Haystacks]
 **Learning:** Tree view component search filters (like component registry catalog sidebars) often reconstruct search haystack strings (`[id, title, path, ...files].join(" ").toLowerCase()`) recursively for every node on every keystroke or state update. Furthermore, evaluating haystack creation before checking `if (!query) return true` causes thousands of array allocations even on initial/empty state renders.
 **Action:** Short-circuit empty query filters immediately at function entry and cache static tree node search strings in a module-level `Map` by node ID.
+
+## 2026-07-31 - [O(1) Map Lookups for UI Component Filter Fields]
+**Learning:** UI Filter components often flatten nested field/group hierarchies on every render or filter modification using `.flatMap()` and `.find()`. Performing array allocations and linear traversals per field label rendering degrades UI responsiveness.
+**Action:** Pre-calculate an $O(1)$ lookup Map for nested field groups inside a `useMemo` block to eliminate per-render array traversals and garbage collection overhead.
