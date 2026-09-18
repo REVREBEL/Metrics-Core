@@ -286,6 +286,9 @@ export function KanbanView({
   );
 }
 
+// ⚡ Bolt: Static Map lookup for strategy types O(1) time complexity per card instead of O(M) .find() array traversals.
+const strategyTypeMap = new Map(strategyTypes.map((s) => [s.value, s]));
+
 // BOLT OPTIMIZATION: Memoize card to prevent unnecessary re-renders in large boards
 const InitiativeCard = memo(
   ({
@@ -295,9 +298,7 @@ const InitiativeCard = memo(
     initiative: Initiative;
     onClick?: (item: Initiative) => void;
   }) => {
-    const strategyType = strategyTypes.find(
-      (s) => s.value === initiative.strategyType,
-    );
+    const strategyType = strategyTypeMap.get(initiative.strategyType);
     const colors = categoryColors[initiative.strategyType] || {
       bg: "bg-slate-100 dark:bg-slate-800",
       text: "text-slate-700 dark:text-slate-300",
@@ -468,9 +469,10 @@ const TaskCard = memo(
 
     const checklistItems = task.checklist ?? [];
     const checklistTotal = checklistItems.length;
-    const checklistCompleted = checklistItems.filter(
-      (item) => item.completed,
-    ).length;
+    let checklistCompleted = 0;
+    for (const item of checklistItems) {
+      if (item.completed) checklistCompleted++;
+    }
     const isChecklistComplete =
       checklistTotal > 0 && checklistCompleted === checklistTotal;
 
