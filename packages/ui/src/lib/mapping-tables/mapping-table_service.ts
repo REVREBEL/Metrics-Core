@@ -64,15 +64,20 @@ function registryEntryToMetadata(
 
   const now = new Date().toISOString();
   const approximateRowCount = counts?.approximateRowCount ?? fixtureRows.length;
-  const mappedRowCount =
-    counts?.mappedRowCount ??
-    fixtureRows.filter((r) => r.status === "mapped").length;
-  const partialRowCount =
-    counts?.partialRowCount ??
-    fixtureRows.filter((r) => r.status === "partial").length;
-  const unmappedRowCount =
-    counts?.unmappedRowCount ??
-    fixtureRows.filter((r) => r.status === "unmapped").length;
+
+  // ⚡ Bolt: Single pass O(N) status counting.
+  // Replaces 3 separate .filter() iterations and temporary array allocations with a single loop pass.
+  let mappedRowCount = counts?.mappedRowCount ?? 0;
+  let partialRowCount = counts?.partialRowCount ?? 0;
+  let unmappedRowCount = counts?.unmappedRowCount ?? 0;
+
+  if (!counts) {
+    for (const r of fixtureRows) {
+      if (r.status === "mapped") mappedRowCount++;
+      else if (r.status === "partial") partialRowCount++;
+      else if (r.status === "unmapped") unmappedRowCount++;
+    }
+  }
 
   const fixtureMetadata = mappingTableMetadata.find(
     (m) => m.key === registryKey,
