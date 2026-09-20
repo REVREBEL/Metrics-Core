@@ -19,6 +19,8 @@ type NavItem = {
   name: string;
   title: string;
   path: string;
+  /** Pre-calculated lowercase title for keystroke search matching */
+  titleLower?: string;
 };
 
 export const gettingStartedItems: NavItem[] = [
@@ -29,6 +31,8 @@ export const gettingStartedItems: NavItem[] = [
 
 type FolderGroup = {
   folder: string;
+  /** Pre-calculated lowercase folder name for keystroke search matching */
+  folderLower?: string;
   items: NavItem[];
 };
 
@@ -54,27 +58,36 @@ function folderHref(folder: string) {
     .join("/")}`;
 }
 
-const sourceFolderGroups: FolderGroup[] = Object.entries(
+// BOLT OPTIMIZATION: Use a Map for O(1) group lookups during initial accumulation (O(N) vs O(N * G)).
+// Precompute folderLower and titleLower to avoid lowercasing strings on every search keystroke.
+const folderGroupMap = new Map<string, FolderGroup>();
+
+for (const [id, entry] of Object.entries(
   REGISTRY as Record<string, PlaygroundEntry>,
-)
-  .reduce<FolderGroup[]>((groups, [id, entry]) => {
-    if (!entry || typeof entry !== "object") return groups;
+)) {
+  if (!entry || typeof entry !== "object") continue;
 
-    const folder = getFolderFromSourcePath(entry.metadata?.sourcePath);
-    let group = groups.find((candidate) => candidate.folder === folder);
-    if (!group) {
-      group = { folder, items: [] };
-      groups.push(group);
-    }
+  const folder = getFolderFromSourcePath(entry.metadata?.sourcePath);
+  let group = folderGroupMap.get(folder);
+  if (!group) {
+    group = {
+      folder,
+      folderLower: folder.toLowerCase(),
+      items: [],
+    };
+    folderGroupMap.set(folder, group);
+  }
 
-    group.items.push({
-      name: id,
-      title: toTitle(entry.name ?? id),
-      path: `${folderHref(folder)}#${id}`,
-    });
+  const title = toTitle(entry.name ?? id);
+  group.items.push({
+    name: id,
+    title,
+    titleLower: title.toLowerCase(),
+    path: `${folderHref(folder)}#${id}`,
+  });
+}
 
-    return groups;
-  }, [])
+const sourceFolderGroups: FolderGroup[] = Array.from(folderGroupMap.values())
   .map((group) => ({
     ...group,
     items: group.items.sort((a, b) => a.title.localeCompare(b.title)),
@@ -192,20 +205,33 @@ function RegistrySidebar() {
   const pathname = usePathname();
   const [searchTerm, setSearchTerm] = useState("");
 
+  // BOLT OPTIMIZATION: Short-circuit empty terms immediately and hoist folder matching
+  // outside the per-item filter loop to avoid redundant string lowercasing and repeated string searches on every keystroke.
   const filteredFolderGroups = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
     if (!term) return sourceFolderGroups;
 
     return sourceFolderGroups
-      .map((group) => ({
-        ...group,
-        items: group.items.filter(
-          (item) =>
-            item.title.toLowerCase().includes(term) ||
-            group.folder.toLowerCase().includes(term),
-        ),
-      }))
-      .filter((group) => group.items.length > 0);
+      .map((group) => {
+        const folderMatches =
+          group.folderLower?.includes(term) ??
+          group.folder.toLowerCase().includes(term);
+        if (folderMatches) {
+          return group;
+        }
+
+        const filteredItems = group.items.filter((item) =>
+          (item.titleLower ?? item.title.toLowerCase()).includes(term),
+        );
+
+        if (filteredItems.length === 0) return null;
+
+        return {
+          ...group,
+          items: filteredItems,
+        };
+      })
+      .filter((group): group is FolderGroup => group !== null);
   }, [searchTerm]);
 
   return (
