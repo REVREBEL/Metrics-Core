@@ -19,6 +19,8 @@ type NavItem = {
   name: string;
   title: string;
   path: string;
+  // Pre-lowercased search key to eliminate repeated String.toLowerCase() during user typing
+  searchKey?: string;
 };
 
 export const gettingStartedItems: NavItem[] = [
@@ -29,6 +31,7 @@ export const gettingStartedItems: NavItem[] = [
 
 type FolderGroup = {
   folder: string;
+  folderLower?: string;
   items: NavItem[];
 };
 
@@ -63,14 +66,16 @@ const sourceFolderGroups: FolderGroup[] = Object.entries(
     const folder = getFolderFromSourcePath(entry.metadata?.sourcePath);
     let group = groups.find((candidate) => candidate.folder === folder);
     if (!group) {
-      group = { folder, items: [] };
+      group = { folder, folderLower: folder.toLowerCase(), items: [] };
       groups.push(group);
     }
 
+    const title = toTitle(entry.name ?? id);
     group.items.push({
       name: id,
-      title: toTitle(entry.name ?? id),
+      title,
       path: `${folderHref(folder)}#${id}`,
+      searchKey: title.toLowerCase(),
     });
 
     return groups;
@@ -192,20 +197,31 @@ function RegistrySidebar() {
   const pathname = usePathname();
   const [searchTerm, setSearchTerm] = useState("");
 
+  // BOLT OPTIMIZATION:
+  // Short-circuit early on empty query to avoid mapping/filtering arrays.
+  // Utilizes pre-lowercased searchKey and folderLower to avoid calling .toLowerCase() repeatedly
+  // on every single item and folder on every keystroke.
   const filteredFolderGroups = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
     if (!term) return sourceFolderGroups;
 
-    return sourceFolderGroups
-      .map((group) => ({
-        ...group,
-        items: group.items.filter(
-          (item) =>
-            item.title.toLowerCase().includes(term) ||
-            group.folder.toLowerCase().includes(term),
-        ),
-      }))
-      .filter((group) => group.items.length > 0);
+    const result: FolderGroup[] = [];
+    for (let i = 0; i < sourceFolderGroups.length; i++) {
+      const group = sourceFolderGroups[i];
+      const folderMatches = group.folderLower?.includes(term) ?? false;
+
+      const matchingItems = group.items.filter(
+        (item) => folderMatches || (item.searchKey ?? item.title.toLowerCase()).includes(term),
+      );
+
+      if (matchingItems.length > 0) {
+        result.push({
+          ...group,
+          items: matchingItems,
+        });
+      }
+    }
+    return result;
   }, [searchTerm]);
 
   return (
