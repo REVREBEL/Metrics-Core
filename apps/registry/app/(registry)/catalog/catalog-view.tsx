@@ -253,24 +253,14 @@ function buildButtonGroupedEntries(
   return entries.concat(buildDefaultGroupedEntries(leftovers));
 }
 
-function hasMatchingDescendant(
-  node: RegistryFolderNode,
-  query: string,
-): boolean {
-  return node.children.some((childId) => {
-    const child = getRegistryFolderNode(childId);
-    if (!child) return false;
-    return (
-      getNodeText(child).includes(query) || hasMatchingDescendant(child, query)
-    );
-  });
-}
-
 function matchesFolder(node: RegistryFolderNode, query: string): boolean {
   if (!query) return true;
-  return (
-    getNodeText(node).includes(query) || hasMatchingDescendant(node, query)
-  );
+  if (getNodeText(node).includes(query)) return true;
+
+  return node.children.some((childId) => {
+    const child = getRegistryFolderNode(childId);
+    return child ? matchesFolder(child, query) : false;
+  });
 }
 
 function FolderCard({ node }: { node: RegistryFolderNode }) {
@@ -310,12 +300,12 @@ function FolderTree({
   node: RegistryFolderNode;
   query: string;
 }) {
+  if (!matchesFolder(node, query)) return null;
+
   const visibleChildren = node.children
     .map((childId) => getRegistryFolderNode(childId))
     .filter((child): child is RegistryFolderNode => Boolean(child))
     .filter((child) => matchesFolder(child, query));
-
-  if (!matchesFolder(node, query)) return null;
 
   return (
     <details className="group" open={node.depth < 1 || Boolean(query)}>
