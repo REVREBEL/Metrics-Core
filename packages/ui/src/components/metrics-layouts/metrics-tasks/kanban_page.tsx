@@ -26,6 +26,17 @@ import { initiativeStatuses, strategyTypes, taskStatuses } from "../data/data";
 import type { Initiative, Task } from "../data/schema";
 import { useTasks } from "./tasks-provider";
 
+// ⚡ Bolt: Pre-computed static Map for O(1) strategy type lookup in InitiativeCard render
+const strategyTypeMap = new Map(strategyTypes.map((s) => [s.value, s]));
+
+function getInitials(name: string): string {
+  const trimmed = name.trim();
+  if (!trimmed) return "";
+  const words = trimmed.split(/\s+/);
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return (words[0][0] + words[1][0]).toUpperCase();
+}
+
 type KanbanViewProps = {
   initiatives: Initiative[];
   tasks: Task[];
@@ -295,9 +306,8 @@ const InitiativeCard = memo(
     initiative: Initiative;
     onClick?: (item: Initiative) => void;
   }) => {
-    const strategyType = strategyTypes.find(
-      (s) => s.value === initiative.strategyType,
-    );
+    // ⚡ Bolt: O(1) Map lookup instead of O(N) array search on every render
+    const strategyType = strategyTypeMap.get(initiative.strategyType);
     const colors = categoryColors[initiative.strategyType] || {
       bg: "bg-slate-100 dark:bg-slate-800",
       text: "text-slate-700 dark:text-slate-300",
@@ -305,9 +315,15 @@ const InitiativeCard = memo(
     };
 
     // Calculate progress
+    // ⚡ Bolt: Fast loop count to avoid intermediate array allocations (.filter)
     const cardTasks = initiative.tasks || [];
     const totalTasks = cardTasks.length;
-    const completedTasks = cardTasks.filter((t) => t.status === "done").length;
+    let completedTasks = 0;
+    for (let i = 0; i < totalTasks; i++) {
+      if (cardTasks[i].status === "done") {
+        completedTasks++;
+      }
+    }
     const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
     return (
@@ -466,11 +482,15 @@ const TaskCard = memo(
       label: "General",
     };
 
+    // ⚡ Bolt: Fast loop count to avoid intermediate array allocations (.filter)
     const checklistItems = task.checklist ?? [];
     const checklistTotal = checklistItems.length;
-    const checklistCompleted = checklistItems.filter(
-      (item) => item.completed,
-    ).length;
+    let checklistCompleted = 0;
+    for (let i = 0; i < checklistTotal; i++) {
+      if (checklistItems[i].completed) {
+        checklistCompleted++;
+      }
+    }
     const isChecklistComplete =
       checklistTotal > 0 && checklistCompleted === checklistTotal;
 
@@ -579,11 +599,7 @@ const TaskCard = memo(
                     src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${task.assignedTo}`}
                   />
                   <AvatarFallback className="text-[10px] bg-primary/10 text-primary font-medium">
-                    {task.assignedTo
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .slice(0, 2)}
+                    {getInitials(task.assignedTo)}
                   </AvatarFallback>
                 </Avatar>
               )}
