@@ -44,3 +44,7 @@
 ## 2026-07-30 - [Memoizing Static Tree Search Haystacks]
 **Learning:** Tree view component search filters (like component registry catalog sidebars) often reconstruct search haystack strings (`[id, title, path, ...files].join(" ").toLowerCase()`) recursively for every node on every keystroke or state update. Furthermore, evaluating haystack creation before checking `if (!query) return true` causes thousands of array allocations even on initial/empty state renders.
 **Action:** Short-circuit empty query filters immediately at function entry and cache static tree node search strings in a module-level `Map` by node ID.
+
+## 2026-07-31 - [Static Dictionary Pre-Sorting and Single-Pass Row Counting]
+**Learning:** Functions that return column definitions for mapping or lookup tables often re-sort static dictionary arrays (`[...cols].sort(...)`) on every invocation, causing unnecessary $O(N \log N)$ sorting and object allocations. Similarly, resolving table metadata by running multiple `.filter()` calls over fixture rows causes 3N array iterations and intermediate array allocations per table.
+**Action:** Pre-sort static schema/column dictionary definitions once at module initialization time, and compute status frequencies in a single $O(N)$ loop pass without intermediate array allocations.
