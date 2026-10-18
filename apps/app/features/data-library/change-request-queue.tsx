@@ -11,13 +11,16 @@ import {
   Send,
   XCircle,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   getChangeRequestAction,
   listChangeRequestsAction,
   reviewChangeRequestAction,
   withdrawChangeRequestAction,
 } from "./change-request-actions";
+
+// Hoist static DateFormatter to avoid instantiating Intl.DateTimeFormat on every row render
+const dateFormatter = new Intl.DateTimeFormat("en-US");
 
 export interface QueueItem {
   id: string;
@@ -92,17 +95,20 @@ export function ChangeRequestQueue() {
     );
     setIsLoading(false);
     if (res.success) {
-      let data = res.data as QueueItem[];
-      if (submitterFilter.trim()) {
-        data = data.filter((r) =>
-          r.submitterId
-            .toLowerCase()
-            .includes(submitterFilter.trim().toLowerCase()),
-        );
-      }
-      setRequests(data);
+      setRequests(res.data as QueueItem[]);
     }
   }
+
+  // ⚡ Bolt: Memoize filtered requests to prevent redundant array traversals and string allocations
+  // on every re-render (e.g., when toggling modal states, modal text input, or setting action errors).
+  const filteredRequests = useMemo(() => {
+    const trimmedFilter = submitterFilter.trim().toLowerCase();
+    if (!trimmedFilter) return requests;
+
+    return requests.filter((r) =>
+      r.submitterId.toLowerCase().includes(trimmedFilter),
+    );
+  }, [requests, submitterFilter]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Only fetch when explicit status or table selection changes.
   useEffect(() => {
@@ -322,7 +328,7 @@ export function ChangeRequestQueue() {
                   Loading change requests...
                 </td>
               </tr>
-            ) : requests.length === 0 ? (
+            ) : filteredRequests.length === 0 ? (
               <tr>
                 <td
                   colSpan={6}
@@ -332,7 +338,7 @@ export function ChangeRequestQueue() {
                 </td>
               </tr>
             ) : (
-              requests.map((r) => (
+              filteredRequests.map((r) => (
                 <tr
                   key={r.id}
                   className="hover:bg-slate-50 dark:hover:bg-slate-900/50"
@@ -350,7 +356,7 @@ export function ChangeRequestQueue() {
                     {r.submitterId.substring(0, 8)}...
                   </td>
                   <td className="px-4 py-3 text-xs text-slate-500">
-                    {new Date(r.submittedAt).toLocaleDateString()}
+                    {dateFormatter.format(new Date(r.submittedAt))}
                   </td>
                   <td className="px-4 py-3">
                     <StatusBadge status={r.status} />
