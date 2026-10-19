@@ -25,6 +25,50 @@ interface AppContainer {
   version: string;
 }
 
+// BOLT OPTIMIZATION: Hoist static UI badge and icon helper functions outside component scope.
+// Prevents function re-allocation and unnecessary element instantiation on every state change/re-render.
+const getStatusBadge = (status: AppContainer["status"]) => {
+  switch (status) {
+    case "running":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <CheckCircle className="size-3" /> RUNNING
+        </span>
+      );
+    case "restarting":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 animate-pulse">
+          <RefreshCw className="size-3 animate-spin" /> RESTARATING
+        </span>
+      );
+    case "stopped":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20">
+          <Square className="size-3" /> STOPPED
+        </span>
+      );
+    case "degraded":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+          <AlertTriangle className="size-3" /> DEGRADED
+        </span>
+      );
+  }
+};
+
+const getContainerIcon = (type: string) => {
+  switch (type) {
+    case "network":
+      return <Network className="size-5 text-violet-400" />;
+    case "compute":
+      return <Cpu className="size-5 text-blue-400" />;
+    case "queue":
+      return <Zap className="size-5 text-amber-400" />;
+    default:
+      return <Server className="size-5 text-emerald-400" />;
+  }
+};
+
 export default function AppManagementPage() {
   const [containers, setContainers] = useState<AppContainer[]>([
     {
@@ -130,48 +174,6 @@ export default function AppManagementPage() {
         ...prev.slice(0, 8),
       ]);
     }, 2500);
-  };
-
-  const getStatusBadge = (status: AppContainer["status"]) => {
-    switch (status) {
-      case "running":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            <CheckCircle className="size-3" /> RUNNING
-          </span>
-        );
-      case "restarting":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 animate-pulse">
-            <RefreshCw className="size-3 animate-spin" /> RESTARATING
-          </span>
-        );
-      case "stopped":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20">
-            <Square className="size-3" /> STOPPED
-          </span>
-        );
-      case "degraded":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold bg-red-500/10 text-red-400 border border-red-500/20">
-            <AlertTriangle className="size-3" /> DEGRADED
-          </span>
-        );
-    }
-  };
-
-  const getContainerIcon = (type: string) => {
-    switch (type) {
-      case "network":
-        return <Network className="size-5 text-violet-400" />;
-      case "compute":
-        return <Cpu className="size-5 text-blue-400" />;
-      case "queue":
-        return <Zap className="size-5 text-amber-400" />;
-      default:
-        return <Server className="size-5 text-emerald-400" />;
-    }
   };
 
   return (
