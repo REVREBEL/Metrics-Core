@@ -19,7 +19,7 @@ export function canonicalizeRowKey(
     return buildCanonicalRowKey(primaryKeyFields, row);
   }
 
-  const pkKey = primaryKeyFields.join(",");
+  const pkKey = JSON.stringify(primaryKeyFields);
   let rowMap = rowKeyCache.get(row);
   if (!rowMap) {
     rowMap = new Map();
