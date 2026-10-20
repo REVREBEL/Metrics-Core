@@ -44,3 +44,7 @@
 ## 2026-07-30 - [Memoizing Static Tree Search Haystacks]
 **Learning:** Tree view component search filters (like component registry catalog sidebars) often reconstruct search haystack strings (`[id, title, path, ...files].join(" ").toLowerCase()`) recursively for every node on every keystroke or state update. Furthermore, evaluating haystack creation before checking `if (!query) return true` causes thousands of array allocations even on initial/empty state renders.
 **Action:** Short-circuit empty query filters immediately at function entry and cache static tree node search strings in a module-level `Map` by node ID.
+
+## 2026-07-31 - [Date Formatter Hoisting & Table Filter Memoization]
+**Learning:** Calling `toLocaleDateString()` inside table row mapping functions creates an implicit `Intl.DateTimeFormat` object for every single row on every re-render. Additionally, performing array filtering (`requests.filter(...)`) in data fetchers or un-memoized render cycles re-runs string lowercasing and array traversals whenever unrelated state changes occur (such as modal toggling or input text typing).
+**Action:** Always hoist `Intl.DateTimeFormat` instances to module level and wrap string-filter operations in `useMemo` hooks so re-renders caused by orthogonal UI state do not trigger full array re-filtering or formatting.
