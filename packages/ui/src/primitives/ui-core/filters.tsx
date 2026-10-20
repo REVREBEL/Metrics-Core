@@ -1,5 +1,7 @@
 "use client";
 
+import * as React from "react";
+import { useMemo } from "react";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { CommandGroup } from "cmdk";
 import {
@@ -125,12 +127,27 @@ export function Filters({
     setFilterValue("");
   };
 
+  // ⚡ Bolt: Build an O(1) lookup Map for fields to avoid redundant .flatMap() traversals and array allocations on every render & filter open.
+  const fieldMap = useMemo(() => {
+    const map = new Map<string, FilterField>();
+    for (const item of fields) {
+      if (isFieldGroup(item)) {
+        for (const f of item.fields) {
+          if (f.type !== "separator" && "value" in f) {
+            map.set(f.value, f);
+          }
+        }
+      } else if (item.type !== "separator" && "value" in item) {
+        map.set(item.value, item);
+      }
+    }
+    return map;
+  }, [fields]);
+
   const openFilter = (index?: number) => {
     if (typeof index === "number") {
       const filter = value[index];
-      const field = fields
-        .flatMap((item) => (isFieldGroup(item) ? item.fields : [item]))
-        .find((f) => f.type !== "separator" && f.value === filter.field) as FilterField;
+      const field = fieldMap.get(filter.field) ?? null;
       setActiveFilterIndex(index);
       setSelectedField(field);
       setSelectedOperator(filter.operator);
@@ -145,10 +162,8 @@ export function Filters({
   };
 
   const getFieldLabel = (fieldValue: string) => {
-    const field = fields
-      .flatMap((item) => (isFieldGroup(item) ? item.fields : [item]))
-      .find((f) => f.type !== "separator" && f.value === fieldValue) as FilterField;
-    return field?.label || fieldValue;
+    const field = fieldMap.get(fieldValue);
+    return (field && "label" in field ? field.label : undefined) || fieldValue;
   };
 
   const selectedFields = value.map((v) => v.field);
