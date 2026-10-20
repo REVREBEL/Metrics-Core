@@ -95,6 +95,13 @@ const salesChartConfig = {
   },
 } satisfies ChartConfig;
 
+// ⚡ Bolt: Precompute static DateTimeFormat to avoid expensive repeated implicit instantiation.
+const salesDateFormatter = new Intl.DateTimeFormat("en-GB", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
+
 const SalesMetricsCard = ({
   className,
   companyName = "Sandy's Company",
@@ -109,14 +116,10 @@ const SalesMetricsCard = ({
   const filledBars = Math.round((salesPlanPercentage * totalBars) / 100);
 
   // Sales chart data
-  // ⚡ Bolt: Memoize chart data and move expensive date formatting outside the loop
+  // ⚡ Bolt: Memoize chart data and use pre-instantiated formatter outside the loop
   const salesChartData = useMemo(() => {
     const date = new Date(2025, 5, 15);
-    const formattedDate = date.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
+    const formattedDate = salesDateFormatter.format(date);
 
     return Array.from({ length: totalBars }, (_, index) => ({
       date: formattedDate,
