@@ -14,7 +14,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 
 // ⚡ Bolt: Hoist static Intl.DateTimeFormat instance to avoid re-creation inside loops or render passes
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
+const dateFormatter = new Intl.DateTimeFormat(undefined, {
   year: "numeric",
   month: "numeric",
   day: "numeric",
