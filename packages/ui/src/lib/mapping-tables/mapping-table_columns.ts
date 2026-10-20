@@ -568,16 +568,25 @@ export const mappingTableColumnsByKey: Record<
   ],
 };
 
+// ⚡ Bolt: Pre-sort columns by displayOrder and filter detail columns once at module load time
+// to avoid O(N log N) sorting and array allocation on every function call.
+const sortedColumnsByKey: Record<string, MappingColumnDefinition[]> = {};
+const detailColumnsByKey: Record<string, MappingColumnDefinition[]> = {};
+
+for (const [key, cols] of Object.entries(mappingTableColumnsByKey)) {
+  const sorted = [...cols].sort((a, b) => a.displayOrder - b.displayOrder);
+  sortedColumnsByKey[key] = sorted;
+  detailColumnsByKey[key] = sorted.filter((col) => col.visibleInDetail);
+}
+
 export function getColumnsForTable(
   tableKey: string,
 ): MappingColumnDefinition[] {
-  const cols = mappingTableColumnsByKey[tableKey];
-  if (!cols) return [];
-  return [...cols].sort((a, b) => a.displayOrder - b.displayOrder);
+  return sortedColumnsByKey[tableKey] ?? [];
 }
 
 export function getDetailColumnsForTable(
   tableKey: string,
 ): MappingColumnDefinition[] {
-  return getColumnsForTable(tableKey).filter((col) => col.visibleInDetail);
+  return detailColumnsByKey[tableKey] ?? [];
 }

@@ -1,11 +1,11 @@
 import { inArray } from "drizzle-orm";
 import type * as DbModuleTypes from "@/db/index";
 import type * as SchemaModuleTypes from "@/db/schema";
-import { mappingTableMetadata, mappingTableRowsByKey } from "./fixtures";
+import { mappingTableMetadata, mappingTableRowsByKey } from "./mapping-table_fixtures";
 import {
   getMappingTableRegistryEntry,
   mappingTableRegistry,
-} from "./mapping-table-registry";
+} from "./mapping-table_registry";
 import type { MappingTableMetadata, MappingTableRow } from "./types";
 
 type DbModule = typeof DbModuleTypes;
@@ -47,6 +47,11 @@ async function tryGetBigQueryCounts(tableKey: string): Promise<{
   }
 }
 
+// ⚡ Bolt: Pre-built Map for O(1) fixture metadata lookups instead of O(M) array `.find()` calls per key.
+const fixtureMetadataMap = new Map(
+  mappingTableMetadata.map((m) => [m.key, m]),
+);
+
 function registryEntryToMetadata(
   registryKey: string,
   overrides: Partial<MappingTableMetadata> = {},
@@ -64,19 +69,27 @@ function registryEntryToMetadata(
 
   const now = new Date().toISOString();
   const approximateRowCount = counts?.approximateRowCount ?? fixtureRows.length;
-  const mappedRowCount =
-    counts?.mappedRowCount ??
-    fixtureRows.filter((r) => r.status === "mapped").length;
-  const partialRowCount =
-    counts?.partialRowCount ??
-    fixtureRows.filter((r) => r.status === "partial").length;
-  const unmappedRowCount =
-    counts?.unmappedRowCount ??
-    fixtureRows.filter((r) => r.status === "unmapped").length;
 
-  const fixtureMetadata = mappingTableMetadata.find(
-    (m) => m.key === registryKey,
-  );
+  // ⚡ Bolt: Compute status counts in a single O(N) pass without array allocations,
+  // replacing 3 separate `.filter()` array traversals per table.
+  let mappedRowCount = counts?.mappedRowCount ?? 0;
+  let partialRowCount = counts?.partialRowCount ?? 0;
+  let unmappedRowCount = counts?.unmappedRowCount ?? 0;
+
+  if (!counts) {
+    for (let i = 0; i < fixtureRows.length; i++) {
+      const status = fixtureRows[i].status;
+      if (status === "mapped") {
+        mappedRowCount++;
+      } else if (status === "partial") {
+        partialRowCount++;
+      } else if (status === "unmapped") {
+        unmappedRowCount++;
+      }
+    }
+  }
+
+  const fixtureMetadata = fixtureMetadataMap.get(registryKey);
 
   return {
     key: registryKey,
