@@ -20,6 +20,37 @@ interface DataConnector {
   credentialId: string;
 }
 
+// BOLT OPTIMIZATION: Hoist static UI badge helper function outside component scope.
+// Prevents function re-allocation and unnecessary element instantiation on every state change/re-render.
+const getStatusBadge = (status: DataConnector["status"]) => {
+  switch (status) {
+    case "connected":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <CheckCircle className="size-3" /> SECURE
+        </span>
+      );
+    case "testing":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 animate-pulse">
+          <RefreshCw className="size-3 animate-spin" /> TESTING
+        </span>
+      );
+    case "disconnected":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20">
+          <AlertCircle className="size-3" /> OFFLINE
+        </span>
+      );
+    case "error":
+      return (
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+          <AlertCircle className="size-3" /> CREDENTIAL ERROR
+        </span>
+      );
+  }
+};
+
 export default function DataSourcesPage() {
   const [connectors, setContainers] = useState<DataConnector[]>([
     {
@@ -105,35 +136,6 @@ export default function DataSourcesPage() {
       setNotification(`Database ingestion complete for ${name}.`);
       setTimeout(() => setNotification(null), 3000);
     }, 1500);
-  };
-
-  const getStatusBadge = (status: DataConnector["status"]) => {
-    switch (status) {
-      case "connected":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            <CheckCircle className="size-3" /> SECURE
-          </span>
-        );
-      case "testing":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 animate-pulse">
-            <RefreshCw className="size-3 animate-spin" /> TESTING
-          </span>
-        );
-      case "disconnected":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20">
-            <AlertCircle className="size-3" /> OFFLINE
-          </span>
-        );
-      case "error":
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-red-500/10 text-red-400 border border-red-500/20">
-            <AlertCircle className="size-3" /> CREDENTIAL ERROR
-          </span>
-        );
-    }
   };
 
   return (
