@@ -171,11 +171,12 @@ export const permissionsRegistry: PermissionDefinition[] = [
   },
 ];
 
-export function getPermission(key: string): PermissionDefinition | undefined {
-  return permissionsRegistry.find((p) => p.key === key);
-}
+// ⚡ Bolt: Pre-index permissionsMap and permissionsByGroup for O(1) key lookups and zero allocation group retrievals.
+const permissionsMap = new Map<string, PermissionDefinition>(
+  permissionsRegistry.map((p) => [p.key, p]),
+);
 
-export function getPermissionsByGroup(): Map<string, PermissionDefinition[]> {
+const permissionsByGroup = (() => {
   const groups = new Map<string, PermissionDefinition[]>();
   for (const perm of permissionsRegistry) {
     const existing = groups.get(perm.group) ?? [];
@@ -183,4 +184,12 @@ export function getPermissionsByGroup(): Map<string, PermissionDefinition[]> {
     groups.set(perm.group, existing);
   }
   return groups;
+})();
+
+export function getPermission(key: string): PermissionDefinition | undefined {
+  return permissionsMap.get(key);
+}
+
+export function getPermissionsByGroup(): Map<string, PermissionDefinition[]> {
+  return permissionsByGroup;
 }
