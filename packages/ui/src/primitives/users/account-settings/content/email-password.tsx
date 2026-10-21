@@ -34,14 +34,21 @@ const EmailPass = () => {
 
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
-  const strength = requirements.map((req) => ({
-    met: req.regex.test(password),
-    text: req.text,
-  }));
+  // ⚡ Bolt: Consolidated strength mapping and strengthScore into a single pass O(1) useMemo block
+  // with primitive `password` dependency. Previous implementation created a fresh `strength` array
+  // on every render, invalidating useMemo([strength]) every time and causing redundant regex evaluations.
+  const { strength, strengthScore } = useMemo(() => {
+    let score = 0;
+    const items = requirements.map((req) => {
+      const met = req.regex.test(password);
+      if (met) {
+        score++;
+      }
+      return { met, text: req.text };
+    });
 
-  const strengthScore = useMemo(() => {
-    return strength.filter((req) => req.met).length;
-  }, [strength]);
+    return { strength: items, strengthScore: score };
+  }, [password]);
 
   const getColor = (score: number) => {
     if (score === 0) return "bg-border";
