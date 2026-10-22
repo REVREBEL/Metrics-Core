@@ -137,7 +137,8 @@ export function CalendarView({ tasks, onTaskClick }: CalendarViewProps) {
     tasks.forEach((task) => {
       if (task.dueDate) {
         const tIndex = task.dueDate.indexOf("T");
-        const key = tIndex !== -1 ? task.dueDate.slice(0, tIndex) : task.dueDate;
+        const key =
+          tIndex !== -1 ? task.dueDate.slice(0, tIndex) : task.dueDate;
         if (!grouped[key]) grouped[key] = [];
         grouped[key].push(task);
       }
