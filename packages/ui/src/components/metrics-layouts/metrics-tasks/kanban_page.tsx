@@ -34,6 +34,9 @@ type KanbanViewProps = {
   onTaskClick?: (task: Task) => void;
 };
 
+// ⚡ Bolt: Pre-computed static Map for O(1) strategy type lookup in InitiativeCard render loop.
+const strategyTypeMap = new Map(strategyTypes.map((s) => [s.value, s]));
+
 // Status dot colors mapping
 const statusDotColors: Record<string, string> = {
   discussed: "bg-red-500",
@@ -295,9 +298,7 @@ const InitiativeCard = memo(
     initiative: Initiative;
     onClick?: (item: Initiative) => void;
   }) => {
-    const strategyType = strategyTypes.find(
-      (s) => s.value === initiative.strategyType,
-    );
+    const strategyType = strategyTypeMap.get(initiative.strategyType);
     const colors = categoryColors[initiative.strategyType] || {
       bg: "bg-slate-100 dark:bg-slate-800",
       text: "text-slate-700 dark:text-slate-300",
