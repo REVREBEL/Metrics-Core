@@ -136,6 +136,15 @@ const SIDEBAR_NAV_ITEMS = [
   },
 ];
 
+// ⚡ Bolt: Module-level pre-computed Map instances for O(1) option & route lookups
+// Eliminates linear O(N) array traversals (.find()) inside render-cycle useMemo hooks.
+const WORKSPACE_MAP = new Map(WORKSPACE_OPTIONS.map((w) => [w.id, w]));
+const HOTEL_MAP = new Map(HOTEL_OPTIONS.map((h) => [h.id, h]));
+const ENGAGEMENT_MAP = new Map(ENGAGEMENT_OPTIONS.map((e) => [e.id, e]));
+const SIDEBAR_NAV_MAP = new Map(
+  SIDEBAR_NAV_ITEMS.map((item) => [item.path, item]),
+);
+
 const AUDIT_CHECKLIST = [
   { label: "Workspace provider linked", ok: true },
   { label: "Routing boundary secure", ok: true },
@@ -159,32 +168,25 @@ export function WorkspaceShell({ children }: WorkspaceShellProps) {
   // Layout Sidebar/Panel states
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
 
-  // Retrieve selected object details for high fidelity display
+  // Retrieve selected object details for high fidelity display using O(1) Map lookups
   const currentWorkspace = useMemo(
-    () =>
-      WORKSPACE_OPTIONS.find((w) => w.id === activeWorkspace) ||
-      scope.workspace,
+    () => WORKSPACE_MAP.get(activeWorkspace) || scope.workspace,
     [activeWorkspace, scope.workspace],
   );
   const currentHotel = useMemo(
-    () => HOTEL_OPTIONS.find((h) => h.id === activeHotel) || scope.hotel,
+    () => HOTEL_MAP.get(activeHotel) || scope.hotel,
     [activeHotel, scope.hotel],
   );
   const currentEngagement = useMemo(
-    () =>
-      ENGAGEMENT_OPTIONS.find((e) => e.id === activeEngagement) ||
-      scope.engagement,
+    () => ENGAGEMENT_MAP.get(activeEngagement) || scope.engagement,
     [activeEngagement, scope.engagement],
   );
 
-  // Determine active item dynamically based on active route path
+  // Determine active item dynamically based on active route path using O(1) Map lookup
   const currentItem = useMemo(
     () =>
-      SIDEBAR_NAV_ITEMS.find(
-        (item) =>
-          pathname === item.path ||
-          (item.path === "/metrics" && pathname === "/"),
-      ) || SIDEBAR_NAV_ITEMS[0],
+      SIDEBAR_NAV_MAP.get(pathname === "/" ? "/metrics" : pathname) ||
+      SIDEBAR_NAV_ITEMS[0],
     [pathname],
   );
 

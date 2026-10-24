@@ -48,3 +48,7 @@
 ## 2026-07-31 - [Zero-Allocation Calendar Date Key & Stats Evaluation]
 **Learning:** Generating date keys using `date.toISOString().split("T")[0]` in loops (~42 times per grid render) creates unnecessary ISO string conversions and array allocations. Similarly, using `.split("-").map(Number)` and `new Date(task.dueDate)` repeatedly to evaluate monthly task stats creates garbage collection pressure during UI interactions.
 **Action:** Use direct numeric string concatenation (`${year}-${month}-${day}`) for calendar keys, `.startsWith("YYYY-MM")` prefix comparisons for string date matching, and `Date.parse()` for timestamps without creating Date instances in loops.
+
+## 2026-08-01 - [Pre-computed Module Maps for Static Option Lookups]
+**Learning:** Performing linear `.find()` traversals over static configuration options or sidebar navigation route arrays inside `useMemo` hooks re-executes linear scans on every render cycle when dependencies change. Pre-computing `Map` instances at the module level converts these lookups to $O(1)$ operations without memory overhead or hook recalculations.
+**Action:** Always extract static option arrays and route definitions into module-level `Map` structures for $O(1)$ key lookups in layout shells and component controls.
