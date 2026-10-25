@@ -55,6 +55,12 @@ const formatActions: InsertElement[] = [
   },
 ];
 
+// ⚡ Bolt: Hoist static default action values array outside component scope to prevent allocating a new array on every render pass,
+// ensuring stable prop references and restoring useMemo cache hits in ToolbarSection.
+const DEFAULT_ACTIVE_ACTIONS: InsertElementAction[] = formatActions.map(
+  (action) => action.value,
+);
+
 interface SectionFiveProps extends VariantProps<typeof toggleVariants> {
   editor: Editor;
   activeActions?: InsertElementAction[];
@@ -63,7 +69,7 @@ interface SectionFiveProps extends VariantProps<typeof toggleVariants> {
 
 export const SectionFive: React.FC<SectionFiveProps> = ({
   editor,
-  activeActions = formatActions.map((action) => action.value),
+  activeActions = DEFAULT_ACTIVE_ACTIONS,
   mainActionCount = 0,
   size,
   variant,

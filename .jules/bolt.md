@@ -48,3 +48,7 @@
 ## 2026-07-31 - [Zero-Allocation Calendar Date Key & Stats Evaluation]
 **Learning:** Generating date keys using `date.toISOString().split("T")[0]` in loops (~42 times per grid render) creates unnecessary ISO string conversions and array allocations. Similarly, using `.split("-").map(Number)` and `new Date(task.dueDate)` repeatedly to evaluate monthly task stats creates garbage collection pressure during UI interactions.
 **Action:** Use direct numeric string concatenation (`${year}-${month}-${day}`) for calendar keys, `.startsWith("YYYY-MM")` prefix comparisons for string date matching, and `Date.parse()` for timestamps without creating Date instances in loops.
+
+## 2026-08-01 - [Unstable Default Array Parameters in Component Signatures]
+**Learning:** Defining default array or object parameters inline in component function signatures (e.g. `activeActions = formatActions.map(...)` or `activeLevels = [1, 2, 3, 4, 5, 6]`) creates a new array instance on every single render pass when the prop is omitted. Passing these unstable array references to downstream `useMemo` dependency arrays completely breaks memoization because reference equality (`===`) fails, forcing expensive set operations, maps, filtering, and sorting to re-execute on every render pass.
+**Action:** Always hoist default parameter arrays and objects outside component render scope, or compute fallbacks inside `useMemo` blocks when props are `undefined`.

@@ -28,7 +28,7 @@ interface ToolbarSectionProps extends VariantProps<typeof toggleVariants> {
 export const ToolbarSection: React.FC<ToolbarSectionProps> = ({
   editor,
   actions,
-  activeActions = actions.map((action) => action.value),
+  activeActions,
   mainActionCount = 0,
   dropdownIcon,
   dropdownTooltip = "More options",
@@ -37,12 +37,14 @@ export const ToolbarSection: React.FC<ToolbarSectionProps> = ({
   variant,
 }) => {
   const { mainActions, dropdownActions } = React.useMemo(() => {
-    // ⚡ Bolt: Build a Set for O(1) filter membership checks and a Map for O(1) sort index lookups.
-    // This avoids O(N * M) linear scans inside array filter & sort operations.
-    const activeSet = new Set(activeActions);
+    // ⚡ Bolt: If activeActions is undefined, fallback to mapping actions.value inside useMemo to avoid array allocation on every render pass.
+    const effectiveActiveActions =
+      activeActions ?? actions.map((action) => action.value);
+    // Build a Set for O(1) filter membership checks and a Map for O(1) sort index lookups.
+    const activeSet = new Set(effectiveActiveActions);
     const orderMap = new Map<string, number>();
-    for (let i = 0; i < activeActions.length; i++) {
-      orderMap.set(activeActions[i], i);
+    for (let i = 0; i < effectiveActiveActions.length; i++) {
+      orderMap.set(effectiveActiveActions[i], i);
     }
 
     const sortedActions = actions
