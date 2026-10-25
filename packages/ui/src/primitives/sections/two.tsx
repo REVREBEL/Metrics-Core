@@ -101,6 +101,12 @@ const formatActions: TextStyle[] = [
   },
 ];
 
+// ⚡ Bolt: Hoist static default action values array outside component scope to prevent allocating a new array on every render pass,
+// ensuring stable prop references and restoring useMemo cache hits in ToolbarSection.
+const DEFAULT_ACTIVE_ACTIONS: TextStyleAction[] = formatActions.map(
+  (action) => action.value,
+);
+
 interface SectionTwoProps extends VariantProps<typeof toggleVariants> {
   editor: Editor;
   activeActions?: TextStyleAction[];
@@ -109,7 +115,7 @@ interface SectionTwoProps extends VariantProps<typeof toggleVariants> {
 
 export const SectionTwo: React.FC<SectionTwoProps> = ({
   editor,
-  activeActions = formatActions.map((action) => action.value),
+  activeActions = DEFAULT_ACTIVE_ACTIONS,
   mainActionCount = 2,
   size,
   variant,

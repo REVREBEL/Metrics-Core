@@ -76,6 +76,10 @@ const formatActions: TextStyle[] = [
   },
 ];
 
+// ⚡ Bolt: Hoist static default array outside component scope to avoid array allocation on every render pass
+// and prevent breaking useMemo reference equality checks.
+const DEFAULT_ACTIVE_LEVELS: Level[] = [1, 2, 3, 4, 5, 6];
+
 interface SectionOneProps extends VariantProps<typeof toggleVariants> {
   editor: Editor;
   activeLevels?: Level[];
@@ -83,17 +87,17 @@ interface SectionOneProps extends VariantProps<typeof toggleVariants> {
 
 export const SectionOne: React.FC<SectionOneProps> = ({
   editor,
-  activeLevels = [1, 2, 3, 4, 5, 6],
+  activeLevels = DEFAULT_ACTIVE_LEVELS,
   size,
   variant,
 }) => {
-  const filteredActions = React.useMemo(
-    () =>
-      formatActions.filter(
-        (action) => !action.level || activeLevels.includes(action.level),
-      ),
-    [activeLevels],
-  );
+  // ⚡ Bolt: Use Set for O(1) level membership lookup inside filter
+  const filteredActions = React.useMemo(() => {
+    const activeSet = new Set(activeLevels);
+    return formatActions.filter(
+      (action) => !action.level || activeSet.has(action.level),
+    );
+  }, [activeLevels]);
 
   const handleStyleChange = React.useCallback(
     (level?: Level) => {
