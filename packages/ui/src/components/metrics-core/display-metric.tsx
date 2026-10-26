@@ -4,6 +4,32 @@ import { cn } from "@/lib/utils";
 
 export type DisplayMetricFormat = "number" | "currency";
 
+// ⚡ Bolt: Module-level cache for Intl.NumberFormat instances to avoid 10-100x instantiation overhead on every render.
+const formatterCache = new Map<string, Intl.NumberFormat>();
+
+function getNumberFormatter(
+  locale: string,
+  format: DisplayMetricFormat,
+  currency: string,
+  fractionDigits: number,
+): Intl.NumberFormat {
+  const cacheKey = `${locale}:${format}:${currency}:${fractionDigits}`;
+  let formatter = formatterCache.get(cacheKey);
+
+  if (!formatter) {
+    formatter = new Intl.NumberFormat(locale, {
+      style: format === "currency" ? "currency" : "decimal",
+      currency: format === "currency" ? currency : undefined,
+      currencyDisplay: "narrowSymbol",
+      minimumFractionDigits: fractionDigits,
+      maximumFractionDigits: fractionDigits,
+    });
+    formatterCache.set(cacheKey, formatter);
+  }
+
+  return formatter;
+}
+
 export interface DisplayMetricProps
   extends Omit<React.ComponentProps<"span">, "children" | "color" | "content"> {
   /**
@@ -109,13 +135,9 @@ export function DisplayMetric({
   const formattedValue =
     numericValue === null
       ? emptyValue
-      : new Intl.NumberFormat(locale, {
-          style: format === "currency" ? "currency" : "decimal",
-          currency: format === "currency" ? currency : undefined,
-          currencyDisplay: "narrowSymbol",
-          minimumFractionDigits: fractionDigits,
-          maximumFractionDigits: fractionDigits,
-        }).format(Math.abs(numericValue));
+      : getNumberFormatter(locale, format, currency, fractionDigits).format(
+          Math.abs(numericValue),
+        );
 
   const leftGlyph = isNegative
     ? "("
