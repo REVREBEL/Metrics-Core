@@ -114,7 +114,13 @@ function DataGridTableDndHeader<TData>({
   );
 }
 
-function DataGridTableDndCell<TData>({ cell }: { cell: Cell<TData, unknown> }) {
+function DataGridTableDndCell<TData>({
+  cell,
+  isLastCell,
+}: {
+  cell: Cell<TData, unknown>;
+  isLastCell?: boolean;
+}) {
   const { isDragging, setNodeRef, transform, transition } = useSortable({
     id: cell.column.id,
   });
@@ -129,7 +135,12 @@ function DataGridTableDndCell<TData>({ cell }: { cell: Cell<TData, unknown> }) {
   };
 
   return (
-    <DataGridTableBodyRowCell cell={cell} dndStyle={style} dndRef={setNodeRef}>
+    <DataGridTableBodyRowCell
+      cell={cell}
+      dndStyle={style}
+      dndRef={setNodeRef}
+      isLastCell={isLastCell}
+    >
       {flexRender(cell.column.columnDef.cell, cell.getContext())}
     </DataGridTableBodyRowCell>
   );
@@ -231,39 +242,55 @@ function DataGridTableDnd<TData>({
             {props.loadingMode === "skeleton" &&
             isLoading &&
             pagination?.pageSize ? (
-              Array.from({ length: pagination.pageSize }).map((_, rowIndex) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: The order of the items is static
-                <DataGridTableBodyRowSkeleton key={`skeleton-row-${rowIndex}`}>
-                  {table.getVisibleFlatColumns().map((column) => {
-                    return (
-                      <DataGridTableBodyRowSkeletonCell
-                        column={column}
-                        key={column.id}
-                      >
-                        {column.columnDef.meta?.skeleton}
-                      </DataGridTableBodyRowSkeletonCell>
-                    );
-                  })}
-                </DataGridTableBodyRowSkeleton>
-              ))
+              // ⚡ Bolt: Hoist table.getVisibleFlatColumns() outside row loop
+              (() => {
+                const visibleFlatColumns = table.getVisibleFlatColumns();
+                const totalCols = visibleFlatColumns.length;
+                return Array.from({ length: pagination.pageSize }).map(
+                  (_, rowIndex) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: The order of the items is static
+                    <DataGridTableBodyRowSkeleton
+                      key={`skeleton-row-${rowIndex}`}
+                    >
+                      {visibleFlatColumns.map((column, colIndex) => {
+                        return (
+                          <DataGridTableBodyRowSkeletonCell
+                            column={column}
+                            key={column.id}
+                            isLastColumn={colIndex === totalCols - 1}
+                          >
+                            {column.columnDef.meta?.skeleton}
+                          </DataGridTableBodyRowSkeletonCell>
+                        );
+                      })}
+                    </DataGridTableBodyRowSkeleton>
+                  ),
+                );
+              })()
             ) : table.getRowModel().rows.length ? (
+              // ⚡ Bolt: Cache visibleCells once per row
               table.getRowModel().rows.map((row: Row<TData>) => {
+                const visibleCells = row.getVisibleCells();
+                const totalCells = visibleCells.length;
                 return (
                   <Fragment key={row.id}>
                     <DataGridTableBodyRow row={row}>
-                      {row
-                        .getVisibleCells()
-                        .map((cell: Cell<TData, unknown>) => {
+                      {visibleCells.map(
+                        (cell: Cell<TData, unknown>, colIndex) => {
                           return (
                             <SortableContext
                               key={cell.id}
                               items={table.getState().columnOrder}
                               strategy={horizontalListSortingStrategy}
                             >
-                              <DataGridTableDndCell cell={cell} />
+                              <DataGridTableDndCell
+                                cell={cell}
+                                isLastCell={colIndex === totalCells - 1}
+                              />
                             </SortableContext>
                           );
-                        })}
+                        },
+                      )}
                     </DataGridTableBodyRow>
                     {row.getIsExpanded() && (
                       <DataGridTableBodyRowExpandded row={row} />

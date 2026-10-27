@@ -48,3 +48,7 @@
 ## 2026-07-31 - [Zero-Allocation Calendar Date Key & Stats Evaluation]
 **Learning:** Generating date keys using `date.toISOString().split("T")[0]` in loops (~42 times per grid render) creates unnecessary ISO string conversions and array allocations. Similarly, using `.split("-").map(Number)` and `new Date(task.dueDate)` repeatedly to evaluate monthly task stats creates garbage collection pressure during UI interactions.
 **Action:** Use direct numeric string concatenation (`${year}-${month}-${day}`) for calendar keys, `.startsWith("YYYY-MM")` prefix comparisons for string date matching, and `Date.parse()` for timestamps without creating Date instances in loops.
+
+## 2026-08-01 - [Data Grid Column Resolution & Visible Cells Hoisting]
+**Learning:** In table rendering components, calling `table.getVisibleFlatColumns()` inside skeleton row/cell loops and `row.getVisibleCells()` inside child cell components multiplies function calls to $O(R \cdot C)$ per render frame. Pre-resolving visible columns once per skeleton table render and caching `visibleCells` per row reduces table setup and cell iteration overhead from $O(R \cdot C)$ to $O(R)$.
+**Action:** Always hoist table structure lookups (`getVisibleFlatColumns`) above row loops, and pass `isLastCell`/`isLastColumn` props from parent row loops to avoid calling `getVisibleCells()` inside leaf cell components.
