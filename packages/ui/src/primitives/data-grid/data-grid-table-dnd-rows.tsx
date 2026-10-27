@@ -116,6 +116,10 @@ function DataGridTableDndRow<TData>({ row }: { row: Row<TData> }) {
     position: "relative",
   };
 
+  // ⚡ Bolt: Cache visibleCells once per row
+  const visibleCells = row.getVisibleCells();
+  const totalCells = visibleCells.length;
+
   return (
     <SortableRowContext.Provider value={{ attributes, listeners }}>
       <DataGridTableBodyRow
@@ -124,9 +128,13 @@ function DataGridTableDndRow<TData>({ row }: { row: Row<TData> }) {
         dndStyle={style}
         key={row.id}
       >
-        {row.getVisibleCells().map((cell: Cell<TData, unknown>) => {
+        {visibleCells.map((cell: Cell<TData, unknown>, colIndex) => {
           return (
-            <DataGridTableBodyRowCell cell={cell} key={cell.id}>
+            <DataGridTableBodyRowCell
+              cell={cell}
+              key={cell.id}
+              isLastCell={colIndex === totalCells - 1}
+            >
               {flexRender(cell.column.columnDef.cell, cell.getContext())}
             </DataGridTableBodyRowCell>
           );
@@ -245,21 +253,31 @@ function DataGridTableDndRows<TData>({
             {props.loadingMode === "skeleton" &&
             isLoading &&
             pagination?.pageSize ? (
-              Array.from({ length: pagination.pageSize }).map((_, rowIndex) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: The order of the items is static
-                <DataGridTableBodyRowSkeleton key={`skeleton-row-${rowIndex}`}>
-                  {table.getVisibleFlatColumns().map((column) => {
-                    return (
-                      <DataGridTableBodyRowSkeletonCell
-                        column={column}
-                        key={column.id}
-                      >
-                        {column.columnDef.meta?.skeleton}
-                      </DataGridTableBodyRowSkeletonCell>
-                    );
-                  })}
-                </DataGridTableBodyRowSkeleton>
-              ))
+              // ⚡ Bolt: Hoist table.getVisibleFlatColumns() outside row loop
+              (() => {
+                const visibleFlatColumns = table.getVisibleFlatColumns();
+                const totalCols = visibleFlatColumns.length;
+                return Array.from({ length: pagination.pageSize }).map(
+                  (_, rowIndex) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: The order of the items is static
+                    <DataGridTableBodyRowSkeleton
+                      key={`skeleton-row-${rowIndex}`}
+                    >
+                      {visibleFlatColumns.map((column, colIndex) => {
+                        return (
+                          <DataGridTableBodyRowSkeletonCell
+                            column={column}
+                            key={column.id}
+                            isLastColumn={colIndex === totalCols - 1}
+                          >
+                            {column.columnDef.meta?.skeleton}
+                          </DataGridTableBodyRowSkeletonCell>
+                        );
+                      })}
+                    </DataGridTableBodyRowSkeleton>
+                  ),
+                );
+              })()
             ) : table.getRowModel().rows.length ? (
               <SortableContext
                 items={dataIds}

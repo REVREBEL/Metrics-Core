@@ -247,14 +247,21 @@ function DataGridTableBodyRowSkeleton({ children }: { children: ReactNode }) {
 function DataGridTableBodyRowSkeletonCell<TData>({
   children,
   column,
+  isLastColumn,
 }: {
   children: ReactNode;
   column: Column<TData>;
+  isLastColumn?: boolean;
 }) {
   const { props, table } = useDataGrid();
   const bodyCellSpacing = bodyCellSpacingVariants({
     size: props.tableLayout?.dense ? "dense" : "default",
   });
+
+  // ⚡ Bolt: Avoid calling table.getVisibleFlatColumns() inside every skeleton cell
+  const isLast =
+    isLastColumn ??
+    column.getIndex() === table.getVisibleFlatColumns().length - 1;
 
   return (
     <td
@@ -274,8 +281,7 @@ function DataGridTableBodyRowSkeletonCell<TData>({
         props.tableLayout?.columnsPinnable &&
           column.getCanPin() &&
           '[&[data-pinned][data-last-col]]:border-border data-pinned:bg-background/90 data-pinned:backdrop-blur-xs" [&[data-pinned=left][data-last-col=left]]:border-e! [&[data-pinned=right][data-last-col=right]]:border-s!',
-        column.getIndex() === 0 ||
-          column.getIndex() === table.getVisibleFlatColumns().length - 1
+        column.getIndex() === 0 || isLast
           ? props.tableClassNames?.edgeCell
           : "",
       )}
@@ -350,11 +356,13 @@ function DataGridTableBodyRowCell<TData>({
   cell,
   dndRef,
   dndStyle,
+  isLastCell,
 }: {
   children: ReactNode;
   cell: Cell<TData, unknown>;
   dndRef?: React.Ref<HTMLTableCellElement>;
   dndStyle?: CSSProperties;
+  isLastCell?: boolean;
 }) {
   const { props } = useDataGrid();
 
@@ -367,6 +375,10 @@ function DataGridTableBodyRowCell<TData>({
   const bodyCellSpacing = bodyCellSpacingVariants({
     size: props.tableLayout?.dense ? "dense" : "default",
   });
+
+  // ⚡ Bolt: Avoid calling row.getVisibleCells() inside every cell
+  const isLast =
+    isLastCell ?? column.getIndex() === row.getVisibleCells().length - 1;
 
   return (
     <td
@@ -397,8 +409,7 @@ function DataGridTableBodyRowCell<TData>({
         props.tableLayout?.columnsPinnable &&
           column.getCanPin() &&
           '[&[data-pinned][data-last-col]]:border-border data-pinned:bg-background/90 data-pinned:backdrop-blur-xs" [&[data-pinned=left][data-last-col=left]]:border-e! [&[data-pinned=right][data-last-col=right]]:border-s!',
-        column.getIndex() === 0 ||
-          column.getIndex() === row.getVisibleCells().length - 1
+        column.getIndex() === 0 || isLast
           ? props.tableClassNames?.edgeCell
           : "",
       )}
@@ -540,21 +551,28 @@ function DataGridTable<TData>() {
         {isLoading &&
         props.loadingMode === "skeleton" &&
         pagination?.pageSize ? (
-          // Show skeleton loading immediately
-          Array.from({ length: pagination.pageSize }).map((_, rowIndex) => (
-            <DataGridTableBodyRowSkeleton key={rowIndex}>
-              {table.getVisibleFlatColumns().map((column, colIndex) => {
-                return (
-                  <DataGridTableBodyRowSkeletonCell
-                    column={column}
-                    key={colIndex}
-                  >
-                    {column.columnDef.meta?.skeleton}
-                  </DataGridTableBodyRowSkeletonCell>
-                );
-              })}
-            </DataGridTableBodyRowSkeleton>
-          ))
+          // ⚡ Bolt: Hoist table.getVisibleFlatColumns() to execute once instead of N_rows * N_cols times
+          (() => {
+            const visibleFlatColumns = table.getVisibleFlatColumns();
+            const totalCols = visibleFlatColumns.length;
+            return Array.from({ length: pagination.pageSize }).map(
+              (_, rowIndex) => (
+                <DataGridTableBodyRowSkeleton key={rowIndex}>
+                  {visibleFlatColumns.map((column, colIndex) => {
+                    return (
+                      <DataGridTableBodyRowSkeletonCell
+                        column={column}
+                        key={colIndex}
+                        isLastColumn={colIndex === totalCols - 1}
+                      >
+                        {column.columnDef.meta?.skeleton}
+                      </DataGridTableBodyRowSkeletonCell>
+                    );
+                  })}
+                </DataGridTableBodyRowSkeleton>
+              ),
+            );
+          })()
         ) : isLoading && props.loadingMode === "spinner" ? (
           // Show spinner loading immediately
           <tr>
@@ -585,23 +603,27 @@ function DataGridTable<TData>() {
             </td>
           </tr>
         ) : table.getRowModel().rows.length ? (
-          // Show actual data when not loading
+          // ⚡ Bolt: Cache row.getVisibleCells() once per row and pass isLastCell to child cells
           table.getRowModel().rows.map((row: Row<TData>, index) => {
+            const visibleCells = row.getVisibleCells();
+            const totalCells = visibleCells.length;
             return (
               <Fragment key={row.id}>
                 <DataGridTableBodyRow row={row} key={index}>
-                  {row
-                    .getVisibleCells()
-                    .map((cell: Cell<TData, unknown>, colIndex) => {
-                      return (
-                        <DataGridTableBodyRowCell cell={cell} key={colIndex}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </DataGridTableBodyRowCell>
-                      );
-                    })}
+                  {visibleCells.map((cell: Cell<TData, unknown>, colIndex) => {
+                    return (
+                      <DataGridTableBodyRowCell
+                        cell={cell}
+                        key={colIndex}
+                        isLastCell={colIndex === totalCells - 1}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </DataGridTableBodyRowCell>
+                    );
+                  })}
                 </DataGridTableBodyRow>
                 {row.getIsExpanded() && (
                   <DataGridTableBodyRowExpandded row={row} />
