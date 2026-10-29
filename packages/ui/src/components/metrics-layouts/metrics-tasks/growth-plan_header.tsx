@@ -41,12 +41,12 @@ type GrowthPlanHeaderProps = {
   onAddMember?: () => void;
 };
 
-// Mock team avatars
+// ⚡ Bolt: Pre-calculated initials on team avatars to eliminate .split().map().join() array allocations on header renders.
 const teamAvatars = [
-  { name: "Sarah Chen", seed: "sarah" },
-  { name: "Marcus Johnson", seed: "marcus" },
-  { name: "Emily Rodriguez", seed: "emily" },
-  { name: "David Kim", seed: "david" },
+  { name: "Sarah Chen", seed: "sarah", initials: "SC" },
+  { name: "Marcus Johnson", seed: "marcus", initials: "MJ" },
+  { name: "Emily Rodriguez", seed: "emily", initials: "ER" },
+  { name: "David Kim", seed: "david", initials: "DK" },
 ];
 
 export function GrowthPlanHeader({
@@ -160,10 +160,7 @@ export function GrowthPlanHeader({
                       src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${member.seed}`}
                     />
                     <AvatarFallback className="text-xs">
-                      {member.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
+                      {member.initials}
                     </AvatarFallback>
                   </Avatar>
                 ))}

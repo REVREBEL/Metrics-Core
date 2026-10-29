@@ -26,6 +26,32 @@ import { initiativeStatuses, strategyTypes, taskStatuses } from "../data/data";
 import type { Initiative, Task } from "../data/schema";
 import { useTasks } from "./tasks-provider";
 
+// ⚡ Bolt: Pre-computed Map for O(1) strategy type lookup in InitiativeCard, eliminating O(M) .find() traversals.
+const strategyTypeMap = new Map(strategyTypes.map((s) => [s.value, s]));
+
+// ⚡ Bolt: Hoisted default category color fallback objects to avoid object allocation on every fallback render.
+const DEFAULT_INITIATIVE_CATEGORY_COLOR = {
+  bg: "bg-slate-100 dark:bg-slate-800",
+  text: "text-slate-700 dark:text-slate-300",
+  label: "Uncategorized",
+};
+
+const DEFAULT_TASK_CATEGORY_COLOR = {
+  bg: "bg-slate-100 dark:bg-slate-800",
+  text: "text-slate-700 dark:text-slate-300",
+  label: "General",
+};
+
+// ⚡ Bolt: Helper function for initials to eliminate intermediate array allocations from .split().map().join().
+function getInitials(name: string): string {
+  if (!name) return "";
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) {
+    return parts[0].slice(0, 2).toUpperCase();
+  }
+  return (parts[0][0] + (parts[1]?.[0] ?? "")).toUpperCase().slice(0, 2);
+}
+
 type KanbanViewProps = {
   initiatives: Initiative[];
   tasks: Task[];
@@ -295,14 +321,10 @@ const InitiativeCard = memo(
     initiative: Initiative;
     onClick?: (item: Initiative) => void;
   }) => {
-    const strategyType = strategyTypes.find(
-      (s) => s.value === initiative.strategyType,
-    );
-    const colors = categoryColors[initiative.strategyType] || {
-      bg: "bg-slate-100 dark:bg-slate-800",
-      text: "text-slate-700 dark:text-slate-300",
-      label: "Uncategorized",
-    };
+    const strategyType = strategyTypeMap.get(initiative.strategyType);
+    const colors =
+      categoryColors[initiative.strategyType] ??
+      DEFAULT_INITIATIVE_CATEGORY_COLOR;
 
     // Calculate progress
     const cardTasks = initiative.tasks || [];
@@ -466,11 +488,7 @@ const TaskCard = memo(
 
     // Get category from department
     const categoryKey = task.assignedDepartment || "operations";
-    const colors = categoryColors[categoryKey] || {
-      bg: "bg-slate-100 dark:bg-slate-800",
-      text: "text-slate-700 dark:text-slate-300",
-      label: "General",
-    };
+    const colors = categoryColors[categoryKey] ?? DEFAULT_TASK_CATEGORY_COLOR;
 
     const checklistItems = task.checklist ?? [];
     const checklistTotal = checklistItems.length;
@@ -589,11 +607,7 @@ const TaskCard = memo(
                     src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${task.assignedTo}`}
                   />
                   <AvatarFallback className="text-[10px] bg-primary/10 text-primary font-medium">
-                    {task.assignedTo
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .slice(0, 2)}
+                    {getInitials(task.assignedTo)}
                   </AvatarFallback>
                 </Avatar>
               )}
