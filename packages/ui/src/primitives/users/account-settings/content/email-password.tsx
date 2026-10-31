@@ -34,14 +34,18 @@ const EmailPass = () => {
 
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
-  const strength = requirements.map((req) => ({
-    met: req.regex.test(password),
-    text: req.text,
-  }));
-
-  const strengthScore = useMemo(() => {
-    return strength.filter((req) => req.met).length;
-  }, [strength]);
+  // ⚡ Bolt: Single-pass strength evaluation and score calculation memoized on password.
+  // Previously, `strength` was re-created as a fresh array reference on every render,
+  // breaking `useMemo` and causing redundant regex checks and array allocations during unrelated state changes (like toggleVisibility).
+  const { strength, strengthScore } = useMemo(() => {
+    let score = 0;
+    const evaluatedStrength = requirements.map((req) => {
+      const met = req.regex.test(password);
+      if (met) score++;
+      return { met, text: req.text };
+    });
+    return { strength: evaluatedStrength, strengthScore: score };
+  }, [password]);
 
   const getColor = (score: number) => {
     if (score === 0) return "bg-border";
