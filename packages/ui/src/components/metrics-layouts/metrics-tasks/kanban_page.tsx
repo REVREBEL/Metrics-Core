@@ -307,7 +307,13 @@ const InitiativeCard = memo(
     // Calculate progress
     const cardTasks = initiative.tasks || [];
     const totalTasks = cardTasks.length;
-    const completedTasks = cardTasks.filter((t) => t.status === "done").length;
+    // ⚡ Bolt: Single-pass for...of loop to compute completed tasks without array allocation from .filter()
+    let completedTasks = 0;
+    for (const task of cardTasks) {
+      if (task.status === "done") {
+        completedTasks++;
+      }
+    }
     const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
     return (
@@ -468,9 +474,13 @@ const TaskCard = memo(
 
     const checklistItems = task.checklist ?? [];
     const checklistTotal = checklistItems.length;
-    const checklistCompleted = checklistItems.filter(
-      (item) => item.completed,
-    ).length;
+    // ⚡ Bolt: Single-pass for...of loop to count completed items without array allocation from .filter()
+    let checklistCompleted = 0;
+    for (const item of checklistItems) {
+      if (item.completed) {
+        checklistCompleted++;
+      }
+    }
     const isChecklistComplete =
       checklistTotal > 0 && checklistCompleted === checklistTotal;
 

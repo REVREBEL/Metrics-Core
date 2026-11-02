@@ -26,9 +26,13 @@ type ColorFamily = {
   tokens: Token[];
 };
 
+// Hoisted static regex pattern for stripping "color-" prefix and parsing family/shade
+const COLOR_PREFIX_REGEX = /^color-/;
+const COLOR_FAMILY_REGEX = /^color-([a-z-]+)-(\d{2,3})$/;
+
 function formatTokenName(name: string) {
   return name
-    .replace(/^color-/, "")
+    .replace(COLOR_PREFIX_REGEX, "")
     .split("-")
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
@@ -90,29 +94,36 @@ function TokenCard({ token }: { token: Token }) {
   );
 }
 
-function getColorFamilyKey(tokenName: string) {
-  const match = tokenName.match(/^color-([a-z-]+)-(\d{2,3})$/);
-  return match ? match[1] : null;
-}
+type ParsedColorToken = {
+  token: Token;
+  shade: number;
+};
 
 function getColorFamilies(tokens: Token[]): {
   families: ColorFamily[];
   singles: Token[];
 } {
-  const families = new Map<string, Token[]>();
+  // Pre-extract family key and numeric shade in a single pass to eliminate O(N log N) regex & string splits in sort comparators
+  const families = new Map<string, ParsedColorToken[]>();
   const singles: Token[] = [];
 
   for (const token of tokens) {
-    const familyKey = getColorFamilyKey(token.name);
+    const match = token.name.match(COLOR_FAMILY_REGEX);
 
-    if (!familyKey) {
+    if (!match) {
       singles.push(token);
       continue;
     }
 
-    const current = families.get(familyKey) ?? [];
-    current.push(token);
-    families.set(familyKey, current);
+    const familyKey = match[1];
+    const shade = Number.parseInt(match[2], 10);
+
+    let current = families.get(familyKey);
+    if (!current) {
+      current = [];
+      families.set(familyKey, current);
+    }
+    current.push({ token, shade });
   }
 
   return {
@@ -120,11 +131,10 @@ function getColorFamilies(tokens: Token[]): {
       .map(([key, familyTokens]) => ({
         key,
         label: formatTokenName(`color-${key}`),
-        tokens: familyTokens.sort((left, right) => {
-          const leftShade = Number(left.name.split("-").pop() ?? 0);
-          const rightShade = Number(right.name.split("-").pop() ?? 0);
-          return leftShade - rightShade;
-        }),
+        // Sort tokens by pre-parsed numeric shade value without array allocation or string ops in comparator
+        tokens: familyTokens
+          .sort((left, right) => left.shade - right.shade)
+          .map((item) => item.token),
       }))
       .sort((left, right) => left.label.localeCompare(right.label)),
     singles,
@@ -155,7 +165,7 @@ function ColorScaleCard({ family }: { family: ColorFamily }) {
               />
               <div className="min-w-0">
                 <div className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                  {token.name.split("-").pop()}
+                  {token.name.slice(token.name.lastIndexOf("-") + 1)}
                 </div>
                 <div className="mt-1 break-all text-sm font-medium leading-tight">
                   {token.name}

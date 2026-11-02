@@ -26,8 +26,12 @@ type CalendarDay = {
   tasks: Task[];
 };
 
+// ⚡ Bolt: Fast YYYY-MM-DD date key formatting without ISO string overhead or array allocations.
 function formatDateKey(date: Date): string {
-  return date.toISOString().split("T")[0];
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year}-${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""}${day}`;
 }
 
 // ⚡ Bolt: Precompute static DateTimeFormat to avoid expensive repeated implicit instantiation.
@@ -40,7 +44,7 @@ function getMonthDays(year: number, month: number): CalendarDay[] {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // ⚡ Bolt: Precompute today's key to prevent ~42 redundant split & toISOString calls in loops.
+  // ⚡ Bolt: Precompute today's key to prevent redundant formatting calls in loops.
   const todayKey = formatDateKey(today);
 
   const firstDay = new Date(year, month, 1);
@@ -128,11 +132,12 @@ export function CalendarView({ tasks, onTaskClick }: CalendarViewProps) {
     const calendarDays = getMonthDays(year, month);
 
     // Group tasks by due date and assign to calendar days
-    // ⚡ Bolt: Use string slicing .slice(0, 10) instead of .split("T")[0] to avoid array allocation
+    // ⚡ Bolt: Use slice instead of split("T") to eliminate array allocations.
     const grouped: Record<string, Task[]> = {};
     tasks.forEach((task) => {
       if (task.dueDate) {
-        const key = task.dueDate.slice(0, 10);
+        const tIndex = task.dueDate.indexOf("T");
+        const key = tIndex !== -1 ? task.dueDate.slice(0, tIndex) : task.dueDate;
         if (!grouped[key]) grouped[key] = [];
         grouped[key].push(task);
       }
@@ -166,12 +171,12 @@ export function CalendarView({ tasks, onTaskClick }: CalendarViewProps) {
   };
 
   // Stats for current view
-  // ⚡ Bolt: Single pass loop using fast string prefix matching and Date.parse timestamp comparison
-  // to eliminate string array allocations (.split("-").map(Number)) and Date object creation per task.
+  // ⚡ Bolt: Single pass loop for stats, prefix string matching to avoid split/map arrays, and Date.parse for zero-allocation date checks.
   const stats = useMemo(() => {
-    const currentMonth = currentDate.getMonth();
+    const currentMonth = currentDate.getMonth() + 1;
     const currentYear = currentDate.getFullYear();
-    const yearMonthPrefix = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}`;
+    const monthStr = currentMonth < 10 ? `0${currentMonth}` : `${currentMonth}`;
+    const yearMonthPrefix = `${currentYear}-${monthStr}`;
     const nowTs = Date.now();
 
     let total = 0;

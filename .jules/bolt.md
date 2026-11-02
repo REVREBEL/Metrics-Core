@@ -44,3 +44,7 @@
 ## 2026-07-30 - [Memoizing Static Tree Search Haystacks]
 **Learning:** Tree view component search filters (like component registry catalog sidebars) often reconstruct search haystack strings (`[id, title, path, ...files].join(" ").toLowerCase()`) recursively for every node on every keystroke or state update. Furthermore, evaluating haystack creation before checking `if (!query) return true` causes thousands of array allocations even on initial/empty state renders.
 **Action:** Short-circuit empty query filters immediately at function entry and cache static tree node search strings in a module-level `Map` by node ID.
+
+## 2026-07-31 - [Zero-Allocation Calendar Date Key & Stats Evaluation]
+**Learning:** Generating date keys using `date.toISOString().split("T")[0]` in loops (~42 times per grid render) creates unnecessary ISO string conversions and array allocations. Similarly, using `.split("-").map(Number)` and `new Date(task.dueDate)` repeatedly to evaluate monthly task stats creates garbage collection pressure during UI interactions.
+**Action:** Use direct numeric string concatenation (`${year}-${month}-${day}`) for calendar keys, `.startsWith("YYYY-MM")` prefix comparisons for string date matching, and `Date.parse()` for timestamps without creating Date instances in loops.
