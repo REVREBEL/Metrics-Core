@@ -26,6 +26,26 @@ const requirements = [
 
 const strengthBars = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 
+// ⚡ Bolt: Hoist static presentation helpers outside component scope to avoid recreating closures on every render.
+const getColor = (score: number) => {
+  if (score === 0) return "bg-border";
+  if (score <= 1) return "bg-destructive";
+  if (score <= 2) return "bg-orange-500 ";
+  if (score <= 3) return "bg-amber-500";
+  if (score === 4) return "bg-yellow-400";
+
+  return "bg-green-500";
+};
+
+const getText = (score: number) => {
+  if (score === 0) return "Enter a password";
+  if (score <= 2) return "Weak password";
+  if (score <= 3) return "Medium password";
+  if (score === 4) return "Strong password";
+
+  return "Very strong password";
+};
+
 const EmailPass = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -33,33 +53,18 @@ const EmailPass = () => {
 
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
-  const strength = requirements.map((req) => ({
-    met: req.regex.test(password),
-    text: req.text,
-  }));
-
-  const strengthScore = useMemo(() => {
-    return strength.filter((req) => req.met).length;
-  }, [strength]);
-
-  const getColor = (score: number) => {
-    if (score === 0) return "bg-border";
-    if (score <= 1) return "bg-destructive";
-    if (score <= 2) return "bg-orange-500 ";
-    if (score <= 3) return "bg-amber-500";
-    if (score === 4) return "bg-yellow-400";
-
-    return "bg-green-500";
-  };
-
-  const getText = (score: number) => {
-    if (score === 0) return "Enter a password";
-    if (score <= 2) return "Weak password";
-    if (score <= 3) return "Medium password";
-    if (score === 4) return "Strong password";
-
-    return "Very strong password";
-  };
+  // ⚡ Bolt: Calculate requirements and score in a single pass memoized on [password].
+  // Previously, `strength` was re-created on every render as a fresh array reference,
+  // causing `useMemo(..., [strength])` to re-execute every render (e.g. visibility toggle or form inputs).
+  const { strength, strengthScore } = useMemo(() => {
+    let score = 0;
+    const list = requirements.map((req) => {
+      const met = req.regex.test(password);
+      if (met) score += 1;
+      return { met, text: req.text };
+    });
+    return { strength: list, strengthScore: score };
+  }, [password]);
 
   return (
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
