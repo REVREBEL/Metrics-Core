@@ -288,10 +288,11 @@ export function DataLibraryWorkspace({
     for (let i = 0; i < rows.length; i++) {
       const r = rows[i];
       const overlay = r._overlay as Record<string, unknown> | undefined;
-      const key =
-        (overlay?.rowKey as string) ??
-        canonicalizeRowKey(selectedTable.primaryKey, r);
-      rowByKeyMap.set(key, r);
+      const canonicalKey = canonicalizeRowKey(selectedTable.primaryKey, r);
+      rowByKeyMap.set(canonicalKey, r);
+      if (overlay?.rowKey) {
+        rowByKeyMap.set(overlay.rowKey as string, r);
+      }
     }
 
     const changes = Object.entries(localEdits).map(([rowKey, draftPayload]) => {
