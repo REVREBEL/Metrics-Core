@@ -48,3 +48,7 @@
 ## 2026-07-31 - [Zero-Allocation Calendar Date Key & Stats Evaluation]
 **Learning:** Generating date keys using `date.toISOString().split("T")[0]` in loops (~42 times per grid render) creates unnecessary ISO string conversions and array allocations. Similarly, using `.split("-").map(Number)` and `new Date(task.dueDate)` repeatedly to evaluate monthly task stats creates garbage collection pressure during UI interactions.
 **Action:** Use direct numeric string concatenation (`${year}-${month}-${day}`) for calendar keys, `.startsWith("YYYY-MM")` prefix comparisons for string date matching, and `Date.parse()` for timestamps without creating Date instances in loops.
+
+## 2026-11-02 - [Broken Memoization via Un-memoized Intermediate Array]
+**Learning:** Deriving an un-memoized intermediate array directly in a component render body (e.g. `const strength = requirements.map(...)`) and passing it as a dependency to `useMemo(..., [strength])` completely breaks memoization. React generates a fresh array reference on every render, causing the downstream `useMemo` to re-execute unconditionally on unrelated state updates (e.g. visibility toggles, other form field keystrokes).
+**Action:** Always memoize derived arrays directly on their primitive root dependencies (e.g., `[password]`), compute multi-step metrics in a single pass to eliminate intermediate allocations, and hoist static helper functions outside the component.
