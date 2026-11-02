@@ -23,6 +23,21 @@ interface PermissionRow {
   auditor: boolean;
 }
 
+// BOLT OPTIMIZATION: Hoist static UI category icon helper function outside component scope.
+// Prevents function re-allocation and unnecessary element instantiation on every state change/re-render.
+const getCategoryIcon = (category: PermissionRow["category"]) => {
+  switch (category) {
+    case "infrastructure":
+      return <Server className="size-4 text-violet-400" />;
+    case "data":
+      return <Database className="size-4 text-blue-400" />;
+    case "billing":
+      return <FileText className="size-4 text-emerald-400" />;
+    default:
+      return <Network className="size-4 text-amber-400" />;
+  }
+};
+
 export default function RolesPermissionsPage() {
   const [permissions, setPermissions] = useState<PermissionRow[]>([
     {
@@ -123,19 +138,6 @@ export default function RolesPermissionsPage() {
         return p;
       }),
     );
-  };
-
-  const getCategoryIcon = (category: PermissionRow["category"]) => {
-    switch (category) {
-      case "infrastructure":
-        return <Server className="size-4 text-violet-400" />;
-      case "data":
-        return <Database className="size-4 text-blue-400" />;
-      case "billing":
-        return <FileText className="size-4 text-emerald-400" />;
-      default:
-        return <Network className="size-4 text-amber-400" />;
-    }
   };
 
   return (

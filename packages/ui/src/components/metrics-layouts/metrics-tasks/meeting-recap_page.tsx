@@ -32,6 +32,12 @@ type RecapSection = {
   emptyMessage: string;
 };
 
+// ⚡ Bolt: Pre-computed static Maps for O(1) lookup in render loops, eliminating O(M) .find() traversals.
+const initiativeStatusMap = new Map(
+  initiativeStatuses.map((s) => [s.value, s]),
+);
+const taskStatusMap = new Map(taskStatuses.map((s) => [s.value, s]));
+
 function RecapSectionCard({ section }: { section: RecapSection }) {
   const Icon = section.icon;
 
@@ -54,8 +60,8 @@ function RecapSectionCard({ section }: { section: RecapSection }) {
             {section.items.map((item) => {
               const statusInfo =
                 item.type === "initiative"
-                  ? initiativeStatuses.find((s) => s.value === item.status)
-                  : taskStatuses.find((s) => s.value === item.status);
+                  ? initiativeStatusMap.get(item.status)
+                  : taskStatusMap.get(item.status);
 
               return (
                 <li

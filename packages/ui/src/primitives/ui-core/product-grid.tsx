@@ -3,7 +3,7 @@
 import { Button } from "@buttons/button";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { Product } from "../../types/products";
 import { Card, CardContent, CardFooter } from "./card";
 
@@ -16,9 +16,12 @@ export default function ProductGrid({
 }) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const filteredProducts = selectedCategory
-    ? products.filter((product) => product.category === selectedCategory)
-    : products;
+  // ⚡ Bolt: Memoize filtered products list to avoid redundant O(N) filtering on unrelated parent state/props re-renders.
+  const filteredProducts = useMemo(() => {
+    return selectedCategory
+      ? products.filter((product) => product.category === selectedCategory)
+      : products;
+  }, [products, selectedCategory]);
 
   return (
     <div className="space-y-6">

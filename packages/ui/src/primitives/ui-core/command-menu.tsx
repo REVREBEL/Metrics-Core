@@ -8,8 +8,8 @@ import { useTheme } from "@/context/theme-provider";
 import {
   type NavGroup,
   type NavItem,
-  sidebarData,
   type NavLink,
+  sidebarData,
 } from "../layouts/data/sidebar-data";
 import {
   CommandDialog,
