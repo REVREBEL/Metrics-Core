@@ -109,29 +109,29 @@ export function MeetingRecapView({
   }, [meetingDate]);
 
   // ⚡ Bolt: Single pass O(N + M) grouping and filtering inside useMemo.
-  // This also hoists new Date() and date string comparisons, and keeps stable dependencies
-  // to ensure that the useMemo cache actually hits (previously invalidated by fresh Date object references).
+  // Pre-computes numeric timestamps and date strings to eliminate new Date() instances
+  // and array allocations (.split) in tight loops, reducing garbage collection pressure.
   const sections = useMemo((): RecapSection[] => {
     const recapDate = meetingDate ? new Date(meetingDate) : new Date();
-    const recapDateStr = recapDate.toISOString().split("T")[0];
-
-    const oneWeekAgo = new Date(recapDate);
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    // Fast YYYY-MM-DD slice without array allocation from .split("T")
+    const recapDateStr = recapDate.toISOString().slice(0, 10);
+    const recapTs = recapDate.getTime();
+    const oneWeekAgoTs = recapTs - 7 * 24 * 60 * 60 * 1000;
 
     const newInitiatives: Initiative[] = [];
     const reviewedInitiatives: Initiative[] = [];
 
-    // Single-pass loop for initiatives
+    // Single-pass loop for initiatives with zero-allocation Date.parse() timestamp comparisons
     for (const i of initiatives) {
-      const created = new Date(i.createdAt);
-      if (created >= oneWeekAgo && created <= recapDate) {
+      const createdTs = Date.parse(i.createdAt);
+      if (createdTs >= oneWeekAgoTs && createdTs <= recapTs) {
         newInitiatives.push(i);
       } else {
-        const updated = new Date(i.updatedAt);
+        const updatedTs = Date.parse(i.updatedAt);
         if (
-          created < oneWeekAgo &&
-          updated >= oneWeekAgo &&
-          updated <= recapDate
+          createdTs < oneWeekAgoTs &&
+          updatedTs >= oneWeekAgoTs &&
+          updatedTs <= recapTs
         ) {
           reviewedInitiatives.push(i);
         }
@@ -142,20 +142,21 @@ export function MeetingRecapView({
     const overdueTasks: Task[] = [];
     const newAssignments: Task[] = [];
 
-    // Single-pass loop for tasks
+    // Single-pass loop for tasks with zero-allocation timestamp comparisons and prefix slice
     for (const t of tasks) {
-      const created = new Date(t.createdAt);
-      if (created >= oneWeekAgo && created <= recapDate) {
+      const createdTs = Date.parse(t.createdAt);
+      if (createdTs >= oneWeekAgoTs && createdTs <= recapTs) {
         newAssignments.push(t);
       }
 
       if (t.status === "complete" && t.completedAt) {
-        const completed = new Date(t.completedAt);
-        if (completed >= oneWeekAgo && completed <= recapDate) {
+        const completedTs = Date.parse(t.completedAt);
+        if (completedTs >= oneWeekAgoTs && completedTs <= recapTs) {
           completedTasks.push(t);
         }
       } else if (t.status !== "canceled" && t.dueDate) {
-        if (t.dueDate.split("T")[0] < recapDateStr) {
+        const duePrefix = t.dueDate.slice(0, 10);
+        if (duePrefix < recapDateStr) {
           overdueTasks.push(t);
         }
       }
