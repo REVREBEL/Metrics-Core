@@ -1,0 +1,322 @@
+[
+  {
+    "id": "PRMPT-01",
+    "prompt": "Draft an employment contract agreement outlining intellectual property assignment, compensation, and non-disclosure terms",
+    "expected_path": "business-and-operations/legal-and-governance/employment-contract-templates"
+  },
+  {
+    "id": "PRMPT-02",
+    "prompt": "Conduct customer Jobs-to-be-Done (JTBD) interviews and construct functional product outcome requirement statements",
+    "expected_path": "business-and-operations/product-management/jobs-to-be-done-analyst"
+  },
+  {
+    "id": "PRMPT-03",
+    "prompt": "Build a SaaS financial model forecasting burn rate, runway, monthly recurring revenue, and unit economics",
+    "expected_path": "business-and-operations/startup-finance/startup-financial-modeling"
+  },
+  {
+    "id": "PRMPT-04",
+    "prompt": "Analyze market size (TAM, SAM, SOM) and competitive advantage barriers for a new venture expansion",
+    "expected_path": "business-and-operations/strategy/startup-business-analyst-market-opportunity"
+  },
+  {
+    "id": "PRMPT-05",
+    "prompt": "Craft engaging editorial newsletter copy with a consistent narrative voice and clear storytelling tone",
+    "expected_path": "content-and-documentation/copywriting/copywriting"
+  },
+  {
+    "id": "PRMPT-06",
+    "prompt": "Generate a programmatic PowerPoint presentation with custom slide layouts and data charts using python-pptx",
+    "expected_path": "content-and-documentation/presentations/python-pptx-generator"
+  },
+  {
+    "id": "PRMPT-07",
+    "prompt": "Synthesize multiple academic literature sources and user study transcripts into a structured research summary",
+    "expected_path": "content-and-documentation/research-and-synthesis/research-documentation"
+  },
+  {
+    "id": "PRMPT-08",
+    "prompt": "Structure a technical developer portal with comprehensive API reference guides and architecture manuals",
+    "expected_path": "content-and-documentation/technical-writing/docs-architect"
+  },
+  {
+    "id": "PRMPT-09",
+    "prompt": "Design an interactive analytics dashboard analyzing customer lifetime value (LTV) and cohort revenue retention",
+    "expected_path": "data-and-ai/analytics/financial-analytics-dashboard"
+  },
+  {
+    "id": "PRMPT-10",
+    "prompt": "Design a resilient batch ETL pipeline to ingest, transform, and validate transactional data streams",
+    "expected_path": "data-and-ai/data-engineering/data-engineer"
+  },
+  {
+    "id": "PRMPT-11",
+    "prompt": "Implement a retrieval-augmented generation (RAG) system with hybrid semantic search and context re-ranking",
+    "expected_path": "data-and-ai/llm-and-rag/rag-implementation"
+  },
+  {
+    "id": "PRMPT-12",
+    "prompt": "Develop an ML workflow integrating multimodal Gemini models for structured vision and audio inference",
+    "expected_path": "data-and-ai/machine-learning/gemini-api-dev"
+  },
+  {
+    "id": "PRMPT-13",
+    "prompt": "Optimize high-dimensional vector embeddings and indexing strategies for vector similarity search",
+    "expected_path": "data-and-ai/vector-databases/embedding-strategies"
+  },
+  {
+    "id": "PRMPT-14",
+    "prompt": "Establish reusable UI design patterns, atomic component guidelines, and Tailwind design tokens",
+    "expected_path": "design-and-experience/design-systems/ui-pattern"
+  },
+  {
+    "id": "PRMPT-15",
+    "prompt": "Implement visual motion styling, 3D Canvas rendering aesthetics, and smooth UI transitions",
+    "expected_path": "design-and-experience/motion-and-graphics/lookdev-auto"
+  },
+  {
+    "id": "PRMPT-16",
+    "prompt": "Audit the aesthetic quality, visual balance, typographic rhythm, and spacing harmony of a web application",
+    "expected_path": "design-and-experience/taste-and-critique/ui-score"
+  },
+  {
+    "id": "PRMPT-17",
+    "prompt": "Design user flows, wireframes, and responsive component layouts with accessibility standards",
+    "expected_path": "design-and-experience/ui-ux/ui-ux-pro-max"
+  },
+  {
+    "id": "PRMPT-18",
+    "prompt": "Implement a transactional double-entry accounting ledger service with SQL schema and ACID consistency",
+    "expected_path": "development/backend/trading-ledger"
+  },
+  {
+    "id": "PRMPT-19",
+    "prompt": "Build custom interactive client-side web components and DOM integrations using modern JavaScript",
+    "expected_path": "development/frontend/webflow-cli-code-component"
+  },
+  {
+    "id": "PRMPT-20",
+    "prompt": "Architect and develop an end-to-end fullstack web platform integrating Next.js frontend interfaces with PostgreSQL backend services",
+    "expected_path": "development/fullstack/senior-fullstack"
+  },
+  {
+    "id": "PRMPT-21",
+    "prompt": "Develop native iOS mobile app features using Swift and SwiftUI with device hardware integrations",
+    "expected_path": "development/mobile/swift"
+  },
+  {
+    "id": "PRMPT-22",
+    "prompt": "Refactor a monolithic codebase using Clean Architecture principles, dependency inversion, and modular layering",
+    "expected_path": "development/software-architecture/clean-code"
+  },
+  {
+    "id": "PRMPT-23",
+    "prompt": "Implement secure OAuth2 and OIDC token validation protocols with cryptographic signature verification",
+    "expected_path": "development/systems/auth-implementation-patterns"
+  },
+  {
+    "id": "PRMPT-24",
+    "prompt": "Build and automate a continuous delivery pipeline with automated test stages and canary deployments",
+    "expected_path": "infrastructure-and-ops/ci-cd/ci-cd-and-automation"
+  },
+  {
+    "id": "PRMPT-25",
+    "prompt": "Configure cloud hosting and edge deployment configurations on Vercel with environment variable provisioning",
+    "expected_path": "infrastructure-and-ops/cloud-platforms/deploy-to-vercel"
+  },
+  {
+    "id": "PRMPT-26",
+    "prompt": "Configure Docker container orchestration, multi-stage builds, and Kubernetes cluster manifests",
+    "expected_path": "infrastructure-and-ops/containers-and-orchestration/cloud-devops"
+  },
+  {
+    "id": "PRMPT-27",
+    "prompt": "Set up an observability monitoring dashboard tracking infrastructure latency, memory, and error rates",
+    "expected_path": "infrastructure-and-ops/observability/observability-monitoring-monitor-setup"
+  },
+  {
+    "id": "PRMPT-28",
+    "prompt": "Manage Linux server administration, user permissions, systemd services, and SSH security configs",
+    "expected_path": "infrastructure-and-ops/server-management/server-management"
+  },
+  {
+    "id": "PRMPT-29",
+    "prompt": "Generate high-converting platform-specific advertising copy and creative variations for paid Google and Meta campaigns",
+    "expected_path": "marketing-and-seo/content-and-campaigns/ad-creative"
+  },
+  {
+    "id": "PRMPT-30",
+    "prompt": "Analyze marketing conversion funnel drop-offs and optimize call-to-action button placements for higher conversion",
+    "expected_path": "marketing-and-seo/cro/funnel-audit"
+  },
+  {
+    "id": "PRMPT-31",
+    "prompt": "Audit local search visibility, Google Business citations, and geographic ranking signals for a regional service",
+    "expected_path": "marketing-and-seo/geo-and-local-seo/local-seo-audit"
+  },
+  {
+    "id": "PRMPT-32",
+    "prompt": "Optimize on-page keyword targeting, error message queries, and technical long-tail search intent for developer audiences",
+    "expected_path": "marketing-and-seo/on-page-seo/developer-seo"
+  },
+  {
+    "id": "PRMPT-33",
+    "prompt": "Diagnose Google crawl errors, canonical tag mismatches, and search engine indexation issues",
+    "expected_path": "marketing-and-seo/technical-seo/indexing-issue-auditor"
+  },
+  {
+    "id": "PRMPT-34",
+    "prompt": "Architect a multi-agent system with parent-child task delegation, communication channels, and context management",
+    "expected_path": "meta-and-agent-skills/agent-architecture/subagent-orchestrator"
+  },
+  {
+    "id": "PRMPT-35",
+    "prompt": "Refactor and optimize an existing agent skill following best practices for progressive disclosure and resource bundling",
+    "expected_path": "meta-and-agent-skills/skill-lifecycle/effective-agent-skills"
+  },
+  {
+    "id": "PRMPT-36",
+    "prompt": "Audit an Agent Skills repository for specification compliance, frontmatter accuracy, and relative link resolution",
+    "expected_path": "meta-and-agent-skills/skill-validation/project-skill-audit"
+  },
+  {
+    "id": "PRMPT-37",
+    "prompt": "Review an application that collects personal data for data minimization, consent, encryption, and privacy-by-design controls",
+    "expected_path": "quality-and-security/compliance/privacy-by-design"
+  },
+  {
+    "id": "PRMPT-38",
+    "prompt": "Systematically isolate a runtime exception, reproduce the failure with minimal test case, and diagnose the root cause",
+    "expected_path": "quality-and-security/debugging/bug-hunter"
+  },
+  {
+    "id": "PRMPT-39",
+    "prompt": "Perform a web application security audit scanning for injection vulnerabilities, CSRF, and broken access controls",
+    "expected_path": "quality-and-security/security/web-security-testing"
+  },
+  {
+    "id": "PRMPT-40",
+    "prompt": "Author automated end-to-end browser test suites with Playwright to verify user checkout workflows",
+    "expected_path": "quality-and-security/testing/playwright-skill"
+  },
+  {
+    "id": "PRMPT-41",
+    "prompt": "Create and manage multiple isolated git worktrees to work on parallel branches simultaneously",
+    "expected_path": "workflow-and-automation/git-and-vcs/using-git-worktrees"
+  },
+  {
+    "id": "PRMPT-42",
+    "prompt": "Orchestrate a multi-step background job pipeline with conditional retries and error notifications",
+    "expected_path": "workflow-and-automation/task-orchestration/workflow-automation"
+  },
+  {
+    "id": "PRMPT-43",
+    "prompt": "Configure Model Context Protocol (MCP) server permissions, tool access policies, and security guardrails",
+    "expected_path": "workflow-and-automation/tool-integration/protect-mcp-governance"
+  },
+  {
+    "id": "PRMPT-44",
+    "prompt": "Automate headless Chrome data extraction and DOM scraping across paginated product catalog pages",
+    "expected_path": "workflow-and-automation/web-scraping/puppeteer-skill"
+  },
+  {
+    "id": "PRMPT-45",
+    "prompt": "Formulate a subscription SaaS pricing model evaluating tier features, seat-based vs usage-based pricing",
+    "expected_path": "business-and-operations/startup-finance/pricing-strategy"
+  },
+  {
+    "id": "PRMPT-46",
+    "prompt": "Write comprehensive software user documentation and integration tutorials for developer onboarding",
+    "expected_path": "content-and-documentation/technical-writing/documentation"
+  },
+  {
+    "id": "PRMPT-47",
+    "prompt": "Build an agentic LLM workflow using LangGraph state machines with cyclic tool calling and memory checkpoints",
+    "expected_path": "data-and-ai/llm-and-rag/langgraph"
+  },
+  {
+    "id": "PRMPT-48",
+    "prompt": "Review visual UI components for design system compliance, token consistency, and accessible typography",
+    "expected_path": "design-and-experience/design-systems/ui-review"
+  },
+  {
+    "id": "PRMPT-49",
+    "prompt": "Audit production application code for architecture antipatterns, race conditions, and error handling gaps",
+    "expected_path": "development/software-architecture/production-code-audit"
+  },
+  {
+    "id": "PRMPT-50",
+    "prompt": "Harden Docker container images by stripping root privileges, minimizing layers, and scanning base images",
+    "expected_path": "infrastructure-and-ops/containers-and-orchestration/container-security-hardening"
+  },
+  {
+    "id": "PRMPT-51",
+    "prompt": "Perform an end-to-end technical SEO audit reviewing robots.txt, XML sitemaps, and Core Web Vitals performance",
+    "expected_path": "marketing-and-seo/technical-seo/seo-optimizer"
+  },
+  {
+    "id": "PRMPT-52",
+    "prompt": "Implement a subagent-driven development workflow with discrete execution loops and parent-child verification",
+    "expected_path": "meta-and-agent-skills/agent-architecture/subagent-driven-development"
+  },
+  {
+    "id": "PRMPT-53",
+    "prompt": "Analyze suspicious binary artifacts and evaluate potential security exploit vectors in an untrusted payload",
+    "expected_path": "quality-and-security/security/malware-analyst"
+  },
+  {
+    "id": "PRMPT-54",
+    "prompt": "Configure dynamic multi-step automation workflows connecting webhook triggers to background agent processes",
+    "expected_path": "workflow-and-automation/task-orchestration/open-dynamic-workflows"
+  },
+  {
+    "id": "PRMPT-55",
+    "prompt": "Generate robust Pydantic v2 data models with custom field validators and JSON schema serialization in Python",
+    "expected_path": "development/backend/pydantic-models-py"
+  },
+  {
+    "id": "PRMPT-56",
+    "prompt": "Design an n8n workflow error routing sub-workflow with dead-letter queue retries and alerting",
+    "expected_path": "workflow-and-automation/task-orchestration/n8n-error-handling"
+  },
+  {
+    "id": "PRMPT-57",
+    "prompt": "Design an AI-native command-line interface (CLI) with streaming LLM output, argument parsing, and interactive agent hooks",
+    "expected_path": "development/systems/ai-native-cli"
+  },
+  {
+    "id": "PRMPT-58",
+    "prompt": "Develop Solidity smart contracts with hardhat test suites and web3 frontend wallet connection hooks",
+    "expected_path": "development/fullstack/blockchain-developer"
+  },
+  {
+    "id": "PRMPT-59",
+    "prompt": "Define end-to-end TypeScript client-server data contracts with Zod validation schemas and OpenAPI sync",
+    "expected_path": "development/frontend/frontend-data-contracts"
+  },
+  {
+    "id": "PRMPT-60",
+    "prompt": "Coordinate an autonomous multi-agent hierarchy with task delegation, shared state blackboard, and verification loops",
+    "expected_path": "meta-and-agent-skills/agent-architecture/aria"
+  },
+  {
+    "id": "PRMPT-61",
+    "prompt": "Track unusual options volume, block trades, and institutional order flow to analyze equity market sentiment",
+    "expected_path": "business-and-operations/startup-finance/options-flow-analyzer"
+  },
+  {
+    "id": "PRMPT-62",
+    "prompt": "Design a high-converting downloadable PDF lead magnet checklist to capture email subscriber leads",
+    "expected_path": "marketing-and-seo/content-and-campaigns/lead-magnets"
+  },
+  {
+    "id": "PRMPT-63",
+    "prompt": "Evaluate product positioning and keynote narrative through the visionary design and simplicity lens of Steve Jobs",
+    "expected_path": "business-and-operations/strategy/steve-jobs"
+  },
+  {
+    "id": "PRMPT-64",
+    "prompt": "Debug why our Next.js application build and deployment is failing in GitHub Actions CI pipeline",
+    "expected_path": "quality-and-security/debugging/actions-debugger"
+  }
+]

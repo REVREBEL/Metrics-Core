@@ -1,0 +1,26 @@
+[
+  {
+    "profile_name": "Flat Profile (Profile A)",
+    "avg_accuracy": 0.4,
+    "avg_tokens": 105150.0,
+    "avg_latency": 110.15,
+    "avg_hops": 1.0,
+    "scenarios_run": 64
+  },
+  {
+    "profile_name": "Single Router Profile (Profile B)",
+    "avg_accuracy": 0.95,
+    "avg_tokens": 13152.8125,
+    "avg_latency": 17.1528125,
+    "avg_hops": 2.0,
+    "scenarios_run": 64
+  },
+  {
+    "profile_name": "Scoped Family Profile (Profile C)",
+    "avg_accuracy": 0.9835937499999999,
+    "avg_tokens": 4757.140625,
+    "avg_latency": 8.296203125,
+    "avg_hops": 2.359375,
+    "scenarios_run": 64
+  }
+]
