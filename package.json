@@ -31,7 +31,7 @@
     "db:push": "turbo run db:push"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.16",
+    "@biomejs/biome": "2.6.3",
     "@tailwindcss/postcss": "^4.3.0",
     "glob": "^13.0.6",
     "markdown-link-check": "^3.15.0",
