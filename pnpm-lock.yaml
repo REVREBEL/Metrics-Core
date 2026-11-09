@@ -94,7 +94,7 @@ importers:
     devDependencies:
       '@tailwindcss/nesting':
         specifier: latest
-        version: 0.0.0-insiders.565cd3e(postcss@8.5.15)
+        version: 0.0.0-insiders.565cd3e(postcss@8.5.31)
       '@types/node':
         specifier: ^20
         version: 20.19.43
@@ -106,7 +106,7 @@ importers:
         version: 19.2.3(@types/react@19.2.17)
       autoprefixer:
         specifier: ^10.4.19
-        version: 10.5.0(postcss@8.5.15)
+        version: 10.5.0(postcss@8.5.31)
       eslint:
         specifier: ^9
         version: 9.39.5(jiti@2.7.0)
@@ -118,7 +118,7 @@ importers:
         version: 10.5.0
       postcss:
         specifier: ^8.4.39
-        version: 8.5.15
+        version: 8.5.31
       tsx:
         specifier: ^4.19.0
         version: 4.22.4
@@ -213,7 +213,7 @@ importers:
         version: 3.44.0(react@19.2.7)
       '@tailwindcss/nesting':
         specifier: latest
-        version: 0.0.0-insiders.565cd3e(postcss@8.5.15)
+        version: 0.0.0-insiders.565cd3e(postcss@8.5.31)
       '@types/node':
         specifier: ^20
         version: 20.19.43
@@ -225,7 +225,7 @@ importers:
         version: 19.2.3(@types/react@19.2.17)
       autoprefixer:
         specifier: ^10.4.19
-        version: 10.5.0(postcss@8.5.15)
+        version: 10.5.0(postcss@8.5.31)
       eslint:
         specifier: ^9
         version: 9.39.5(jiti@2.7.0)
@@ -237,7 +237,7 @@ importers:
         version: 10.5.0
       postcss:
         specifier: ^8.4.39
-        version: 8.5.15
+        version: 8.5.31
       turbopack:
         specifier: ^0.0.1
         version: 0.0.1
@@ -550,7 +550,7 @@ importers:
         version: 29.1.1(@noble/hashes@1.8.0)
       postcss:
         specifier: ^8.5.6
-        version: 8.5.15
+        version: 8.5.31
       react-resizable-panels:
         specifier: ^4.11.2
         version: 4.11.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -7014,11 +7014,6 @@ packages:
       react: '*'
       react-dom: '*'
 
-  nanoid@3.3.12:
-    resolution: {integrity: sha512-ZB9RH/39qpq5Vu6Y+NmUaFhQR6pp+M2Xt76XBnEwDaGcVAqhlvxrl3B2bKS5D3NH3QR76v3aSrKaF/Kiy7lEtQ==}
-    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
-    hasBin: true
-
   nanoid@3.3.20:
     resolution: {integrity: sha512-uKdg2G3GNCKQn9byYOpxbGqrT2fGO5KRt5J/8b3pok8rT6qxGWF6hxMyJiEYtAf+FVyYuD9hRaDqX5uPFYJ4ZQ==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -7404,6 +7399,10 @@ packages:
 
   postcss@8.5.15:
     resolution: {integrity: sha512-FfR8sjd4em2T6fb3I2MwAJU7HWVMr9zba+enmQeeWFfCbm+UOC/0X4DS8XtpUTMwWMGbjKYP7xjfNekzyGmB3A==}
+    engines: {node: ^10 || ^12 || >=14}
+
+  postcss@8.5.31:
+    resolution: {integrity: sha512-YUbWYCgErwnMAVkjUnYa+KlMBzGpHwiIt/DE7f0G33AuX2LH9UcTk6KgWxd3zRU+pN3u/C+Xl3EnMLM4Hea7Sg==}
     engines: {node: ^10 || ^12 || >=14}
 
   postcss@8.5.32:
@@ -8037,10 +8036,6 @@ packages:
     peerDependencies:
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
-
-  source-map-js@1.2.1:
-    resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
-    engines: {node: '>=0.10.0'}
 
   source-map-js@1.2.2:
     resolution: {integrity: sha512-KGj/8Y43x35aZVDtt+J4mK1hoLGHULMYfSkODJNQjNDC3oW1PqPoxMwo0pLUsWM/UEGzON/NxeHywEfNXNP3Vw==}
@@ -11495,10 +11490,10 @@ snapshots:
 
   '@tabler/icons@3.44.0': {}
 
-  '@tailwindcss/nesting@0.0.0-insiders.565cd3e(postcss@8.5.15)':
+  '@tailwindcss/nesting@0.0.0-insiders.565cd3e(postcss@8.5.31)':
     dependencies:
-      postcss: 8.5.15
-      postcss-nested: 5.0.6(postcss@8.5.15)
+      postcss: 8.5.31
+      postcss-nested: 5.0.6(postcss@8.5.31)
 
   '@tailwindcss/node@4.3.0':
     dependencies:
@@ -11507,7 +11502,7 @@ snapshots:
       jiti: 2.7.0
       lightningcss: 1.32.0
       magic-string: 0.30.21
-      source-map-js: 1.2.1
+      source-map-js: 1.2.2
       tailwindcss: 4.3.0
 
   '@tailwindcss/oxide-android-arm64@4.3.0':
@@ -12386,13 +12381,13 @@ snapshots:
 
   async@3.2.6: {}
 
-  autoprefixer@10.5.0(postcss@8.5.15):
+  autoprefixer@10.5.0(postcss@8.5.31):
     dependencies:
       browserslist: 4.28.2
       caniuse-lite: 1.0.30001797
       fraction.js: 5.3.4
       picocolors: 1.1.1
-      postcss: 8.5.15
+      postcss: 8.5.31
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:
@@ -12688,7 +12683,7 @@ snapshots:
   css-tree@3.2.1:
     dependencies:
       mdn-data: 2.27.1
-      source-map-js: 1.2.1
+      source-map-js: 1.2.2
 
   css-what@6.2.2: {}
 
@@ -15442,8 +15437,6 @@ snapshots:
       stacktrace-js: 2.0.2
       stylis: 4.4.0
 
-  nanoid@3.3.12: {}
-
   nanoid@3.3.20: {}
 
   napi-postinstall@0.3.4: {}
@@ -15935,9 +15928,9 @@ snapshots:
 
   possible-typed-array-names@1.1.0: {}
 
-  postcss-nested@5.0.6(postcss@8.5.15):
+  postcss-nested@5.0.6(postcss@8.5.31):
     dependencies:
-      postcss: 8.5.15
+      postcss: 8.5.31
       postcss-selector-parser: 6.1.2
 
   postcss-selector-parser@6.1.2:
@@ -15954,15 +15947,21 @@ snapshots:
 
   postcss@8.4.31:
     dependencies:
-      nanoid: 3.3.12
+      nanoid: 3.3.20
       picocolors: 1.1.1
-      source-map-js: 1.2.1
+      source-map-js: 1.2.2
 
   postcss@8.5.15:
     dependencies:
-      nanoid: 3.3.12
+      nanoid: 3.3.20
       picocolors: 1.1.1
-      source-map-js: 1.2.1
+      source-map-js: 1.2.2
+
+  postcss@8.5.31:
+    dependencies:
+      nanoid: 3.3.20
+      picocolors: 1.1.1
+      source-map-js: 1.2.2
 
   postcss@8.5.32:
     dependencies:
@@ -16847,7 +16846,7 @@ snapshots:
       node-fetch: 3.3.2
       open: 11.0.0
       ora: 8.2.0
-      postcss: 8.5.15
+      postcss: 8.5.31
       postcss-selector-parser: 7.1.1
       prompts: 2.4.2
       recast: 0.23.11
@@ -16979,8 +16978,6 @@ snapshots:
     dependencies:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
-
-  source-map-js@1.2.1: {}
 
   source-map-js@1.2.2: {}
 
@@ -17647,7 +17644,7 @@ snapshots:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.4)
       picomatch: 4.0.4
-      postcss: 8.5.15
+      postcss: 8.5.32
       rollup: 4.62.2
       tinyglobby: 0.2.17
     optionalDependencies:
